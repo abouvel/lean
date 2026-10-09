@@ -1,0 +1,7 @@
+Complete every `sorry` placeholder in `Main.lean`.
+
+Requirements:
+- Do not change the definition or theorem statement.
+- Use the existing Mathlib dependency and Lean toolchain.
+- Do not add axioms, `admit`, or new `sorry` placeholders.
+- Make the project compile with `lake build`.
