@@ -20,13 +20,17 @@ Update this semantic checklist before changing the main Lean theorem.
 
 ## Lean checklist
 
-- [ ] Represent every assumption explicitly or document why it is built into the model.
-- [ ] Use arbitrary input length, not only powers of two.
-- [ ] Handle unmatched nodes without unintended rounding steps.
-- [ ] Preserve the exact `gamma` constant and depth bound.
-- [ ] Do not add assumptions merely to make the proof easier.
-- [ ] Back-translate the final Lean theorem and compare it with this specification.
+- [x] Represent every assumption explicitly or document why it is built into the model.
+- [x] Use arbitrary nonempty input length, not only powers of two.
+- [x] Handle shorter leaf paths without unintended rounding steps in the general tree theorem.
+- [x] Preserve the exact `gamma` constant and depth bound.
+- [x] Do not add assumptions merely to make the proof easier.
+- [x] Back-translate the final Lean theorem and compare it with this specification.
 
 ## Dot-product extension
 
 The reduction theorem treats leaves as values already available for summation. The later dot-product theorem must also model and bound rounding in each multiplication `xᵢ*yᵢ`.
+
+The current deterministic dot-product theorem accounts for one rounded
+multiplication plus at most `tree.depth` rounded additions. The source's
+probabilistic dot-product result is a separate extension and is not yet claimed.

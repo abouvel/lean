@@ -39,10 +39,15 @@ For a balanced reduction of `n` inputs, let `L = ⌈log₂ n⌉`. Under the no-o
 - [x] Repository and module structure
 - [x] Abstract model scaffold
 - [x] `gamma` definition
-- [x] Tree and rounded-evaluation scaffold
-- [ ] Product-of-rounding-errors bound
-- [ ] Balanced-tree construction and depth theorem
-- [ ] Binary-tree backward-error theorem
-- [ ] Floating-point dot-product theorem
+- [x] Tree and rounded-evaluation definitions
+- [x] Product-of-rounding-errors bound
+- [x] Backward-error theorem for an arbitrary tree of bounded depth
+- [x] Four-input verification example
+- [x] Deterministic dot-product theorem for an arbitrary tree
+- [x] Algorithm 1 offset-paired construction for every nonempty input list
+- [x] Input-multiset preservation and unmatched-element carry theorem
+- [x] Depth bound `≤ Nat.clog 2 n = ⌈log₂ n⌉`
+- [x] Specialize the backward-error theorem to Algorithm 1
+- [ ] Connect the deterministic result to the probabilistic theorem, if required
 
 See [`theorem.md`](theorem.md) for the source-to-Lean checklist.

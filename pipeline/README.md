@@ -18,4 +18,5 @@ source theorem
 
 Submit only after the statement compiles, local search and repair have failed, and the goal is a small lemma. Send a minimal staging project with no credentials or unrelated files. Accept the result only if the theorem statement is unchanged and the main project builds without `sorry`, `admit`, or new axioms.
 
-Use [`verify.sh`](verify.sh) for the local build. Placeholder and axiom checks remain part of the review before a result is accepted.
+Use [`verify.sh`](verify.sh) for the local build. It also rejects `sorry`,
+`admit`, and project-defined `axiom` declarations before a result is accepted.
