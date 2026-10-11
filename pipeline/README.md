@@ -1,9 +1,12 @@
-# Initial proving pipeline
+# Proving and artifact-learning pipeline
 
-The pipeline is intentionally small. Lean is the verifier; Aristotle is an optional slow fallback.
+Lean is the verifier, artifacts provide optional external memory, and Aristotle
+is a slow fallback for an isolated blocked lemma.
 
 ```text
 source theorem
+→ choose memory mode: stateless or retrieved
+→ search artifacts/index.md and relevant validated artifacts
 → reviewed Lean statement
 → compiling skeleton
 → small lemmas
@@ -11,8 +14,41 @@ source theorem
 → further decomposition if blocked
 → Aristotle for one isolated blocked lemma
 → local verification
-→ semantic audit and run record
+→ semantic audit
+→ save raw run artifact
+→ promote only compiler-verified reusable lessons
+→ update artifact index
 ```
+
+## Artifact rule
+
+Follow [`../AGENTS.md`](../AGENTS.md). Before a stateful attempt, record which
+artifact IDs were retrieved. After the attempt, save a structured record in
+`artifacts/runs/`. Only general lessons backed by a successful full build may
+be added to `artifacts/validated/`.
+
+For stateless experiments, skip retrieval and record that explicitly. Never
+place the evaluated theorem's completed proof in its retrieval set.
+
+## Memory-ablation experiment
+
+When testing whether artifacts help, create two isolated runs:
+
+```text
+same task specification and starting repository
+├─ stateless: artifact retrieval prohibited
+└─ retrieved: artifact snapshot available and retrieval logged
+```
+
+Assign the condition before work begins, freeze the retrieved condition's
+artifact snapshot, and prevent either run from seeing the other's changes.
+Keep the model, reasoning effort, tools, time limit, and verification command
+fixed. Do not update shared validated memory until both runs finish.
+
+Each run must record an `experiment_id`, `task_id`, condition, starting commit,
+artifact snapshot, retrieved IDs, success, verification result, and all
+available time/cost/attempt metrics. Detailed rules are in
+[`../AGENTS.md`](../AGENTS.md#research-comparisons).
 
 ## Aristotle rule
 
