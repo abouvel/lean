@@ -1,11 +1,9 @@
 import Mathlib
 import Research.DotProduct
+import Research.Projects.BinaryTreeReduction
 
 /-!
 # Research
 
-This module is the starting point for the Lean formalization project.
+This module is the entry point for the research formalization library.
 -/
-
-example : 2 + 2 = 4 := by
-  norm_num
