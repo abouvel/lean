@@ -1,0 +1,18 @@
+{
+  "stateless": {
+    "exit_code": 0,
+    "stdout": "{\"host_repository_absent\": true, \"docker_socket_absent\": true, \"no_project_git\": true, \"no_previous_solution\": true, \"no_worked_examples\": true, \"reviewer_and_hidden_tests_absent\": true, \"memory_visibility_correct\": true, \"spec_read_only\": true, \"direct_egress_blocked\": true, \"github_blocked\": true, \"lean_version_correct\": true, \"codex_version\": \"codex-cli 0.162.0\"}\n",
+    "stderr": ""
+  },
+  "retrieved": {
+    "exit_code": 0,
+    "stdout": "{\"host_repository_absent\": true, \"docker_socket_absent\": true, \"no_project_git\": true, \"no_previous_solution\": true, \"no_worked_examples\": true, \"reviewer_and_hidden_tests_absent\": true, \"memory_visibility_correct\": true, \"spec_read_only\": true, \"direct_egress_blocked\": true, \"github_blocked\": true, \"lean_version_correct\": true, \"codex_version\": \"codex-cli 0.162.0\"}\n",
+    "stderr": ""
+  },
+  "lean_smoke_build": {
+    "exit_code": 0,
+    "stdout": "\u2714 [8026/8028] Built Research.Submission (59s)\n\u2714 [8027/8028] Built Research (5.0s)\nBuild completed successfully (8028 jobs).\n",
+    "stderr": ""
+  },
+  "image_id": "sha256:6c37762e961592a69be71db86a2f5dd3019a4e0d4d18869de1e962ebe23c2632"
+}

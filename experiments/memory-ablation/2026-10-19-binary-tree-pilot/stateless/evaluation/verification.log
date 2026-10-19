@@ -1,0 +1,109 @@
+✖ [8026/8028] Building Research.Submission (7.3s)
+trace: .> LEAN_PATH=/workspace/.lake/packages/Cli/.lake/build/lib/lean:/workspace/.lake/packages/batteries/.lake/build/lib/lean:/workspace/.lake/packages/Qq/.lake/build/lib/lean:/workspace/.lake/packages/aesop/.lake/build/lib/lean:/workspace/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/.lake/packages/plausible/.lake/build/lib/lean:/workspace/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/.lake/build/lib/lean /opt/lean/bin/lean /workspace/Research/Submission.lean -o /workspace/.lake/build/lib/lean/Research/Submission.olean -i /workspace/.lake/build/lib/lean/Research/Submission.ilean -c /workspace/.lake/build/ir/Research/Submission.c --setup /workspace/.lake/build/ir/Research/Submission.setup.json --json
+error: Research/Submission.lean:10:4: failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.instDivInvMonoid', which is 'noncomputable'
+error: Research/Submission.lean:60:8: unsolved goals
+case nil
+α : Type
+inst✝ : DecidableEq α
+δ : ℕ → ℝ
+u : ℝ
+hδ : ∀ (k : ℕ), |δ k| ≤ u
+i : α
+k : ℕ
+bs : List (List α)
+⊢ 0 ≤ u
+error: Research/Submission.lean:63:10: unsolved goals
+case cons.nil
+α : Type
+inst✝ : DecidableEq α
+δ : ℕ → ℝ
+u : ℝ
+hδ : ∀ (k : ℕ), |δ k| ≤ u
+i : α
+a : List α
+as : List (List α)
+ih : ∀ (k : ℕ) (bs : List (List α)), |errorAux δ k i as bs| ≤ u
+k : ℕ
+⊢ 0 ≤ u
+warning: Research/Submission.lean:60:27: This simp argument is unused:
+  abs_nonneg
+
+Hint: Omit it from the simp argument list.
+  simp [errorAux,̵ ̵a̵b̵s̵_̵n̵o̵n̵n̵e̵g̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Research/Submission.lean:63:29: This simp argument is unused:
+  abs_nonneg
+
+Hint: Omit it from the simp argument list.
+  simp [errorAux,̵ ̵a̵b̵s̵_̵n̵o̵n̵n̵e̵g̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Research/Submission.lean:87:2: Tactic `apply` failed: could not unify the conclusion of `(div_le_iff₀ hspos).mpr`
+  ?m.140 / (1 - ↑(k + 1) * u) ≤ ?m.139
+with the goal
+  ↑k * u / (1 - ↑k * u) + u + ↑k * u / (1 - ↑k * u) * u ≤ ↑(k + 1) * u / (1 - ↑(k + 1) * u)
+
+Note: The full type of `(div_le_iff₀ hspos).mpr` is
+  ?m.140 ≤ ?m.139 * (1 - ↑(k + 1) * u) → ?m.140 / (1 - ↑(k + 1) * u) ≤ ?m.139
+
+k : ℕ
+u : ℝ
+hu : 0 ≤ u
+hsmall : ↑(k + 1) * u < 1
+hk : ↑k * u < 1
+hkpos : 0 < 1 - ↑k * u
+hspos : 0 < 1 - ↑(k + 1) * u
+⊢ ↑k * u / (1 - ↑k * u) + u + ↑k * u / (1 - ↑k * u) * u ≤ ↑(k + 1) * u / (1 - ↑(k + 1) * u)
+warning: Research/Submission.lean:91:32: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+error: Research/Submission.lean:110:4: Tactic `apply` failed: could not unify the conclusion of `ih (level + 1) (round (δ level) s)`
+  ∀ (i : Fin n), |(run δ (level + 1) d (round (δ level) s)).coeff i - 1| ≤ gamma (level + 1 + d) u
+with the goal
+  ∀ (i : Fin n), |(run δ (level + 1) d (round (δ level) s)).coeff i - 1| ≤ gamma (level + (d + 1)) u
+
+Note: The full type of `ih (level + 1) (round (δ level) s)` is
+  (∀ (i : Fin n), |(round (δ level) s).coeff i - 1| ≤ gamma (level + 1) u) →
+    ↑(level + 1 + d) * u < 1 →
+      ∀ (i : Fin n), |(run δ (level + 1) d (round (δ level) s)).coeff i - 1| ≤ gamma (level + 1 + d) u
+
+case succ
+n : ℕ
+δ : ℕ → ℕ → ℝ
+u : ℝ
+hu : 0 ≤ u
+hδ : ∀ (l k : ℕ), |δ l k| ≤ u
+d : ℕ
+ih :
+  ∀ (level : ℕ) (s : TreeState n),
+    (∀ (i : Fin n), |s.coeff i - 1| ≤ gamma level u) →
+      ↑(level + d) * u < 1 → ∀ (i : Fin n), |(run δ level d s).coeff i - 1| ≤ gamma (level + d) u
+level : ℕ
+s : TreeState n
+hs : ∀ (i : Fin n), |s.coeff i - 1| ≤ gamma level u
+hsmall : ↑(level + (d + 1)) * u < 1
+⊢ ∀ (i : Fin n), |(run δ (level + 1) d (round (δ level) s)).coeff i - 1| ≤ gamma (level + (d + 1)) u
+error: Research/Submission.lean:131:4: Tactic `apply` failed: could not unify the conclusion of `run_coeff_bound δ u hu hδ 0 depth (initial x.length)`
+  ∀ (i : Fin x.length), |(run δ 0 depth (initial x.length)).coeff i - 1| ≤ gamma (0 + depth) u
+with the goal
+  ∀ (i : Fin x.length), |final.coeff i - 1| ≤ gamma depth u
+
+Note: The full type of `run_coeff_bound δ u hu hδ 0 depth (initial x.length)` is
+  (∀ (i : Fin x.length), |(initial x.length).coeff i - 1| ≤ gamma 0 u) →
+    ↑(0 + depth) * u < 1 → ∀ (i : Fin x.length), |(run δ 0 depth (initial x.length)).coeff i - 1| ≤ gamma (0 + depth) u
+
+x : List ℝ
+hne : x ≠ []
+δ : ℕ → ℕ → ℝ
+u : ℝ
+hu : 0 ≤ u
+hδ : ∀ (l k : ℕ), |δ l k| ≤ u
+hsmall : ↑(Nat.clog 2 x.length) * u < 1
+depth : ℕ := Nat.clog 2 x.length
+final : TreeState x.length := run δ 0 depth (initial x.length)
+⊢ ∀ (i : Fin x.length), |final.coeff i - 1| ≤ gamma depth u
+error: Lean exited with code 1
+Some required targets logged failures:
+- Research.Submission
+error: build failed

@@ -1,0 +1,6 @@
+✔ [8026/8030] Built Research.BinaryTree (7.6s)
+✔ [8027/8030] Built Research.FloatingPoint (4.4s)
+✔ [8028/8030] Built Research.Submission (3.5s)
+✔ [8029/8030] Built Research (3.7s)
+Build completed successfully (8030 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

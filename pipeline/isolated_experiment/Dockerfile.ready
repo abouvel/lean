@@ -1,0 +1,6 @@
+FROM research-proof-pilot:2026-10-19
+USER root
+# Login shells reset PATH. Expose only the binaries from the read-only Lean mount.
+RUN ln -s /opt/lean/bin/lean /usr/local/bin/lean \
+    && ln -s /opt/lean/bin/lake /usr/local/bin/lake
+USER 1100:1100

@@ -1,0 +1,4 @@
+'Bhola.algorithm1_theorem3_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.round_getD' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.exact_depth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.sumFP_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
