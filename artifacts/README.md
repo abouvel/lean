@@ -2,6 +2,10 @@
 
 This directory is the repository's searchable external memory.
 
+It is not the experiment workspace. Keep summaries and reusable lessons here;
+link to the full inputs, code, transcripts, and metrics in `../experiments/`.
+The executable runner belongs in `../pipeline/`.
+
 - `runs/` contains factual records of individual proof attempts.
 - `validated/` contains compact lessons supported by verified runs.
 - `index.md` is the retrieval entry point.

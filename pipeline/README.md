@@ -1,5 +1,12 @@
 # Proving and artifact-learning pipeline
 
+This directory contains executable machinery, not experiment results or memory.
+Use [`experiment.py`](experiment.py) for the container pilot; see
+[`REPRODUCE.md`](REPRODUCE.md) for checking results, offline replay, and fresh runs.
+The scripts in `isolated_experiment/` are historical implementation details, not
+separate workflows to choose between. Evidence belongs in `experiments/`;
+searchable summaries belong in `artifacts/`.
+
 Lean is the verifier, artifacts provide optional external memory, and Aristotle
 is a slow fallback for an isolated blocked lemma.
 
