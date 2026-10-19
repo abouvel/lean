@@ -1,8 +1,9 @@
 # Experiment evidence
 
 Each experiment owns its config, frozen inputs/memory, candidates, reviews,
-metrics, and artifact summaries. Shared code and Docker files live in `../pipeline/`.
-The global artifact index links here instead of duplicating run records.
+metrics, notes, presentations, and artifact summaries. Shared code and Docker
+files live in `../pipeline/`; the proof library lives in `../lean/`.
+Each experiment's `artifacts/index.md` indexes its lessons and runs.
 
 - [Experiment 1: binary-tree formalization](exp-001-binary-tree/README.md)
   includes the completed pair and its separate `interrupted/` attempts.

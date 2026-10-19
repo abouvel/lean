@@ -6,6 +6,9 @@ status: verified
 supporting_runs: run-2026-10-11-algorithm1
 ```
 
+[Supporting run](../2026-10-11-algorithm1-offset-reduction.md).
+These full lessons are not the experiment's restricted `memory/` snapshot.
+
 ## Offset-paired reduction
 
 Represent one parallel level as a forest of trees. Split at

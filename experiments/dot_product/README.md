@@ -6,7 +6,7 @@ Convert a fixed Lean statement of dot-product symmetry into a machine-checked pr
 
 ## Pipeline organization
 
-1. A human fixes the mathematical meaning in `Research/DotProduct.lean`.
+1. A human fixes the mathematical meaning in [`lean/Research/DotProduct.lean`](../../lean/Research/DotProduct.lean).
 2. Lean checks that the statement and definitions elaborate.
 3. A minimal submission project is created in `submission/`. It contains no credentials.
 4. Aristotle receives only that staging project and the recorded prompt in `prompt.txt`.

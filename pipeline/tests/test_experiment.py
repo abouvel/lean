@@ -1,6 +1,7 @@
 """Migration and isolation tests; no model calls or Docker required."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -81,6 +82,7 @@ class RunnerTests(unittest.TestCase):
                 self.assertEqual(text, "-- prior answer\n" if replay else "import Mathlib\n")
                 self.assertFalse((target / condition / "private-transcript.txt").exists())
             self.assertTrue((target / "artifacts").is_dir())
+            self.assertTrue((target / "artifacts/index.md").is_file())
             self.assertEqual(current["name"], "target")
             self.assertNotIn("relocation", current)
             manifest = json.loads((target / "frozen-manifest.json").read_text())
@@ -165,10 +167,12 @@ class RunnerTests(unittest.TestCase):
                 runner.require_success(root, config(), semantic=True)
 
     def test_navigation_links_exist(self):
-        documents = [runner.ROOT / "README.md", runner.ROOT / "artifacts/index.md",
+        documents = [runner.ROOT / "README.md", EXPERIMENT / "artifacts/index.md",
                      runner.ROOT / "experiments/README.md", PIPELINE / "README.md",
                      PIPELINE / "REPRODUCE.md", EXPERIMENT / "README.md", EXPERIMENT / "REPORT.md",
-                     *(EXPERIMENT / "artifacts").glob("*.md")]
+                     *(EXPERIMENT / "artifacts").rglob("*.md"),
+                     *(EXPERIMENT / "notes").glob("*.md"),
+                     runner.ROOT / "experiments/dot_product/README.md"]
         for document in documents:
             for target in re.findall(r"\]\(([^)]+)\)", document.read_text()):
                 if "://" in target or target.startswith("#"):
@@ -194,6 +198,65 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(actual, metadata.split()[2], old)
             checked += 1
         self.assertGreater(checked, 100)
+
+    def test_no_separate_root_project_or_artifact_stores(self):
+        for name in ("projects", "artifacts", "Research", "Research.lean", "output"):
+            self.assertFalse((runner.ROOT / name).exists(), name)
+
+    def test_library_sources_preserved_byte_for_byte(self):
+        before = "bf9b1d012f5a20d1e932d79d5d86a0709f25e69c"
+        tree = subprocess.run(["git", "-C", str(runner.ROOT), "ls-tree", "-r", before,
+                               "--", "Research", "Research.lean"], check=True, capture_output=True, text=True).stdout
+        checked = 0
+        for line in tree.splitlines():
+            metadata, old = line.split("\t", 1)
+            actual = subprocess.run(["git", "-C", str(runner.ROOT), "hash-object", "lean/" + old],
+                                    check=True, capture_output=True, text=True).stdout.strip()
+            self.assertEqual(actual, metadata.split()[2], old)
+            checked += 1
+        self.assertGreater(checked, 5)
+
+    def test_presentation_deliverables_preserved(self):
+        before = "bf9b1d012f5a20d1e932d79d5d86a0709f25e69c"
+        tree = subprocess.run(["git", "-C", str(runner.ROOT), "ls-tree", "-r", before,
+                               "--", "output/slides"], check=True, capture_output=True, text=True).stdout
+        self.assertEqual(len(tree.splitlines()), 4)
+        for line in tree.splitlines():
+            metadata, old = line.split("\t", 1)
+            path = EXPERIMENT / "presentations" / Path(old).name
+            actual = subprocess.run(["git", "-C", str(runner.ROOT), "hash-object", str(path)],
+                                    check=True, capture_output=True, text=True).stdout.strip()
+            self.assertEqual(actual, metadata.split()[2], old)
+
+    def verifier_fixture(self, source_dir, text, expected):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            binaries = root / "bin"
+            binaries.mkdir()
+            lake = binaries / "lake"
+            lake.write_text("#!/bin/sh\nexit 0\n")
+            lake.chmod(0o755)
+            if source_dir:
+                source = root / source_dir
+                source.mkdir(parents=True)
+                (source / "Check.lean").write_text(text)
+            environment = dict(os.environ, PATH=str(binaries) + os.pathsep + os.environ["PATH"])
+            result = subprocess.run(["bash", str(PIPELINE / "verify.sh")], cwd=root, env=environment,
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, expected, result.stdout + result.stderr)
+
+    def test_verifier_accepts_both_source_layouts(self):
+        for source in ("lean/Research", "Research"):
+            with self.subTest(source=source):
+                self.verifier_fixture(source, "example : True := trivial\n", 0)
+
+    def test_verifier_rejects_placeholder_and_axiom(self):
+        for text in ("example : True := sorry\n", "axiom bad : False\n"):
+            with self.subTest(text=text):
+                self.verifier_fixture("lean/Research", text, 1)
+
+    def test_verifier_fails_when_source_directory_is_missing(self):
+        self.verifier_fixture(None, "", 1)
 
 
 if __name__ == "__main__":

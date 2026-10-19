@@ -71,10 +71,10 @@ connect its structural guarantees to the existing floating-point tree theorem.
 
 ## Evidence
 
-- Implementation: `Research/Projects/BinaryTreeReduction/Algorithm.lean`
-- Five-input checks: `Research/Projects/BinaryTreeReduction/Examples.lean`
-- Floating-point bridge: `Research/Projects/BinaryTreeReduction/Reduction.lean`
-- Detailed project record: `projects/binary-tree-reduction/runs/run-002/README.md`
+- [Implementation](../../../lean/Research/Projects/BinaryTreeReduction/Algorithm.lean)
+- [Five-input checks](../../../lean/Research/Projects/BinaryTreeReduction/Examples.lean)
+- [Floating-point bridge](../../../lean/Research/Projects/BinaryTreeReduction/Reduction.lean)
+- [Detailed baseline record](../notes/baseline-002.md)
 - Verification result: 8,036 build jobs completed; placeholder and custom-axiom
   scans passed.
 

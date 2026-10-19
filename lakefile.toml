@@ -4,6 +4,7 @@ defaultTargets = ["Research"]
 
 [[lean_lib]]
 name = "Research"
+srcDir = "lean"
 
 [[require]]
 name = "mathlib"

@@ -10,11 +10,13 @@ Artifacts are external memory; they are not evidence that model weights changed.
 
 ## Before a proof attempt
 
-1. Read `artifacts/index.md`.
-2. Search `artifacts/validated/` for theorem names, mathematical structures,
-   tactics, and compiler errors relevant to the task.
-3. Read a raw record in `artifacts/runs/` or `experiments/<id>/artifacts/` only
-   when its index entry is relevant.
+1. For ordinary proof work, read `experiments/<id>/artifacts/index.md` for the
+   relevant experiment. For experimental runs, follow the condition-specific
+   access restrictions below instead.
+2. Search its `artifacts/validated/` directory for theorem names, mathematical
+   structures, tactics, and compiler errors relevant to the task.
+3. Read a raw record in that experiment's `artifacts/` or `notes/` directory
+   only when its index entry is relevant.
 4. Record the artifact IDs actually used. Do not claim that retrieval helped
    unless the final run record identifies how it affected a decision.
 5. If the task is an explicitly stateless experiment, do not search or read
@@ -47,9 +49,9 @@ and custom-axiom scans pass. Record unavailable timing, token, or cost data as
 
 ## Saving a run artifact
 
-For an experiment, create one Markdown summary in its own
-`experiments/<id>/artifacts/` directory and link it from `artifacts/index.md`.
-Standalone proof attempts can still use `artifacts/runs/`. Name the file:
+Create one Markdown summary in `experiments/<id>/artifacts/` and link it from
+that directory's `index.md`. All proof attempts belong to an experiment; do not
+create separate root-level `projects/` or `artifacts/` directories. Name the file:
 
 ```text
 YYYY-MM-DD-short-description.md
@@ -83,7 +85,7 @@ project run record instead of copying large proofs or logs.
 
 ## Promoting reusable knowledge
 
-Only promote a lesson into `artifacts/validated/` when:
+Only promote a lesson into `experiments/<id>/artifacts/validated/` when:
 
 1. the supporting Lean project passes `pipeline/verify.sh`;
 2. the lesson is more general than one theorem;
@@ -92,11 +94,11 @@ Only promote a lesson into `artifacts/validated/` when:
 
 Validated artifacts contain compact proof patterns, failure patterns, and
 strategy rules. Raw evidence remains with its experiment; summaries stay in
-the experiment's `artifacts/` directory (or legacy `artifacts/runs/`).
+the experiment's `artifacts/` directory.
 
 ## Updating the index
 
-After adding or materially changing an artifact, update `artifacts/index.md`
+After adding or materially changing an artifact, update its experiment-local `artifacts/index.md`
 with its ID, status, project, tags, one-sentence summary, and relative path.
 Keep newest entries first. Do not delete failed runs merely because a later run
 succeeded.
@@ -106,11 +108,13 @@ succeeded.
 Use a memory-ablation experiment to test whether artifacts improve agent
 performance. The two conditions are:
 
-- `stateless`: do not read `artifacts/index.md`, `artifacts/runs/`,
-  `artifacts/validated/`, experiment-local artifacts, prior experiment outputs,
-  or earlier project run records before or during the attempt.
-- `retrieved`: read `artifacts/index.md`, select relevant artifacts, and record
-  every artifact ID actually opened and used.
+- `stateless`: do not read artifact indexes, validated lessons, experiment-local
+  artifacts, prior experiment outputs, or earlier run records before or during
+  the attempt.
+- `retrieved`: use only the approved frozen memory snapshot, read its index,
+  select relevant artifacts, and record every artifact ID actually opened and used.
+  Do not read the full experiment-local artifact store unless it is explicitly
+  part of the approved snapshot.
 
 ### Before an experiment
 
@@ -177,4 +181,4 @@ Use `unknown` for unavailable measurements. Never estimate missing values.
 4. Separate retrieval from learning: improved performance shows benefit from
    external memory, not a change to model weights.
 5. Only after comparison is complete may verified lessons be promoted into
-   `artifacts/validated/` for future experiments.
+   the experiment's `artifacts/validated/` for future experiments.

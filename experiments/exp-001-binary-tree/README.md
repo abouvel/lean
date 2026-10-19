@@ -22,7 +22,9 @@ exp-001-binary-tree/
 ├── memory/               Frozen notes for retrieved only
 ├── stateless/            Candidate, transcript, verification, critic
 ├── retrieved/            Candidate, transcript, verification, critic
-├── artifacts/            Searchable summaries of both pairs
+├── artifacts/            Local index, run summaries, validated lessons
+├── notes/                Mathematical plan, specification, earlier baselines
+├── presentations/        Slide decks
 ├── interrupted/          Earlier capacity-interrupted pair; kept separate
 ├── REPORT.md             Detailed findings and evidence links
 ├── comparison.json       Recorded metrics and judgments
@@ -47,6 +49,12 @@ folders; this evidence is never overwritten. [Setup](../../pipeline/REPRODUCE.md
 - Stateless: [proof](stateless/workspace/Research/Submission.lean) · [critic](stateless/review/review.md)
 - Retrieved: [proof](retrieved/workspace/Research/FloatingPoint.lean) · [critic](retrieved/review/review.md)
 - [Stateless summary](artifacts/2026-10-19-floating-point-stateless.md) · [retrieved summary](artifacts/2026-10-19-floating-point-retrieved.md)
+- [Artifact index](artifacts/index.md) · [mathematical specification](notes/theorem.md)
+- [Earlier proof plan](notes/PLAN.md) · [latest slides](presentations/binary-tree-agent-memory-update-v4.pptx)
+
+The reusable [proof library](../../lean/Research/) is separate from the fresh
+agents' submitted proofs above. The full lessons under `artifacts/` are **not**
+automatically included in the frozen `memory/` snapshot.
 
 Historical records retain the original experiment ID `2026-10-19-binary-tree-pilot-gpt61`.
 Relocation changes navigation, not the reported measurements. The shared

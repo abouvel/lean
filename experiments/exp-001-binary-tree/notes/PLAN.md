@@ -1,5 +1,8 @@
 # Binary-tree floating-point reduction
 
+Earlier proof-library plan and status, retained as baseline documentation.
+For the container comparison, see the [experiment overview](../README.md).
+
 ## Objective
 
 Formalize the backward-error analysis of floating-point binary-tree summation, then extend it to a floating-point dot product.

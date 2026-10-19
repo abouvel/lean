@@ -122,6 +122,8 @@ def initialize(target, source, config, replay):
         ownership(work)
         ownership(out)
     (target / "artifacts").mkdir()
+    save(target / "artifacts/index.md", "# Run artifacts\n\n"
+         "Add run summaries here after evaluation. Do not expose them to either builder.\n")
     save(target / "experiment.json", current)
     files = [p for key in ("inputs", "memory", "evaluator")
              for p in (target / current[key]).rglob("*") if p.is_file()]
