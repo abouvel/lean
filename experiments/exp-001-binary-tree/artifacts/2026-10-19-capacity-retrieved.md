@@ -56,10 +56,10 @@ project. Semantic and nontrivial-submission checks are necessary.
 
 ## Evidence
 
-- [Frozen inputs](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot/frozen-manifest.json)
-- [Metrics](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot/retrieved/output/metrics.json)
-- [Transcript](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot/retrieved/output/events.jsonl)
-- [Verification](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot/retrieved/evaluation/verification.json)
+- [Frozen inputs](../interrupted/frozen-manifest.json)
+- [Metrics](../interrupted/retrieved/output/metrics.json)
+- [Transcript](../interrupted/retrieved/output/events.jsonl)
+- [Verification](../interrupted/retrieved/evaluation/verification.json)
 
 ## Remaining limitations
 

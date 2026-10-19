@@ -1,13 +1,13 @@
 # Experiment evidence
 
-Each experiment owns its frozen inputs, candidate sources, logs, and results.
-The runner lives in `../pipeline/`; searchable summaries live in `../artifacts/`.
-Do not copy full logs into either directory.
+Each experiment owns its config, frozen inputs/memory, candidates, reviews,
+metrics, and artifact summaries. Shared code and Docker files live in `../pipeline/`.
+The global artifact index links here instead of duplicating run records.
 
-- [Completed container pilot](memory-ablation/2026-10-19-binary-tree-pilot-gpt61/REPORT.md)
-- `memory-ablation/2026-10-19-binary-tree-pilot/`: earlier capacity-interrupted pair; retained, not pooled with the completed pair.
+- [Experiment 1: binary-tree formalization](exp-001-binary-tree/README.md)
+  includes the completed pair and its separate `interrupted/` attempts.
 - `dot_product/`: original Lean/Aristotle integration pilot; historical evidence.
 
 See [reproduction commands](../pipeline/REPRODUCE.md). New runs use new IDs.
-Old workspace/config copies are run snapshots, not additional source projects
-to maintain. Keep them intact while their manifests and reports reference them.
+Old workspace/config copies are evidence, not additional projects to maintain.
+Historical IDs and manifests are preserved; `relocation.json` maps moved paths.

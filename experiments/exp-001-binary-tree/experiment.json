@@ -1,0 +1,23 @@
+{
+  "name": "exp-001-binary-tree",
+  "task_id": "sahil-theorem-3.1-algorithm-1",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": ["stateless", "retrieved"],
+  "builder_seconds": 1200,
+  "critic_seconds": 300,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {"memory": "8g", "cpus": 2, "pids": 256},
+  "relocation": "relocation.json",
+  "historical_records": [".", "interrupted"],
+  "limitations": [
+    "One source-assisted task and one run per condition; no statistical or held-out learning conclusion.",
+    "Generic memory was manually curated from prior experience on the same assignment.",
+    "External memory does not change model weights. Monetary cost is unknown under ChatGPT authentication.",
+    "No critic-assisted repair or automatic Aristotle fallback; no complete action-trace audit by critics."
+  ]
+}

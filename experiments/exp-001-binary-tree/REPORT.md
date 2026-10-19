@@ -142,7 +142,7 @@ The first pair used the configured local model, `gpt-5.6-sol / medium`.
 The service interrupted the baseline after 156.308 seconds and prevented the
 retrieved run from starting substantively, with `Selected model is at capacity`.
 Their transcripts, partial source, metrics, and failed acceptance remain in the
-[separate original experiment](../2026-10-19-binary-tree-pilot/README.md).
+[separate interrupted pair](interrupted/README.md).
 
 The new pair fixed `gpt-6.1-sol / medium` for both conditions before either
 started. It also fixed login-shell binary discovery and allowed the observed
@@ -178,7 +178,7 @@ separate test of critic-assisted repair. Retain regressions and failures.
 - [Retrieved metrics](retrieved/output/metrics.json) and [decisions](retrieved/output/decisions.md)
 - [Stateless critic](stateless/review/review.md) and [independent checks](stateless/review/IndependentChecks.lean)
 - [Retrieved critic](retrieved/review/review.md) and [independent checks](retrieved/review/IndependentChecks.lean)
-- [Controller and reproduction notes](../../../pipeline/isolated_experiment/README.md)
+- [Shared pipeline](../../pipeline/README.md) and [reproduction notes](../../pipeline/REPRODUCE.md)
 
 The pre-existing main research proof was left unchanged and independently
 passed the repository verification gate during the experiment. Its build is

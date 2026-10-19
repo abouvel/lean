@@ -13,7 +13,8 @@ Artifacts are external memory; they are not evidence that model weights changed.
 1. Read `artifacts/index.md`.
 2. Search `artifacts/validated/` for theorem names, mathematical structures,
    tactics, and compiler errors relevant to the task.
-3. Read a raw record in `artifacts/runs/` only when its index entry is relevant.
+3. Read a raw record in `artifacts/runs/` or `experiments/<id>/artifacts/` only
+   when its index entry is relevant.
 4. Record the artifact IDs actually used. Do not claim that retrieval helped
    unless the final run record identifies how it affected a decision.
 5. If the task is an explicitly stateless experiment, do not search or read
@@ -46,7 +47,9 @@ and custom-axiom scans pass. Record unavailable timing, token, or cost data as
 
 ## Saving a run artifact
 
-Create one Markdown file in `artifacts/runs/` named:
+For an experiment, create one Markdown summary in its own
+`experiments/<id>/artifacts/` directory and link it from `artifacts/index.md`.
+Standalone proof attempts can still use `artifacts/runs/`. Name the file:
 
 ```text
 YYYY-MM-DD-short-description.md
@@ -88,7 +91,8 @@ Only promote a lesson into `artifacts/validated/` when:
 4. limitations and counterexamples are retained.
 
 Validated artifacts contain compact proof patterns, failure patterns, and
-strategy rules. Raw attempts remain in `artifacts/runs/`.
+strategy rules. Raw evidence remains with its experiment; summaries stay in
+the experiment's `artifacts/` directory (or legacy `artifacts/runs/`).
 
 ## Updating the index
 
@@ -103,8 +107,8 @@ Use a memory-ablation experiment to test whether artifacts improve agent
 performance. The two conditions are:
 
 - `stateless`: do not read `artifacts/index.md`, `artifacts/runs/`,
-  `artifacts/validated/`, or earlier project run records before or during the
-  attempt.
+  `artifacts/validated/`, experiment-local artifacts, prior experiment outputs,
+  or earlier project run records before or during the attempt.
 - `retrieved`: read `artifacts/index.md`, select relevant artifacts, and record
   every artifact ID actually opened and used.
 

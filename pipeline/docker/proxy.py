@@ -3,7 +3,12 @@ import select
 import socket
 import socketserver
 
-ALLOWED = {"chatgpt.com", "api.openai.com", "auth.openai.com"}
+ALLOWED = {
+    "chatgpt.com", "api.openai.com", "auth.openai.com",
+    "sdmntprindiasocentral.oaiusercontent.com",
+    "sdmntprsouthcentralus.oaiusercontent.com",
+    "sdmntprcentralus.oaiusercontent.com",
+}
 
 
 class Handler(socketserver.BaseRequestHandler):

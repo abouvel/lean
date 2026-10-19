@@ -13,9 +13,9 @@ Lean 4 numerical-analysis proofs and controlled agent experiments.
 ```text
 Research/                       Proof code: Common/ and Projects/
 projects/                       Human-facing mathematical plans and explanations
-pipeline/                       Executable machinery: build, isolate, run, verify
-experiments/                    Evidence: frozen inputs, submissions, logs, metrics
-artifacts/                      Searchable memory: concise run summaries and lessons
+pipeline/                       Shared runner, verifier, and docker/ runtime
+experiments/exp-001-binary-tree/  Config, inputs, memory, submissions, reviews, results
+artifacts/                      Cross-experiment index and validated lessons
 output/slides/                  Presentation deliverables
 ```
 
@@ -45,25 +45,27 @@ From WSL at the repository root:
 
 ```bash
 # Check frozen inputs and display the recorded results; no model call.
-python3 pipeline/experiment.py check
+cd experiments/exp-001-binary-tree
+python3 ../../pipeline/run.py check --config experiment.json
 
 # Rebuild both saved submissions in fresh offline containers; no model call.
-python3 pipeline/experiment.py replay --run-id replay-001
+python3 ../../pipeline/run.py replay --config experiment.json --name replay-001
 
 # Fresh agents, same frozen task and generic memory; uses model quota.
-python3 pipeline/experiment.py run --run-id pair-002
+python3 ../../pipeline/run.py run --config experiment.json --name exp-002-binary-tree
 ```
 
 See [the reproduction guide](pipeline/REPRODUCE.md) for prerequisites and image builds,
-and [the completed report](experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/REPORT.md)
+and [experiment 1](experiments/exp-001-binary-tree/README.md)
 for the original results. New runs never overwrite that evidence. Reproduction
 means repeating the protocol, not guaranteeing identical model outputs.
 
 ## What goes where
 
-`pipeline/` is the machinery; `experiments/` is what happened when it ran;
-`artifacts/` is what a future agent may retrieve. An artifact links to experiment
-evidence rather than copying its transcript. `projects/` explains the mathematics;
+`pipeline/` is the shared machinery. Each experiment folder owns its config,
+inputs, frozen memory, both candidates, reviews, metrics, and `artifacts/` summaries.
+The global `artifacts/index.md` links to these summaries; it does not duplicate them.
+`projects/` explains the mathematics;
 new execution logs belong in `experiments/`, not a second project run directory.
 
 ## Proving policy

@@ -66,12 +66,12 @@ No new shared validated lesson is promoted from this comparison.
 
 ## Evidence
 
-- [Experiment report](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/REPORT.md)
-- [Proof](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/stateless/workspace/Research/Submission.lean)
-- [Exact prompt](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/stateless/output/actual-prompt.txt)
-- [Decisions](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/stateless/output/decisions.md)
-- [Verification](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/stateless/evaluation/verification.json)
-- [Critic](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/stateless/review/review.json)
+- [Experiment report](../REPORT.md)
+- [Proof](../stateless/workspace/Research/Submission.lean)
+- [Exact prompt](../stateless/output/actual-prompt.txt)
+- [Decisions](../stateless/output/decisions.md)
+- [Verification](../stateless/evaluation/verification.json)
+- [Critic](../stateless/review/review.json)
 
 ## Remaining limitations
 

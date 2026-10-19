@@ -1,0 +1,17 @@
+{
+  "reason": "Directory reorganization only. Frozen manifests, prompts, transcripts, proof sources, and metrics retain their original bytes and historical IDs.",
+  "historical_code_commit": "e92d0cef1cdd8f209800df878637c0905284032b",
+  "evidence_commit": "644155042e797f6078864abad02cfbbb9cb9d6c6",
+  "manifests": {
+    "experiments/exp-001-binary-tree/frozen-manifest.json": "bd7121e86afe5318ed419c7e342c3f59294335a6f96af6f67930c1fccc35754c",
+    "experiments/exp-001-binary-tree/interrupted/frozen-manifest.json": "10da059d902b1697a9a9a60bb092de67a0cf71f999f75b99f27eac36a8120ffe"
+  },
+  "paths": {
+    "experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/spec": "experiments/exp-001-binary-tree/inputs",
+    "experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/trusted": "experiments/exp-001-binary-tree/evaluator",
+    "experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61": "experiments/exp-001-binary-tree",
+    "experiments/memory-ablation/2026-10-19-binary-tree-pilot/spec": "experiments/exp-001-binary-tree/interrupted/inputs",
+    "experiments/memory-ablation/2026-10-19-binary-tree-pilot/trusted": "experiments/exp-001-binary-tree/interrupted/evaluator",
+    "experiments/memory-ablation/2026-10-19-binary-tree-pilot": "experiments/exp-001-binary-tree/interrupted"
+  }
+}

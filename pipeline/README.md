@@ -1,65 +1,53 @@
-# Proving and artifact-learning pipeline
+# Shared proof pipeline
 
-This directory contains executable machinery, not experiment results or memory.
-Use [`experiment.py`](experiment.py) for the container pilot; see
-[`REPRODUCE.md`](REPRODUCE.md) for checking results, offline replay, and fresh runs.
-The scripts in `isolated_experiment/` are historical implementation details, not
-separate workflows to choose between. Evidence belongs in `experiments/`;
-searchable summaries belong in `artifacts/`.
-
-Lean is the verifier, artifacts provide optional external memory, and Aristotle
-is a slow fallback for an isolated blocked lemma.
+Experiments own their inputs and results; this directory owns the machinery.
 
 ```text
-source theorem
-→ choose memory mode: stateless or retrieved
-→ search artifacts/index.md and relevant validated artifacts
-→ reviewed Lean statement
-→ compiling skeleton
-→ small lemmas
-→ local tactics and compiler-guided repair
-→ further decomposition if blocked
-→ Aristotle for one isolated blocked lemma
-→ local verification
-→ semantic audit
-→ save raw run artifact
-→ promote only compiler-verified reusable lessons
-→ update artifact index
+experiment.json + inputs + frozen memory
+                    ↓
+         run.py → isolation preflight
+                    ↓
+         Builder agent: Lean repair
+                    ↓
+         Fresh offline verifier script
+                    ↓
+         Separate critic agent
+                    ↓
+         Experiment-local results
 ```
 
-## Artifact rule
+Stateless runs first; retrieved starts fresh with **pre-existing frozen notes**,
+not the first run's answer. Critics inspect the original source, read-only
+candidate, verification logs, and withheld tests. No critic repair loop is enabled.
 
-Follow [`../AGENTS.md`](../AGENTS.md). Before a stateful attempt, record which
-artifact IDs were retrieved. After the attempt, save a structured record in
-`artifacts/runs/`. Only general lessons backed by a successful full build may
-be added to `artifacts/validated/`.
+| File | Role |
+| --- | --- |
+| `run.py` | Config, input freezing, new experiment creation, outcome checks |
+| `engine.py` | Container isolation, builders, verification, critics |
+| `agent.py` | Fresh model session, transcript, timing/token records |
+| `verify.py` | Offline build and placeholder/custom-axiom scans |
+| `verify.sh` | Main repository verification gate |
+| `docker/` | Dockerfiles and allowlisted network proxy |
 
-For stateless experiments, skip retrieval and record that explicitly. Never
-place the evaluated theorem's completed proof in its retrieval set.
+Builder containers get selected inputs, private workspace/output, read-only
+Lean/Mathlib, and optional memory. No host repository, Git history, other run,
+or Docker socket. Non-root, read-only root, dropped capabilities, resource limits.
+Model access uses a restricted proxy; verification has no network.
+Credentials are separately mounted, never saved in prompts or artifacts.
 
-## Memory-ablation experiment
-
-When testing whether artifacts help, create two isolated runs:
+## Aristotle policy
 
 ```text
-same task specification and starting repository
-├─ stateless: artifact retrieval prohibited
-└─ retrieved: artifact snapshot available and retrieval logged
+Compiling statement + failed local repair/decomposition + blocked small lemma
+                                  ↓
+                              Aristotle
+                                  ↓
+                  Unchanged statement + full local recheck
 ```
 
-Assign the condition before work begins, freeze the retrieved condition's
-artifact snapshot, and prevent either run from seeing the other's changes.
-Keep the model, reasoning effort, tools, time limit, and verification command
-fixed. Do not update shared validated memory until both runs finish.
+This is a future fallback policy, **not an automatic implemented branch**.
+Aristotle is disabled in the current pair. Both conditions must have equal access
+and budgets if it is added. Lean validity, semantic fidelity, and process fidelity
+are different checks; human statement review remains necessary.
 
-Each run must record an `experiment_id`, `task_id`, condition, starting commit,
-artifact snapshot, retrieved IDs, success, verification result, and all
-available time/cost/attempt metrics. Detailed rules are in
-[`../AGENTS.md`](../AGENTS.md#research-comparisons).
-
-## Aristotle rule
-
-Submit only after the statement compiles, local search and repair have failed, and the goal is a small lemma. Send a minimal staging project with no credentials or unrelated files. Accept the result only if the theorem statement is unchanged and the main project builds without `sorry`, `admit`, or new axioms.
-
-Use [`verify.sh`](verify.sh) for the local build. It also rejects `sorry`,
-`admit`, and project-defined `axiom` declarations before a result is accepted.
+[Run commands and prerequisites](REPRODUCE.md) · [Experiment 1](../experiments/exp-001-binary-tree/README.md)

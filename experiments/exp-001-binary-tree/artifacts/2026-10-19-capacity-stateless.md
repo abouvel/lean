@@ -61,10 +61,10 @@ These observations are not promoted as validated proof lessons.
 
 ## Evidence
 
-- [Frozen inputs](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot/frozen-manifest.json)
-- [Actor metrics](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot/stateless/output/metrics.json)
-- [Transcript](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot/stateless/output/events.jsonl)
-- [Verification](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot/stateless/evaluation/verification.json)
+- [Frozen inputs](../interrupted/frozen-manifest.json)
+- [Actor metrics](../interrupted/stateless/output/metrics.json)
+- [Transcript](../interrupted/stateless/output/events.jsonl)
+- [Verification](../interrupted/stateless/evaluation/verification.json)
 
 ## Remaining limitations
 

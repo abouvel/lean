@@ -77,13 +77,13 @@ observed efficiency improvement. No shared validated lesson is promoted here.
 
 ## Evidence
 
-- [Experiment report](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/REPORT.md)
-- [Main theorem](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/retrieved/workspace/Research/FloatingPoint.lean)
-- [Tree proof](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/retrieved/workspace/Research/BinaryTree.lean)
-- [Exact prompt](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/retrieved/output/actual-prompt.txt)
-- [Retrieval log](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/retrieved/output/retrieval.md)
-- [Decisions](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/retrieved/output/decisions.md)
-- [Critic](../../experiments/memory-ablation/2026-10-19-binary-tree-pilot-gpt61/retrieved/review/review.json)
+- [Experiment report](../REPORT.md)
+- [Main theorem](../retrieved/workspace/Research/FloatingPoint.lean)
+- [Tree proof](../retrieved/workspace/Research/BinaryTree.lean)
+- [Exact prompt](../retrieved/output/actual-prompt.txt)
+- [Retrieval log](../retrieved/output/retrieval.md)
+- [Decisions](../retrieved/output/decisions.md)
+- [Critic](../retrieved/review/review.json)
 
 ## Remaining limitations
 

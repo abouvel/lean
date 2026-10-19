@@ -6,4 +6,4 @@
 __pycache__/
 *.pyc
 /.codex-build/
-/experiments/memory-ablation/replay-*/
+/experiments/replay-*/
