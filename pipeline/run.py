@@ -11,6 +11,7 @@ import sys
 import time
 
 from engine import CONFIG_FILES, Engine, ownership, save
+from critic import require_pass, review
 
 ROOT = Path(__file__).resolve().parents[1]
 PIPELINE = Path(__file__).resolve().parent
@@ -177,9 +178,7 @@ def require_success(directory, config, semantic):
         if not result["formal_gate_passed"]:
             raise RuntimeError(f"Formal gate failed: {condition}")
         if semantic:
-            result = json.loads((directory / condition / "review/review.json").read_text())
-            if result.get("overall_verdict") != "pass":
-                raise RuntimeError(f"Critic did not pass: {condition}")
+            require_pass(directory / condition / "review")
 
 
 def main(argv=None):
@@ -229,7 +228,7 @@ def main(argv=None):
         engine.connectivity()
         engine.builders()
         engine.evaluate()
-        engine.review()
+        review(engine)
         engine.summarize()
         require_success(target, current, semantic=True)
     finally:

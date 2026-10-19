@@ -25,27 +25,31 @@ The current critic is a post-hoc reviewer; it does not send repair feedback.
 
 ## Where the critic agent is
 
-There is no separate `critic.py`. Builder and critic use the same launcher with
-different roles, prompts, and container mounts:
+[`critic.py`](critic.py) owns critic preparation, launch, reviewer entry point,
+and verdict checking. It reuses the shared container and session runners:
 
 ```text
-run.py: engine.review()
+run.py: critic.review(engine)
           ↓
-engine.py: Engine.review() creates a fresh critic container
+critic.py: stage source + rubric; request read-only critic container
           ↓
-Engine.container(reviewer=True) sets RUN_KIND=reviewer
+engine.py: Engine.container(reviewer=True) enforces shared isolation
           ↓
-agent.py selects /spec/REVIEWER.txt and starts a fresh model session
+critic.py: main() reads /spec/REVIEWER.txt
+          ↓
+agent.py: run_agent(..., kind="reviewer") starts the fresh session
           ↓
 <condition>/review/ receives the verdict, checks, and transcript
 ```
 
 | Open this | What it controls |
 | --- | --- |
-| [`engine.py`](engine.py), `Engine.review()` | Critic launch and its source/candidate/evaluation mounts |
-| [`agent.py`](agent.py), `RUN_KIND` | Selects the reviewer prompt; launches the model; records timing and tokens |
+| [`critic.py`](critic.py), `review()` | Stages the private rubric and launches each critic |
+| [`critic.py`](critic.py), `main()` / `require_pass()` | Reviewer prompt selection and fail-closed verdict check |
+| [`engine.py`](engine.py), `Engine.container()` | Shared read-only mounts, network restrictions, and resource limits |
+| [`agent.py`](agent.py), `run_agent()` | Shared fresh-session launch, transcript, timeout, and metrics |
 | [Experiment 1 reviewer instructions](../experiments/exp-001-binary-tree/evaluator/REVIEWER.txt) | Mathematical rubric, withheld cases, required report format |
-| [`run.py`](run.py), `require_success()` | Rejects a failed formal gate or a critic verdict other than `pass` |
+| [`run.py`](run.py), `require_success()` | Requires the formal gate and delegates semantic acceptance to `critic.require_pass()` |
 
 Each condition gets its own critic. The critic uses the experiment's configured
 model and reasoning setting, with a separate time limit: five minutes in Experiment 1.

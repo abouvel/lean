@@ -68,7 +68,7 @@ class Engine:
                 *mount(self.lean, "/opt/lean", True),
                 *mount(self.packages, "/workspace/.lake/packages", True),
                 *mount(spec or self.directory / self.config["inputs"], "/spec", True),
-                *mount(TOOLS / "agent.py", "/runner/entry.py", True)]
+                *mount(TOOLS / "agent.py", "/runner/agent.py", True)]
         dependencies = sorted(p.name for p in self.packages.iterdir() if p.is_dir())
         args += ["-e", f"GIT_CONFIG_COUNT={len(dependencies)}"]
         for i, dependency in enumerate(dependencies):
@@ -87,7 +87,6 @@ class Engine:
         args += ["-e", "EXPERIMENT_MODEL=" + self.config["model"],
                  "-e", "REASONING_EFFORT=" + self.config["reasoning_effort"],
                  "-e", "MEMORY_MODE=" + condition,
-                 "-e", "RUN_KIND=" + ("reviewer" if reviewer else "builder"),
                  "-e", f"TIME_LIMIT_SECONDS={limit}"]
         return args
 
@@ -156,7 +155,7 @@ print(json.dumps(r));raise SystemExit(0 if all(r.values()) else 1)
                 raise RuntimeError(f"Existing builder output: {condition}")
             print("BUILD", condition, flush=True)
             with (self.directory / condition / "container.log").open("w") as log:
-                result = subprocess.run([*self.container(condition), self.image, "python3", "/runner/entry.py"],
+                result = subprocess.run([*self.container(condition), self.image, "python3", "/runner/agent.py"],
                                         stdout=log, stderr=subprocess.STDOUT,
                                         timeout=self.config["builder_seconds"] + 60)
             save(output / "container-exit.json", {"exit_code": result.returncode})
@@ -191,27 +190,6 @@ print(json.dumps(r));raise SystemExit(0 if all(r.values()) else 1)
                            *mount(TOOLS / "verify.py", "/trusted/verify_candidate.py", True),
                            self.image, "python3", "/trusted/verify_candidate.py"], check=False, timeout=270)
             save(output / "container.log", result.stdout + result.stderr)
-            save(output / "container-exit.json", {"exit_code": result.returncode})
-
-    def review(self):
-        self.guard()
-        self.network()
-        for condition in self.conditions:
-            spec = self.directory / condition / "reviewer-spec"
-            spec.mkdir()
-            for name in ("source.txt", "source.pdf"):
-                shutil.copyfile(self.directory / self.config["inputs"] / name, spec / name)
-            shutil.copyfile(self.directory / self.config["evaluator"] / "REVIEWER.txt", spec / "REVIEWER.txt")
-            output = self.directory / condition / "review"
-            output.mkdir()
-            ownership(output)
-            with (output / "container.log").open("w") as log:
-                result = subprocess.run([*self.container(condition,
-                    workspace=self.directory / condition / "evaluation-workspace", output=output,
-                    spec=spec, reviewer=True),
-                    *mount(self.directory / condition / "evaluation", "/evaluation", True),
-                    self.image, "python3", "/runner/entry.py"], stdout=log, stderr=subprocess.STDOUT,
-                    timeout=self.config["critic_seconds"] + 60)
             save(output / "container-exit.json", {"exit_code": result.returncode})
 
     def summarize(self):
