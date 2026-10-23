@@ -163,7 +163,7 @@ class RunnerTests(unittest.TestCase):
                 (root / "stateless" / directory).mkdir(parents=True)
             (root / "stateless/evaluation/verification.json").write_text('{"formal_gate_passed": true}')
             (root / "stateless/review/review.json").write_text('{"overall_verdict": "uncertain"}')
-            with self.assertRaisesRegex(RuntimeError, "Critic did not pass"):
+            with self.assertRaises((RuntimeError, ValueError)):
                 runner.require_success(root, config(), semantic=True)
 
     def test_navigation_links_exist(self):

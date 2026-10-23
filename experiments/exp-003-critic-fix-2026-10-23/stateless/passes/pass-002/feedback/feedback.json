@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "previous_pass": 1,
+  "formal_gate_passed": true,
+  "corrections": [
+    {
+      "requirement": "Actual proof of Theorem 3.1 for arbitrary nonempty input",
+      "correction": "Prove a theorem for every nonempty list, with valid relative errors and depth*u < 1, establishing the sum representation and the componentwise gamma bound for algorithm."
+    },
+    {
+      "requirement": "Exact offset pairing in Algorithm 1",
+      "correction": "Prove round lengths equal the specified ceiling and that nonempty input produces exactly one final tree."
+    },
+    {
+      "requirement": "Preserve occurrences and multiplicities, including duplicate inputs",
+      "correction": "Combine forest_occurrences with a proof that the final forest is a singleton to preserve all occurrences in the returned result."
+    },
+    {
+      "requirement": "ceil(log2 n) depth",
+      "correction": "Prove the length invariant and final singleton result, then connect forest_height to the returned tree for every nonempty input."
+    },
+    {
+      "requirement": "Componentwise gamma bound under depth*u < 1",
+      "correction": "Prove the path-product estimate from ValidErrors, path length <= depth, and depth*u < 1; derive perturbations for each indexed input occurrence and sum them to algorithm."
+    },
+    {
+      "requirement": "No weakened, circular, vacuous assumptions; appropriate floating-point model",
+      "correction": "State the target theorem with only the original mathematical hypotheses and a nonempty-input condition; derive the factor estimate rather than assume it."
+    },
+    {
+      "requirement": "Acceptance levels [2,3,4,5,6], [7,9,4], [11,9], [20]; singleton, odd-length and duplicate cases",
+      "correction": "Complete the general theorem, including singleton termination and indexed multiplicity preservation; independently check the specified levels and edge cases afterward."
+    }
+  ],
+  "verification_log": "\u2714 [8026/8028] Built Research.Submission (4.6s)\n\u2714 [8027/8028] Built Research (3.3s)\nBuild completed successfully (8028 jobs).\nVerification passed: build succeeds with no proof placeholders or custom axioms.\n"
+}

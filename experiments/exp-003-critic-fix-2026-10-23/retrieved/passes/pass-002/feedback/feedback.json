@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "previous_pass": 1,
+  "formal_gate_passed": true,
+  "corrections": [
+    {
+      "requirement": "Theorem 3.1 for arbitrary nonempty inputs in the floating-point model",
+      "correction": "Prove the perturbation representation of the sole rounded output for every nonempty input and every \u03b4 with |\u03b4 l k| \u2264 u, under 0 \u2264 u and depth(length xs)*u < 1."
+    },
+    {
+      "requirement": "Preserve all input occurrences and multiplicities in the error representation",
+      "correction": "Index perturbations by input position, and prove every occurrence contributes exactly once to the rounded-output expansion."
+    },
+    {
+      "requirement": "ceil(log2 n) depth and path-length bound",
+      "correction": "Prove the path factors for each input occurrence have length at most depth(length xs), and use that bound in the final theorem."
+    },
+    {
+      "requirement": "Componentwise gamma bound for the actual computed result",
+      "correction": "Derive actual path products, apply the gamma estimate at the common depth, construct \u0394xi, and prove the sum identity and each component bound. State coordinatewise generality explicitly, or establish the scalar theorem universally so it can be applied to each coordinate."
+    },
+    {
+      "requirement": "Singleton, odd-length, duplicate inputs and acceptance levels",
+      "correction": "Complete the general rounded-error theorem covering these cases; retain the specified offset behavior."
+    }
+  ],
+  "verification_log": "\u2714 [8026/8028] Built Research.Submission (4.6s)\n\u2714 [8027/8028] Built Research (3.4s)\nBuild completed successfully (8028 jobs).\nVerification passed: build succeeds with no proof placeholders or custom axioms.\n"
+}

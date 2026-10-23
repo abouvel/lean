@@ -82,7 +82,9 @@ class CriticTests(unittest.TestCase):
     def test_critic_entry_point_has_explicit_reviewer_role(self):
         with patch("critic.reviewer_prompt", return_value="rubric"), patch("critic.run_agent") as session:
             critic.main()
-            session.assert_called_once_with("rubric", kind="reviewer")
+            self.assertEqual(session.call_args.args[0], critic.COMPLETENESS_FIRST + "rubric")
+            self.assertEqual(session.call_args.kwargs["kind"], "reviewer")
+            self.assertTrue(callable(session.call_args.kwargs["stop_when"]))
 
     def test_builder_entry_point_has_explicit_builder_role(self):
         with patch("agent.builder_prompt", return_value="assignment"), patch("agent.run_agent") as session:
@@ -103,7 +105,7 @@ class CriticTests(unittest.TestCase):
             for report in ({"overall_verdict": "fail"}, {"overall_verdict": "uncertain"}, {}, [], "pass"):
                 with self.subTest(report=report):
                     (directory / "review.json").write_text(json.dumps(report))
-                    with self.assertRaises(RuntimeError):
+                    with self.assertRaises((RuntimeError, ValueError)):
                         critic.require_pass(directory)
             (directory / "review.json").write_text("not json")
             with self.assertRaises(ValueError):
@@ -112,8 +114,113 @@ class CriticTests(unittest.TestCase):
     def test_verdict_gate_accepts_pass(self):
         with TemporaryDirectory() as folder:
             directory = Path(folder)
-            (directory / "review.json").write_text('{"overall_verdict": "pass"}')
+            (directory / "review.json").write_text(json.dumps(self.report("pass", "final")))
             critic.require_pass(directory)
+
+    def report(self, verdict="fail", phase="completeness"):
+        return {"overall_verdict": verdict, "phase": phase,
+                "target_evidence": "Submission.lean:12 defines a proposition but never proves it",
+                "requirements": [{"requirement": "Prove the full bound", "evidence": "Submission.lean:12",
+                                  "verdict": verdict, "correction": "Prove the bound under the original assumptions"}],
+                "assumptions_added": [], "missing_obligations": [] if verdict == "pass" else ["Full bound"],
+                "limitations": []}
+
+    def test_only_definite_valid_rejection_stops_critic(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            for report in (self.report("pass"), self.report("uncertain"), {}, self.report("fail", "final")):
+                (root / "checkpoint.json").write_text(json.dumps(report))
+                self.assertFalse(critic.rejection_checkpoint(root))
+            (root / "checkpoint.json").write_text('{"overall_verdict":')
+            self.assertFalse(critic.rejection_checkpoint(root))
+            (root / "checkpoint.json").write_text(json.dumps(self.report()))
+            self.assertTrue(critic.rejection_checkpoint(root))
+
+    def test_checkpoint_failure_can_be_feedback_but_timeout_cannot(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "checkpoint.json").write_text(json.dumps(self.report()))
+            metrics = {"exit_code": -15, "timed_out": False, "stopped_for_checkpoint": True}
+            self.assertEqual(critic.completed_review(root, metrics)["overall_verdict"], "fail")
+            for changes in ({"timed_out": True}, {"stopped_for_checkpoint": False}):
+                with self.assertRaises(RuntimeError):
+                    critic.completed_review(root, dict(metrics, **changes))
+
+    def test_pass_requires_final_target_evidence_and_no_missing_obligations(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            for changes in ({"target_evidence": ""}, {"phase": "completeness"},
+                            {"missing_obligations": ["Bound"]}, {"requirements": []}):
+                (root / "review.json").write_text(json.dumps(dict(self.report("pass", "final"), **changes)))
+                with self.assertRaises(ValueError):
+                    critic.require_pass(root)
+
+    def test_session_stops_on_checkpoint_without_marking_timeout(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            environment = {"CODEX_HOME": str(root / "home"), "EXPERIMENT_MODEL": "test",
+                           "REASONING_EFFORT": "medium", "TIME_LIMIT_SECONDS": "120"}
+            process = Mock(returncode=-15)
+            process.communicate.side_effect = agent.subprocess.TimeoutExpired("codex", 2)
+            with patch.dict(os.environ, environment), patch("agent.subprocess.Popen", return_value=process), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                result = agent.run_agent("rubric", kind="reviewer", output=root / "output", stop_when=lambda: True)
+            process.terminate.assert_called_once()
+            self.assertTrue(result["stopped_for_checkpoint"])
+            self.assertFalse(result["timed_out"])
+
+    def test_uncertain_checkpoint_does_not_extend_time_budget(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            environment = {"CODEX_HOME": str(root / "home"), "EXPERIMENT_MODEL": "test",
+                           "REASONING_EFFORT": "medium", "TIME_LIMIT_SECONDS": "3"}
+            process = Mock(returncode=-15)
+            process.communicate.side_effect = agent.subprocess.TimeoutExpired("codex", 2)
+            with patch.dict(os.environ, environment), patch("agent.subprocess.Popen", return_value=process), \
+                 patch("agent.time.monotonic", side_effect=[0, 0, 3]), contextlib.redirect_stdout(io.StringIO()):
+                result = agent.run_agent("rubric", kind="reviewer", output=root / "output", stop_when=lambda: False)
+            self.assertTrue(result["timed_out"])
+            self.assertFalse(result.get("stopped_for_checkpoint", False))
+
+    def test_controller_returns_checkpoint_rejection_to_repair_loop(self):
+        from passes import execute
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            for name in ("output", "evaluation", "review"):
+                (root / "stateless" / name).mkdir(parents=True)
+            (root / "stateless/output/metrics.json").write_text('{"exit_code": 0}')
+            (root / "stateless/evaluation/verification.json").write_text('{"formal_gate_passed": true}')
+            (root / "stateless/review/metrics.json").write_text(json.dumps(
+                {"exit_code": -15, "timed_out": False, "stopped_for_checkpoint": True}))
+            (root / "stateless/review/checkpoint.json").write_text(json.dumps(self.report()))
+            child = SimpleNamespace(directory=root, builders=Mock(), evaluate=Mock())
+            with patch("passes.review"):
+                result = execute(child, "stateless")
+            self.assertEqual(result["status"], "critic_failed")
+            self.assertIn("Full bound", result["report"]["missing_obligations"])
+
+    def test_archived_runtime_is_hash_checked_without_relaxing_task_checks(self):
+        import run as runner
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "pipeline").mkdir()
+            (root / "pipeline/critic.py").write_text("new critic")
+            archive = root / "runtime-source/pipeline"
+            archive.mkdir(parents=True)
+            (archive / "critic.py").write_text("original critic")
+            (root / "task.txt").write_text("original task")
+            hashes = {"pipeline/critic.py": runner.digest(archive / "critic.py"),
+                      "task.txt": runner.digest(root / "task.txt")}
+            (root / "frozen-manifest.json").write_text(json.dumps({"hashes": hashes}))
+            with patch.object(runner, "ROOT", root):
+                runner.checked_record(root)
+                (root / "task.txt").write_text("changed task")
+                with self.assertRaisesRegex(RuntimeError, "task.txt"):
+                    runner.checked_record(root)
+                (root / "task.txt").write_text("original task")
+                (archive / "critic.py").write_text("corrupted archive")
+                with self.assertRaisesRegex(RuntimeError, "pipeline/critic.py"):
+                    runner.checked_record(root)
 
     def test_shared_session_records_reviewer_metadata_without_adding_memory_prompt(self):
         with TemporaryDirectory() as folder:

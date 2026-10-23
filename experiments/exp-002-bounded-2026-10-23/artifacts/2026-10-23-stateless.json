@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "artifact_id": "2026-10-23-stateless",
+  "date": "2026-10-23",
+  "experiment_id": "exp-002-bounded-2026-10-23",
+  "condition": "stateless",
+  "status": "partial",
+  "outcome": "infrastructure_error",
+  "success": false,
+  "task_id": "sahil-theorem-3.1-algorithm-1",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "starting_commit": "adbd5be23017f72e328742388ab7da063d17f5c3",
+  "project": "sahil-theorem-3.1-algorithm-1",
+  "memory_mode": "stateless",
+  "time_limit": {
+    "max_passes": 2,
+    "builder_seconds_per_pass": 180,
+    "critic_seconds_per_pass": 120
+  },
+  "artifact_snapshot": {
+    "experiments/exp-002-bounded-2026-10-23/inputs/source.pdf": "620f7b063a68cb4d64cb964fee589815266ae11b934a03a864a59e05a48167eb",
+    "experiments/exp-002-bounded-2026-10-23/inputs/PROMPT.txt": "696a3818adf821ea67e93bfcbd1e2d8440dd216d3ae1340a6aa50c7ae78d23b4",
+    "experiments/exp-002-bounded-2026-10-23/inputs/source.txt": "9b7f712a6a0423b4ef1e7d70c58cc56063bc0d34ade235d8dbefa0c667b414f3",
+    "experiments/exp-002-bounded-2026-10-23/memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+    "experiments/exp-002-bounded-2026-10-23/memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+    "experiments/exp-002-bounded-2026-10-23/evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+    "experiments/exp-002-bounded-2026-10-23/evaluator/verify.sh": "356b9d9be50c59ed61046597649c2d1d3711e1d29bf8c713bd9522666e0dfff4",
+    "experiments/exp-002-bounded-2026-10-23/evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+    "experiments/exp-002-bounded-2026-10-23/evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+    "experiments/exp-002-bounded-2026-10-23/evaluator/REVIEWER.txt": "7f7e89a0afa1066d2616efb46257965b99bea0dea79ebcd7ce5f29e427991a00",
+    "experiments/exp-002-bounded-2026-10-23/evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939",
+    "experiments/exp-002-bounded-2026-10-23/experiment.json": "52511108edde24b5fed1e2ee91301dc25fca956e2e7ab926ce4feff536aacf9d",
+    "pipeline/run.py": "a049a7ab122bf44a310d9fc76258e472a134a0f8d789c3543a1062378a8c8f6a",
+    "pipeline/smoke_model.py": "3dabe73c64b0b4c13fc04a31d9a82d4f4cad4452d2583c69869be70f72a9ae53",
+    "pipeline/engine.py": "19ee2cb6ec395e564cdffa7db2aac0e3dfaa2e11d270e53250605389cf15ac67",
+    "pipeline/verify.py": "610ddc77896195d008d6ea8dcfab93987b10876e53e7f2f047a24ee8d78880ba",
+    "pipeline/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+    "pipeline/artifacts.py": "1810bfca20ddbceecf9995021e099492eb2d7abd092ef1d063f03e903282fd82",
+    "pipeline/agent.py": "75904351ff9d40a452536c2a1842bbd1f321a1b01e17822ce029ca6792cabc28",
+    "pipeline/critic.py": "669bd6806c24d95a93d687091f59429909e1661f352b4902cbd17e3ffb8c2134",
+    "pipeline/passes.py": "e68960510abed59a1489d582b7f525b9860cbfbd5d20dfb5fea25692b9e8aafb",
+    "pipeline/docker/Dockerfile": "9f9c499509672ebbfeb1817521c175861dd3eb722d85d0ab1da884e604e991d1",
+    "pipeline/docker/Dockerfile.ready": "8fba11b7730c46a8b41dfdc98c9c56efdff4c1a28227e1a00d3eb96369fdc8ba",
+    "pipeline/docker/proxy.py": "2e79cf96635643f540385207755ad37c3c4265795929cbb63ae2e85e9b63e72b"
+  },
+  "retrieved_artifacts": [],
+  "verification_command": "bash pipeline/verify.sh",
+  "passes": [
+    {
+      "status": "infrastructure_error",
+      "error": "Critic service/process failed",
+      "builder": {
+        "condition": "stateless",
+        "kind": "builder",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1792766960.339477,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": true,
+        "wall_time_seconds": 180.034,
+        "token_usage": "unknown",
+        "compiler_command_events": 7,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "critic": {
+        "condition": "stateless",
+        "kind": "reviewer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1792767153.7779486,
+        "time_limit_seconds": 120,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": true,
+        "wall_time_seconds": 120.017,
+        "token_usage": "unknown",
+        "compiler_command_events": 3,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "verification": {
+        "verification_command": "bash pipeline/verify.sh",
+        "build_and_scans_exit_code": 0,
+        "nontrivial_submission": true,
+        "formal_gate_passed": true,
+        "semantic_review": "pending",
+        "wall_time_seconds": 12.661,
+        "source_files": [
+          "Research/Submission.lean"
+        ],
+        "source_lines": 195,
+        "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."
+      },
+      "number": 1,
+      "wall_time_seconds": 313.8406980330001,
+      "evidence": "stateless/passes/pass-001",
+      "retrieval_record": "unknown"
+    }
+  ],
+  "metrics": {
+    "wall_time_seconds": 313.8438847239995,
+    "passes_used": 1,
+    "first_success_pass": null,
+    "builder_seconds": 180.034,
+    "critic_seconds": 120.017,
+    "compiler_command_events": 7,
+    "tokens": "unknown",
+    "cost": "unknown",
+    "aristotle_calls": 0,
+    "verification_calls": 1,
+    "critic_calls": 1,
+    "formal_failures": 0,
+    "critic_rejections": 0,
+    "final_source_lines": 195,
+    "builder_tokens": {
+      "input_tokens": "unknown",
+      "cached_input_tokens": "unknown",
+      "output_tokens": "unknown",
+      "reasoning_output_tokens": "unknown"
+    },
+    "critic_tokens": {
+      "input_tokens": "unknown",
+      "cached_input_tokens": "unknown",
+      "output_tokens": "unknown",
+      "reasoning_output_tokens": "unknown"
+    }
+  },
+  "reuse": {
+    "approved": false,
+    "reason": "Review and remove target answers before freezing for a future run."
+  },
+  "candidate_lessons": []
+}

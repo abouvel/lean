@@ -1,0 +1,11 @@
+⚠ [8026/8028] Built Research.Submission (4.8s)
+warning: Research/Submission.lean:123:58: This simp argument is unused:
+  add_comm
+
+Hint: Omit it from the simp argument list.
+  simp [pairOffset, hm, ih, add_assoc, add_left_comm,̵ ̵a̵d̵d̵_̵c̵o̵m̵m̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [8027/8028] Built Research (3.7s)
+Build completed successfully (8028 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

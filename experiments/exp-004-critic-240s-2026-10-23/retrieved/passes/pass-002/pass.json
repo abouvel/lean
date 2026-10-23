@@ -1,0 +1,36 @@
+{
+  "builder": {
+    "condition": "retrieved",
+    "kind": "builder",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1792770554.7602513,
+    "time_limit_seconds": 180,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": true,
+    "wall_time_seconds": 180.034,
+    "token_usage": "unknown",
+    "compiler_command_events": 9,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 1,
+    "nontrivial_submission": true,
+    "formal_gate_passed": false,
+    "semantic_review": "pending",
+    "wall_time_seconds": 10.344,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 356,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."
+  },
+  "critic": {},
+  "status": "formal_failed",
+  "number": 2,
+  "wall_time_seconds": 190.9569723670029,
+  "evidence": "retrieved/passes/pass-002"
+}

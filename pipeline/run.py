@@ -43,6 +43,10 @@ def load_config(path):
         raise RuntimeError("This runner supports the fixed stateless/retrieved pair.")
     if config.get("aristotle_enabled", False):
         raise RuntimeError("Aristotle fallback is not implemented; keep it disabled in both conditions.")
+    if "max_passes" in config:
+        for key in ("max_passes", "builder_seconds", "critic_seconds"):
+            if type(config[key]) is not int or config[key] <= 0:
+                raise RuntimeError(f"{key} must be a positive integer")
     directories = [contained(path.parent, config[key]) for key in ("inputs", "memory", "evaluator")]
     for i, directory in enumerate(directories):
         if not directory.is_dir():
@@ -78,7 +82,13 @@ def checked_record(directory, relocation=None):
                     if name == old or name.startswith(old + "/"):
                         mapped = new + name[len(old):]
                         break
-            actual = digest(contained(ROOT, mapped))
+            # Completed runs may preserve byte-identical runtime sources before
+            # the shared pipeline evolves. Never substitute for task inputs.
+            archived = contained(directory, "runtime-source/" + name)
+            if name.startswith("pipeline/") and archived.is_file():
+                actual = digest(archived)
+            else:
+                actual = digest(contained(ROOT, mapped))
         if actual != expected:
             raise RuntimeError(f"Frozen input changed: {name}")
     return manifest
@@ -226,6 +236,14 @@ def main(argv=None):
     try:
         engine.preflight()
         engine.connectivity()
+        if "max_passes" in current:
+            from passes import run_pair
+            result = run_pair(engine)
+            for condition, item in result["conditions"].items():
+                print(f"{condition}: {item['outcome']}, {item['metrics']['passes_used']} passes")
+            if any(item["outcome"] == "infrastructure_error" for item in result["conditions"].values()):
+                raise RuntimeError("Infrastructure failure recorded; do not interpret it as a memory effect")
+            return
         engine.builders()
         engine.evaluate()
         review(engine)

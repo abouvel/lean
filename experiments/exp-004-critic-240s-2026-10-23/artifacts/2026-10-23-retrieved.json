@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "artifact_id": "2026-10-23-retrieved",
+  "date": "2026-10-23",
+  "experiment_id": "exp-004-critic-240s-2026-10-23",
+  "condition": "retrieved",
+  "status": "partial",
+  "outcome": "formal_failed",
+  "success": false,
+  "task_id": "sahil-theorem-3.1-algorithm-1",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "starting_commit": "adbd5be23017f72e328742388ab7da063d17f5c3",
+  "project": "sahil-theorem-3.1-algorithm-1",
+  "memory_mode": "retrieved",
+  "time_limit": {
+    "max_passes": 2,
+    "builder_seconds_per_pass": 180,
+    "critic_seconds_per_pass": 240
+  },
+  "artifact_snapshot": {
+    "experiments/exp-004-critic-240s-2026-10-23/inputs/source.pdf": "620f7b063a68cb4d64cb964fee589815266ae11b934a03a864a59e05a48167eb",
+    "experiments/exp-004-critic-240s-2026-10-23/inputs/PROMPT.txt": "696a3818adf821ea67e93bfcbd1e2d8440dd216d3ae1340a6aa50c7ae78d23b4",
+    "experiments/exp-004-critic-240s-2026-10-23/inputs/source.txt": "9b7f712a6a0423b4ef1e7d70c58cc56063bc0d34ade235d8dbefa0c667b414f3",
+    "experiments/exp-004-critic-240s-2026-10-23/memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+    "experiments/exp-004-critic-240s-2026-10-23/memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+    "experiments/exp-004-critic-240s-2026-10-23/evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+    "experiments/exp-004-critic-240s-2026-10-23/evaluator/verify.sh": "356b9d9be50c59ed61046597649c2d1d3711e1d29bf8c713bd9522666e0dfff4",
+    "experiments/exp-004-critic-240s-2026-10-23/evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+    "experiments/exp-004-critic-240s-2026-10-23/evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+    "experiments/exp-004-critic-240s-2026-10-23/evaluator/REVIEWER.txt": "7f7e89a0afa1066d2616efb46257965b99bea0dea79ebcd7ce5f29e427991a00",
+    "experiments/exp-004-critic-240s-2026-10-23/evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939",
+    "experiments/exp-004-critic-240s-2026-10-23/experiment.json": "383d9fc2b5c0d19da4dcad7afbb671820f09245c7158477579d022f65b3d449b",
+    "pipeline/run.py": "f5271b2eeb918d461d67abd03f0a93bb7ee7a6f36eabaa9ca65bd74bd41c3215",
+    "pipeline/smoke_model.py": "3dabe73c64b0b4c13fc04a31d9a82d4f4cad4452d2583c69869be70f72a9ae53",
+    "pipeline/engine.py": "19ee2cb6ec395e564cdffa7db2aac0e3dfaa2e11d270e53250605389cf15ac67",
+    "pipeline/verify.py": "610ddc77896195d008d6ea8dcfab93987b10876e53e7f2f047a24ee8d78880ba",
+    "pipeline/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+    "pipeline/artifacts.py": "1810bfca20ddbceecf9995021e099492eb2d7abd092ef1d063f03e903282fd82",
+    "pipeline/agent.py": "ecc56fa9018e2d911285c773270bfb4fa9d4b0fdfd6839ec30a3373e4e878eaf",
+    "pipeline/critic.py": "0b05274a47bd78d6807a3b6e83815bec71ceb788d00bf1debf0f99d239a411d4",
+    "pipeline/passes.py": "2d349f323da023f3e92ffde55c19ee37b26af59d82d5473a30425dfe89b853a5",
+    "pipeline/docker/Dockerfile": "9f9c499509672ebbfeb1817521c175861dd3eb722d85d0ab1da884e604e991d1",
+    "pipeline/docker/Dockerfile.ready": "8fba11b7730c46a8b41dfdc98c9c56efdff4c1a28227e1a00d3eb96369fdc8ba",
+    "pipeline/docker/proxy.py": "2e79cf96635643f540385207755ad37c3c4265795929cbb63ae2e85e9b63e72b"
+  },
+  "retrieved_artifacts": "unknown",
+  "verification_command": "bash pipeline/verify.sh",
+  "passes": [
+    {
+      "builder": {
+        "condition": "retrieved",
+        "kind": "builder",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1792770293.081852,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": true,
+        "wall_time_seconds": 180.066,
+        "token_usage": "unknown",
+        "compiler_command_events": 5,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "verification": {
+        "verification_command": "bash pipeline/verify.sh",
+        "build_and_scans_exit_code": 0,
+        "nontrivial_submission": true,
+        "formal_gate_passed": true,
+        "semantic_review": "pending",
+        "wall_time_seconds": 12.368,
+        "source_files": [
+          "Research/Submission.lean"
+        ],
+        "source_lines": 248,
+        "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."
+      },
+      "critic": {
+        "condition": "retrieved",
+        "kind": "reviewer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1792770486.330657,
+        "time_limit_seconds": 240,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "stopped_for_checkpoint": true,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 68.034,
+        "token_usage": "unknown",
+        "compiler_command_events": 1,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "status": "critic_failed",
+      "report": {
+        "overall_verdict": "fail",
+        "requirements": [
+          {
+            "requirement": "Prove Theorem 3.1 for arbitrary nonempty inputs under the floating-point model and d*u < 1.",
+            "evidence": "/workspace/Research/Submission.lean:179-180 only defines gamma. The final theorem is paths_errors at lines 233-246, which only transfers the assumed local error bound to path entries. The namespace ends at line 248. No proved declaration constructs perturbations or bounds them by gamma.",
+            "verdict": "fail",
+            "correction": "Prove an unconditional-on-the-conclusion theorem producing an occurrence-indexed perturbation for every input, proving computed = sum of perturbed inputs and each absolute perturbation <= gamma (Nat.clog 2 n) u * abs(input), assuming nonemptiness, nonnegative u, local rounding bounds, and d*u < 1."
+          },
+          {
+            "requirement": "Exact offset pairing from Algorithm 1.",
+            "evidence": "/workspace/Research/Submission.lean:25-34 defines pair and round by splitting at (current length + 1)/2 and pairing the two halves in order. round_length at 89-91 proves the next length is that ceiling. This implements the required offset on each current level.",
+            "verdict": "pass",
+            "correction": ""
+          },
+          {
+            "requirement": "Carry an unmatched subtree unchanged without an additional rounding operation.",
+            "evidence": "/workspace/Research/Submission.lean:25-28 returns the unmatched list directly. Tree.eval at 21-23 introduces a rounding factor only at node constructors; round at 32-34 introduces no node for a carry.",
+            "verdict": "pass",
+            "correction": ""
+          },
+          {
+            "requirement": "Preserve every input occurrence, including duplicates.",
+            "evidence": "/workspace/Research/Submission.lean:75-79 proves all_occurrences as multiset equality for every list. paths_occurrences at 189-193 also retains leaf multiplicities.",
+            "verdict": "pass",
+            "correction": ""
+          },
+          {
+            "requirement": "Reduce every arbitrary nonempty input to one tree in ceil(log2 n) rounds with logarithmic path depth.",
+            "evidence": "/workspace/Research/Submission.lean:42-43 runs Nat.clog 2 xs.length rounds. algorithm_singleton at 115-124 proves a singleton result for xs != []; logarithmic_depth at 157-163 proves tree depth <= Nat.clog 2 xs.length; paths_length at 195-207 bounds every path length. Exact equality of tree depth is not established, but the upper bound is sufficient for the requested error estimate.",
+            "verdict": "pass",
+            "correction": ""
+          },
+          {
+            "requirement": "Componentwise gamma bound and backward-error decomposition.",
+            "evidence": "/workspace/Research/Submission.lean:180 defines gamma; paths_evaluate at 212-231 gives only a scalar real path-product expansion. There is no product perturbation estimate, no perturbation witness theorem, no use of a d*u < 1 hypothesis, and no componentwise/vector corollary.",
+            "verdict": "fail",
+            "correction": "Prove the bounded-product estimate from |delta| <= u and path length <= d with d*u < 1; derive occurrence-indexed perturbations, transport them to the original input indices, and state/prove the componentwise result."
+          },
+          {
+            "requirement": "Model arbitrary allowed rounding errors, including distinct operations on duplicate-valued subtrees.",
+            "evidence": "/workspace/Research/Submission.lean:21-23,184-187 indexes delta by Tree, whose only data are real leaves and binary node structure (7-10). Identical subtrees at distinct operation occurrences must receive the same delta. The local bound at 233 is universally assumed for that restricted function.",
+            "verdict": "fail",
+            "correction": "Index rounding errors by operation occurrence, node address, or level/index, or accept an occurrence-labelled evaluated tree, so equal-valued distinct additions can have independent errors."
+          },
+          {
+            "requirement": "Singleton, odd-length, duplicate inputs, and evaluator levels [2,3,4,5,6] -> [7,9,4] -> [11,9] -> [20].",
+            "evidence": "/workspace/Research/Submission.lean:25-43 structurally implements the required offset/carry behavior; 75-79 and 115-124 cover duplicates and arbitrary nonempty lengths. For a singleton Nat.clog 2 1 yields zero rounds. No independent examples were run because the target proof is absent.",
+            "verdict": "uncertain",
+            "correction": "After supplying the missing target theorem, independently compile the acceptance sequence and singleton/odd/duplicate checks."
+          },
+          {
+            "requirement": "Check for circular or vacuous hypotheses, nonstandard axioms, missing imports, and offline verification evidence.",
+            "evidence": "/workspace/Research/Submission.lean:1 imports Mathlib; all shown supporting lemmas have proof bodies and the file contains no axiom or sorry declarations. No circular target theorem exists because the target theorem is absent. /workspace/Research.lean imports Research.Submission. Offline verification files were not read: the completeness gate requires stopping immediately once the missing target proof is established.",
+            "verdict": "uncertain",
+            "correction": "After implementing Theorem 3.1, inspect verification.json/log, compile the target, and inspect its transitive axioms. Compilation of these supporting lemmas alone cannot discharge the missing theorem."
+          }
+        ],
+        "assumptions_added": [
+          "The rounding error is a function Tree -> Real, forcing structurally identical subtrees at distinct operation occurrences to share an error (Submission.lean:21-23). This restricts the allowed rounding histories."
+        ],
+        "missing_obligations": [
+          "Theorem 3.1: existence of per-input perturbations with computed output equal to their perturbed sum and |Delta x_i| <= gamma_d |x_i|, for d = ceil(log2 n) and d*u < 1.",
+          "A product-error bound deriving gamma_d from the local rounding model and the logarithmic path bound.",
+          "An occurrence-indexed rounding model covering independent errors on repeated subtrees.",
+          "A componentwise formulation or proved lifting of the scalar theorem."
+        ],
+        "limitations": [
+          "Review stopped at the mandatory completeness gate; no independent compilation or numerical examples were run.",
+          "/evaluation/verification.json and verification.log were not read because the protocol requires immediate termination when the requested target proof is definitely absent.",
+          "Supporting proof bodies were inspected as source; their kernel acceptance and transitive axiom dependencies were not independently verified."
+        ],
+        "target_evidence": "/workspace/Research/Submission.lean:179-180 defines gamma but does not prove a bound. The last proved declaration, paths_errors (233-246), says only that each error on a tree path satisfies the assumed local bound. The file ends at 248. The required backward-error existence theorem and gamma inequality are absent.",
+        "phase": "completeness"
+      },
+      "number": 1,
+      "wall_time_seconds": 261.6939907699998,
+      "evidence": "retrieved/passes/pass-001",
+      "retrieval_record": "retrieved/passes/pass-001/retrieved/output/retrieval.md"
+    },
+    {
+      "builder": {
+        "condition": "retrieved",
+        "kind": "builder",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1792770554.7602513,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": true,
+        "wall_time_seconds": 180.034,
+        "token_usage": "unknown",
+        "compiler_command_events": 9,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "verification": {
+        "verification_command": "bash pipeline/verify.sh",
+        "build_and_scans_exit_code": 1,
+        "nontrivial_submission": true,
+        "formal_gate_passed": false,
+        "semantic_review": "pending",
+        "wall_time_seconds": 10.344,
+        "source_files": [
+          "Research/Submission.lean"
+        ],
+        "source_lines": 356,
+        "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."
+      },
+      "critic": {},
+      "status": "formal_failed",
+      "number": 2,
+      "wall_time_seconds": 190.9569723670029,
+      "evidence": "retrieved/passes/pass-002",
+      "retrieval_record": "retrieved/passes/pass-002/retrieved/output/retrieval.md"
+    }
+  ],
+  "metrics": {
+    "wall_time_seconds": 452.6613658330025,
+    "passes_used": 2,
+    "first_success_pass": null,
+    "builder_seconds": 360.1,
+    "critic_seconds": "unknown",
+    "compiler_command_events": 14,
+    "tokens": "unknown",
+    "cost": "unknown",
+    "aristotle_calls": 0,
+    "verification_calls": 2,
+    "critic_calls": 1,
+    "formal_failures": 1,
+    "critic_rejections": 1,
+    "final_source_lines": 356,
+    "builder_tokens": {
+      "input_tokens": "unknown",
+      "cached_input_tokens": "unknown",
+      "output_tokens": "unknown",
+      "reasoning_output_tokens": "unknown"
+    },
+    "critic_tokens": {
+      "input_tokens": "unknown",
+      "cached_input_tokens": "unknown",
+      "output_tokens": "unknown",
+      "reasoning_output_tokens": "unknown"
+    }
+  },
+  "reuse": {
+    "approved": false,
+    "reason": "Review and remove target answers before freezing for a future run."
+  },
+  "candidate_lessons": [
+    {
+      "status": "unvalidated",
+      "supporting_pass": 1,
+      "requirement": "Prove Theorem 3.1 for arbitrary nonempty inputs under the floating-point model and d*u < 1.",
+      "evidence": "/workspace/Research/Submission.lean:179-180 only defines gamma. The final theorem is paths_errors at lines 233-246, which only transfers the assumed local error bound to path entries. The namespace ends at line 248. No proved declaration constructs perturbations or bounds them by gamma.",
+      "proposed_correction": "Prove an unconditional-on-the-conclusion theorem producing an occurrence-indexed perturbation for every input, proving computed = sum of perturbed inputs and each absolute perturbation <= gamma (Nat.clog 2 n) u * abs(input), assuming nonemptiness, nonnegative u, local rounding bounds, and d*u < 1."
+    },
+    {
+      "status": "unvalidated",
+      "supporting_pass": 1,
+      "requirement": "Componentwise gamma bound and backward-error decomposition.",
+      "evidence": "/workspace/Research/Submission.lean:180 defines gamma; paths_evaluate at 212-231 gives only a scalar real path-product expansion. There is no product perturbation estimate, no perturbation witness theorem, no use of a d*u < 1 hypothesis, and no componentwise/vector corollary.",
+      "proposed_correction": "Prove the bounded-product estimate from |delta| <= u and path length <= d with d*u < 1; derive occurrence-indexed perturbations, transport them to the original input indices, and state/prove the componentwise result."
+    },
+    {
+      "status": "unvalidated",
+      "supporting_pass": 1,
+      "requirement": "Model arbitrary allowed rounding errors, including distinct operations on duplicate-valued subtrees.",
+      "evidence": "/workspace/Research/Submission.lean:21-23,184-187 indexes delta by Tree, whose only data are real leaves and binary node structure (7-10). Identical subtrees at distinct operation occurrences must receive the same delta. The local bound at 233 is universally assumed for that restricted function.",
+      "proposed_correction": "Index rounding errors by operation occurrence, node address, or level/index, or accept an occurrence-labelled evaluated tree, so equal-valued distinct additions can have independent errors."
+    },
+    {
+      "status": "unvalidated",
+      "supporting_pass": 1,
+      "requirement": "Singleton, odd-length, duplicate inputs, and evaluator levels [2,3,4,5,6] -> [7,9,4] -> [11,9] -> [20].",
+      "evidence": "/workspace/Research/Submission.lean:25-43 structurally implements the required offset/carry behavior; 75-79 and 115-124 cover duplicates and arbitrary nonempty lengths. For a singleton Nat.clog 2 1 yields zero rounds. No independent examples were run because the target proof is absent.",
+      "proposed_correction": "After supplying the missing target theorem, independently compile the acceptance sequence and singleton/odd/duplicate checks."
+    },
+    {
+      "status": "unvalidated",
+      "supporting_pass": 1,
+      "requirement": "Check for circular or vacuous hypotheses, nonstandard axioms, missing imports, and offline verification evidence.",
+      "evidence": "/workspace/Research/Submission.lean:1 imports Mathlib; all shown supporting lemmas have proof bodies and the file contains no axiom or sorry declarations. No circular target theorem exists because the target theorem is absent. /workspace/Research.lean imports Research.Submission. Offline verification files were not read: the completeness gate requires stopping immediately once the missing target proof is established.",
+      "proposed_correction": "After implementing Theorem 3.1, inspect verification.json/log, compile the target, and inspect its transitive axioms. Compilation of these supporting lemmas alone cannot discharge the missing theorem."
+    }
+  ]
+}

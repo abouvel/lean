@@ -21,7 +21,58 @@ Save comparison; require verification AND critic pass
 
 Builders run first, followed by verification and then critics. The retrieved
 builder gets pre-existing frozen notes, **not** the stateless builder's output.
-The current critic is a post-hoc reviewer; it does not send repair feedback.
+This is historical single-shot mode. Optional bounded mode adds repair without
+changing the completed pilot results.
+
+## Bounded passes and JSON artifacts
+
+```text
+Builder → fresh verification → critic → accept
+   ↑                              |
+   └── corrections, if budget remains
+```
+
+One pass is one fresh builder session, verification, and a critic if the formal
+gate passes. Repairs retain that condition's candidate and feedback, not chat
+history or compiler caches. "Stateless" excludes external research memory,
+not feedback from its own earlier passes.
+
+The [bounded config](../experiments/exp-001-binary-tree/bounded.json) fixes two
+passes, 180 builder seconds/pass, and 120 critic seconds/pass for both conditions.
+Verification has its own timeout. These are per-pass limits, not a hard token or
+whole-condition wall-time cap. Choose budgets before running; do not lower the
+baseline's limit after observing its result.
+
+| Outcome | Next action |
+| --- | --- |
+| Formal gate fails | Builder receives compiler diagnostics |
+| Critic rejects | Builder receives requirement/correction pairs |
+| Critic uncertain | Stop for human review |
+| Invalid review/service failure | Infrastructure error, not proof rejection |
+| Pass cap reached | Save failure; no automatic Aristotle call |
+
+[`passes.py`](passes.py) controls the loop. [`artifacts.py`](artifacts.py) writes
+versioned JSON records with provenance, per-pass outcomes, timings, available
+per-role token usage, compiler-command counts, final source lines, and evidence
+paths. Unknowns stay `unknown`; cached inputs are a subset, and reasoning/output
+counts are not blindly added. Markdown summaries link to the JSON and raw evidence.
+
+Each `<condition>/passes/pass-NNN/` preserves its own candidate, review, feedback,
+verification, and frozen input hashes. `comparison.json` summarizes the pair;
+`artifacts/*.json` also contains unvalidated candidate lessons. Nothing generated
+is automatically promoted or supplied to the other condition. The full private
+critic report is not passed to the builder; model-written corrections still need
+inspection for leakage or instruction injection.
+
+From Experiment 1, when ready to spend model quota:
+
+```bash
+python3 ../../pipeline/run.py run --config bounded.json --name exp-002-bounded
+```
+
+Same-target compressed experience can leak an answer. Curate and freeze lessons
+before a later run; exclude the completed target proof. Use matched distinct
+tasks for transfer claims. Pseudocode ablation and Aristotle are separate future work.
 
 ## Where the critic agent is
 
@@ -101,6 +152,32 @@ final code, not the complete builder action trace; jailbreak resistance and
 critic accuracy have not been benchmarked.
 
 ## Isolation and saved files
+
+### Critic order and failure handling
+
+```text
+Original task + submitted code + offline verification
+                         ↓
+             Is the full target actually proved?
+               ├─ No → failure checkpoint → same builder's next pass
+               └─ Possibly → full semantic review → final report
+                                 ├─ Pass → accept
+                                 ├─ Fail → same builder's next pass
+                                 └─ Uncertain → human review
+```
+
+The critic must identify the proved declaration and assumptions before running
+optional examples. Defining the desired proposition does not prove it.
+`checkpoint.json` records this first check; a valid, definite failure stops the
+critic early (polled every two seconds). `review.json` is the final audit.
+Both need requirement-level evidence and target source locations. Only a final
+report can pass; Lean's offline gate must also pass. No report, malformed JSON,
+or a timeout remains an infrastructure error, not a theorem rejection. Repairs
+stay within the existing pass cap; uncertainty stops for human review.
+
+This is a workflow guard, not a guarantee that the critic's judgment is correct.
+The revised handling is covered by local tests; a fresh model pair is needed to
+measure whether it fixes the observed timeout bottleneck.
 
 Containers run non-root with a read-only root, dropped capabilities, and resource
 limits. Builders see only selected inputs, private workspace/output, read-only

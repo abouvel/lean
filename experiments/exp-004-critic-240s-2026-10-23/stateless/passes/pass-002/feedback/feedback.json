@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "previous_pass": 1,
+  "formal_gate_passed": true,
+  "corrections": [
+    {
+      "requirement": "Theorem 3.1 for Algorithm 1 on arbitrary nonempty input",
+      "correction": "Prove that every nonempty xs yields some t after Nat.clog 2 xs.length rounds, then derive the backward-error statement for the original indexed input occurrences under the original roundoff and depth hypotheses."
+    },
+    {
+      "requirement": "Exact offset pairing and unchanged carried subtree without extra rounding",
+      "correction": "Prove the round-width invariant and its correspondence with the original algorithm offset for every executed round."
+    },
+    {
+      "requirement": "Preserve all input occurrences and multiplicities",
+      "correction": "Prove forest leaf-multiset conservation at each level, final singleton length, and an occurrence-preserving correspondence from final leaves to xs, including duplicates."
+    },
+    {
+      "requirement": "ceil(log2 n) depth",
+      "correction": "Combine the depth bound with nonempty termination and complete leaf coverage to obtain the required bound for the algorithm output."
+    },
+    {
+      "requirement": "Componentwise gamma bound and backward-error decomposition",
+      "correction": "Instantiate coefficient_bound at the ceiling-log depth for the returned tree, transfer perturbations along the occurrence permutation to xs, and state the final equality and individual gamma bounds. Apply coordinatewise for vector inputs if vectors are included in the formal interface."
+    },
+    {
+      "requirement": "Singleton, odd lengths, duplicate inputs, and acceptance levels [2,3,4,5,6] -> [7,9,4] -> [11,9] -> [20]",
+      "correction": "Cover these cases with the general correctness theorem; optionally compile independent checks of the exact level transitions, carry behavior, and duplicate occurrence conservation."
+    },
+    {
+      "requirement": "Nonvacuous hypotheses, standard axioms, and imports",
+      "correction": "Keep the explicit relative-error model and prove the missing end-to-end theorem; use offline verification and axiom inspection to confirm the completed declaration compiles without nonstandard axioms."
+    }
+  ],
+  "verification_log": "\u26a0 [8026/8028] Built Research.Submission (4.0s)\nwarning: Research/Submission.lean:142:4: try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\n\u2714 [8027/8028] Built Research (3.2s)\nBuild completed successfully (8028 jobs).\nVerification passed: build succeeds with no proof placeholders or custom axioms.\n"
+}

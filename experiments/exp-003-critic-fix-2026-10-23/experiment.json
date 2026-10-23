@@ -1,0 +1,28 @@
+{
+  "name": "exp-003-critic-fix-2026-10-23",
+  "task_id": "sahil-theorem-3.1-algorithm-1",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "max_passes": 2,
+  "builder_seconds": 180,
+  "critic_seconds": 120,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "8g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "limitations": [
+    "Budget chosen before running; this may or may not make the baseline fail.",
+    "Per-pass limits, not a hard token or whole-condition time cap.",
+    "No automatic transfer of same-target answers; generated artifacts require curation."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:135-154 proves Bhola.backward_error only for an arbitrary Tree t, under 0 \u2264 u, t.depth*u < 1, and t.Valid u. Bhola.algorithm at lines 69-70 is only a definition returning Option Tree. The file ends at line 215 without a theorem connecting algorithm to backward_error, proving successful reduction for nonempty xs, or preserving the input multiset.",
+  "requirements": [
+    {
+      "requirement": "Theorem 3.1 for Algorithm 1 on arbitrary nonempty input",
+      "evidence": "Submission.lean:69-70 defines algorithm; 135-154 proves backward_error for t.leaves, not for a supplied xs or the output of algorithm. No subsequent theorem supplies that connection (156-213 are supporting level/round lemmas).",
+      "verdict": "fail",
+      "correction": "Prove that every nonempty xs yields some t after Nat.clog 2 xs.length rounds, then derive the backward-error statement for the original indexed input occurrences under the original roundoff and depth hypotheses."
+    },
+    {
+      "requirement": "Exact offset pairing and unchanged carried subtree without extra rounding",
+      "evidence": "Submission.lean:57-62 uses m=(ts.length+1)/2 and pairs index k with k+m; the none branch returns a unchanged. Lines 65-67 execute simultaneous levels. This definition matches the specified local transition, but no general theorem relates round widths to ceil(n/2^(l+1)).",
+      "verdict": "uncertain",
+      "correction": "Prove the round-width invariant and its correspondence with the original algorithm offset for every executed round."
+    },
+    {
+      "requirement": "Preserve all input occurrences and multiplicities",
+      "evidence": "Submission.lean:38-41 proves terms_inputs for leaves of an existing tree. No theorem proves that the forest leaves across level/rounds preserve a permutation of the initial xs. Returning head? at 70 has no coverage theorem.",
+      "verdict": "fail",
+      "correction": "Prove forest leaf-multiset conservation at each level, final singleton length, and an occurrence-preserving correspondence from final leaves to xs, including duplicates."
+    },
+    {
+      "requirement": "ceil(log2 n) depth",
+      "evidence": "Submission.lean:75-76 identifies Nat.clog with the natural ceiling of the real logarithm. Lines 179-201 prove every tree surviving k rounds has depth at most k. There is no theorem proving a complete final tree exists and contains every leaf.",
+      "verdict": "uncertain",
+      "correction": "Combine the depth bound with nonempty termination and complete leaf coverage to obtain the required bound for the algorithm output."
+    },
+    {
+      "requirement": "Componentwise gamma bound and backward-error decomposition",
+      "evidence": "Submission.lean:79-101 proves gamma_step; 104-131 proves coefficient_bound; 135-154 proves a per-occurrence real scalar perturbation bound with gamma t.depth u. This is substantive supporting mathematics, but has no algorithm-specific corollary with gamma (Nat.clog 2 xs.length) u and the original input occurrences.",
+      "verdict": "fail",
+      "correction": "Instantiate coefficient_bound at the ceiling-log depth for the returned tree, transfer perturbations along the occurrence permutation to xs, and state the final equality and individual gamma bounds. Apply coordinatewise for vector inputs if vectors are included in the formal interface."
+    },
+    {
+      "requirement": "Singleton, odd lengths, duplicate inputs, and acceptance levels [2,3,4,5,6] -> [7,9,4] -> [11,9] -> [20]",
+      "evidence": "The transition definition at 57-62 is consistent by inspection with the listed acceptance levels at zero roundoff and carries singleton trees unchanged. These cases are not established as end-to-end theorems, and no independent examples were run.",
+      "verdict": "uncertain",
+      "correction": "Cover these cases with the general correctness theorem; optionally compile independent checks of the exact level transitions, carry behavior, and duplicate occurrence conservation."
+    },
+    {
+      "requirement": "Nonvacuous hypotheses, standard axioms, and imports",
+      "evidence": "Submission.lean:1 imports Mathlib. The complete source contains no explicit sorry, axiom, or conclusion-as-hypothesis. Valid at 29-31 expresses local roundoff bounds; backward_error assumes that property and a tree depth condition. rounds_valid at 203-213 derives Valid from bounded errors. These are legitimate local hypotheses, but do not supply the missing algorithm correctness theorem.",
+      "verdict": "uncertain",
+      "correction": "Keep the explicit relative-error model and prove the missing end-to-end theorem; use offline verification and axiom inspection to confirm the completed declaration compiles without nonstandard axioms."
+    }
+  ],
+  "assumptions_added": [
+    "The proved backward_error theorem takes an arbitrary tree t with t.Valid u and t.depth*u < 1, rather than deriving the target statement for algorithm xs err from the original nonempty input and ceiling-log condition.",
+    "Explicit 0 \u2264 u is a natural unit-roundoff assumption. rounds_valid requires |err l j| \u2264 u for all natural indices, including unused ones; the final theorem is absent, so this has not been reconciled with the original operation-local model.",
+    "Exceptional floating-point behavior is abstracted by real arithmetic and explicit relative errors; no concrete floating-point implementation is verified."
+  ],
+  "missing_obligations": [
+    "For arbitrary nonempty xs, prove exactly one tree remains after Nat.clog 2 xs.length rounds and algorithm returns it.",
+    "Prove round widths and offsets agree with Algorithm 1 for arbitrary n.",
+    "Prove all original input occurrences survive exactly once, modulo the permutation induced by offset pairing.",
+    "Derive the final decomposition indexed by original inputs and componentwise gamma_(ceil(log2 n)) bounds from the original assumptions."
+  ],
+  "limitations": [
+    "Review stopped at the definite missing target theorem, as required by the review protocol.",
+    "/evaluation/verification.json and verification.log were not read: the completeness failure triggers immediate stopping before further semantic verification.",
+    "No independent Lean compilation or numerical examples were run. This rejection concerns an absent proof obligation, regardless of whether the supporting declarations compile.",
+    "Candidate files were not modified."
+  ]
+}

@@ -1,0 +1,8 @@
+✖ [8026/8028] Building Research.Submission (7.0s)
+trace: .> LEAN_PATH=/workspace/.lake/packages/Cli/.lake/build/lib/lean:/workspace/.lake/packages/batteries/.lake/build/lib/lean:/workspace/.lake/packages/Qq/.lake/build/lib/lean:/workspace/.lake/packages/aesop/.lake/build/lib/lean:/workspace/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/.lake/packages/plausible/.lake/build/lib/lean:/workspace/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/.lake/build/lib/lean /opt/lean/bin/lean /workspace/Research/Submission.lean -o /workspace/.lake/build/lib/lean/Research/Submission.olean -i /workspace/.lake/build/lib/lean/Research/Submission.ilean -c /workspace/.lake/build/ir/Research/Submission.c --setup /workspace/.lake/build/ir/Research/Submission.setup.json --json
+error: Research/Submission.lean:353:47: unsolved goals
+⊢ 2 ::ₘ 2 ::ₘ 2 ::ₘ 2 ::ₘ {2} = ↑[2, 2, 2, 2, 2]
+error: Lean exited with code 1
+Some required targets logged failures:
+- Research.Submission
+error: build failed

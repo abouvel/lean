@@ -1,0 +1,134 @@
+             Self-contained Proof for Parallel Binary Tree Reduction
+                                                   Sahil Bhola∗
+
+                                       Last Edited: September 10, 2026
+
+
+
+1        Floating-Point Model
+We assume the standard floating-point model [1]: for every elementary operation ◦ ∈ {+, −, ×, /},
+                                      fl(a ◦ b) = (a ◦ b)(1 + δ),   |δ| ≤ u,                       (1)
+where u is the unit roundoff and δ is the relative roundoff error. Using eq. (1) for numerical analysis
+we typicall obtain the product
+                                Yn
+                                    (1 + δi )ρi ≜ 1 + θn ,    ρ = ±1,                               (2)
+                                       i=1
+where n denotes the number of accumulated roundoff error terms. For numerical analysis, we seek
+reliable and sharp bounds for θn .
+
+
+2        Deterministic Rounding Error Analysis
+The deterministic rounding error analysis proposes the following problem-size dependent constant
+                                                  nu
+                                          γn ≜         ,                                      (3)
+                                                1 − nu
+for nu < 1. Here, n is the number of accumulated error terms [1]. The problem-size dependent
+constant is monotonic, that is, γn+1 > γn for u > 0. Performing backward/forward error analysis
+using eq. (3) we obtain
+                                                     |θn | ≤ γn .                                  (4)
+
+
+3        Parallel Binary Tree Reduction
+In parallel computing,Pthe parallel reduction kernel is routinely observed. Mathematically, the
+kerenel computes y = ni=1 xi as
+                                                                       n
+                         Skℓ+1 = Skℓ + Sk+⌈
+                                        ℓ
+                                              n
+                                                 ⌉ , k = 1, · · · , ⌈ ℓ+1 ⌉,                 (5)
+                                            2ℓ+1                     2
+                      †
+such that y = S1ℓ . Here, ℓ† ≜ ⌈log2 n⌉ and Si0 = xi for all i. Note that, for some values of ℓ and n,
+    ℓ
+if Sk+⌈ n
+          ⌉ is unavailable, it is considered as zero. Here, we perform the rounding error analysis
+           2ℓ+1
+of the parallel binary tree reduction, re-deriving the problem-size dependent constant γ⌈log2 n⌉ as
+proposed by [1, p. 64].
+
+    ∗
+        University of Michigan, Ann Arbor
+
+
+                                                          1
+Algorithm 1 Parallel Binary-Tree Reduction
+Require: Input  P vector x = (x1 , . . . , xn )
+Ensure: y = ni=1 xi
+ 1: Sk0 ← xk ,     k = 1, . . . , n
+ 2: ℓt ← ⌈log2 n⌉
+ 3: for ℓ = 0, . . . , ℓt − 1 do
+                                        ℓ+1 in parallel do
+                                          
+ 4:     for all k = 1,     . . . ,  n/2
+            j ← k + n/2ℓ+1
+                                    
+ 5:
+ 6:         if Sjℓ is available then
+ 7:             Skℓ+1 ← Skℓ + Sjℓ
+ 8:         else
+ 9:             Skℓ+1 ← Skℓ
+10:         end if
+11:     end for
+12: end for
+           ℓ
+13: y ← S1t
+14: return y
+
+
+
+ Theorem 3.1. Let
+                                                                    n
+                                                                    X
+                                                             y=            xi                                    (6)
+                                                                     i=1
+
+ be evaluated componentwise using a binary-tree reduction of depth ℓ† = ⌈log2 n⌉ in floating-point
+ arithmetic with unit roundoff u. Assume that no overflow or underflow occurs and that ℓ† u < 1.
+ Then the computed result ŷ satisfies
+                               n
+                               X
+                        ŷ =         (xi + ∆xi ) ,                |∆xi | ≤ γℓ† |xi | ,      i = 1, . . . , n,    (7)
+                               i=1
+
+ where the inequalities are interpreted componentwise and γℓ† = ℓ† u/(1 − ℓ† u).
+
+  Proof. Using eq. (3), the computed floating-point approximation Sbkℓ+1 of Skℓ+1 is given by
+                                                
+                        Sbkℓ+1 = Sbkℓ + Sbk+⌈
+                                          ℓ
+                                              n
+                                                        ℓ+1
+                                                ⌉ (1 + δk ),    δkℓ+1 ≤ u.                                       (8)
+                                                           2ℓ+1
+
+  Since, at most we will have ℓ† addition operations, the computed approximation ŷ of y is given
+  by
+                                         n           ℓ†
+                                         X           Y
+                                  ŷ =         xi         (1 + δkℓ i (ℓ) ),          δkℓ i (ℓ) ≤ u,              (9)
+                                         i=1         ℓ=1
+
+ where ki (ℓ) denotes the index of the node at level ℓ corresponding to the path from the leaf
+ containing xi to the root. Now, usign eqs. (2) and (3) we obtain
+                                              n
+                                              X
+                                       ŷ =          xi + ∆xi ,                 ∆xi ≜ θℓ† xi ,                  (10)
+                                               i=1
+
+  such that |∆xi | ≤ γℓ† |xi |.
+
+
+                                                                     2
+    Note, compared to the sequential dot-product, where the problem-size dependent constant is
+γn [1], we get logarithmic scaling. This shows that the binary tree reduciton algorithm has better
+backward stability compared to the sequential computations.
+
+
+References
+[1] Nicholas J Higham. Accuracy and stability of numerical algorithms. SIAM, 2002.
+
+
+
+
+                                                3
+

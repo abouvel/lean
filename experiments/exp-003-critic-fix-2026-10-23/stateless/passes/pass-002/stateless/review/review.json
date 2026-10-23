@@ -1,0 +1,71 @@
+{
+  "overall_verdict": "pass",
+  "phase": "final",
+  "target_evidence": "/workspace/Research/Submission.lean:323-338: proved theorem_3_1, under xs \u2260 [], ValidErrors u \u03b4, and depth(xs.length)*u<1, gives indexed perturbations preserving all occurrences, equality to algorithm xs \u03b4, and individual gamma(depth(xs.length)) bounds; forest singleton and path-depth bound are proved, not assumed. See also algorithm_exact at lines 341-347.",
+  "requirements": [
+    {
+      "requirement": "Actual Theorem 3.1 for arbitrary nonempty inputs",
+      "evidence": "/workspace/Research/Submission.lean:323-338 \u2014 theorem_3_1 is a proved declaration, universally quantified over xs : List \u211d with xs \u2260 [], u, and \u03b4. Its conclusion gives perturbations of every original indexed occurrence, the actual algorithm result as their perturbed sum, and the required individual bounds. forest_singleton (259-269) proves the forest has one tree; it is not an assumption. Independent /output/Audit.lean also extracts the core error theorem directly.",
+      "verdict": "pass",
+      "correction": "None required."
+    },
+    {
+      "requirement": "Exact Algorithm 1 offset pairing and returned slot",
+      "evidence": "/workspace/Research/Submission.lean:23-53,208-257 \u2014 offset uses original n and level: (n+2^(l+1)-1)/2^(l+1). step splits at this offset and pairs matching slots from take/drop, i.e. zero-based k with k+offset. step_length and rounds_length prove the requisite ceiling-length invariant. forest_length proves termination at one slot and algorithm evaluates that slot. /output/independent-checks.log reproduces all required acceptance levels exactly.",
+      "verdict": "pass",
+      "correction": "None required."
+    },
+    {
+      "requirement": "Unavailable partners carry their subtrees unchanged with no extra rounding",
+      "evidence": "/workspace/Research/Submission.lean:23-26,45-47,63-66 \u2014 pair returns the remaining list literally unchanged when the other list is empty. Only Tree.add multiplies by (1+\u03b4); there is no rounding operation on a carry. /output/Audit.lean proves pair l k ts [] = ts by reduction. The schedule executes exactly depth rounds, with no additional rounding nodes for carried subtrees.",
+      "verdict": "pass",
+      "correction": "None required."
+    },
+    {
+      "requirement": "Multiplicities and original occurrence identity",
+      "evidence": "/workspace/Research/Submission.lean:41-43,68-73,85-110,165-176,259-269,327-334 \u2014 zipIdx distinguishes equal input values; forest_occurrences proves a permutation of indexed leaves, and terms_occurrences transports this to perturbations. Thus no input is lost or duplicated even when values coincide. Duplicate trace [2,2,2,2,2] ends at [10], with leaf indices [0,3,2,1,4], a permutation of all five indices.",
+      "verdict": "pass",
+      "correction": "None required."
+    },
+    {
+      "requirement": "Ceil(log2 n) schedule and path-depth bound",
+      "evidence": "/workspace/Research/Submission.lean:38-43,119-162,241-269,330 \u2014 depth is Nat.clog 2 n. rounds uses exactly this fuel, forest_height proves every path has at most that many additions, and forest_length uses Nat.le_pow_clog to prove one final tree for every positive length. These are precisely the depth facts required by the error bound, allowing shorter carried paths.",
+      "verdict": "pass",
+      "correction": "None required."
+    },
+    {
+      "requirement": "Componentwise gamma bound, sum identity, and denominator condition",
+      "evidence": "/workspace/Research/Submission.lean:55-66,75-83,178-192,274-315,323-338 \u2014 gamma is d*u/(1-d*u). gamma_step proves the rounding-factor induction using nonnegative u and positive denominators, and terms_bound establishes |w-1| \u2264 gamma for every actual leaf path. backward_identity and perturbation_bound produce \u0394x=(w-1)x and |\u0394x| \u2264 gamma*|x|. theorem_3_1 combines these with multiplicity and the actual algorithm. Applying the scalar theorem to each coordinate gives the stated componentwise interpretation.",
+      "verdict": "pass",
+      "correction": "None required."
+    },
+    {
+      "requirement": "No circular or vacuous assumptions and faithful floating-point model",
+      "evidence": "/workspace/Research/Submission.lean:45-59,294-296,323-325 \u2014 Only xs \u2260 [], ValidErrors u \u03b4 (0 \u2264 u and absolute error \u2264 u), and depth(length)*u<1 are assumed. No gamma estimate, output property, singleton result, or preservation invariant is assumed. The hypotheses are satisfiable (e.g. u=0, \u03b4=0); valid errors model standard arithmetic without overflow/underflow. Bounds for unused slots are harmless since any used-slot assignment can be extended by zero.",
+      "verdict": "pass",
+      "correction": "None required."
+    },
+    {
+      "requirement": "Imports, kernel compilation, proof placeholders, and axioms",
+      "evidence": "/workspace/Research/Submission.lean:1,323-349 \u2014 import Mathlib resolves through the pinned mathlib v4.28.0 and Research.lean imports the submission. /evaluation/verification.json reports build_and_scans_exit_code=0 and formal_gate_passed=true; verification.log shows a successful build and no placeholders/custom axioms. Independent lake env lean /output/Audit.lean exited 0. #print axioms for theorem_3_1 and algorithm_exact reports only propext, Classical.choice, Quot.sound; source scan found no sorry/admit/axiom/unsafe declarations.",
+      "verdict": "pass",
+      "correction": "None required."
+    },
+    {
+      "requirement": "Singleton, odd-length, duplicate inputs, and evaluator acceptance case",
+      "evidence": "/workspace/Research/Submission.lean:23-43,241-269,341-347 \u2014 Independent compiled trace gives [[2,3,4,5,6],[7,9,4],[11,9],[20]], singleton [[42]], odd triple [[1,2,3],[4,2],[6]], and duplicate [[2,2,2,2,2],[4,4,2],[6,4],[10]]. A compiled symbolic example proves algorithm [x] \u03b4 = x for arbitrary x and \u03b4. algorithm_exact proves the exact sum for every nonempty list, in addition to these checks.",
+      "verdict": "pass",
+      "correction": "None required."
+    }
+  ],
+  "assumptions_added": [
+    "Explicit 0 \u2264 u, consistent with unit roundoff; the full standard model is ValidErrors u \u03b4 at lines 55-57.",
+    "The real relative-error semantics abstract away floating-point representation and exclude overflow/underflow through the assumed standard model. This matches the source numerical-analysis setting."
+  ],
+  "missing_obligations": [],
+  "limitations": [
+    "The formal statement is scalar over \u211d; its componentwise vector interpretation follows by applying it separately to each coordinate, rather than a separately declared vector theorem.",
+    "Independent numerical traces use a natural-valued evaluator of the actual candidate Tree/step/rounds structure, with leaf indices looking up the test values; they are not hardware floating-point tests. The symbolic singleton and extracted error theorem were also kernel-checked.",
+    "Offline verification is supporting compilation evidence; semantic acceptance rests on the declarations and proofs audited above."
+  ]
+}

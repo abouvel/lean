@@ -1,0 +1,6 @@
+'Bhola.final_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.algorithm_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.occurrences_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.depth_le_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.local_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+Bhola.BackwardStable (op : ℝ → ℝ → ℝ) (u : ℝ) (xs : List ℝ) : Prop

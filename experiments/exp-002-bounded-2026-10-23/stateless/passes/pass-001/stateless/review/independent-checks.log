@@ -1,0 +1,7 @@
+'Bhola.algorithm_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.exact_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.singleton_occurrences' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.depth_minimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.path_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+Bhola.StandardModel (add : ℝ → ℝ → ℝ) (u : ℝ) : Prop
+Bhola.BackwardStable (add : ℝ → ℝ → ℝ) (u : ℝ) (xs : List ℝ) : Prop

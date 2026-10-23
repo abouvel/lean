@@ -1,0 +1,7 @@
+⚠ [8026/8028] Built Research.Submission (7.4s)
+warning: Research/Submission.lean:205:19: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+✔ [8027/8028] Built Research (3.2s)
+Build completed successfully (8028 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

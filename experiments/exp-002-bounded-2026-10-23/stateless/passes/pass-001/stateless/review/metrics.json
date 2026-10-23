@@ -1,0 +1,16 @@
+{
+  "condition": "stateless",
+  "kind": "reviewer",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "started_unix": 1792767153.7779486,
+  "time_limit_seconds": 120,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "exit_code": 0,
+  "timed_out": true,
+  "wall_time_seconds": 120.017,
+  "token_usage": "unknown",
+  "compiler_command_events": 3,
+  "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+}

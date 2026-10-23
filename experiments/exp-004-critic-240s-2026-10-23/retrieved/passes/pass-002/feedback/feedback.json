@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "previous_pass": 1,
+  "formal_gate_passed": true,
+  "corrections": [
+    {
+      "requirement": "Prove Theorem 3.1 for arbitrary nonempty inputs under the floating-point model and d*u < 1.",
+      "correction": "Prove an unconditional-on-the-conclusion theorem producing an occurrence-indexed perturbation for every input, proving computed = sum of perturbed inputs and each absolute perturbation <= gamma (Nat.clog 2 n) u * abs(input), assuming nonemptiness, nonnegative u, local rounding bounds, and d*u < 1."
+    },
+    {
+      "requirement": "Componentwise gamma bound and backward-error decomposition.",
+      "correction": "Prove the bounded-product estimate from |delta| <= u and path length <= d with d*u < 1; derive occurrence-indexed perturbations, transport them to the original input indices, and state/prove the componentwise result."
+    },
+    {
+      "requirement": "Model arbitrary allowed rounding errors, including distinct operations on duplicate-valued subtrees.",
+      "correction": "Index rounding errors by operation occurrence, node address, or level/index, or accept an occurrence-labelled evaluated tree, so equal-valued distinct additions can have independent errors."
+    },
+    {
+      "requirement": "Singleton, odd-length, duplicate inputs, and evaluator levels [2,3,4,5,6] -> [7,9,4] -> [11,9] -> [20].",
+      "correction": "After supplying the missing target theorem, independently compile the acceptance sequence and singleton/odd/duplicate checks."
+    },
+    {
+      "requirement": "Check for circular or vacuous hypotheses, nonstandard axioms, missing imports, and offline verification evidence.",
+      "correction": "After implementing Theorem 3.1, inspect verification.json/log, compile the target, and inspect its transitive axioms. Compilation of these supporting lemmas alone cannot discharge the missing theorem."
+    }
+  ],
+  "verification_log": "\u2714 [8026/8028] Built Research.Submission (5.2s)\n\u2714 [8027/8028] Built Research (3.4s)\nBuild completed successfully (8028 jobs).\nVerification passed: build succeeds with no proof placeholders or custom axioms.\n"
+}

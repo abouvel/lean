@@ -1,0 +1,1 @@
+Opened memory index and artifact pilot-general-lean-001 (/memory/general-lean.md). Used its advice to establish positive denominators before division inequalities, use abs_add_le, and rebuild imported modules after changes.

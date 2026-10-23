@@ -83,6 +83,8 @@ class Engine:
             args += ["-e", "NO_PROXY=localhost,127.0.0.1"]
         if condition == "retrieved" and not reviewer and not offline:
             args += mount(self.directory / self.config["memory"], "/memory", True)
+        if not reviewer and not offline and (self.directory / "feedback").is_dir():
+            args += mount(self.directory / "feedback", "/feedback", True)
         limit = self.config["critic_seconds" if reviewer else "builder_seconds"]
         args += ["-e", "EXPERIMENT_MODEL=" + self.config["model"],
                  "-e", "REASONING_EFFORT=" + self.config["reasoning_effort"],

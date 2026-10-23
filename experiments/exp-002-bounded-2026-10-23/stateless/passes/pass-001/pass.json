@@ -1,0 +1,52 @@
+{
+  "status": "infrastructure_error",
+  "error": "Critic service/process failed",
+  "builder": {
+    "condition": "stateless",
+    "kind": "builder",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1792766960.339477,
+    "time_limit_seconds": 180,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": true,
+    "wall_time_seconds": 180.034,
+    "token_usage": "unknown",
+    "compiler_command_events": 7,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "critic": {
+    "condition": "stateless",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1792767153.7779486,
+    "time_limit_seconds": 120,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": true,
+    "wall_time_seconds": 120.017,
+    "token_usage": "unknown",
+    "compiler_command_events": 3,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 12.661,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 195,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."
+  },
+  "number": 1,
+  "wall_time_seconds": 313.8406980330001,
+  "evidence": "stateless/passes/pass-001"
+}

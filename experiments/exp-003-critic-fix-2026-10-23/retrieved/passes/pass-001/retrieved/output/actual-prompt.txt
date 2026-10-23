@@ -1,0 +1,9 @@
+Formalize Sahil Bhola's original Algorithm 1 and Theorem 3.1 from /spec/source.txt in the supplied Lean project. The original PDF is also available at /spec/source.pdf. Produce your own implementation and formal proof in /workspace/Research, connected to the project's root import.
+
+The assignment is the complete deterministic binary-tree summation result for arbitrary nonempty real input lists under the paper's assumptions. Preserve the algorithm's offset pairing and unchanged carry branch, all input occurrences, and the stated logarithmic depth and componentwise backward-error bound. The source's mathematical proof is permitted input. No worked example or completed formalization is supplied.
+
+You have 20 minutes. Use only the supplied environment. Do not change /spec or the project configuration. Save a concise account of important decisions, failed approaches, completed results, and remaining obligations in /output/decisions.md. Do not claim verification if obligations remain. Never print or copy authentication material.
+
+Controller budget: pass 1/2; hard builder limit 180 seconds. Original time estimates do not override this limit.
+
+A read-only research-memory snapshot is available at /memory. Read its index, select relevant entries, and record every opened artifact ID and the concrete decision it influenced in /output/retrieval.md.

@@ -1,0 +1,75 @@
+{
+  "overall_verdict": "fail",
+  "phase": "final",
+  "target_evidence": "The requested Theorem 3.1 requires a backward-error representation of algorithm xs \u03b4 for every nonempty xs under ValidErrors u \u03b4 and depth(xs.length)*u < 1, with each occurrence perturbation bounded by gamma u (depth xs.length) times its absolute value. No such declaration exists in Research/Submission.lean:1-194. gamma (line 59) and ValidErrors (lines 56-57) are only defined, never used in a theorem. backward_identity (179-186) is an identity for an arbitrary tree; perturbation_bound (189-192) assumes the factor estimate instead of proving it.",
+  "requirements": [
+    {
+      "requirement": "Actual proof of Theorem 3.1 for arbitrary nonempty input",
+      "evidence": "Submission.lean:49-53 defines algorithm as the first forest tree; no theorem states its backward stability. The source ends at line 194 after an arbitrary-tree identity and conditional inequality.",
+      "verdict": "fail",
+      "correction": "Prove a theorem for every nonempty list, with valid relative errors and depth*u < 1, establishing the sum representation and the componentwise gamma bound for algorithm."
+    },
+    {
+      "requirement": "Exact offset pairing in Algorithm 1",
+      "evidence": "Submission.lean:23-32 pairs take(offset n level) with drop(offset n level), where offset=(n+2^(level+1)-1)/2^(level+1). rounds at 34-43 retains the original n and advances level. This implements the specified offset structurally, but the general length invariant and completion are not proved.",
+      "verdict": "uncertain",
+      "correction": "Prove round lengths equal the specified ceiling and that nonempty input produces exactly one final tree."
+    },
+    {
+      "requirement": "Carried subtree unchanged without extra rounding calls",
+      "evidence": "Submission.lean:25 returns xs literally when the right list is empty. Only Tree.add introduces a rounding factor in eval (45-47) and terms (63-66).",
+      "verdict": "pass",
+      "correction": ""
+    },
+    {
+      "requirement": "Preserve occurrences and multiplicities, including duplicate inputs",
+      "evidence": "forest_occurrences at 165-176 proves a permutation of indexed input occurrences across the entire forest; terms_occurrences at 68-73 preserves each tree occurrence. This does not identify the leaves of the returned first tree without a singleton-forest result.",
+      "verdict": "uncertain",
+      "correction": "Combine forest_occurrences with a proof that the final forest is a singleton to preserve all occurrences in the returned result."
+    },
+    {
+      "requirement": "ceil(log2 n) depth",
+      "evidence": "depth at 38-39 is Nat.clog 2 n; forest executes that many steps (41-43). forest_height (155-162) proves each resulting tree has height at most this depth. No final singleton theorem is present.",
+      "verdict": "uncertain",
+      "correction": "Prove the length invariant and final singleton result, then connect forest_height to the returned tree for every nonempty input."
+    },
+    {
+      "requirement": "Componentwise gamma bound under depth*u < 1",
+      "evidence": "gamma at 59 is only a definition. No declaration proves |w-1| <= gamma u d from bounded node errors and path length. perturbation_bound (189-192) assumes |w-1| <= g; backward_identity (179-186) supplies no estimate.",
+      "verdict": "fail",
+      "correction": "Prove the path-product estimate from ValidErrors, path length <= depth, and depth*u < 1; derive perturbations for each indexed input occurrence and sum them to algorithm."
+    },
+    {
+      "requirement": "No weakened, circular, vacuous assumptions; appropriate floating-point model",
+      "evidence": "ValidErrors (56-57) expresses nonnegative u and absolute bounds for node errors, and eval (45-47) supplies the relative-error model. The proved perturbation_bound assumes precisely its local factor estimate. It is a valid supporting lemma but cannot discharge the missing analytic obligation. No target theorem states the required assumptions.",
+      "verdict": "fail",
+      "correction": "State the target theorem with only the original mathematical hypotheses and a nonempty-input condition; derive the factor estimate rather than assume it."
+    },
+    {
+      "requirement": "Imports, compilation, and absence of nonstandard axioms or placeholders",
+      "evidence": "Submission.lean:1 imports Mathlib; Research.lean imports Research.Submission. /evaluation/verification.json reports build_and_scans_exit_code=0 and formal_gate_passed=true. verification.log reports successful builds and no proof placeholders or custom axioms.",
+      "verdict": "pass",
+      "correction": ""
+    },
+    {
+      "requirement": "Acceptance levels [2,3,4,5,6], [7,9,4], [11,9], [20]; singleton, odd-length and duplicate cases",
+      "evidence": "The offset and carry definitions at 23-43 are consistent with the stated acceptance schedule by source inspection. No candidate examples or general correctness theorem establish the returned result for these cases. Independent evaluation was not run because completeness review found the target theorem absent.",
+      "verdict": "uncertain",
+      "correction": "Complete the general theorem, including singleton termination and indexed multiplicity preservation; independently check the specified levels and edge cases afterward."
+    }
+  ],
+  "assumptions_added": [
+    "No final theorem is present, so its assumptions cannot be audited as a complete statement. The supporting perturbation_bound explicitly assumes a factor bound |w - 1| <= g (line 189), which still needs to be derived for gamma."
+  ],
+  "missing_obligations": [
+    "Final backward stability theorem for algorithm on arbitrary nonempty inputs.",
+    "Bound path-product deviation by gamma using ValidErrors and depth*u < 1.",
+    "Prove the forest becomes a singleton after ceil(log2 n) rounds.",
+    "Transfer indexed occurrence preservation and height bounds from the forest to the algorithm result, yielding one bounded perturbation per input occurrence."
+  ],
+  "limitations": [
+    "Stopped after definite completeness failure as required by the review protocol; no independent examples or compilation were run.",
+    "Compilation evidence was read from /evaluation/verification.json and verification.log; it establishes successful Lean verification of supporting declarations, not the absent theorem.",
+    "Candidate files were not modified."
+  ]
+}

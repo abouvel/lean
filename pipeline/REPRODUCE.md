@@ -36,8 +36,11 @@ JSON configuration keeps the Python 3.10 runner dependency-free.
 
 Fresh builders get an import-only project, never prior submissions or logs.
 Both use the same model/settings; only retrieved sees the frozen memory.
+Use `--config bounded.json` from Experiment 1 for equal capped repair passes;
+see [bounded mode](README.md#bounded-passes-and-json-artifacts).
 Replay checks compilation/scans, not a new semantic review. The model can produce
-different outputs on repeated runs. Aristotle and critic-assisted repair are disabled.
+different outputs on repeated runs. Aristotle is disabled. Critic repair is
+enabled only when the selected config declares `max_passes`.
 
 ## Historical evidence
 

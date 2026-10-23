@@ -1,0 +1,70 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "/workspace/Research/Submission.lean:285-307 proves Bhola.algorithm_leaf_backward_error: for nonempty xs, nonnegative u, globally bounded err and clog(2,length xs)*u<1, the returned tree has perturbations whose first components equal t.leaves. It does not identify these leaves with xs, even up to permutation. No declaration in the complete source (lines 1-318) proves conservation of input occurrences or the componentwise backward-error theorem over the original input vector required by /spec/source.txt, Theorem 3.1, equation (7).",
+  "requirements": [
+    {
+      "requirement": "Theorem 3.1 for arbitrary nonempty original input",
+      "evidence": "Submission.lean:254-268 proves termination for every xs != []; :285-292 bounds only t.leaves. The conclusion contains no equality or permutation between ps.map Prod.fst and xs.",
+      "verdict": "fail",
+      "correction": "Prove occurrence conservation through level and rounds, then state and prove a final theorem with perturbations indexed by the original xs (or an occurrence-preserving permutation that is explicitly transported back)."
+    },
+    {
+      "requirement": "Exact offset pairing from Algorithm 1",
+      "evidence": "Submission.lean:57-62 pairs zero-based a at k with ts[k+m], m=(length+1)/2; :228-243 proves round widths and offset xs.length ceilDiv 2^(k+1).",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "requirement": "Carry unavailable partner unchanged with no additional rounding",
+      "evidence": "Submission.lean:60-62 returns a in the none branch, adding no Tree.add node; Tree.eval at :21-23 introduces roundoff only at add nodes.",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "requirement": "Preserve every input occurrence, including duplicates",
+      "evidence": "Submission.lean:17-19 defines leaves and :38-41 proves terms_inputs only for an already constructed tree. There is no level/rounds leaf-conservation theorem. :290 equates perturbation inputs only to t.leaves.",
+      "verdict": "fail",
+      "correction": "Prove List.Perm between flattened forest leaves before and after each level and derive t.leaves.Perm xs for the singleton output; retain multiplicity rather than merely set membership."
+    },
+    {
+      "requirement": "Ceil(log2 n) round count and depth bound",
+      "evidence": "Submission.lean:65-70 executes Nat.clog 2 xs.length rounds; :75-76 identifies this with the natural ceiling of real log base 2; :179-201 and :254-268 bound returned-tree depth by this count.",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "requirement": "Componentwise gamma bound for original inputs",
+      "evidence": "Submission.lean:72 defines gamma=k*u/(1-k*u). :104-154 proves a tree coefficient/backward-error bound; :285-307 specializes the clog bound to the returned tree, but only for its unconnected leaf list.",
+      "verdict": "fail",
+      "correction": "Combine the proved coefficient bound with input-occurrence conservation to obtain yhat=sum_i(xs_i+Delta_i) and |Delta_i|<=gamma_clog*|xs_i| for every original index."
+    },
+    {
+      "requirement": "Singleton, odd-length, duplicate, and acceptance-case behavior",
+      "evidence": "Singleton follows directly from :65-70 since clog 2 1=0. The odd carry branch is explicit at :62. Candidate examples :310-316 cover acceptance first level [7,9,4] and final [20], but not its intermediate [11,9]. There is no general multiplicity-conservation proof or duplicate-specific example.",
+      "verdict": "uncertain",
+      "correction": "Supply the missing general conservation proof. Independent checks for [2,3,4,5,6] -> [7,9,4] -> [11,9] -> [20], singleton, and duplicates can supplement but cannot replace it."
+    },
+    {
+      "requirement": "Assumptions are noncircular and meaningful; no custom axioms, placeholders, or missing imports",
+      "evidence": "Submission.lean:1 imports Mathlib; :286-288 assumes xs!=[], 0<=u, forall l j, |err l j|<=u, and clog*u<1. These do not assume the result and admit err=0,u=0 for all nonempty xs. /evaluation/verification.json reports build_and_scans_exit_code=0 and formal_gate_passed=true; verification.log reports a successful build with no placeholders or custom axioms.",
+      "verdict": "pass",
+      "correction": null
+    }
+  ],
+  "assumptions_added": [
+    "Explicit 0 <= u, the usual unit-roundoff condition.",
+    "All err l j, including unused indices, satisfy |err l j| <= u. This is stronger than bounding only executed operations, but unused errors can be set to zero.",
+    "Arithmetic is abstracted as exact real Tree.eval with relative errors; no-overflow/no-underflow is represented by applicability of that model rather than a concrete floating-point implementation."
+  ],
+  "missing_obligations": [
+    "An occurrence-preserving permutation between all input leaves before and after each level/round.",
+    "A proof that the returned singleton tree has exactly the original input occurrences.",
+    "The final componentwise backward-error theorem for the original xs, transporting perturbations through the proven permutation."
+  ],
+  "limitations": [
+    "Stopped at the definite completeness failure as required by the review protocol; no independent examples were compiled and no candidate files were modified.",
+    "Compilation and axiom-scan evidence was read from /evaluation/verification.json and verification.log, not rerun. Successful compilation does not supply the missing theorem.",
+    "Edge-case assessments above are source inspection, not independent execution."
+  ]
+}
