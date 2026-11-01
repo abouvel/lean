@@ -1,0 +1,58 @@
+{
+  "experiment_id": "exp-007-critic-live-benchmark-2026-10-28",
+  "task_id": "lean-critic-five-case-smoke-benchmark",
+  "purpose": "Measure semantic critic judgment on a small frozen set of compiling Lean candidates.",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "critic_time_limit_seconds": 240,
+  "allowed_tools": [
+    "read original source and candidate files",
+    "read trusted verification evidence",
+    "write structured critic reports and private independent Lean checks",
+    "run local Lean commands inside the isolated reviewer container"
+  ],
+  "verification_command": "bash pipeline/verify.sh <case>/evaluation-workspace",
+  "acceptance_tests": [
+    "Every candidate passes Lean compilation and placeholder/custom-axiom scans before critic launch.",
+    "The correct candidate receives a valid pass.",
+    "Every defective candidate receives a valid fail with its preregistered defect category.",
+    "No critic report is malformed and no critic times out."
+  ],
+  "cases": [
+    {
+      "id": "known-complete",
+      "source_kind": "frozen historical complete candidate",
+      "expected_verdict": "pass",
+      "expected_defects": [],
+      "expected_report": "review.json"
+    },
+    {
+      "id": "missing-original-input-link",
+      "source_kind": "frozen historical compiling incomplete candidate",
+      "expected_verdict": "fail",
+      "expected_defects": ["missing-original-input-link"],
+      "expected_report": "checkpoint.json"
+    },
+    {
+      "id": "proposition-only",
+      "source_kind": "frozen historical candidate defining but not proving the target",
+      "expected_verdict": "fail",
+      "expected_defects": ["missing-final-theorem"],
+      "expected_report": "checkpoint.json"
+    },
+    {
+      "id": "concrete-example-only",
+      "source_kind": "deterministic mutation of the complete candidate",
+      "expected_verdict": "fail",
+      "expected_defects": ["concrete-example-only"],
+      "expected_report": "checkpoint.json"
+    },
+    {
+      "id": "conclusion-assumed",
+      "source_kind": "deterministic mutation of the complete candidate",
+      "expected_verdict": "fail",
+      "expected_defects": ["conclusion-assumed"],
+      "expected_report": "checkpoint.json"
+    }
+  ]
+}

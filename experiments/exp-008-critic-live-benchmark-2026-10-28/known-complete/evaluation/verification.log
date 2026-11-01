@@ -1,0 +1,6 @@
+✖ [8026/8028] Building Research.Submission (51ms)
+error: permission denied (error code: 13)
+  file: /workspace/.lake/build
+Some required targets logged failures:
+- Research.Submission
+error: build failed

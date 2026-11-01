@@ -1,0 +1,35 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:285-307 proves algorithm_leaf_backward_error under xs \u2260 [], 0 \u2264 u, bounded relative errors, and clog(2, length xs)*u < 1, but its perturbations correspond only to t.leaves (line 290). No declaration in the complete file (lines 1-318) proves these leaves preserve the original input occurrences. Theorem 3.1 requires perturbations for every original xi.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+      "evidence": "Research/Submission.lean:135-154 proves a bound for arbitrary valid trees; lines 285-307 specialize a ceiling-log bound to the returned tree, but line 290 identifies perturbation inputs only with t.leaves, never xs. The file ends at line 318 without a conservation theorem or the full original-input conclusion.",
+      "verdict": "fail",
+      "defect_categories": [
+        "weakened-conclusion"
+      ],
+      "correction": "Prove conservation of original input occurrences through every level and combine it with the returned-tree bound to state and prove Theorem 3.1 for every nonempty original input."
+    },
+    {
+      "requirement_id": "input-occurrences",
+      "requirement": "The result is connected to every occurrence in the original input.",
+      "evidence": "Research/Submission.lean:38-41 identifies terms with tree leaves only. The strongest algorithm backward-error theorem at lines 285-292 has ps.map Prod.fst = t.leaves, with no equality, permutation, or indexed correspondence to xs. Neither algorithm_singleton (lines 254-268) nor algorithm_coefficients (lines 271-280) supplies that missing correspondence.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-original-input-link"
+      ],
+      "correction": "Prove that the final tree leaves are a permutation of xs with multiplicities, then transport the perturbation list to the original input order and establish the bound for each occurrence."
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "A proved conservation statement relating final tree leaves to every original input occurrence, including duplicates.",
+    "The full componentwise backward-error theorem indexed by the original input under the requested assumptions."
+  ],
+  "limitations": [
+    "Stopped immediately after the definite completeness failure as required by the review protocol; offline verification evidence and independent example checks were not examined."
+  ]
+}

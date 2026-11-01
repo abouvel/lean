@@ -1,0 +1,18 @@
+{
+  "search_queries": [
+    "rg --files /workspace /spec /memory /evaluation",
+    "theorem|axiom|sorry|DotProduct|exactProduct|roundedProduct|^import"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "2026-10-27-critic-contract-canary",
+      "path": "/memory/2026-10-27-critic-contract-canary.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "2026-10-27-critic-contract-canary",
+      "decision": "Reinforced use of the completeness checkpoint alone for a definitely missing final proof; the verdict itself follows from the candidate declarations."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "experiment_id": "exp-015-dot-product-proof-task-2026-10-29",
+  "task_id": "floating-point-dot-product-backward-error",
+  "purpose": "Live end-to-end test of the modular proof-building pipeline on one dot-product theorem, one stateless/retrieved pair.",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "allowed_tools": [
+    "local Lean and Mathlib",
+    "approved supporting source modules",
+    "frozen generic memory only for retrieved builder"
+  ],
+  "time_limit": {
+    "max_passes": 2,
+    "builder_seconds_per_pass": 180,
+    "critic_seconds_per_pass": 240,
+    "job_seconds": 2400
+  },
+  "verification_command": "bash pipeline/verify.sh",
+  "acceptance_tests": [
+    "Both jobs finish with valid collected result bundles and no infrastructure error.",
+    "Each accepted proof passes the full Lean build and placeholder/custom-axiom scans.",
+    "Each accepted proof receives a valid independent critic pass covering the complete original target.",
+    "The completed dot-product proof and all prior dot-product reports/candidates are absent from builder inputs and the retrieval snapshot.",
+    "Compare success before passes, time and tokens; retain failures and unavailable measurements as unknown."
+  ],
+  "snapshot_review": "Only five prerequisite modules are supplied to both builders; DotProduct.lean is excluded. Generic memory includes pilot-general-lean-001 only. No prior candidates, verdicts, reports, or transcripts are exposed."
+}

@@ -1,0 +1,346 @@
+theorem Research.BinaryTreeReduction.dotProductBackwardError : ∀ (model : Research.FloatingPoint.Model)
+  (tree : Research.BinaryTreeReduction.Tree (ℝ × ℝ)),
+  ↑(tree.depth + 1) * model.u < 1 →
+    ∃ perturbed,
+      Research.BinaryTreeReduction.IsPerturbation (Research.FloatingPoint.gamma (tree.depth + 1) model.u)
+          (Research.BinaryTreeReduction.exactProductTree tree) perturbed ∧
+        perturbed.exactSum = Research.BinaryTreeReduction.roundedDotProduct model tree :=
+fun model tree hsmall =>
+  have htail_small :=
+    lt_of_not_ge fun a =>
+      Mathlib.Tactic.Linarith.lt_irrefl
+        (Eq.mp
+          (congrArg (fun _a => _a < 0)
+            (Mathlib.Tactic.Ring.of_eq
+              (Mathlib.Tactic.Ring.add_congr
+                (Mathlib.Tactic.Ring.add_congr
+                  (Mathlib.Tactic.Ring.sub_congr
+                    (Mathlib.Tactic.Ring.mul_congr
+                      (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf ↑tree.depth)
+                        (Mathlib.Tactic.Ring.cast_pos (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one))
+                        (Mathlib.Tactic.Ring.add_pf_add_gt (Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.add_pf_add_zero (↑tree.depth ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+                      (Mathlib.Tactic.Ring.atom_pf model.u)
+                      (Mathlib.Tactic.Ring.add_mul
+                        (Mathlib.Tactic.Ring.mul_add
+                          (Mathlib.Tactic.Ring.mul_pf_right model.u (Nat.rawCast 1)
+                            (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))
+                          (Mathlib.Tactic.Ring.mul_zero (Nat.rawCast 1))
+                          (Mathlib.Tactic.Ring.add_pf_add_zero (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))
+                        (Mathlib.Tactic.Ring.add_mul
+                          (Mathlib.Tactic.Ring.mul_add
+                            (Mathlib.Tactic.Ring.mul_pf_left (↑tree.depth) (Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.mul_pf_right model.u (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                            (Mathlib.Tactic.Ring.mul_zero (↑tree.depth ^ Nat.rawCast 1 * Nat.rawCast 1))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero
+                              (↑tree.depth ^ Nat.rawCast 1 * (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) + 0)))
+                          (Mathlib.Tactic.Ring.zero_mul (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                          (Mathlib.Tactic.Ring.add_pf_add_zero
+                            (↑tree.depth ^ Nat.rawCast 1 * (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) + 0)))
+                        (Mathlib.Tactic.Ring.add_pf_add_gt
+                          (↑tree.depth ^ Nat.rawCast 1 * (model.u ^ Nat.rawCast 1 * Nat.rawCast 1))
+                          (Mathlib.Tactic.Ring.add_pf_add_zero (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))))
+                    (Mathlib.Tactic.Ring.cast_pos (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one))
+                    (Mathlib.Tactic.Ring.sub_pf
+                      (Mathlib.Tactic.Ring.neg_add
+                        (Mathlib.Tactic.Ring.neg_one_mul
+                          (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                            (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                              (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                              (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                              (Eq.refl (Int.negOfNat 1)))))
+                        Mathlib.Tactic.Ring.neg_zero)
+                      (Mathlib.Tactic.Ring.add_pf_add_gt (Int.negOfNat 1).rawCast
+                        (Mathlib.Tactic.Ring.add_pf_add_zero
+                          (↑tree.depth ^ Nat.rawCast 1 * (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) +
+                            (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))))
+                  (Mathlib.Tactic.Ring.sub_congr
+                    (Mathlib.Tactic.Ring.cast_pos (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one))
+                    (Mathlib.Tactic.Ring.mul_congr (Mathlib.Tactic.Ring.atom_pf ↑tree.depth)
+                      (Mathlib.Tactic.Ring.atom_pf model.u)
+                      (Mathlib.Tactic.Ring.add_mul
+                        (Mathlib.Tactic.Ring.mul_add
+                          (Mathlib.Tactic.Ring.mul_pf_left (↑tree.depth) (Nat.rawCast 1)
+                            (Mathlib.Tactic.Ring.mul_pf_right model.u (Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                          (Mathlib.Tactic.Ring.mul_zero (↑tree.depth ^ Nat.rawCast 1 * Nat.rawCast 1))
+                          (Mathlib.Tactic.Ring.add_pf_add_zero
+                            (↑tree.depth ^ Nat.rawCast 1 * (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) + 0)))
+                        (Mathlib.Tactic.Ring.zero_mul (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                        (Mathlib.Tactic.Ring.add_pf_add_zero
+                          (↑tree.depth ^ Nat.rawCast 1 * (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) + 0))))
+                    (Mathlib.Tactic.Ring.sub_pf
+                      (Mathlib.Tactic.Ring.neg_add
+                        (Mathlib.Tactic.Ring.neg_mul (↑tree.depth) (Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.neg_mul model.u (Nat.rawCast 1)
+                            (Mathlib.Tactic.Ring.neg_one_mul
+                              (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                  (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                  (Eq.refl (Int.negOfNat 1)))))))
+                        Mathlib.Tactic.Ring.neg_zero)
+                      (Mathlib.Tactic.Ring.add_pf_add_lt (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.add_pf_zero_add
+                          (↑tree.depth ^ Nat.rawCast 1 * (model.u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) + 0)))))
+                  (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                    (Mathlib.Meta.NormNum.IsInt.to_isNat
+                      (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                        (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                        (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                        (Eq.refl (Int.ofNat 0))))
+                    (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                      (Mathlib.Tactic.Ring.add_overlap_pf_zero (↑tree.depth) (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.add_overlap_pf_zero model.u (Nat.rawCast 1)
+                          (Mathlib.Meta.NormNum.IsInt.to_isNat
+                            (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                              (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                              (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1)) (Eq.refl (Int.ofNat 0))))))
+                      (Mathlib.Tactic.Ring.add_pf_add_zero (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))))
+                (Mathlib.Tactic.Ring.sub_congr
+                  (Mathlib.Tactic.Ring.cast_zero (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero))
+                  (Mathlib.Tactic.Ring.atom_pf model.u)
+                  (Mathlib.Tactic.Ring.sub_pf
+                    (Mathlib.Tactic.Ring.neg_add
+                      (Mathlib.Tactic.Ring.neg_mul model.u (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.neg_one_mul
+                          (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                            (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                              (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                              (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                              (Eq.refl (Int.negOfNat 1))))))
+                      Mathlib.Tactic.Ring.neg_zero)
+                    (Mathlib.Tactic.Ring.add_pf_zero_add (model.u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast + 0))))
+                (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                  (Mathlib.Tactic.Ring.add_overlap_pf_zero model.u (Nat.rawCast 1)
+                    (Mathlib.Meta.NormNum.IsInt.to_isNat
+                      (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                        (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                        (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1)) (Eq.refl (Int.ofNat 0)))))
+                  (Mathlib.Tactic.Ring.add_pf_zero_add 0)))
+              (Mathlib.Tactic.Ring.cast_zero (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero))))
+          (Mathlib.Tactic.Linarith.add_lt_of_neg_of_le
+            (Mathlib.Tactic.Linarith.add_lt_of_neg_of_le
+              (Mathlib.Tactic.Linarith.sub_neg_of_lt
+                (Eq.mp
+                  (congrFun'
+                    (congrArg LT.lt
+                      (congrFun'
+                        (congrArg HMul.hMul
+                          (Eq.trans (Nat.cast_add tree.depth 1)
+                            (congrArg (HAdd.hAdd ↑tree.depth)
+                              (Mathlib.Meta.NormNum.IsNat.to_eq
+                                (Mathlib.Meta.NormNum.isNat_natCast 1 1
+                                  (Mathlib.Meta.NormNum.isNat_ofNat ℕ (Eq.refl 1)))
+                                Nat.cast_one))))
+                        model.u))
+                    1)
+                  hsmall))
+              (Mathlib.Tactic.Linarith.sub_nonpos_of_le a))
+            (Mathlib.Tactic.Linarith.sub_nonpos_of_le model.u_nonneg)));
+  Exists.casesOn
+    (Research.BinaryTreeReduction.roundedSum_exists_perturbation_of_depth_le model tree.depth
+      (Research.BinaryTreeReduction.roundedProductTree model tree)
+      (of_eq_true
+        (Eq.trans
+          (congrFun'
+            (congrArg LE.le
+              (Research.BinaryTreeReduction.Tree.depth_map
+                (fun pair => Research.BinaryTreeReduction.roundedProductTerm model pair.1 pair.2) tree))
+            tree.depth)
+          (le_refl._simp_1 tree.depth)))
+      htail_small)
+    fun perturbed h =>
+    And.casesOn h fun hsum hvalue =>
+      have hproducts := Research.BinaryTreeReduction.roundedProductTree_isPerturbation model tree;
+      have hcomposed :=
+        Research.BinaryTreeReduction.IsPerturbation.trans hproducts hsum
+          (Research.FloatingPoint.gamma_nonneg tree.depth model.u model.u_nonneg htail_small);
+      have hbound :=
+        have hstep := Research.FloatingPoint.gamma_step tree.depth model.u model.u_nonneg hsmall;
+        le_of_not_gt fun a =>
+          Mathlib.Tactic.Linarith.lt_irrefl
+            (Eq.mp
+              (congrArg (fun _a => _a < 0)
+                (Mathlib.Tactic.Ring.of_eq
+                  (Mathlib.Tactic.Ring.add_congr
+                    (Mathlib.Tactic.Ring.sub_congr
+                      (Mathlib.Tactic.Ring.add_congr
+                        (Mathlib.Tactic.Ring.atom_pf (Research.FloatingPoint.gamma tree.depth model.u))
+                        (Mathlib.Tactic.Ring.mul_congr (Mathlib.Tactic.Ring.atom_pf model.u)
+                          (Mathlib.Tactic.Ring.add_congr
+                            (Mathlib.Tactic.Ring.cast_pos (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one))
+                            (Mathlib.Tactic.Ring.atom_pf (Research.FloatingPoint.gamma tree.depth model.u))
+                            (Mathlib.Tactic.Ring.add_pf_add_lt (Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.add_pf_zero_add
+                                (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+                          (Mathlib.Tactic.Ring.add_mul
+                            (Mathlib.Tactic.Ring.mul_add
+                              (Mathlib.Tactic.Ring.mul_pf_left model.u (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))
+                              (Mathlib.Tactic.Ring.mul_add
+                                (Mathlib.Tactic.Ring.mul_pf_right (Research.FloatingPoint.gamma tree.depth model.u)
+                                  (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_left model.u (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                                (Mathlib.Tactic.Ring.mul_zero (model.u ^ Nat.rawCast 1 * Nat.rawCast 1))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero
+                                  (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                                      (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) +
+                                    0)))
+                              (Mathlib.Tactic.Ring.add_pf_add_gt
+                                (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                                  (model.u ^ Nat.rawCast 1 * Nat.rawCast 1))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+                            (Mathlib.Tactic.Ring.zero_mul
+                              (Nat.rawCast 1 +
+                                (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero
+                              (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                                  (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) +
+                                (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))))
+                        (Mathlib.Tactic.Ring.add_pf_add_lt
+                          (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.add_pf_zero_add
+                            (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                                (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) +
+                              (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))))
+                      (Mathlib.Tactic.Ring.atom_pf (Research.FloatingPoint.gamma (tree.depth + 1) model.u))
+                      (Mathlib.Tactic.Ring.sub_pf
+                        (Mathlib.Tactic.Ring.neg_add
+                          (Mathlib.Tactic.Ring.neg_mul (Research.FloatingPoint.gamma (tree.depth + 1) model.u)
+                            (Nat.rawCast 1)
+                            (Mathlib.Tactic.Ring.neg_one_mul
+                              (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                  (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                  (Eq.refl (Int.negOfNat 1))))))
+                          Mathlib.Tactic.Ring.neg_zero)
+                        (Mathlib.Tactic.Ring.add_pf_add_lt
+                          (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.add_pf_add_lt
+                            (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                              (model.u ^ Nat.rawCast 1 * Nat.rawCast 1))
+                            (Mathlib.Tactic.Ring.add_pf_add_lt (model.u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.add_pf_zero_add
+                                (Research.FloatingPoint.gamma (tree.depth + 1) model.u ^ Nat.rawCast 1 *
+                                    (Int.negOfNat 1).rawCast +
+                                  0)))))))
+                    (Mathlib.Tactic.Ring.sub_congr
+                      (Mathlib.Tactic.Ring.atom_pf (Research.FloatingPoint.gamma (tree.depth + 1) model.u))
+                      (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf model.u)
+                        (Mathlib.Tactic.Ring.mul_congr
+                          (Mathlib.Tactic.Ring.atom_pf (Research.FloatingPoint.gamma tree.depth model.u))
+                          (Mathlib.Tactic.Ring.add_congr
+                            (Mathlib.Tactic.Ring.cast_pos (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one))
+                            (Mathlib.Tactic.Ring.atom_pf model.u)
+                            (Mathlib.Tactic.Ring.add_pf_add_lt (Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.add_pf_zero_add (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+                          (Mathlib.Tactic.Ring.add_mul
+                            (Mathlib.Tactic.Ring.mul_add
+                              (Mathlib.Tactic.Ring.mul_pf_left (Research.FloatingPoint.gamma tree.depth model.u)
+                                (Nat.rawCast 1) (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))
+                              (Mathlib.Tactic.Ring.mul_add
+                                (Mathlib.Tactic.Ring.mul_pf_left (Research.FloatingPoint.gamma tree.depth model.u)
+                                  (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_right model.u (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                                (Mathlib.Tactic.Ring.mul_zero
+                                  (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 * Nat.rawCast 1))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero
+                                  (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                                      (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) +
+                                    0)))
+                              (Mathlib.Tactic.Ring.add_pf_add_lt
+                                (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.add_pf_zero_add
+                                  (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                                      (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) +
+                                    0))))
+                            (Mathlib.Tactic.Ring.zero_mul
+                              (Nat.rawCast 1 + (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero
+                              (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                                (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                                    (model.u ^ Nat.rawCast 1 * Nat.rawCast 1) +
+                                  0)))))
+                        (Mathlib.Tactic.Ring.add_pf_add_gt
+                          (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.add_pf_add_gt
+                            (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                              (model.u ^ Nat.rawCast 1 * Nat.rawCast 1))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero (model.u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))))
+                      (Mathlib.Tactic.Ring.sub_pf
+                        (Mathlib.Tactic.Ring.neg_add
+                          (Mathlib.Tactic.Ring.neg_mul (Research.FloatingPoint.gamma tree.depth model.u) (Nat.rawCast 1)
+                            (Mathlib.Tactic.Ring.neg_one_mul
+                              (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                  (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                  (Eq.refl (Int.negOfNat 1))))))
+                          (Mathlib.Tactic.Ring.neg_add
+                            (Mathlib.Tactic.Ring.neg_mul (Research.FloatingPoint.gamma tree.depth model.u)
+                              (Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.neg_mul model.u (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.neg_one_mul
+                                  (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                    (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                      (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                      (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                      (Eq.refl (Int.negOfNat 1)))))))
+                            (Mathlib.Tactic.Ring.neg_add
+                              (Mathlib.Tactic.Ring.neg_mul model.u (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.neg_one_mul
+                                  (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                    (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                      (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                      (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                      (Eq.refl (Int.negOfNat 1))))))
+                              Mathlib.Tactic.Ring.neg_zero)))
+                        (Mathlib.Tactic.Ring.add_pf_add_gt
+                          (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)
+                          (Mathlib.Tactic.Ring.add_pf_add_gt
+                            (Research.FloatingPoint.gamma tree.depth model.u ^ Nat.rawCast 1 *
+                              (model.u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))
+                            (Mathlib.Tactic.Ring.add_pf_add_gt (model.u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)
+                              (Mathlib.Tactic.Ring.add_pf_add_zero
+                                (Research.FloatingPoint.gamma (tree.depth + 1) model.u ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                                  0)))))))
+                    (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                      (Mathlib.Tactic.Ring.add_overlap_pf_zero (Research.FloatingPoint.gamma tree.depth model.u)
+                        (Nat.rawCast 1)
+                        (Mathlib.Meta.NormNum.IsInt.to_isNat
+                          (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                            (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1)) (Eq.refl (Int.ofNat 0)))))
+                      (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                        (Mathlib.Tactic.Ring.add_overlap_pf_zero (Research.FloatingPoint.gamma tree.depth model.u)
+                          (Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.add_overlap_pf_zero model.u (Nat.rawCast 1)
+                            (Mathlib.Meta.NormNum.IsInt.to_isNat
+                              (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                                (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1)) (Eq.refl (Int.ofNat 0))))))
+                        (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                          (Mathlib.Tactic.Ring.add_overlap_pf_zero model.u (Nat.rawCast 1)
+                            (Mathlib.Meta.NormNum.IsInt.to_isNat
+                              (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                                (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1)) (Eq.refl (Int.ofNat 0)))))
+                          (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                            (Mathlib.Tactic.Ring.add_overlap_pf_zero
+                              (Research.FloatingPoint.gamma (tree.depth + 1) model.u) (Nat.rawCast 1)
+                              (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                  (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                  (Eq.refl (Int.ofNat 0)))))
+                            (Mathlib.Tactic.Ring.add_pf_zero_add 0))))))
+                  (Mathlib.Tactic.Ring.cast_zero (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero))))
+              (Mathlib.Tactic.Linarith.add_lt_of_le_of_neg (Mathlib.Tactic.Linarith.sub_nonpos_of_le hstep)
+                (Mathlib.Tactic.Linarith.sub_neg_of_lt a)));
+      Exists.intro perturbed ⟨Research.BinaryTreeReduction.IsPerturbation.mono hcomposed hbound, hvalue⟩
+'Research.BinaryTreeReduction.dotProductBackwardError' depends on axioms: [propext, Classical.choice, Quot.sound]

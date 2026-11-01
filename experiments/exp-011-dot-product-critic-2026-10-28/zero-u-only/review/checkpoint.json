@@ -1,0 +1,36 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:49-56 proves roundedDotProduct_exists_perturbation relative to exactProductTree with gamma(depth+1,u), but its explicit hypothesis at line 52 is hzero : model.u = 0, in addition to model, tree, and the smallness hypothesis at lines 50-51. No unrestricted dot-product theorem is declared elsewhere in the candidate.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "Research/Submission.lean:49-56 restricts the final theorem to models with zero unit roundoff. The authoritative target requires every Model satisfying only the depth-plus-one smallness condition. The product perturbation lemma at lines 28-44 and addition-only theorems in Research/Projects/BinaryTreeReduction/Reduction.lean:112-180 do not state the full unrestricted dot-product result.",
+      "verdict": "fail",
+      "defect_categories": [
+        "weakened-quantification"
+      ],
+      "correction": "Remove the hzero hypothesis and prove the same dot-product conclusion for every Model and tree under only the stated smallness assumption."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "Research/Submission.lean:52 adds hzero : model.u = 0. Research/Common/FloatingPoint/Model.lean:15-19 requires only nonnegative u and a relative-error specification, not u = 0. With u = 0 that specification forces exact rounding. Although hzero is unused in the proof body, it remains an explicit hypothesis of the proved declaration.",
+      "verdict": "fail",
+      "defect_categories": [
+        "strengthened-assumption"
+      ],
+      "correction": "Delete the exact-arithmetic restriction hzero : model.u = 0 from the final theorem declaration and verify the proof under the original Model and smallness assumptions."
+    }
+  ],
+  "assumptions_added": [
+    "Research/Submission.lean:52: hzero : model.u = 0."
+  ],
+  "missing_obligations": [
+    "The full dot-product perturbation theorem for arbitrary permitted models, including positive unit roundoff, is not proved by any declaration."
+  ],
+  "limitations": [
+    "Stopped immediately after establishing a definite completeness failure; offline verification evidence and further semantic checks were not reviewed."
+  ]
+}

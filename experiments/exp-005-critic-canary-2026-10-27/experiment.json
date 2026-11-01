@@ -1,0 +1,21 @@
+{
+  "name": "exp-005-critic-canary-2026-10-27",
+  "task_id": "critic-report-contract-canary",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": ["canary-incomplete", "canary-complete"],
+  "builder_seconds": 0,
+  "critic_seconds": 240,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {"memory": "8g", "cpus": 2, "pids": 256},
+  "verification_command": "bash pipeline/verify.sh",
+  "limitations": [
+    "Infrastructure canary only; not a memory-ablation comparison.",
+    "Candidates are prior outputs selected because their semantic status is already known.",
+    "A passing canary validates this reviewer workflow, not critic accuracy on unseen tasks."
+  ]
+}

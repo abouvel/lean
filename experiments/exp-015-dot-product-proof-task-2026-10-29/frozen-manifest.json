@@ -1,0 +1,28 @@
+{
+  "experiment_id": "exp-015-dot-product-proof-task-2026-10-29",
+  "starting_commit": "a42eeb51fa8a9ee36f5a6027bd840189198ab283",
+  "mode": "preregistered-proof-task-template",
+  "hashes": {
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/prepare.py": "b2c56a357e0eca4c23e98fa244045bf0d683c57ab6454f961296e9dafd0f2254",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/batch.json": "4d0519a1a894df8330c754f5d02c690ec882dc29f8926aa854c3ab8c8ac89878",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/experiment.json": "37122678d1183ba5dc10a2386cfe38ff4539d35432ca44f8777de92fe2f0883c",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/protocol.json": "2d8985efd1db1dfc9aadb54e717792e802abf18680fcf05368f6a77c73989868",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/evaluator/requirements.json": "2ecce2638547aea9f75dbad3c816aae39c2fe386e05236bb51bf6de80181098e",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/evaluator/REVIEWER.txt": "800d9daf958e7984a684dcbe9d8b4f4a098c0b353a60ec8676a4b6cd213c5852",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/inputs/source.pdf": "620f7b063a68cb4d64cb964fee589815266ae11b934a03a864a59e05a48167eb",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/inputs/PROMPT.txt": "de41f236ec587b420b676a2b1f98e0b47c3d3d7bdd254b2f01e32fcf8c50425a",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/inputs/source.txt": "3d8a7e83fadefa36f92fc47d31c4937e3edda6734b08002fa026ffc68d93abef",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/inputs/support/Research/Projects/BinaryTreeReduction/Tree.lean": "336f0a53173d33a3630bb98428faafab87ebc0dbe606eead4f9eb2cbd95cd480",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/inputs/support/Research/Projects/BinaryTreeReduction/Reduction.lean": "7bb500f0306604e5c07f7621ff0603ffa172ed8944374abd9d269896b8ab26b5",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/inputs/support/Research/Projects/BinaryTreeReduction/Algorithm.lean": "b2736b0297959943cf2913729c2111de051ff1a95f1d5cd4e930a09249e000a1",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/inputs/support/Research/Common/FloatingPoint/Gamma.lean": "146665586383021bfd9635f035823ee12513685241abf366ab61921f1febf843",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/inputs/support/Research/Common/FloatingPoint/Model.lean": "b3730c493db6864297bc3ce04f2be01c9811a26d211dc268f10a50bf3894eece",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+    "experiments/exp-015-dot-product-proof-task-2026-10-29/memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "command": "bash pipeline/verify.sh",
+  "build_and_scans_exit_code": 1,
+  "formal_gate_passed": false
+}

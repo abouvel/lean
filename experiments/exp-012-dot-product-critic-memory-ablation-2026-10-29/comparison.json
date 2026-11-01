@@ -1,0 +1,24 @@
+{
+  "stateless": {
+    "total_cases": 6,
+    "verdicts_correct": 6,
+    "false_passes": 0,
+    "false_rejections": 0,
+    "invalid_reports": 0,
+    "timeouts": 0,
+    "expected_defects_found": 3,
+    "expected_defects_total": 4,
+    "critic_wall_time_seconds": 238.393
+  },
+  "retrieved": {
+    "total_cases": 6,
+    "verdicts_correct": 6,
+    "false_passes": 0,
+    "false_rejections": 0,
+    "invalid_reports": 0,
+    "timeouts": 0,
+    "expected_defects_found": 4,
+    "expected_defects_total": 4,
+    "critic_wall_time_seconds": 295.541
+  }
+}

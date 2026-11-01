@@ -1,0 +1,24 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:345\u2013351 proves tree_backward_error_local for an arbitrary tree t, assuming 0 \u2264 u, d*u < 1, t.height \u2264 d, and t.Valid add u. It concludes an occurrencewise bound on t.leaves. No declaration proves the requested backward-error theorem for algorithm add xs and the original nonempty input xs. The file ends at line 381; its only subsequent theorem (lines 377\u2013379) proves a fixed exact-addition example.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+      "evidence": "Theorem 3.1 in /spec/source.txt requires the computed algorithm output on arbitrary nonempty input to equal a sum of perturbed original occurrences, each bounded by gamma (ceil(log2 n)) u times its magnitude. Research/Submission.lean:69\u201370 defines algorithm; lines 227\u2013242 establish a final tree with permuted input leaves and bounded height; lines 245\u2013252 connect numerical and symbolic evaluations. The local bound at lines 345\u2013373 is never combined with these facts or transported back to original input occurrences. The only remaining theorem is concrete_example_only at lines 377\u2013379 for [2,3,4,5,6].",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "State and prove a theorem for every nonempty xs under the standard execution rounding model, 0 \u2264 u, and depth xs.length * u < 1, giving perturbations indexed by every original input occurrence whose perturbed sum equals algorithm add xs and whose absolute errors satisfy the requested gamma bound. Apply the local tree theorem and transport its occurrencewise relation through the proved leaf permutation."
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "The full backward-error theorem for the implemented algorithm on arbitrary nonempty original input is not proved."
+  ],
+  "limitations": [
+    "Stopped after the definite completeness failure, as required by the review protocol; offline verification evidence and independent examples were not examined."
+  ]
+}

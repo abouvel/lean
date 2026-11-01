@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "catalog": "evaluator/requirements.json",
+  "cases": [
+    {
+      "id": "known-complete",
+      "report": "known-complete/review/review.json",
+      "metrics": "known-complete/review/metrics.json",
+      "expected_verdict": "pass",
+      "expected_defects": []
+    },
+    {
+      "id": "renamed-complete",
+      "report": "renamed-complete/review/review.json",
+      "metrics": "renamed-complete/review/metrics.json",
+      "expected_verdict": "pass",
+      "expected_defects": []
+    },
+    {
+      "id": "proposition-only",
+      "report": "proposition-only/review/checkpoint.json",
+      "metrics": "proposition-only/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-final-theorem"
+      ]
+    },
+    {
+      "id": "additions-only",
+      "report": "additions-only/review/checkpoint.json",
+      "metrics": "additions-only/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-exact-product-link"
+      ]
+    },
+    {
+      "id": "zero-u-only",
+      "report": "zero-u-only/review/checkpoint.json",
+      "metrics": "zero-u-only/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "strengthened-assumption"
+      ]
+    },
+    {
+      "id": "conclusion-assumed",
+      "report": "conclusion-assumed/review/checkpoint.json",
+      "metrics": "conclusion-assumed/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "conclusion-assumed"
+      ]
+    }
+  ]
+}

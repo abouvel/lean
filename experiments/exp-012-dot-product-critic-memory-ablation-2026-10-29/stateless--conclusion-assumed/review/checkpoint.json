@@ -1,0 +1,36 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:48-59 declares roundedDotProduct_exists_perturbation for model, tree, and hsmall, but additionally assumes result (lines 51-54), which is exactly its conclusion (lines 55-58), and proves it with exact result (line 59). No unconditional target theorem is proved.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "Research/Submission.lean:48-59 proves only the desired conclusion conditional on itself. The supporting theorem at lines 28-44 proves multiplication perturbations alone; Research/Projects/BinaryTreeReduction/Reduction.lean:174-180 proves a rounded-sum theorem for supplied leaf values, not the requested dot-product theorem.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Prove the existential perturbation conclusion for every Model and pair-valued Tree from the stated smallness hypothesis alone, composing multiplication and addition errors."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "Research/Submission.lean:51-54 adds result : \u2203 perturbed, IsPerturbation (gamma (tree.depth + 1) model.u) (exactProductTree tree) perturbed \u2227 perturbed.exactSum = roundedDotProduct model tree. This repeats the conclusion at lines 55-58 verbatim; line 59 returns that assumption.",
+      "verdict": "fail",
+      "defect_categories": [
+        "conclusion-assumed"
+      ],
+      "correction": "Remove the result hypothesis and construct the perturbation witness and both required properties using the relative-error model and hsmall."
+    }
+  ],
+  "assumptions_added": [
+    "Research/Submission.lean:51-54 assumes the entire requested existential backward-error conclusion as result."
+  ],
+  "missing_obligations": [
+    "An unconditional proof of the dot-product perturbation theorem under only the supplied Model and (tree.depth + 1) * model.u < 1."
+  ],
+  "limitations": [
+    "Stopped after the definite completeness failure, as required; offline verification evidence and further semantic checks were not reviewed."
+  ]
+}

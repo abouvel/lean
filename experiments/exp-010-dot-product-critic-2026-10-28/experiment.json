@@ -1,0 +1,27 @@
+{
+  "name": "exp-010-dot-product-critic-2026-10-28",
+  "task_id": "floating-point-dot-product-critic-benchmark",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "known-complete",
+    "renamed-complete",
+    "proposition-only",
+    "additions-only",
+    "zero-u-only",
+    "conclusion-assumed"
+  ],
+  "builder_seconds": 1,
+  "critic_seconds": 240,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "8g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "verification_command": "bash pipeline/verify.sh <case>/evaluation-workspace"
+}

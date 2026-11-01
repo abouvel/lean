@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "stateless--known-complete",
+      "expected_verdict": "pass",
+      "expected_defects": [],
+      "status": "scored",
+      "predicted_verdict": "pass",
+      "predicted_defects": [],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "retrieved--known-complete",
+      "expected_verdict": "pass",
+      "expected_defects": [],
+      "status": "scored",
+      "predicted_verdict": "pass",
+      "predicted_defects": [],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "retrieved--renamed-complete",
+      "expected_verdict": "pass",
+      "expected_defects": [],
+      "status": "scored",
+      "predicted_verdict": "pass",
+      "predicted_defects": [],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "stateless--renamed-complete",
+      "expected_verdict": "pass",
+      "expected_defects": [],
+      "status": "scored",
+      "predicted_verdict": "pass",
+      "predicted_defects": [],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "stateless--proposition-only",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-final-theorem"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "missing-final-theorem"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "retrieved--proposition-only",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-final-theorem"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "missing-final-theorem"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "retrieved--additions-only",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-exact-product-link"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "missing-exact-product-link",
+        "missing-final-theorem",
+        "wrong-error-count"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "stateless--additions-only",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-exact-product-link"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "missing-final-theorem"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": false,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "stateless--zero-u-only",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "strengthened-assumption"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "strengthened-assumption",
+        "weakened-quantification"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "retrieved--zero-u-only",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "strengthened-assumption"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "missing-final-theorem",
+        "strengthened-assumption",
+        "weakened-quantification"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "retrieved--conclusion-assumed",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "conclusion-assumed"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "conclusion-assumed",
+        "missing-final-theorem",
+        "strengthened-assumption"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "stateless--conclusion-assumed",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "conclusion-assumed"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "conclusion-assumed",
+        "missing-final-theorem"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    }
+  ],
+  "summary": {
+    "total_cases": 12,
+    "scored_cases": 12,
+    "verdicts_correct": 12,
+    "false_passes": 0,
+    "false_rejections": 0,
+    "invalid_reports": 0,
+    "timeouts": 0,
+    "expected_defects_found": 7,
+    "expected_defects_total": 8
+  }
+}

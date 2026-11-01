@@ -1,0 +1,22 @@
+{
+  "condition": "stateless",
+  "kind": "reviewer",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "started_unix": 1793289268.9183266,
+  "time_limit_seconds": 240,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_time_seconds": 56.233,
+  "token_usage": {
+    "input_tokens": 251309,
+    "cached_input_tokens": 226560,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2224,
+    "reasoning_output_tokens": 110
+  },
+  "compiler_command_events": 4,
+  "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+}

@@ -85,6 +85,22 @@ class CriticTests(unittest.TestCase):
             self.assertEqual(session.call_args.args[0], critic.COMPLETENESS_FIRST + "rubric")
             self.assertEqual(session.call_args.kwargs["kind"], "reviewer")
             self.assertTrue(callable(session.call_args.kwargs["stop_when"]))
+            self.assertIn('"correction": ""', critic.COMPLETENESS_FIRST)
+            self.assertIn("Never use null", critic.COMPLETENESS_FIRST)
+            self.assertIn("Otherwise do not create checkpoint.json", critic.COMPLETENESS_FIRST)
+
+    def test_retrieval_log_requires_opened_artifacts_for_influences(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            valid = {"search_queries": ["semantic completeness"],
+                     "opened_artifacts": [{"artifact_id": "lesson", "path": "/memory/lesson.md"}],
+                     "decisions_influenced": [{"artifact_id": "lesson", "decision": "Checked target first"}]}
+            (root / "retrieval.json").write_text(json.dumps(valid))
+            self.assertEqual(critic.read_retrieval_log(root), valid)
+            valid["decisions_influenced"][0]["artifact_id"] = "not-opened"
+            (root / "retrieval.json").write_text(json.dumps(valid))
+            with self.assertRaisesRegex(ValueError, "decision log"):
+                critic.read_retrieval_log(root)
 
     def test_builder_entry_point_has_explicit_builder_role(self):
         with patch("agent.builder_prompt", return_value="assignment"), patch("agent.run_agent") as session:
@@ -125,6 +141,63 @@ class CriticTests(unittest.TestCase):
                 "assumptions_added": [], "missing_obligations": [] if verdict == "pass" else ["Full bound"],
                 "limitations": []}
 
+    def catalog(self):
+        return {"schema_version": 1,
+                "requirements": [
+                    {"id": "target-completeness", "description": "Prove the requested theorem"},
+                    {"id": "assumption-integrity", "description": "Do not assume the conclusion"}],
+                "defect_categories": [
+                    {"id": "missing-final-theorem", "description": "No final theorem"},
+                    {"id": "conclusion-assumed", "description": "Conclusion is a hypothesis"}]}
+
+    def catalog_report(self, verdict="pass", phase="final"):
+        report = self.report(verdict, phase)
+        report["requirements"] = [
+            {"requirement_id": "target-completeness", "requirement": "Prove target",
+             "evidence": "Submission.lean:10", "verdict": verdict,
+             "defect_categories": [] if verdict == "pass" else ["missing-final-theorem"],
+             "correction": "" if verdict == "pass" else "Prove the target"},
+            {"requirement_id": "assumption-integrity", "requirement": "Do not assume target",
+             "evidence": "Submission.lean:10", "verdict": "pass", "defect_categories": [],
+             "correction": ""}]
+        return report
+
+    def test_catalog_prompt_and_validation_use_stable_ids(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "REVIEWER.txt").write_text("rubric")
+            (root / "requirements.json").write_text(json.dumps(self.catalog()))
+            prompt = critic.reviewer_prompt(root)
+            self.assertIn("target-completeness", prompt)
+            review = root / "review"
+            review.mkdir()
+            (review / "review.json").write_text(json.dumps(self.catalog_report()))
+            self.assertEqual(critic.read_review(review, catalog=root / "requirements.json")["overall_verdict"], "pass")
+
+    def test_catalog_rejects_unknown_missing_and_duplicate_ids(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            for mutate in ("unknown", "missing", "duplicate"):
+                report = self.catalog_report()
+                if mutate == "unknown":
+                    report["requirements"][0]["requirement_id"] = "invented"
+                elif mutate == "missing":
+                    report["requirements"].pop()
+                else:
+                    report["requirements"][1]["requirement_id"] = "target-completeness"
+                (root / "review.json").write_text(json.dumps(report))
+                with self.subTest(mutate=mutate), self.assertRaises(ValueError):
+                    critic.read_review(root, catalog=self.catalog())
+
+    def test_catalog_rejects_unclassified_failure(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            report = self.catalog_report("fail")
+            report["requirements"][0]["defect_categories"] = []
+            (root / "review.json").write_text(json.dumps(report))
+            with self.assertRaisesRegex(ValueError, "defect category"):
+                critic.read_review(root, catalog=self.catalog())
+
     def test_only_definite_valid_rejection_stops_critic(self):
         with TemporaryDirectory() as folder:
             root = Path(folder)
@@ -154,6 +227,58 @@ class CriticTests(unittest.TestCase):
                 (root / "review.json").write_text(json.dumps(dict(self.report("pass", "final"), **changes)))
                 with self.assertRaises(ValueError):
                     critic.require_pass(root)
+
+    def test_null_corrections_and_nonstring_collection_items_are_rejected(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            invalid = self.report("pass", "final")
+            invalid["requirements"][0]["correction"] = None
+            (root / "review.json").write_text(json.dumps(invalid))
+            with self.assertRaisesRegex(ValueError, "verdict/evidence"):
+                critic.read_review(root)
+            for key in ("assumptions_added", "missing_obligations", "limitations"):
+                with self.subTest(key=key):
+                    invalid = self.report("pass", "final")
+                    invalid[key] = [None]
+                    (root / "review.json").write_text(json.dumps(invalid))
+                    with self.assertRaisesRegex(ValueError, "list of strings"):
+                        critic.read_review(root)
+
+    def test_uncertain_final_requires_uncertain_requirement(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            invalid = self.report("fail", "final")
+            invalid["overall_verdict"] = "uncertain"
+            (root / "review.json").write_text(json.dumps(invalid))
+            with self.assertRaisesRegex(ValueError, "uncertain requirement"):
+                critic.read_review(root)
+            valid = self.report("uncertain", "final")
+            (root / "review.json").write_text(json.dumps(valid))
+            self.assertEqual(critic.read_review(root)["overall_verdict"], "uncertain")
+
+    def test_process_state_selects_exactly_one_report(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            checkpoint = self.report("fail", "completeness")
+            final = self.report("pass", "final")
+            (root / "checkpoint.json").write_text(json.dumps(checkpoint))
+            (root / "review.json").write_text(json.dumps(final))
+            stopped = {"exit_code": -15, "timed_out": False, "stopped_for_checkpoint": True}
+            clean = {"exit_code": 0, "timed_out": False, "stopped_for_checkpoint": False}
+            self.assertEqual(critic.completed_review(root, stopped)["overall_verdict"], "fail")
+            self.assertEqual(critic.completed_review(root, clean)["overall_verdict"], "pass")
+            (root / "review.json").unlink()
+            with self.assertRaises(FileNotFoundError):
+                critic.completed_review(root, clean)
+
+    def test_timeout_or_crash_never_uses_an_existing_terminal_report(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "review.json").write_text(json.dumps(self.report("pass", "final")))
+            for metrics in ({"exit_code": -15, "timed_out": True},
+                            {"exit_code": 1, "timed_out": False}):
+                with self.subTest(metrics=metrics), self.assertRaisesRegex(RuntimeError, "failed"):
+                    critic.completed_review(root, metrics)
 
     def test_session_stops_on_checkpoint_without_marking_timeout(self):
         with TemporaryDirectory() as folder:
@@ -193,11 +318,28 @@ class CriticTests(unittest.TestCase):
             (root / "stateless/review/metrics.json").write_text(json.dumps(
                 {"exit_code": -15, "timed_out": False, "stopped_for_checkpoint": True}))
             (root / "stateless/review/checkpoint.json").write_text(json.dumps(self.report()))
-            child = SimpleNamespace(directory=root, builders=Mock(), evaluate=Mock())
-            with patch("passes.review"):
+            child = SimpleNamespace(directory=root, config={}, builders=Mock(), evaluate=Mock())
+            with patch("stages.review"):
                 result = execute(child, "stateless")
             self.assertEqual(result["status"], "critic_failed")
             self.assertIn("Full bound", result["report"]["missing_obligations"])
+
+    def test_controller_accepts_one_formal_pass_with_valid_final_review(self):
+        from passes import execute
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            for name in ("output", "evaluation", "review"):
+                (root / "stateless" / name).mkdir(parents=True)
+            (root / "stateless/output/metrics.json").write_text('{"exit_code": 0}')
+            (root / "stateless/evaluation/verification.json").write_text('{"formal_gate_passed": true}')
+            (root / "stateless/review/metrics.json").write_text(json.dumps(
+                {"exit_code": 0, "timed_out": False, "stopped_for_checkpoint": False}))
+            (root / "stateless/review/review.json").write_text(json.dumps(self.report("pass", "final")))
+            child = SimpleNamespace(directory=root, config={}, builders=Mock(), evaluate=Mock())
+            with patch("stages.review"):
+                result = execute(child, "stateless")
+            self.assertEqual(result["status"], "accepted")
+            self.assertEqual(result["report"]["phase"], "final")
 
     def test_archived_runtime_is_hash_checked_without_relaxing_task_checks(self):
         import run as runner

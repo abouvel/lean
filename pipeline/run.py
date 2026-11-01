@@ -207,6 +207,25 @@ def main(argv=None):
         comparison = json.loads((source / "comparison.json").read_text())
         print("Frozen records: PASS; historical code checked in Git when relocated.")
         for condition, item in comparison["conditions"].items():
+            if "passes" in item:
+                passes = item["passes"]
+                verified = sum(p.get("verification", {}).get("formal_gate_passed") is True
+                               for p in passes)
+                verification_calls = sum("verification" in p for p in passes)
+                reports = [p.get("report", {}).get("overall_verdict") for p in passes
+                           if p.get("report")]
+                verdict = reports[-1] if reports else "not_run"
+                metrics = item.get("metrics", {})
+                critic_times = [p["critic"].get("wall_time_seconds", "unknown")
+                                for p in passes if p.get("critic")]
+                critic_seconds = (round(sum(critic_times), 3) if all(
+                    type(value) in (int, float) for value in critic_times) else "unknown")
+                print(f"{condition}: outcome={item.get('outcome', 'unknown')}, "
+                      f"formal_gates={verified}/{verification_calls}, critic={verdict}, "
+                      f"passes={len(passes)}, "
+                      f"builder_seconds={metrics.get('builder_seconds', 'unknown')}, "
+                      f"critic_seconds={critic_seconds}")
+                continue
             actor, verifier, critic = (item.get(key) for key in ("actor", "verification", "critic"))
             elapsed = actor.get("wall_time_seconds", "unknown") if isinstance(actor, dict) else "unknown"
             formal = verifier.get("formal_gate_passed", "unknown") if isinstance(verifier, dict) else "unknown"

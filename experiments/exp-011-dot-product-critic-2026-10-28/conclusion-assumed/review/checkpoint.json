@@ -1,0 +1,37 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:48-59 declares roundedDotProduct_exists_perturbation for model, tree, and the requested smallness hypothesis, but additionally assumes result at lines 51-54, exactly the existential conclusion at lines 55-58; its proof is exact result at line 59. The conclusion references exactProductTree, but is not established independently.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "Research/Submission.lean:48-59 proves only that the desired perturbation conclusion follows from itself. Lines 28-44 prove a multiplication-only supporting lemma, not the requested combined dot-product theorem.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Prove the existential perturbation theorem for every model and tree from the stated smallness hypothesis without a result hypothesis."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "Research/Submission.lean:51-54 adds result, an existential perturbation statement identical to the conclusion at lines 55-58, and line 59 returns that assumption.",
+      "verdict": "fail",
+      "defect_categories": [
+        "conclusion-assumed",
+        "strengthened-assumption"
+      ],
+      "correction": "Remove the result hypothesis and derive the exact-product perturbation witness and gamma(depth+1,u) bound using the multiplication and rounded-addition model."
+    }
+  ],
+  "assumptions_added": [
+    "The result hypothesis at Research/Submission.lean:51-54 assumes the entire requested conclusion."
+  ],
+  "missing_obligations": [
+    "An unconditional proof of the combined multiplication-and-addition backward-error theorem under only the original model and smallness assumptions."
+  ],
+  "limitations": [
+    "Stopped after the definite completeness failure; offline verification evidence and further semantic checks were not reviewed."
+  ]
+}

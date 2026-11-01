@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "experiment_id": "exp-016-dot-product-live-pipeline-2026-10-29",
+  "repository_root": "/home/abouvel/fall26/research",
+  "order": "stateless-phase-first",
+  "limits": {
+    "jobs": 1,
+    "model_calls": 1,
+    "lean_builds": 1,
+    "ram_gib": 12,
+    "job_seconds": 2400
+  },
+  "tasks": [
+    {
+      "id": "dot-product",
+      "config": "experiments/exp-015-dot-product-proof-task-2026-10-29/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Reviewed pilot-general-lean-001: generic tactic, denominator, and stale-module notes only. Completed dot-product proof, previous benchmark candidates, verdicts, and reports are excluded from all builder inputs."
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "dot-product-trial-001-stateless",
+      "pair_id": "dot-product-trial-001",
+      "task_id": "floating-point-dot-product-backward-error",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/dot-product-trial-001-stateless"
+    },
+    {
+      "job_id": "dot-product-trial-001-retrieved",
+      "pair_id": "dot-product-trial-001",
+      "task_id": "floating-point-dot-product-backward-error",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/dot-product-trial-001-retrieved"
+    }
+  ],
+  "created_unix": 1793289163.289932
+}

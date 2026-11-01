@@ -1,0 +1,23 @@
+{
+  "name": "dot-product-trial-001-retrieved",
+  "task_id": "floating-point-dot-product-backward-error",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "max_passes": 2,
+  "builder_seconds": 180,
+  "critic_seconds": 240,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "8g",
+    "cpus": 2,
+    "pids": 256
+  }
+}

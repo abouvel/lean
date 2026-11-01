@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "catalog": "critic-requirements.json",
+  "cases": [
+    {
+      "id": "known-complete",
+      "report": "reports/known-complete/review.json",
+      "metrics": "reports/known-complete/metrics.json",
+      "expected_verdict": "pass",
+      "expected_defects": []
+    },
+    {
+      "id": "missing-final-theorem",
+      "report": "reports/missing-final-theorem/review.json",
+      "metrics": "reports/missing-final-theorem/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-final-theorem"
+      ]
+    }
+  ]
+}

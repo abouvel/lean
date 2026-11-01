@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "theorem|axiom|sorry|roundedDotProduct|exactProductTree"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "2026-10-28-critic-agent-stable-ids",
+      "path": "/memory/2026-10-28-critic-agent-stable-ids.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "2026-10-28-critic-agent-stable-ids",
+      "decision": "Used catalog requirement and defect IDs in a partial completeness checkpoint; the mathematical failure was established directly from the candidate."
+    }
+  ]
+}

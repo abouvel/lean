@@ -1,0 +1,17 @@
+# Authoritative floating-point dot-product verification target
+
+Use the abstract relative-error Model and binary reduction Tree supplied in the
+candidate project. Prove, for every model and every tree of pairs of real
+numbers, that if `(tree.depth + 1) * model.u < 1`, rounding each componentwise
+product and then reducing the rounded products with rounded tree addition is the
+exact sum of leafwise perturbations of the exact products.
+
+The perturbation bound must be `gamma (tree.depth + 1) model.u`: one rounding
+error comes from each multiplication and at most `tree.depth` errors come from
+the additions on a leaf-to-root path. The theorem must relate the result to
+`exactProductTree tree`, account for both multiplication and addition rounding,
+and may not assume its conclusion or restrict the model to exact arithmetic.
+
+The intended target has the mathematical content of
+`roundedDotProduct_exists_perturbation`; declaration names and proof order are
+not requirements.

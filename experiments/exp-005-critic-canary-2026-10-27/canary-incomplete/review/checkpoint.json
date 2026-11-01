@@ -1,0 +1,33 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:285-307 proves algorithm_leaf_backward_error under xs \u2260 [], 0 \u2264 u, globally bounded errors, and clog(2,length xs)*u < 1, but line 290 identifies perturbations only with t.leaves. No declaration proves that the returned leaves are a permutation of xs, so the requested bound for the original input occurrences is absent.",
+  "requirements": [
+    {
+      "requirement": "Prove Theorem 3.1 for every original input occurrence of an arbitrary nonempty input, preserving multiplicities",
+      "evidence": "Research/Submission.lean:135-154 proves a generic tree bound; 285-307 proves a bound for the algorithm tree leaves. The only input identification in the latter is ps.map Prod.fst = t.leaves (line 290), with no equality or permutation relating these leaves to xs anywhere in the candidate. Tree.terms_inputs at 38-41 only relates terms to the same tree leaves.",
+      "verdict": "fail",
+      "correction": "Prove that each level preserves the multiset of leaf occurrences and hence that the final tree leaves are a permutation of xs; use this result to prove the backward-error decomposition and componentwise gamma bound indexed by the original input occurrences."
+    },
+    {
+      "requirement": "Implement the exact offset pairing and carry an unavailable-partner subtree unchanged without an extra rounding operation",
+      "evidence": "Research/Submission.lean:57-62 takes m=(length+1)/2, pairs index k with k+m, constructs add only for an available partner, and returns a unchanged otherwise. algorithm_offset at 238-243 identifies the offset with ceil(length xs / 2^(k+1)).",
+      "verdict": "pass",
+      "correction": ""
+    },
+    {
+      "requirement": "Establish termination in ceil(log2 n) levels and the corresponding depth bound for arbitrary nonempty input",
+      "evidence": "Research/Submission.lean:69-70 executes Nat.clog 2 xs.length rounds; logarithmic_depth at 75-76 identifies this with the natural ceiling of logb; algorithm_singleton at 254-268 proves a single returned tree and its depth bound under xs \u2260 [].",
+      "verdict": "pass",
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "Conservation of original input occurrences and their multiplicities through level and rounds is not proved.",
+    "The final backward-error decomposition and gamma bound for the original xs, rather than the unconnected returned tree leaves, is not proved."
+  ],
+  "limitations": [
+    "Stopped after the definite completeness failure as required by the review protocol; offline verification evidence and additional example checks were not examined."
+  ]
+}

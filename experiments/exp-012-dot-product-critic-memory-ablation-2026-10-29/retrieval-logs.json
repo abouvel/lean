@@ -1,0 +1,104 @@
+{
+  "retrieved--known-complete": {
+    "search_queries": [
+      "rg --files /workspace /spec /memory /evaluation",
+      "sorry|admit|axiom|unsafe|implemented_by"
+    ],
+    "opened_artifacts": [
+      {
+        "artifact_id": "2026-10-28-critic-agent-stable-ids",
+        "path": "/memory/2026-10-28-critic-agent-stable-ids.md"
+      }
+    ],
+    "decisions_influenced": [
+      {
+        "artifact_id": "2026-10-28-critic-agent-stable-ids",
+        "decision": "Checked report coverage against every stable requirement ID separately from the mathematical verdict; no candidate correctness inference was drawn from this artifact."
+      }
+    ]
+  },
+  "retrieved--renamed-complete": {
+    "search_queries": [
+      "rg --files /workspace /spec /memory /evaluation /output",
+      "sorry|admit|axiom|unsafe|implemented_by"
+    ],
+    "opened_artifacts": [
+      {
+        "artifact_id": "2026-10-28-critic-agent-stable-ids",
+        "path": "/memory/2026-10-28-critic-agent-stable-ids.md"
+      }
+    ],
+    "decisions_influenced": [
+      {
+        "artifact_id": "2026-10-28-critic-agent-stable-ids",
+        "decision": "Kept report-contract validation separate from the mathematical audit and checked all six catalog requirement IDs appear exactly once."
+      }
+    ]
+  },
+  "retrieved--proposition-only": {
+    "search_queries": [
+      "rg --files /workspace /spec /memory /evaluation",
+      "theorem|axiom|sorry|DotProduct|exactProduct|roundedProduct|^import"
+    ],
+    "opened_artifacts": [
+      {
+        "artifact_id": "2026-10-27-critic-contract-canary",
+        "path": "/memory/2026-10-27-critic-contract-canary.md"
+      }
+    ],
+    "decisions_influenced": [
+      {
+        "artifact_id": "2026-10-27-critic-contract-canary",
+        "decision": "Reinforced use of the completeness checkpoint alone for a definitely missing final proof; the verdict itself follows from the candidate declarations."
+      }
+    ]
+  },
+  "retrieved--additions-only": {
+    "search_queries": [
+      "theorem|axiom|sorry|roundedDotProduct|exactProductTree"
+    ],
+    "opened_artifacts": [
+      {
+        "artifact_id": "2026-10-28-critic-agent-stable-ids",
+        "path": "/memory/2026-10-28-critic-agent-stable-ids.md"
+      }
+    ],
+    "decisions_influenced": [
+      {
+        "artifact_id": "2026-10-28-critic-agent-stable-ids",
+        "decision": "Used catalog requirement and defect IDs in a partial completeness checkpoint; the mathematical failure was established directly from the candidate."
+      }
+    ]
+  },
+  "retrieved--zero-u-only": {
+    "search_queries": [
+      "rg --files /workspace /spec /memory /evaluation",
+      "theorem|axiom|sorry|def |structure "
+    ],
+    "opened_artifacts": [
+      {
+        "artifact_id": "2026-10-27-critic-contract-canary",
+        "path": "/memory/2026-10-27-critic-contract-canary.md"
+      }
+    ],
+    "decisions_influenced": []
+  },
+  "retrieved--conclusion-assumed": {
+    "search_queries": [
+      "rg --files /workspace /spec /memory /evaluation /output",
+      "theorem|axiom|sorry|def |structure|inductive"
+    ],
+    "opened_artifacts": [
+      {
+        "artifact_id": "2026-10-27-critic-contract-canary",
+        "path": "/memory/2026-10-27-critic-contract-canary.md"
+      }
+    ],
+    "decisions_influenced": [
+      {
+        "artifact_id": "2026-10-27-critic-contract-canary",
+        "decision": "Reinforced checkpoint-only routing for a definite incomplete proof; the failure itself was determined from candidate declarations."
+      }
+    ]
+  }
+}

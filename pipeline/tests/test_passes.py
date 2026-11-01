@@ -8,12 +8,23 @@ import unittest
 from unittest.mock import Mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from passes import run_pair, make_pass
+from passes import run_pair, make_pass, total
 from artifacts import validate
 from engine import CONFIG_FILES, save
 
 
 class PassTests(unittest.TestCase):
+    def test_totals_distinguish_skipped_stages_from_missing_measurements(self):
+        passes = [
+            {"builder": {"wall_time_seconds": 1}, "critic": {"wall_time_seconds": 2}},
+            {"builder": {"wall_time_seconds": 3}, "critic": {}},
+        ]
+        self.assertEqual(total(passes, "builder", "wall_time_seconds"), 4)
+        self.assertEqual(total(passes, "critic", "wall_time_seconds"), 2)
+        self.assertEqual(total([{"critic": {}}], "critic", "wall_time_seconds"), 0)
+        self.assertEqual(total([{"critic": {"wall_time_seconds": "unknown"}}],
+                               "critic", "wall_time_seconds"), "unknown")
+
     def fixture(self, root):
         config = {"inputs": "inputs", "memory": "memory", "evaluator": "evaluator", "max_passes": 2,
                   "conditions": ["stateless", "retrieved"], "model": "test", "reasoning_effort": "medium",

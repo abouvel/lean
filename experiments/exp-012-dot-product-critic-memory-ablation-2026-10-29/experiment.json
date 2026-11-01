@@ -1,0 +1,42 @@
+{
+  "name": "exp-012-dot-product-critic-memory-ablation-2026-10-29",
+  "task_id": "floating-point-dot-product-critic-memory-ablation",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless--known-complete",
+    "retrieved--known-complete",
+    "retrieved--renamed-complete",
+    "stateless--renamed-complete",
+    "stateless--proposition-only",
+    "retrieved--proposition-only",
+    "retrieved--additions-only",
+    "stateless--additions-only",
+    "stateless--zero-u-only",
+    "retrieved--zero-u-only",
+    "retrieved--conclusion-assumed",
+    "stateless--conclusion-assumed"
+  ],
+  "retrieved_conditions": [
+    "retrieved--known-complete",
+    "retrieved--renamed-complete",
+    "retrieved--proposition-only",
+    "retrieved--additions-only",
+    "retrieved--zero-u-only",
+    "retrieved--conclusion-assumed"
+  ],
+  "critic_memory_enabled": true,
+  "builder_seconds": 1,
+  "critic_seconds": 240,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "8g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "verification_command": "bash pipeline/verify.sh <condition>/evaluation-workspace"
+}

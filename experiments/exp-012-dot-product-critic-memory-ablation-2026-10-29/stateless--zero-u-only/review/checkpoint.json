@@ -1,0 +1,37 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:49-56 declares roundedDotProduct_exists_perturbation for model : Model and tree : Tree (ℝ × ℝ), with the requested smallness hypothesis but also hzero : model.u = 0 at line 52. Its conclusion uses gamma (tree.depth + 1) model.u and exactProductTree tree, but this extra hypothesis restricts the theorem to exact arithmetic. No unrestricted dot-product theorem is declared elsewhere in the candidate sources.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "Research/Submission.lean:49-56 proves only a theorem requiring hzero : model.u = 0, excluding positive-roundoff models allowed by /spec/source.txt. Supporting multiplication and addition lemmas do not themselves prove the requested unrestricted dot-product conclusion.",
+      "verdict": "fail",
+      "defect_categories": [
+        "weakened-quantification"
+      ],
+      "correction": "Remove hzero from the final theorem and prove the stated conclusion for every Model and every tree under only the requested smallness hypothesis."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "Research/Submission.lean:52 adds hzero : model.u = 0. Model.lean:15-19 requires only nonnegative u and the relative-error round_spec; it does not require u = 0. Together with round_spec, hzero forces every rounding operation to be exact. The hypothesis remains part of the theorem statement even though its proof at Submission.lean:57-75 does not use it.",
+      "verdict": "fail",
+      "defect_categories": [
+        "strengthened-assumption",
+        "weakened-quantification"
+      ],
+      "correction": "Delete the exact-arithmetic hypothesis hzero and establish the theorem using only Model and ((tree.depth + 1 : ℕ) : ℝ) * model.u < 1."
+    }
+  ],
+  "assumptions_added": [
+    "Research/Submission.lean:52: hzero : model.u = 0, an extra exact-arithmetic restriction absent from the authoritative target."
+  ],
+  "missing_obligations": [
+    "The dot-product backward-error theorem for arbitrary allowed positive-roundoff models under the original smallness assumption is not proved as a declaration."
+  ],
+  "limitations": [
+    "Stopped after the definite completeness failure, as required by the review protocol; offline verification evidence and further semantic checks were not reviewed."
+  ]
+}

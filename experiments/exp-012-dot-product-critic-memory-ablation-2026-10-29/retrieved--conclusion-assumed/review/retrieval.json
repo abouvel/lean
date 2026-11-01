@@ -1,0 +1,18 @@
+{
+  "search_queries": [
+    "rg --files /workspace /spec /memory /evaluation /output",
+    "theorem|axiom|sorry|def |structure|inductive"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "2026-10-27-critic-contract-canary",
+      "path": "/memory/2026-10-27-critic-contract-canary.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "2026-10-27-critic-contract-canary",
+      "decision": "Reinforced checkpoint-only routing for a definite incomplete proof; the failure itself was determined from candidate declarations."
+    }
+  ]
+}

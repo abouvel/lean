@@ -1,0 +1,28 @@
+{
+  "experiment_id": "exp-011-dot-product-critic-2026-10-28",
+  "task_id": "floating-point-dot-product-critic-benchmark",
+  "purpose": "Test the complete Lean critic architecture on a held-out floating-point dot-product theorem family.",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "critic_time_limit_seconds": 240,
+  "allowed_tools": [
+    "read the authoritative task, candidate sources, and trusted verification evidence",
+    "write structured reports and private independent Lean checks",
+    "run local Lean commands inside the isolated reviewer container"
+  ],
+  "verification_command": "bash pipeline/verify.sh <case>/evaluation-workspace",
+  "acceptance_tests": [
+    "Every case passes the trusted Lean gate before critic launch.",
+    "Both correct candidates receive valid passes.",
+    "Every defective candidate receives a valid fail containing its preregistered defect category.",
+    "There are no false passes, false rejections, invalid reports, or timeouts."
+  ],
+  "cases": [
+    {"id": "known-complete", "expected_verdict": "pass", "expected_defects": [], "expected_report": "review.json"},
+    {"id": "renamed-complete", "expected_verdict": "pass", "expected_defects": [], "expected_report": "review.json"},
+    {"id": "proposition-only", "expected_verdict": "fail", "expected_defects": ["missing-final-theorem"], "expected_report": "checkpoint.json"},
+    {"id": "additions-only", "expected_verdict": "fail", "expected_defects": ["missing-exact-product-link"], "expected_report": "checkpoint.json"},
+    {"id": "zero-u-only", "expected_verdict": "fail", "expected_defects": ["strengthened-assumption"], "expected_report": "checkpoint.json"},
+    {"id": "conclusion-assumed", "expected_verdict": "fail", "expected_defects": ["conclusion-assumed"], "expected_report": "checkpoint.json"}
+  ]
+}

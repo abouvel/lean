@@ -1,0 +1,3 @@
+Pass. Research/Submission.lean:91–99 proves the full universally quantified dot-product backward-error theorem under the requested smallness hypothesis. The perturbations are relative to exact componentwise products, with one multiplication error plus at most tree.depth addition errors, bounded by gamma (tree.depth + 1) model.u. No additional assumptions or missing obligations were found.
+
+Offline verification reports a successful build and no placeholders or custom axioms. The independent /output/Audit.lean check succeeds with the product and multiplication definitions unfolded; theorem dependencies are only propext, Classical.choice, and Quot.sound.

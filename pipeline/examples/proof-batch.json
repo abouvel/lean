@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "limits": {
+    "jobs": 2,
+    "model_calls": 2,
+    "lean_builds": 2,
+    "ram_gib": 24,
+    "job_seconds": 3600
+  },
+  "tasks": [
+    {
+      "id": "binary-tree",
+      "config": "experiments/exp-001-binary-tree/bounded.json",
+      "trials": 2,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Reviewed memory/index.md and general-lean.md: only generic triangle-inequality, denominator, and stale-module notes; no target theorem, completed proof, or reduction implementation. Re-review this field when changing the task or snapshot."
+      }
+    }
+  ]
+}

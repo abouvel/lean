@@ -3,6 +3,11 @@
 Experiments own their inputs and results. This directory runs the agents,
 enforces container boundaries, and checks their outputs.
 
+For multiple theorems and trials, use the [modular batch pipeline](BATCH.md).
+It reuses the same sequential proof pass inside isolated worker subprocesses,
+with a durable queue, stateless-first scheduling, independent model/build/RAM
+limits, searchable results, and comparisons when each pair finishes.
+
 ## Execution order
 
 ```text
@@ -38,7 +43,7 @@ history or compiler caches. "Stateless" excludes external research memory,
 not feedback from its own earlier passes.
 
 The [bounded config](../experiments/exp-001-binary-tree/bounded.json) fixes two
-passes, 180 builder seconds/pass, and 120 critic seconds/pass for both conditions.
+passes, 180 builder seconds/pass, and 240 critic seconds/pass for both conditions.
 Verification has its own timeout. These are per-pass limits, not a hard token or
 whole-condition wall-time cap. Choose budgets before running; do not lower the
 baseline's limit after observing its result.
@@ -112,7 +117,7 @@ Separation means a fresh session, not a different model or trained evaluator.
 | --- | --- |
 | Original paper and extracted specification | Builder conversation and decision-log files |
 | Candidate Lean code, read-only | Other condition's candidate or results |
-| Trusted verification logs, read-only | Retrieval memory snapshot |
+| Trusted verification logs, read-only | Retrieval memory snapshot by default |
 | Private rubric and withheld acceptance cases | Permission to edit the candidate |
 
 The rubric asks whether the formalization actually proves the assigned result:
@@ -120,6 +125,14 @@ arbitrary nonempty inputs, correct offset pairing, unchanged carries, duplicate
 multiplicities, logarithmic depth, and the componentwise gamma bound. It also
 checks for weakened conclusions, unjustified assumptions, vacuous definitions,
 and missing obligations. Candidate comments are data, not instructions.
+
+Critic memory is an explicit experiment-only opt-in. Set
+`critic_memory_enabled: true` and list the exact condition names in
+`retrieved_conditions` to mount the experiment's frozen memory directory
+read-only for those critics. Retrieved critics are prompted to save a validated
+`retrieval.json` recording actual searches, opened artifact IDs, and decisions
+influenced. Conditions not listed remain stateless; ordinary production critics
+still receive no retrieval memory.
 
 The critic can write and compile independent checks in its private output
 directory. Both pilot critics did so. Open the actual evidence:
@@ -130,6 +143,24 @@ directory. Both pilot critics did so. Open the actual evidence:
 - Retrieved: [review](../experiments/exp-001-binary-tree/retrieved/review/review.md),
   [structured verdict](../experiments/exp-001-binary-tree/retrieved/review/review.json),
   [independent Lean checks](../experiments/exp-001-binary-tree/retrieved/review/IndependentChecks.lean).
+
+### Stable critic requirements and benchmark scoring
+
+New experiments may place `requirements.json` beside `REVIEWER.txt`. The critic
+receives that catalog and must use its exact requirement and defect-category
+IDs. Final reports must cover every requirement; early completeness checkpoints
+may report only the requirements needed for the definite rejection. Historical
+experiments without a catalog retain the legacy report contract.
+
+[`critic_benchmark.py`](critic_benchmark.py) scores preserved reports against a
+hidden manifest after the critic exits. It counts semantic verdict errors,
+false passes, false rejections, expected defect detection, malformed reports,
+and timeouts separately. Expected labels are evaluator data and must never be
+mounted into the critic container. Templates live under [`examples/`](examples/).
+
+```bash
+python3 pipeline/critic_benchmark.py path/to/benchmark.json --output scores.json
+```
 
 ## Lean verification is a separate gate
 
@@ -168,16 +199,19 @@ Original task + submitted code + offline verification
 
 The critic must identify the proved declaration and assumptions before running
 optional examples. Defining the desired proposition does not prove it.
-`checkpoint.json` records this first check; a valid, definite failure stops the
-critic early (polled every two seconds). `review.json` is the final audit.
+`checkpoint.json` records only a valid, definite completeness failure and stops
+the critic early (polled every two seconds). Otherwise no checkpoint is written;
+`review.json` is the final audit.
 Both need requirement-level evidence and target source locations. Only a final
 report can pass; Lean's offline gate must also pass. No report, malformed JSON,
 or a timeout remains an infrastructure error, not a theorem rejection. Repairs
 stay within the existing pass cap; uncertainty stops for human review.
 
 This is a workflow guard, not a guarantee that the critic's judgment is correct.
-The revised handling is covered by local tests; a fresh model pair is needed to
-measure whether it fixes the observed timeout bottleneck.
+The 240-second trial removed the earlier critic timeouts but exposed a report
+contract mismatch (`correction: null` and a completeness report under the final
+filename). The active contract now gives typed JSON examples and deterministic
+filename routing. A model-backed canary is still needed before another paid pair.
 
 Containers run non-root with a read-only root, dropped capabilities, and resource
 limits. Builders see only selected inputs, private workspace/output, read-only

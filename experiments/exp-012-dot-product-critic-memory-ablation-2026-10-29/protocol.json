@@ -1,0 +1,42 @@
+{
+  "experiment_id": "exp-012-dot-product-critic-memory-ablation-2026-10-29",
+  "task_id": "floating-point-dot-product-critic-memory-ablation",
+  "purpose": "Compare stateless and retrieved Lean critics on the same frozen dot-product candidates.",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "critic_time_limit_seconds": 240,
+  "verification_command": "bash pipeline/verify.sh <condition>/evaluation-workspace",
+  "artifact_snapshot_sources": [
+    "2026-10-27-critic-contract-canary",
+    "2026-10-28-critic-agent-stable-ids",
+    "2026-10-28-five-case-live-critic"
+  ],
+  "acceptance_tests": [
+    "Every condition passes the trusted Lean gate before critic launch.",
+    "Both memory modes correctly classify both complete candidates and all four defective candidates.",
+    "Both memory modes find all four preregistered defect categories with no false passes, false rejections, invalid reports, or timeouts.",
+    "Every retrieved critic produces a valid retrieval log and opens at least one approved artifact; stateless critics receive no memory mount."
+  ],
+  "base_cases": [
+    {"id": "known-complete", "expected_verdict": "pass", "expected_defects": [], "expected_report": "review.json"},
+    {"id": "renamed-complete", "expected_verdict": "pass", "expected_defects": [], "expected_report": "review.json"},
+    {"id": "proposition-only", "expected_verdict": "fail", "expected_defects": ["missing-final-theorem"], "expected_report": "checkpoint.json"},
+    {"id": "additions-only", "expected_verdict": "fail", "expected_defects": ["missing-exact-product-link"], "expected_report": "checkpoint.json"},
+    {"id": "zero-u-only", "expected_verdict": "fail", "expected_defects": ["strengthened-assumption"], "expected_report": "checkpoint.json"},
+    {"id": "conclusion-assumed", "expected_verdict": "fail", "expected_defects": ["conclusion-assumed"], "expected_report": "checkpoint.json"}
+  ],
+  "condition_order": [
+    "stateless--known-complete",
+    "retrieved--known-complete",
+    "retrieved--renamed-complete",
+    "stateless--renamed-complete",
+    "stateless--proposition-only",
+    "retrieved--proposition-only",
+    "retrieved--additions-only",
+    "stateless--additions-only",
+    "stateless--zero-u-only",
+    "retrieved--zero-u-only",
+    "retrieved--conclusion-assumed",
+    "stateless--conclusion-assumed"
+  ]
+}

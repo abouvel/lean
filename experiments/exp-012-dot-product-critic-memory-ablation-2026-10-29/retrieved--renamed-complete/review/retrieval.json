@@ -1,0 +1,18 @@
+{
+  "search_queries": [
+    "rg --files /workspace /spec /memory /evaluation /output",
+    "sorry|admit|axiom|unsafe|implemented_by"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "2026-10-28-critic-agent-stable-ids",
+      "path": "/memory/2026-10-28-critic-agent-stable-ids.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "2026-10-28-critic-agent-stable-ids",
+      "decision": "Kept report-contract validation separate from the mathematical audit and checked all six catalog requirement IDs appear exactly once."
+    }
+  ]
+}

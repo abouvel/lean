@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "limits": {
+    "jobs": 1,
+    "model_calls": 1,
+    "lean_builds": 1,
+    "ram_gib": 12,
+    "job_seconds": 2400
+  },
+  "tasks": [
+    {
+      "id": "dot-product",
+      "config": "experiments/exp-015-dot-product-proof-task-2026-10-29/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Reviewed pilot-general-lean-001: generic tactic, denominator, and stale-module notes only. Completed dot-product proof, previous benchmark candidates, verdicts, and reports are excluded from all builder inputs."
+      }
+    }
+  ]
+}

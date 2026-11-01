@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="gSV_s7AcC7ITuOhG-ob1">
+    <mxGraphModel dx="2345" dy="1506" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;" value="Proposed parallel pipeline" vertex="1">
+          <mxGeometry height="40" width="600" x="493.7778625488281" y="777.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;" value="Experiment&lt;br&gt;&lt;br&gt;Proof input + acceptance tests&lt;br&gt;Fixed model, tools and pass budget&lt;br&gt;Freeze source and memory snapshot" vertex="1">
+          <mxGeometry height="130" width="250" x="493.7778625488281" y="852.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;" value="Job queue/list&lt;br&gt;&lt;br&gt;One job = theorem × trial × condition&lt;br&gt;pair_id links stateless and retrieved&lt;br&gt;queued → running → finished&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;run the stateless ones first&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="270" x="813.7778625488281" y="852.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;" value="Coordinator&lt;br&gt;&lt;br&gt;Claim jobs and start runner subprocesses&lt;br&gt;asyncio waits for jobs concurrently&lt;br&gt;Track heartbeat, timeout and job ID" vertex="1">
+          <mxGeometry height="130" width="290" x="1163.7778625488281" y="852.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;spacing=8;" value="parallel does not mean unlimited.&lt;br&gt;&lt;br&gt;Separate limits for model calls, Lean builds and RAM.&lt;br&gt;Start small; increase from measured throughput." vertex="1">
+          <mxGeometry height="140" width="260" x="1533.7778625488281" y="847.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=13;" value="Independent jobs run at the same time. Slots take either condition; they are not extra AI agents." vertex="1">
+          <mxGeometry height="40" width="900" x="553.7778625488281" y="1037.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;" value="Execution slot 1&lt;br&gt;Example: proof A / stateless" vertex="1">
+          <mxGeometry height="65" width="260" x="553.7778625488281" y="1117.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;" value="Execution slot N&lt;br&gt;Example: proof B / stateless" vertex="1">
+          <mxGeometry height="65" width="260" x="1193.7778625488281" y="1117.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" value="Existing single-job proof pipeline&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="135" width="260" x="609.9978625488282" y="1237.9978625488282" as="geometry" />
+        </mxCell>
+        <mxCell id="11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" value="Existing single-job proof pipeline&lt;br&gt;&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="135" width="260" x="1178.7778625488281" y="1237.9978625488282" as="geometry" />
+        </mxCell>
+        <mxCell id="12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;spacing=10;" value="Input isolation&lt;br&gt;&lt;br&gt;Same frozen task and source for a pair.&lt;br&gt;Only retrieved builders get read-only memory.&lt;br&gt;No completed target proof in that memory.&lt;br&gt;No live artifacts shared between jobs.&lt;br&gt;&lt;br&gt;The proof loop stays sequential inside each job. Different jobs overlap." vertex="1">
+          <mxGeometry height="255" width="260" x="1533.7778625488281" y="1117.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;spacing=8;" value="Private result bundle&lt;br&gt;job_id / proof / logs / metrics.json" vertex="1">
+          <mxGeometry height="65" width="260" x="539.9978625488282" y="1449.9978625488282" as="geometry" />
+        </mxCell>
+        <mxCell id="14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;spacing=8;" value="Private result bundle&lt;br&gt;job_id / proof / logs / metrics.json" vertex="1">
+          <mxGeometry height="65" width="260" x="1193.7778625488281" y="1449.9978625488282" as="geometry" />
+        </mxCell>
+        <mxCell id="15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;" value="Coordinator collects each result as it finishes&lt;br&gt;&lt;br&gt;Validate JSON; record success, failure or infrastructure error&lt;br&gt;Single writer updates queue and shared indexes&lt;br&gt;Free slot → claim next queued job (do not wait for the batch)" vertex="1">
+          <mxGeometry height="130" width="440" x="783.7778625488281" y="1557.5278625488281" as="geometry" />
+        </mxCell>
+        <mxCell id="16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;" value="Both jobs in a pair finished&lt;br&gt;&lt;br&gt;Compare acceptance first, then passes, time and tokens&lt;br&gt;Record cost only when available; otherwise unknown&lt;br&gt;Keep failed runs too" vertex="1">
+          <mxGeometry height="115" width="440" x="493.7778625488281" y="1799.9978625488282" as="geometry" />
+        </mxCell>
+        <mxCell id="17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=13;spacing=8;" value="One experiment folder&lt;br&gt;&lt;br&gt;config + inputs + frozen snapshot&lt;br&gt;runs/job_id/ contains all job evidence&lt;br&gt;comparison + artifacts + index" vertex="1">
+          <mxGeometry height="115" width="380" x="1091.9978625488282" y="1789.9978625488282" as="geometry" />
+        </mxCell>
+        <mxCell id="18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;spacing=10;" value="Separate experiment: cumulative transfer&lt;br&gt;&lt;br&gt;Do verified lessons help NEW, related floating-point proofs?&lt;br&gt;&lt;br&gt;Finish a pair → review general lessons → freeze next snapshot → run next pair.&lt;br&gt;&lt;br&gt;Vary task order; exclude the target answer. Track success, time and total token cost as memory grows.&lt;br&gt;&lt;br&gt;External memory reuse, not model-weight learning." vertex="1">
+          <mxGeometry height="325" width="300" x="1629.9978625488282" y="1539.9978625488282" as="geometry" />
+        </mxCell>
+        <mxCell id="19" edge="1" parent="1" source="3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="20" edge="1" parent="1" source="4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="21" edge="1" parent="1" source="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1308.7778625488281" y="1017.5278625488281" />
+              <mxPoint x="683.7778625488281" y="1017.5278625488281" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="22" edge="1" parent="1" source="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1308.7778625488281" y="1017.5278625488281" />
+              <mxPoint x="1323.7778625488281" y="1017.5278625488281" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="23" edge="1" parent="1" source="8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="24" edge="1" parent="1" source="9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="25" edge="1" parent="1" source="10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="26" edge="1" parent="1" source="11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="27" edge="1" parent="1" source="13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.15;entryY=0;" target="15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="683.7778625488281" y="1522.5278625488281" />
+              <mxPoint x="849.7778625488281" y="1522.5278625488281" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="28" edge="1" parent="1" source="14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.85;entryY=0;" target="15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1323.7778625488281" y="1522.5278625488281" />
+              <mxPoint x="1157.7778625488281" y="1522.5278625488281" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29" edge="1" parent="1" source="15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.25;exitY=1;entryX=0.5;entryY=0;" target="16">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="893.7778625488281" y="1707.5278625488281" />
+              <mxPoint x="713.7778625488281" y="1707.5278625488281" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30" edge="1" parent="1" source="15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.75;exitY=1;entryX=0.5;entryY=0;" target="17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1113.7778625488281" y="1707.5278625488281" />
+              <mxPoint x="1263.7778625488281" y="1707.5278625488281" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="31" parent="1" style="whiteSpace=wrap;html=1;" value="Note we plan around with N here. Need to test what number codex performs best with&amp;nbsp;" vertex="1">
+          <mxGeometry height="87.47" width="173.78" x="920" y="1122.53" as="geometry" />
+        </mxCell>
+        <mxCell id="32" parent="1" style="whiteSpace=wrap;html=1;" value="Note:&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;running in parallel isn&#39;t more expensive than sequential as we are still making the same number of api calls.&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="330" x="1000" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="33" parent="1" style="whiteSpace=wrap;html=1;" value="add initial planning step.&lt;div&gt;We process all of them with stateless only. We then store all artifacts and summaries and search them efficiently with agent to see if artificats from different proofs.&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="115" width="180" x="1460" y="615" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

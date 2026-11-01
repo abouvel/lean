@@ -1,0 +1,8 @@
+Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation (model : Model)
+  (tree : Research.BinaryTreeReduction.Tree (ℝ × ℝ)) (hsmall : ↑(tree.depth + 1) * model.u < 1) :
+  ∃ perturbed,
+    IsPerturbation (gamma (tree.depth + 1) model.u) (exactProductTree tree) perturbed ∧
+      perturbed.exactSum = roundedDotProduct model tree
+'Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

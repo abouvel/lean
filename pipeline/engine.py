@@ -40,6 +40,11 @@ class Engine:
         self.net = f"research-{directory.name}-internal"
         self.proxy = f"research-{directory.name}-proxy"
 
+    def memory_mode(self, condition):
+        """Map experiment-specific condition names onto the two memory modes."""
+        retrieved = set(self.config.get("retrieved_conditions", ()))
+        return "retrieved" if condition == "retrieved" or condition in retrieved else "stateless"
+
     def network(self):
         if call(["docker", "network", "inspect", self.net], check=False).returncode:
             call(["docker", "network", "create", "--internal", self.net])
@@ -81,14 +86,16 @@ class Engine:
             for key in ("HTTPS_PROXY", "HTTP_PROXY", "ALL_PROXY"):
                 args += ["-e", key + "=http://model-proxy:3128"]
             args += ["-e", "NO_PROXY=localhost,127.0.0.1"]
-        if condition == "retrieved" and not reviewer and not offline:
+        memory_mode = self.memory_mode(condition)
+        critic_memory = reviewer and self.config.get("critic_memory_enabled", False)
+        if memory_mode == "retrieved" and not offline and (not reviewer or critic_memory):
             args += mount(self.directory / self.config["memory"], "/memory", True)
         if not reviewer and not offline and (self.directory / "feedback").is_dir():
             args += mount(self.directory / "feedback", "/feedback", True)
         limit = self.config["critic_seconds" if reviewer else "builder_seconds"]
         args += ["-e", "EXPERIMENT_MODEL=" + self.config["model"],
                  "-e", "REASONING_EFFORT=" + self.config["reasoning_effort"],
-                 "-e", "MEMORY_MODE=" + condition,
+                 "-e", "MEMORY_MODE=" + memory_mode,
                  "-e", f"TIME_LIMIT_SECONDS={limit}"]
         return args
 

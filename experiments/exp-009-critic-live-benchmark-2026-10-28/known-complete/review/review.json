@@ -1,0 +1,50 @@
+{
+  "overall_verdict": "pass",
+  "phase": "final",
+  "target_evidence": "Research/Submission.lean:391\u2013408 proves theorem_3_1: for every nonempty real list xs, nonnegative u, ExecutionModel add u xs, and (ceil(log2(length xs)))*u < 1, the actual algorithm output is the sum of xs.get i + \u0394 i with |\u0394 i| \u2264 gamma(depth xs.length,u)*|xs.get i| for every original occurrence i. Lines 411\u2013417 also prove the global rounding-model corollary.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+      "evidence": "Research/Submission.lean:391\u2013408 proves the full universally quantified componentwise theorem, using the list theorem at 377\u2013388 and tree induction at 345\u2013373. depth is Nat.clog 2 n (45); depth_spec (475\u2013476) characterizes it as the least integer bounding n by a power of two. gamma (255) is d*u/(1-d*u). IndependentChecks.lean restates and checks the full theorem with these definitions expanded.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "algorithm-linkage",
+      "requirement": "The proved theorem applies to the requested algorithm and its output.",
+      "evidence": "Research/Submission.lean:53\u201370 implements equal-offset pairing, ceiling-half split, unchanged unmatched values, and exactly depth stages. roundValues_entry (92\u2013105) proves the indexed pairing/carry rule. stages_length_ceiling (220\u2013225), stage_offset (447\u2013450), and stagesValues_length (453\u2013462) connect offsets to ceil(n/2^(ell+1)). algorithm_eq_tree (245\u2013252) and algorithm1_spec (465\u2013472) connect the numerical result to the certified tree. algorithm_tree_spec (431\u2013438) proves exact logarithmic tree height. Independent checks compile for all requested acceptance levels, singleton input, and a nonassociative operation detecting pairing and extra arithmetic on carries.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "input-occurrences",
+      "requirement": "The result is connected to every occurrence in the original input.",
+      "evidence": "Research/Submission.lean:143\u2013170 proves preservation as List.Perm, which preserves multiplicities; final_tree (227\u2013242) connects root leaves to the original input. Lines 383\u2013388 transport the occurrencewise Forall\u2082 bound back to original input order using perm_comp_forall\u2082. Lines 394\u2013408 produce \u0394 indexed by Fin xs.length and bound every xs.get i. Independent checks include five equal inputs and verify their round [4,4,2] and final sum 10.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "componentwise-backward-error",
+      "requirement": "The requested componentwise backward-error conclusion is proved.",
+      "evidence": "Research/Submission.lean:307\u2013335 establishes one-round error accumulation using gamma_step (261\u2013277). tree_backward_error_local (345\u2013373) constructs a separate perturbed value for every leaf and proves their sum equals tree evaluation. theorem_3_1 (391\u2013408) then proves algorithm add xs = sum_i(xs.get i + \u0394 i) and the componentwise gamma bound, including singleton depth zero. IndependentChecks.lean compiles a restatement of precisely this conclusion.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "The candidate does not assume, circularly encode, or vacuously imply the conclusion.",
+      "evidence": "Research/Submission.lean:285\u2013294 defines ExecutionModel solely as the local relative-error model at each actual addition in the final expression tree; leaves require True and carried trees gain no node. It does not assume perturbations or a global backward bound. The theorem additionally assumes only nonempty input, nonnegative unit roundoff, and depth*u < 1. Lines 280\u2013281 and 296\u2013305 derive this local model from the standard global operation model. Exact addition witnesses consistency of the model. Imports resolve: verification.json reports exit code 0 and formal_gate_passed true; verification.log reports successful builds and no placeholders/custom axioms. Independent Lean compilation exits 0; #print axioms for theorem_3_1, algorithm1_spec, stage_offset, and algorithm_exact lists only propext, Classical.choice, Quot.sound.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

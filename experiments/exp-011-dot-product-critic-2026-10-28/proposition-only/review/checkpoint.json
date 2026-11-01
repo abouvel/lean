@@ -1,0 +1,24 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:48-53 defines DotProductBackwardErrorClaim for arbitrary Model and tree under (depth+1)*u<1, relative to exactProductTree with gamma(depth+1,u), but does not prove it. Lines 28-44 prove only the multiplication perturbation. Research/Projects/BinaryTreeReduction/Reduction.lean:174-180 proves an addition-only bound relative to its input tree.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "Research/Submission.lean:48-53 is a Prop-valued definition, not a proof. The file ends at line 55. A repository-wide declaration search finds no theorem combining the rounded multiplication and reduction errors into the requested exact-product bound.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Prove the claim for every model and tree under the original smallness assumption, combining multiplication perturbations and rounded tree addition to obtain gamma(depth+1,u) relative to exactProductTree."
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "The final dot-product backward-error theorem is not proved; multiplication and addition perturbations are not combined into the requested bound."
+  ],
+  "limitations": [
+    "Stopped after the definite completeness failure as required; offline verification and independent compilation were not examined."
+  ]
+}

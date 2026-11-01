@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "experiment_id": "exp-005-critic-canary-2026-10-27",
+  "task_id": "critic-report-contract-canary",
+  "success": true,
+  "artifact_snapshot": "sha256:57e35766f5e39e97db2691fdf887c41c8a5cceaea625ae0eba9553e66ed4804f",
+  "conditions": {
+    "canary-incomplete": {
+      "expected": {"overall_verdict": "fail", "phase": "completeness", "file": "checkpoint.json"},
+      "actual": {"overall_verdict": "fail", "phase": "completeness", "file": "checkpoint.json"},
+      "passed": true,
+      "stopped_for_checkpoint": true,
+      "timed_out": false,
+      "wall_time_seconds": 26.074,
+      "token_usage": "unknown",
+      "compiler_command_events": 0,
+      "evidence": "canary-incomplete/review"
+    },
+    "canary-complete": {
+      "expected": {"overall_verdict": "pass", "phase": "final", "file": "review.json"},
+      "actual": {"overall_verdict": "pass", "phase": "final", "file": "review.json"},
+      "passed": true,
+      "stopped_for_checkpoint": false,
+      "timed_out": false,
+      "wall_time_seconds": 248.758,
+      "token_usage": {
+        "input_tokens": 584536,
+        "cached_input_tokens": 520320,
+        "output_tokens": 5465,
+        "reasoning_output_tokens": 1274
+      },
+      "compiler_command_events": 6,
+      "evidence": "canary-complete/review"
+    }
+  },
+  "verification": {
+    "command": "bash pipeline/verify.sh",
+    "passed": true,
+    "build_jobs": 8036,
+    "placeholder_and_custom_axiom_scans": "passed"
+  },
+  "limitations": [
+    "This is a critic-contract infrastructure canary, not a memory-ablation comparison.",
+    "The candidates were selected because their semantic status was already known.",
+    "The complete critic's time.time-derived wall metric exceeded the monotonic 240-second controller limit while timed_out remained false; treat that wall metric cautiously.",
+    "A passing canary does not calibrate critic accuracy on unseen or adversarial candidates."
+  ]
+}

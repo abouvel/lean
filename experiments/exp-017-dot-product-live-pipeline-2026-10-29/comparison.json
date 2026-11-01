@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "pairs": {
+    "dot-product-trial-001": {
+      "stateless": {
+        "job_id": "dot-product-trial-001-stateless",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 151.4714878740051,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 59.939,
+          "critic_seconds": 63.946,
+          "compiler_command_events": 3,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 760,
+          "builder_tokens": {
+            "input_tokens": 196193,
+            "cached_input_tokens": 169344,
+            "output_tokens": 1633,
+            "reasoning_output_tokens": 99
+          },
+          "critic_tokens": {
+            "input_tokens": 160875,
+            "cached_input_tokens": 126720,
+            "output_tokens": 1849,
+            "reasoning_output_tokens": 248
+          }
+        }
+      },
+      "retrieved": {
+        "job_id": "dot-product-trial-001-retrieved",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 175.1856781910028,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 83.961,
+          "critic_seconds": 63.29,
+          "compiler_command_events": 1,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 795,
+          "builder_tokens": {
+            "input_tokens": 164284,
+            "cached_input_tokens": 151168,
+            "output_tokens": 2647,
+            "reasoning_output_tokens": 352
+          },
+          "critic_tokens": {
+            "input_tokens": 247070,
+            "cached_input_tokens": 216448,
+            "output_tokens": 1854,
+            "reasoning_output_tokens": 65
+          }
+        }
+      }
+    }
+  }
+}

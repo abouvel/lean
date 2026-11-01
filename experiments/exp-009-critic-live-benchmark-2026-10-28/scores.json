@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "known-complete",
+      "expected_verdict": "pass",
+      "expected_defects": [],
+      "status": "scored",
+      "predicted_verdict": "pass",
+      "predicted_defects": [],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "missing-original-input-link",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-original-input-link"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "missing-original-input-link",
+        "weakened-conclusion"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "proposition-only",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-final-theorem"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "missing-final-theorem"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "concrete-example-only",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "concrete-example-only"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "missing-final-theorem"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": false,
+      "false_pass": false,
+      "false_rejection": false
+    },
+    {
+      "id": "conclusion-assumed",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "conclusion-assumed"
+      ],
+      "status": "scored",
+      "predicted_verdict": "fail",
+      "predicted_defects": [
+        "conclusion-assumed"
+      ],
+      "verdict_correct": true,
+      "expected_defects_found": true,
+      "false_pass": false,
+      "false_rejection": false
+    }
+  ],
+  "summary": {
+    "total_cases": 5,
+    "scored_cases": 5,
+    "verdicts_correct": 5,
+    "false_passes": 0,
+    "false_rejections": 0,
+    "invalid_reports": 0,
+    "timeouts": 0,
+    "expected_defects_found": 3,
+    "expected_defects_total": 4
+  }
+}

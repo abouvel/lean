@@ -1,0 +1,16 @@
+⚠ [8026/8028] Built Research.Submission (6.3s)
+warning: Research/Submission.lean:378:5: unused variable `hn`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Research/Submission.lean:378:28: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Research/Submission.lean:378:41: unused variable `hm`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Research/Submission.lean:379:5: unused variable `hd`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [8027/8028] Built Research (3.3s)
+Build completed successfully (8028 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

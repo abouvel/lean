@@ -1,5 +1,6 @@
 """Bounded builder/verifier/critic cycles; no cross-condition feedback transfer."""
 import hashlib
+import copy
 import json
 from pathlib import Path
 import shutil
@@ -9,8 +10,8 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from engine import Engine, CONFIG_FILES, ownership, save
-from critic import completed_review, review
 from artifacts import write
+from stages import execute, repair_feedback
 
 
 def read(path):
@@ -18,8 +19,12 @@ def read(path):
 
 
 def total(passes, role, key):
-    values = [item.get(role, {}).get(key, "unknown") for item in passes]
-    return sum(values) if values and all(type(value) in (int, float) for value in values) else "unknown"
+    """Total invoked stages; a deliberately skipped stage contributes zero."""
+    invoked = [item[role] for item in passes if item.get(role)]
+    values = [item.get(key, "unknown") for item in invoked]
+    if not invoked:
+        return 0
+    return sum(values) if all(type(value) in (int, float) for value in values) else "unknown"
 
 
 def make_pass(parent, condition, number, previous=None, feedback=None):
@@ -34,6 +39,7 @@ def make_pass(parent, condition, number, previous=None, feedback=None):
     work = directory / condition / "workspace"
     (work / "Research").mkdir(parents=True)
     (work / ".lake").mkdir()
+    (work / ".lake/packages").mkdir()
     for name in CONFIG_FILES:
         shutil.copyfile(directory / parent.config["evaluator"] / name, work / name)
     if previous:
@@ -70,27 +76,20 @@ def make_pass(parent, condition, number, previous=None, feedback=None):
     child.guard = guard
     child.conditions = (condition,)
     child.net, child.proxy = parent.net, parent.proxy
+    if hasattr(parent, "stage_gate"):
+        child.stage_gate = parent.stage_gate
+    if hasattr(parent, "container") and hasattr(parent, "decorate_child"):
+        parent.decorate_child(child)
     return child
 
 
-def execute(child, condition):
-    root = child.directory / condition
-    child.builders()
-    builder = read(root / "output/metrics.json")
-    if builder["exit_code"] != 0 and not builder.get("timed_out"):
-        raise RuntimeError("Builder service/process failed (not a theorem failure)")
-    child.evaluate()
-    verification = read(root / "evaluation/verification.json")
-    if verification.get("build_and_scans_exit_code") == 124:
-        raise RuntimeError("Verification infrastructure timed out")
-    result = {"builder": builder, "verification": verification, "critic": {}, "status": "formal_failed"}
-    if verification["formal_gate_passed"]:
-        review(child)
-        result["critic"] = read(root / "review/metrics.json")
-        report = completed_review(root / "review", result["critic"])
-        result["report"] = report
-        result["status"] = {"pass": "accepted", "fail": "critic_failed", "uncertain": "needs_human"}[report["overall_verdict"]]
-    return result
+def run_condition(engine, condition, attempt=execute):
+    """Public single-job API; preserve the caller's condition list."""
+    if condition not in ("stateless", "retrieved"):
+        raise ValueError("Unknown memory condition")
+    job_engine = copy.copy(engine)
+    job_engine.conditions = (condition,)
+    return run_pair(job_engine, attempt)["conditions"][condition]
 
 
 def run_pair(engine, attempt=execute):
@@ -121,12 +120,7 @@ def run_pair(engine, attempt=execute):
             if result["status"] not in ("formal_failed", "critic_failed"):
                 break
             previous = child.directory
-            report = result.get("report")
-            feedback = {"schema_version": 1, "previous_pass": number,
-                        "formal_gate_passed": result["verification"]["formal_gate_passed"],
-                        "corrections": [{"requirement": item["requirement"], "correction": item["correction"]}
-                                        for item in (report or {}).get("requirements", []) if item["verdict"] != "pass"],
-                        "verification_log": (child.directory / condition / "evaluation/verification.log").read_text()}
+            feedback = repair_feedback(child.directory, condition, result, number)
         success = passes[-1]["status"] == "accepted"
         metrics = {"wall_time_seconds": time.monotonic() - started,
                    "passes_used": len(passes), "first_success_pass": len(passes) if success else None,
@@ -161,7 +155,8 @@ def run_pair(engine, attempt=execute):
                   "verification_command": "bash pipeline/verify.sh", "passes": passes, "metrics": metrics,
                   "reuse": {"approved": False, "reason": "Review and remove target answers before freezing for a future run."}}
         record["candidate_lessons"] = [
-            {"status": "unvalidated", "supporting_pass": item["number"], "requirement": requirement["requirement"],
+            {"status": "unvalidated", "supporting_pass": item["number"],
+             "requirement_id": requirement.get("requirement_id", "legacy"), "requirement": requirement["requirement"],
              "evidence": requirement["evidence"], "proposed_correction": requirement["correction"]}
             for item in passes for requirement in item.get("report", {}).get("requirements", [])
             if requirement["verdict"] != "pass"]

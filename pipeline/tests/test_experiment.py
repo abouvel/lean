@@ -1,5 +1,7 @@
 """Migration and isolation tests; no model calls or Docker required."""
 import importlib.util
+import contextlib
+import io
 import json
 import os
 from pathlib import Path
@@ -32,6 +34,18 @@ class RunnerTests(unittest.TestCase):
     def test_historical_records_unchanged(self):
         directory, settings = runner.load_config(EXPERIMENT / "experiment.json")
         self.assertEqual(runner.check_experiment(directory, settings)["model"], "gpt-6.1-sol")
+
+    def test_bounded_check_displays_pass_metrics(self):
+        bounded = runner.ROOT / "experiments/exp-004-critic-240s-2026-10-23/experiment.json"
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            runner.main(["check", "--config", str(bounded)])
+        text = output.getvalue()
+        self.assertIn("stateless: outcome=infrastructure_error", text)
+        self.assertIn("formal_gates=2/2", text)
+        self.assertIn("retrieved: outcome=formal_failed", text)
+        self.assertIn("critic_seconds=68.034", text)
+        self.assertNotIn("formal=unknown", text)
 
     def test_changed_frozen_input_rejected(self):
         with TemporaryDirectory() as folder:
@@ -140,6 +154,21 @@ class RunnerTests(unittest.TestCase):
         args = self.container_args("retrieved", reviewer=True)
         self.assertIn("target=/workspace,readonly", args)
         self.assertNotIn("target=/memory", args)
+
+    def test_opt_in_retrieved_critic_gets_read_only_memory(self):
+        with TemporaryDirectory() as folder:
+            root = Path(folder)
+            packages = root / "packages"
+            (packages / "mathlib").mkdir(parents=True)
+            settings = config()
+            settings["conditions"] = ["retrieved-case"]
+            settings["retrieved_conditions"] = ["retrieved-case"]
+            settings["critic_memory_enabled"] = True
+            engine = Engine(root / "example", settings, root / "lean", packages,
+                            root / "secret-auth.json", lambda: None)
+            args = " ".join(engine.container("retrieved-case", reviewer=True))
+            self.assertIn("target=/memory,readonly", args)
+            self.assertIn("MEMORY_MODE=retrieved", args)
 
     def test_offline_has_no_network_credentials_or_memory(self):
         args = self.container_args("retrieved", offline=True)

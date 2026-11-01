@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "experiment_id": "exp-014-modular-proof-pipeline-2026-10-29",
+  "repository_root": "/home/abouvel/fall26/research",
+  "order": "stateless-phase-first",
+  "limits": {
+    "jobs": 2,
+    "model_calls": 2,
+    "lean_builds": 2,
+    "ram_gib": 24,
+    "job_seconds": 3600
+  },
+  "tasks": [
+    {
+      "id": "binary-tree",
+      "config": "experiments/exp-001-binary-tree/bounded.json",
+      "trials": 2,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Reviewed memory/index.md and general-lean.md: only generic triangle-inequality, denominator, and stale-module notes; no target theorem, completed proof, or reduction implementation. Re-review this field when changing the task or snapshot."
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "binary-tree-trial-001-stateless",
+      "pair_id": "binary-tree-trial-001",
+      "task_id": "sahil-theorem-3.1-algorithm-1",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/binary-tree-trial-001-stateless"
+    },
+    {
+      "job_id": "binary-tree-trial-001-retrieved",
+      "pair_id": "binary-tree-trial-001",
+      "task_id": "sahil-theorem-3.1-algorithm-1",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/binary-tree-trial-001-retrieved"
+    },
+    {
+      "job_id": "binary-tree-trial-002-stateless",
+      "pair_id": "binary-tree-trial-002",
+      "task_id": "sahil-theorem-3.1-algorithm-1",
+      "trial": 2,
+      "condition": "stateless",
+      "directory": "runs/binary-tree-trial-002-stateless"
+    },
+    {
+      "job_id": "binary-tree-trial-002-retrieved",
+      "pair_id": "binary-tree-trial-002",
+      "task_id": "sahil-theorem-3.1-algorithm-1",
+      "trial": 2,
+      "condition": "retrieved",
+      "directory": "runs/binary-tree-trial-002-retrieved"
+    }
+  ],
+  "created_unix": 1793288828.4721582
+}

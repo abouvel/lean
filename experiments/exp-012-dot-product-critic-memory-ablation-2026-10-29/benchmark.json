@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "catalog": "evaluator/requirements.json",
+  "cases": [
+    {
+      "id": "stateless--known-complete",
+      "report": "stateless--known-complete/review/review.json",
+      "metrics": "stateless--known-complete/review/metrics.json",
+      "expected_verdict": "pass",
+      "expected_defects": []
+    },
+    {
+      "id": "retrieved--known-complete",
+      "report": "retrieved--known-complete/review/review.json",
+      "metrics": "retrieved--known-complete/review/metrics.json",
+      "expected_verdict": "pass",
+      "expected_defects": []
+    },
+    {
+      "id": "retrieved--renamed-complete",
+      "report": "retrieved--renamed-complete/review/review.json",
+      "metrics": "retrieved--renamed-complete/review/metrics.json",
+      "expected_verdict": "pass",
+      "expected_defects": []
+    },
+    {
+      "id": "stateless--renamed-complete",
+      "report": "stateless--renamed-complete/review/review.json",
+      "metrics": "stateless--renamed-complete/review/metrics.json",
+      "expected_verdict": "pass",
+      "expected_defects": []
+    },
+    {
+      "id": "stateless--proposition-only",
+      "report": "stateless--proposition-only/review/checkpoint.json",
+      "metrics": "stateless--proposition-only/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-final-theorem"
+      ]
+    },
+    {
+      "id": "retrieved--proposition-only",
+      "report": "retrieved--proposition-only/review/checkpoint.json",
+      "metrics": "retrieved--proposition-only/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-final-theorem"
+      ]
+    },
+    {
+      "id": "retrieved--additions-only",
+      "report": "retrieved--additions-only/review/checkpoint.json",
+      "metrics": "retrieved--additions-only/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-exact-product-link"
+      ]
+    },
+    {
+      "id": "stateless--additions-only",
+      "report": "stateless--additions-only/review/checkpoint.json",
+      "metrics": "stateless--additions-only/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "missing-exact-product-link"
+      ]
+    },
+    {
+      "id": "stateless--zero-u-only",
+      "report": "stateless--zero-u-only/review/checkpoint.json",
+      "metrics": "stateless--zero-u-only/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "strengthened-assumption"
+      ]
+    },
+    {
+      "id": "retrieved--zero-u-only",
+      "report": "retrieved--zero-u-only/review/checkpoint.json",
+      "metrics": "retrieved--zero-u-only/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "strengthened-assumption"
+      ]
+    },
+    {
+      "id": "retrieved--conclusion-assumed",
+      "report": "retrieved--conclusion-assumed/review/checkpoint.json",
+      "metrics": "retrieved--conclusion-assumed/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "conclusion-assumed"
+      ]
+    },
+    {
+      "id": "stateless--conclusion-assumed",
+      "report": "stateless--conclusion-assumed/review/checkpoint.json",
+      "metrics": "stateless--conclusion-assumed/review/metrics.json",
+      "expected_verdict": "fail",
+      "expected_defects": [
+        "conclusion-assumed"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+Build the floating-point dot-product proof described in /spec/source.txt.
+
+The five approved supporting Lean modules are under /spec/support/Research.
+Copy them, retaining their relative paths, into /workspace/Research. They supply
+the abstract relative-error Model, gamma bounds, Tree, rounded sum, and
+supporting reduction results. Read them as mathematical prerequisites. Do not
+modify these supplied definitions or lemmas. The dot-product implementation and
+target proof have not been supplied: define the exact and rounded product trees,
+define roundedDotProduct as rounded multiplication followed by rounded tree
+addition, and prove the full componentwise backward-error theorem.
+
+Put the new definitions, supporting lemmas, and final theorem in
+/workspace/Research/Submission.lean. Import the supplied reduction module there.
+No locked theorem statement is supplied; choose an appropriate formal statement
+matching the original task. Keep the theorem statement distinct from its proof.
+The final result must be relative to exactProductTree with gamma(depth+1,u),
+quantified over every Model and pair tree under only the specified smallness
+assumption. Declaration names other than the mathematical objects may vary.
+
+Use local Lean compilation and small lemmas. Do not use proof placeholders,
+custom axioms, changed protected configuration, or Aristotle. The protected
+/workspace/Research.lean imports Research.Submission. The formal verifier will
+compile all submitted Lean modules and scan them for placeholders/custom axioms;
+the independent critic will check semantics and original assumptions.
+
+Controller budget: pass 1/2; hard builder limit 180 seconds. Original time estimates do not override this limit.
+
+A read-only research-memory snapshot is available at /memory. Read its index, select relevant entries, and record every opened artifact ID and the concrete decision it influenced in /output/retrieval.md.

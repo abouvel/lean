@@ -1,0 +1,26 @@
+{
+  "name": "exp-009-critic-live-benchmark-2026-10-28",
+  "task_id": "lean-critic-five-case-smoke-benchmark",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "known-complete",
+    "missing-original-input-link",
+    "proposition-only",
+    "concrete-example-only",
+    "conclusion-assumed"
+  ],
+  "builder_seconds": 1,
+  "critic_seconds": 240,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "8g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "verification_command": "bash pipeline/verify.sh <case>/evaluation-workspace"
+}

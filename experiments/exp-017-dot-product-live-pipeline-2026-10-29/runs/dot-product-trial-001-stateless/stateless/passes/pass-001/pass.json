@@ -1,0 +1,126 @@
+{
+  "builder": {
+    "condition": "stateless",
+    "kind": "builder",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1793289423.5575716,
+    "time_limit_seconds": 180,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 59.939,
+    "token_usage": {
+      "input_tokens": 196193,
+      "cached_input_tokens": 169344,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1633,
+      "reasoning_output_tokens": 99
+    },
+    "compiler_command_events": 3,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 26.406,
+    "source_files": [
+      "Research/Submission.lean",
+      "Research/Projects/BinaryTreeReduction/Tree.lean",
+      "Research/Projects/BinaryTreeReduction/Reduction.lean",
+      "Research/Projects/BinaryTreeReduction/Algorithm.lean",
+      "Research/Common/FloatingPoint/Gamma.lean",
+      "Research/Common/FloatingPoint/Model.lean"
+    ],
+    "source_lines": 760,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."
+  },
+  "critic": {
+    "condition": "stateless",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1793289510.643109,
+    "time_limit_seconds": 240,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 63.946,
+    "token_usage": {
+      "input_tokens": 160875,
+      "cached_input_tokens": 126720,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1849,
+      "reasoning_output_tokens": 248
+    },
+    "compiler_command_events": 5,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "status": "accepted",
+  "report": {
+    "overall_verdict": "pass",
+    "phase": "final",
+    "target_evidence": "Research/Submission.lean:41-64 proves Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation universally over model and pair tree, under ((tree.depth+1):Real)*model.u < 1. The conclusion is IsPerturbation (gamma (tree.depth+1) model.u) (exactProductTree tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. Model.lean:15-19 supplies only nonnegative unit roundoff and the relative-error specification. Independent source compilation and compiled theorem/axiom inspection succeeded.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+        "evidence": "Research/Submission.lean:41-64 proves roundedDotProduct_exists_perturbation for every Model and Tree (real pairs), assuming only ((tree.depth + 1 : Nat) : Real) * model.u < 1; its existential witness satisfies the requested perturbation and exact-sum equality. Independent lake env lean Research/Submission.lean exited 0.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "exact-product-linkage",
+        "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+        "evidence": "Research/Submission.lean:8-9 defines exactProductTree by mapping p.1 * p.2; lines 44-47 state the final perturbation relative to that exact tree. Reduction.lean:17-23 defines shape-preserving leafwise absolute error bounded by bound * |exact product|, including zero products.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "multiplication-rounding",
+        "requirement": "Account for one rounded multiplication per leaf.",
+        "evidence": "Model.lean:26-27 defines mul as round (a * b). Research/Submission.lean:12-17 rounds each multiplication once before roundedSum; lines 20-37 prove the resulting leafwise error is at most model.u using round_spec, with no additional leaf rounding in Reduction.lean:12.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "addition-reduction",
+        "requirement": "Account for every rounded tree addition in the reduction.",
+        "evidence": "Reduction.lean:11-13 rounds addition at every internal node. Lines 112-171 induct on a depth bound; lines 150-165 extract each node rounding error and scale both child witnesses by 1 + delta. Lines 166-171 establish exact-sum equality. Tree.lean:21-23 defines depth as the maximum number of additions on a leaf path; arbitrary unbalanced trees are covered.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "accumulated-bound",
+        "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+        "evidence": "Gamma.lean:8-9 defines gamma k u = k*u/(1-k*u); lines 33-54 prove gamma_step. Reduction.lean:174-180 yields gamma tree.depth model.u for additions. Research/Submission.lean:48-64 derives the smaller smallness condition, preserves depth under mapping, composes the multiplication and addition perturbations, and bounds u + gamma depth u * (1+u) by gamma (depth+1) u.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+        "evidence": "Model.lean:15-19 requires only u >= 0 and the universal relative-error round_spec. Research/Submission.lean:41-47 adds only the requested smallness inequality, with no exact-arithmetic restriction or assumed conclusion. Independent Lean #print confirms this complete theorem type; #print axioms for it and both stage theorems reports only propext, Classical.choice, Quot.sound. /evaluation/verification.json and verification.log record a successful build and no proof placeholders or custom axioms.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "number": 1,
+  "wall_time_seconds": 151.46596227299597,
+  "evidence": "stateless/passes/pass-001"
+}
