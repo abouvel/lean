@@ -1,0 +1,533 @@
+{
+  "schema_version": 1,
+  "pairs": {
+    "dot-product-trial-001": {
+      "stateless": {
+        "job_id": "dot-product-trial-001-stateless",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 466.89713219601254,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 182.185,
+          "critic_seconds": 62.637,
+          "compiler_command_events": 9,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 774,
+          "builder_tokens": {
+            "input_tokens": 383890,
+            "cached_input_tokens": 329856,
+            "output_tokens": 4952,
+            "reasoning_output_tokens": 252
+          },
+          "critic_tokens": {
+            "input_tokens": 242103,
+            "cached_input_tokens": 218112,
+            "output_tokens": 2062,
+            "reasoning_output_tokens": 65
+          },
+          "roles": {
+            "planner": {
+              "calls": 1,
+              "wall_time_seconds": 51.47,
+              "tokens": {
+                "input_tokens": 80290,
+                "cached_input_tokens": 65664,
+                "output_tokens": 1787,
+                "reasoning_output_tokens": 156
+              }
+            },
+            "formalizer": {
+              "calls": 1,
+              "wall_time_seconds": 80.893,
+              "tokens": {
+                "input_tokens": 183763,
+                "cached_input_tokens": 166912,
+                "output_tokens": 1847,
+                "reasoning_output_tokens": 87
+              }
+            },
+            "prover": {
+              "calls": 1,
+              "wall_time_seconds": 49.822,
+              "tokens": {
+                "input_tokens": 119837,
+                "cached_input_tokens": 97280,
+                "output_tokens": 1318,
+                "reasoning_output_tokens": 9
+              }
+            },
+            "translator": {
+              "calls": 1,
+              "wall_time_seconds": 101.646,
+              "tokens": {
+                "input_tokens": 76880,
+                "cached_input_tokens": 56192,
+                "output_tokens": 3196,
+                "reasoning_output_tokens": 82
+              }
+            },
+            "judge": {
+              "calls": 1,
+              "wall_time_seconds": 58.987,
+              "tokens": {
+                "input_tokens": 60370,
+                "cached_input_tokens": 55040,
+                "output_tokens": 2508,
+                "reasoning_output_tokens": 105
+              }
+            }
+          },
+          "total_model_seconds": 405.45500000000004,
+          "total_model_calls": 6
+        }
+      },
+      "retrieved": {
+        "job_id": "dot-product-trial-001-retrieved",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 458.8721819430066,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 214.658,
+          "critic_seconds": 61.041,
+          "compiler_command_events": 8,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 773,
+          "builder_tokens": {
+            "input_tokens": 491370,
+            "cached_input_tokens": 408192,
+            "output_tokens": 5367,
+            "reasoning_output_tokens": 303
+          },
+          "critic_tokens": {
+            "input_tokens": 213970,
+            "cached_input_tokens": 190080,
+            "output_tokens": 1964,
+            "reasoning_output_tokens": 94
+          },
+          "roles": {
+            "planner": {
+              "calls": 1,
+              "wall_time_seconds": 68.908,
+              "tokens": {
+                "input_tokens": 96544,
+                "cached_input_tokens": 83584,
+                "output_tokens": 1884,
+                "reasoning_output_tokens": 163
+              }
+            },
+            "formalizer": {
+              "calls": 1,
+              "wall_time_seconds": 64.428,
+              "tokens": {
+                "input_tokens": 160091,
+                "cached_input_tokens": 121344,
+                "output_tokens": 1684,
+                "reasoning_output_tokens": 44
+              }
+            },
+            "prover": {
+              "calls": 1,
+              "wall_time_seconds": 81.322,
+              "tokens": {
+                "input_tokens": 234735,
+                "cached_input_tokens": 203264,
+                "output_tokens": 1799,
+                "reasoning_output_tokens": 96
+              }
+            },
+            "translator": {
+              "calls": 1,
+              "wall_time_seconds": 77.371,
+              "tokens": {
+                "input_tokens": 77082,
+                "cached_input_tokens": 54528,
+                "output_tokens": 3348,
+                "reasoning_output_tokens": 74
+              }
+            },
+            "judge": {
+              "calls": 1,
+              "wall_time_seconds": 57.591,
+              "tokens": {
+                "input_tokens": 59800,
+                "cached_input_tokens": 54400,
+                "output_tokens": 2234,
+                "reasoning_output_tokens": 57
+              }
+            }
+          },
+          "total_model_seconds": 410.661,
+          "total_model_calls": 6
+        }
+      }
+    },
+    "horner-trial-001": {
+      "stateless": {
+        "job_id": "horner-trial-001-stateless",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 403.76406341799884,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 173.849,
+          "critic_seconds": 69.052,
+          "compiler_command_events": 10,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 121,
+          "builder_tokens": {
+            "input_tokens": 329525,
+            "cached_input_tokens": 286976,
+            "output_tokens": 5337,
+            "reasoning_output_tokens": 141
+          },
+          "critic_tokens": {
+            "input_tokens": 263984,
+            "cached_input_tokens": 231808,
+            "output_tokens": 2245,
+            "reasoning_output_tokens": 84
+          },
+          "roles": {
+            "planner": {
+              "calls": 1,
+              "wall_time_seconds": 45.754,
+              "tokens": {
+                "input_tokens": 65127,
+                "cached_input_tokens": 56576,
+                "output_tokens": 1704,
+                "reasoning_output_tokens": 49
+              }
+            },
+            "formalizer": {
+              "calls": 1,
+              "wall_time_seconds": 46.527,
+              "tokens": {
+                "input_tokens": 85280,
+                "cached_input_tokens": 69504,
+                "output_tokens": 1393,
+                "reasoning_output_tokens": 47
+              }
+            },
+            "prover": {
+              "calls": 1,
+              "wall_time_seconds": 81.568,
+              "tokens": {
+                "input_tokens": 179118,
+                "cached_input_tokens": 160896,
+                "output_tokens": 2240,
+                "reasoning_output_tokens": 45
+              }
+            },
+            "translator": {
+              "calls": 1,
+              "wall_time_seconds": 69.405,
+              "tokens": {
+                "input_tokens": 62739,
+                "cached_input_tokens": 56576,
+                "output_tokens": 2929,
+                "reasoning_output_tokens": 101
+              }
+            },
+            "judge": {
+              "calls": 1,
+              "wall_time_seconds": 56.023,
+              "tokens": {
+                "input_tokens": 59613,
+                "cached_input_tokens": 54272,
+                "output_tokens": 2280,
+                "reasoning_output_tokens": 67
+              }
+            }
+          },
+          "total_model_seconds": 368.329,
+          "total_model_calls": 6
+        }
+      },
+      "retrieved": {
+        "job_id": "horner-trial-001-retrieved",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 443.55572969600325,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 220.349,
+          "critic_seconds": 63.492,
+          "compiler_command_events": 13,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 124,
+          "builder_tokens": {
+            "input_tokens": 380825,
+            "cached_input_tokens": 349440,
+            "output_tokens": 6884,
+            "reasoning_output_tokens": 499
+          },
+          "critic_tokens": {
+            "input_tokens": 197567,
+            "cached_input_tokens": 161920,
+            "output_tokens": 1848,
+            "reasoning_output_tokens": 83
+          },
+          "roles": {
+            "planner": {
+              "calls": 1,
+              "wall_time_seconds": 86.065,
+              "tokens": {
+                "input_tokens": 83650,
+                "cached_input_tokens": 73728,
+                "output_tokens": 2835,
+                "reasoning_output_tokens": 174
+              }
+            },
+            "formalizer": {
+              "calls": 1,
+              "wall_time_seconds": 46.715,
+              "tokens": {
+                "input_tokens": 86775,
+                "cached_input_tokens": 74752,
+                "output_tokens": 1466,
+                "reasoning_output_tokens": 33
+              }
+            },
+            "prover": {
+              "calls": 1,
+              "wall_time_seconds": 87.569,
+              "tokens": {
+                "input_tokens": 210400,
+                "cached_input_tokens": 200960,
+                "output_tokens": 2583,
+                "reasoning_output_tokens": 292
+              }
+            },
+            "translator": {
+              "calls": 1,
+              "wall_time_seconds": 71.828,
+              "tokens": {
+                "input_tokens": 61954,
+                "cached_input_tokens": 55808,
+                "output_tokens": 2580,
+                "reasoning_output_tokens": 77
+              }
+            },
+            "judge": {
+              "calls": 1,
+              "wall_time_seconds": 52.608,
+              "tokens": {
+                "input_tokens": 58415,
+                "cached_input_tokens": 47232,
+                "output_tokens": 2115,
+                "reasoning_output_tokens": 86
+              }
+            }
+          },
+          "total_model_seconds": 408.27700000000004,
+          "total_model_calls": 6
+        }
+      }
+    },
+    "finite-difference-trial-001": {
+      "stateless": {
+        "job_id": "finite-difference-trial-001-stateless",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 287.2083272279997,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 131.243,
+          "critic_seconds": 50.583,
+          "compiler_command_events": 6,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 33,
+          "builder_tokens": {
+            "input_tokens": 315327,
+            "cached_input_tokens": 272256,
+            "output_tokens": 3685,
+            "reasoning_output_tokens": 85
+          },
+          "critic_tokens": {
+            "input_tokens": 157850,
+            "cached_input_tokens": 118144,
+            "output_tokens": 1606,
+            "reasoning_output_tokens": 66
+          },
+          "roles": {
+            "planner": {
+              "calls": 1,
+              "wall_time_seconds": 47.318,
+              "tokens": {
+                "input_tokens": 114288,
+                "cached_input_tokens": 100992,
+                "output_tokens": 1571,
+                "reasoning_output_tokens": 40
+              }
+            },
+            "formalizer": {
+              "calls": 1,
+              "wall_time_seconds": 52.471,
+              "tokens": {
+                "input_tokens": 114141,
+                "cached_input_tokens": 102400,
+                "output_tokens": 1374,
+                "reasoning_output_tokens": 45
+              }
+            },
+            "prover": {
+              "calls": 1,
+              "wall_time_seconds": 31.454,
+              "tokens": {
+                "input_tokens": 86898,
+                "cached_input_tokens": 68864,
+                "output_tokens": 740,
+                "reasoning_output_tokens": 0
+              }
+            },
+            "translator": {
+              "calls": 1,
+              "wall_time_seconds": 37.053,
+              "tokens": {
+                "input_tokens": 40185,
+                "cached_input_tokens": 14464,
+                "output_tokens": 1150,
+                "reasoning_output_tokens": 45
+              }
+            },
+            "judge": {
+              "calls": 1,
+              "wall_time_seconds": 52.617,
+              "tokens": {
+                "input_tokens": 58128,
+                "cached_input_tokens": 41088,
+                "output_tokens": 2127,
+                "reasoning_output_tokens": 66
+              }
+            }
+          },
+          "total_model_seconds": 271.496,
+          "total_model_calls": 6
+        }
+      },
+      "retrieved": {
+        "job_id": "finite-difference-trial-001-retrieved",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 399.8153603200044,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 170.621,
+          "critic_seconds": 55.693,
+          "compiler_command_events": 6,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 32,
+          "builder_tokens": {
+            "input_tokens": 340130,
+            "cached_input_tokens": 296192,
+            "output_tokens": 4099,
+            "reasoning_output_tokens": 217
+          },
+          "critic_tokens": {
+            "input_tokens": 132614,
+            "cached_input_tokens": 109568,
+            "output_tokens": 1867,
+            "reasoning_output_tokens": 117
+          },
+          "roles": {
+            "planner": {
+              "calls": 1,
+              "wall_time_seconds": 61.723,
+              "tokens": {
+                "input_tokens": 112170,
+                "cached_input_tokens": 105600,
+                "output_tokens": 1558,
+                "reasoning_output_tokens": 86
+              }
+            },
+            "formalizer": {
+              "calls": 1,
+              "wall_time_seconds": 50.521,
+              "tokens": {
+                "input_tokens": 101100,
+                "cached_input_tokens": 95360,
+                "output_tokens": 1367,
+                "reasoning_output_tokens": 90
+              }
+            },
+            "prover": {
+              "calls": 1,
+              "wall_time_seconds": 58.377,
+              "tokens": {
+                "input_tokens": 126860,
+                "cached_input_tokens": 95232,
+                "output_tokens": 1174,
+                "reasoning_output_tokens": 41
+              }
+            },
+            "translator": {
+              "calls": 1,
+              "wall_time_seconds": 80.142,
+              "tokens": {
+                "input_tokens": 56123,
+                "cached_input_tokens": 47616,
+                "output_tokens": 2277,
+                "reasoning_output_tokens": 81
+              }
+            },
+            "judge": {
+              "calls": 1,
+              "wall_time_seconds": 78.533,
+              "tokens": {
+                "input_tokens": 58931,
+                "cached_input_tokens": 51584,
+                "output_tokens": 2211,
+                "reasoning_output_tokens": 61
+              }
+            }
+          },
+          "total_model_seconds": 384.989,
+          "total_model_calls": 6
+        }
+      }
+    }
+  }
+}

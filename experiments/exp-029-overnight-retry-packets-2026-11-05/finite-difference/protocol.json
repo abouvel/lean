@@ -1,0 +1,37 @@
+{
+  "task_id": "finite-difference-roundtrip-pilot",
+  "purpose": "Exploratory pilot for an independently authored target",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "trials_per_condition": 1,
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "role_budgets_seconds": {
+    "planner": 90,
+    "formalizer": 150,
+    "prover": 180,
+    "translator": 180,
+    "judge": 180
+  },
+  "critic_seconds": 240,
+  "max_passes": 2,
+  "whole_job_seconds": 3600,
+  "verification_command": "bash pipeline/verify.sh",
+  "allowed_tools": [
+    "local Lean and Mathlib",
+    "Use local Mathlib for calculus prerequisites. No custom prerequisite is supplied.",
+    "frozen generic artifact for retrieved production roles"
+  ],
+  "acceptance_tests": {
+    "target-completeness": "Prove the full error theorem for arbitrary real functions f, D and real x, h, L satisfying the stated hypotheses.",
+    "difference-construction": "Define the actual forward quotient (f(x+h)-f(x))/h.",
+    "derivative-hypotheses": "Use continuity on the closed interval and actual derivative D(t) on the open interval.",
+    "variation-hypothesis": "Use the pointwise absolute variation bound relative to D(x) on the open interval.",
+    "conclusion-linkage": "Prove an absolute error at most L*h between the defined forward difference and D(x).",
+    "assumption-integrity": "Use only the specified hypotheses, including h > 0 and L >= 0, without requiring derivatives at endpoints or global smoothness."
+  },
+  "review_policy": "Require formal verification and agreeing automated semantic passes. Expert review remains pending.",
+  "retry_context": "exp-028 cold Lean preflight timeout. All six retry jobs use a 12 GiB container limit. Mathematical inputs, memory, and time limits are unchanged."
+}

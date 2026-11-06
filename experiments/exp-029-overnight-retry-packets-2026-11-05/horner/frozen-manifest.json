@@ -1,0 +1,21 @@
+{
+  "starting_commit": "b5df08f54d45608c2aad01a58ac3dee5ff95d8f6",
+  "experiment_id": "horner",
+  "hashes": {
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/evaluator/REVIEWER.txt": "a28a5d810bb54d2f6cb2c02f45caebc5ed578b08a39fee5931a8dc8d19ef0344",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/evaluator/requirements.json": "e53b48a6be914b93f0a06c4e64394ffa26e329b4a7eb12c9235e00c32793bf97",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/experiment.json": "d39cd5ebdccddb4a72a48e99ce22dc451d27cca411c116c975f1c36c237dea97",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/inputs/PROMPT.txt": "8245c6de1d9f420607bcd919ea3c7403240e8eea0ec6b77b2883a4638e9d2dc0",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/inputs/source.pdf": "6e8ab561b04c2d8f13050894f6b00a23a1a39cd46cb3a1d14f047da9d4a26030",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/inputs/source.txt": "136c73e542b0f2754284c8543af6675d038df9e1ba1b3da71a59628c58ce16ef",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/inputs/support/Research/Common/FloatingPoint/Model.lean": "b3730c493db6864297bc3ce04f2be01c9811a26d211dc268f10a50bf3894eece",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/protocol.json": "c5a1fde9d44e7a9c13e48556e1009d35bed50c4c3e93c432612c47940841fb65"
+  }
+}

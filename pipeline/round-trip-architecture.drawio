@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="lean-roundtrip" name="Lean proof pipeline">
+    <mxGraphModel dx="1100" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="610">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Lean proof pipeline" vertex="1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=27;fontStyle=1;fontColor=#172033;">
+          <mxGeometry x="46" y="24" width="470" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="production" value="Proof agents" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#f0f5fc;strokeColor=#b0c3df;align=left;verticalAlign=top;spacingTop=5;spacingLeft=12;fontStyle=1;">
+          <mxGeometry x="240" y="148" width="520" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="memory" value="&lt;b&gt;Frozen research notes&lt;/b&gt;&lt;br&gt;Retrieved runs only" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#fff8e8;strokeColor=#bb8a32;dashed=1;">
+          <mxGeometry x="397" y="76" width="206" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="task" value="&lt;b&gt;Original math task&lt;/b&gt;" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#ffffff;strokeColor=#8290a4;">
+          <mxGeometry x="46" y="191" width="153" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="planner" value="&lt;b&gt;Planner&lt;/b&gt;&lt;br&gt;Plans the proof" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#ffffff;strokeColor=#7793bb;">
+          <mxGeometry x="260" y="191" width="144" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="formalizer" value="&lt;b&gt;Formalizer&lt;/b&gt;&lt;br&gt;Writes Lean statements" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#ffffff;strokeColor=#7793bb;">
+          <mxGeometry x="425" y="191" width="144" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="prover" value="&lt;b&gt;Prover&lt;/b&gt;&lt;br&gt;Completes the proof" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#ffffff;strokeColor=#7793bb;">
+          <mxGeometry x="590" y="191" width="144" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="lean" value="&lt;b&gt;Lean verification&lt;/b&gt;&lt;br&gt;Build and audit" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#e8f5ed;strokeColor=#538969;">
+          <mxGeometry x="820" y="191" width="185" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="translator" value="&lt;b&gt;Blind translator&lt;/b&gt;&lt;br&gt;Lean to ordinary math" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#f0ebfb;strokeColor=#927bb4;">
+          <mxGeometry x="820" y="338" width="185" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="judge" value="&lt;b&gt;Round-trip judge&lt;/b&gt;&lt;br&gt;Compares with original task" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#f0ebfb;strokeColor=#927bb4;">
+          <mxGeometry x="554" y="338" width="205" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="critic" value="&lt;b&gt;Direct critic&lt;/b&gt;&lt;br&gt;Lean and original task&lt;br&gt;During calibration" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#f5f6f8;strokeColor=#8290a4;">
+          <mxGeometry x="820" y="476" width="185" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="outcome" value="&lt;b&gt;Outcome&lt;/b&gt;&lt;br&gt;Accept, repair, or human review" vertex="1" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fontSize=15;fontColor=#172033;strokeWidth=1.5;spacing=7;fillColor=#e8f5ed;strokeColor=#538969;">
+          <mxGeometry x="554" y="476" width="205" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="optional-memory" value="" edge="1" parent="1" source="memory" target="production" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;dashPattern=5 4;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="task-to-planner" value="" edge="1" parent="1" source="task" target="planner" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="planner-to-formalizer" value="" edge="1" parent="1" source="planner" target="formalizer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="formalizer-to-prover" value="" edge="1" parent="1" source="formalizer" target="prover" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="prover-to-lean" value="" edge="1" parent="1" source="prover" target="lean" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lean-to-translator" value="Pass" edge="1" parent="1" source="lean" target="translator" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="translator-to-judge" value="" edge="1" parent="1" source="translator" target="judge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=1;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="task-to-judge" value="Original task" edge="1" parent="1" source="task" target="judge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="122.5" y="371" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lean-to-critic" value="" edge="1" parent="1" source="lean" target="critic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=1;entryY=0.5;dashed=1;dashPattern=5 4;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1047" y="224" />
+              <mxPoint x="1047" y="515" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="judge-to-outcome" value="" edge="1" parent="1" source="judge" target="outcome" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="critic-to-outcome" value="" edge="1" parent="1" source="critic" target="outcome" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;endArrow=block;endFill=1;fontColor=#334155;fontSize=12;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=1;entryY=0.5;dashed=1;dashPattern=5 4;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

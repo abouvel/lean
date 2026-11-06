@@ -10,6 +10,9 @@ def read(path):
 
 
 def build(engine, condition):
+    if engine.config.get("revision"):
+        from roles import produce
+        return produce(engine, condition)
     engine.builders()
     metrics = read(engine.directory / condition / "output/metrics.json")
     if metrics["exit_code"] != 0 and not metrics.get("timed_out"):
@@ -44,15 +47,63 @@ def execute(engine, condition, *, gate=None):
     Calling this function without a gate preserves the single-run workflow.
     """
     gate = gate or getattr(engine, "stage_gate", lambda stage: nullcontext())
-    with gate("builder"):
-        builder = build(engine, condition)
+    revised = bool(getattr(engine, "config", {}).get("revision"))
+    if revised:
+        engine.stage_gate = gate
+        from formal_context import FormalizationFailure
+        try:
+            builder = build(engine, condition)
+        except FormalizationFailure as error:
+            from engine import save
+            from roles import aggregate, PRODUCTION
+            invoked = {}
+            for role in PRODUCTION:
+                path = engine.directory / condition / "roles" / role / "metrics.json"
+                if path.exists():
+                    invoked[role] = read(path)
+            builder = aggregate(invoked) if invoked else {}
+            verification = {"formal_gate_passed": False, "build_and_scans_exit_code": 1,
+                            "stage": "formalizer", "diagnostic": str(error)}
+            save(engine.directory / condition / "evaluation/verification.log", str(error))
+            save(engine.directory / condition / "evaluation/verification.json", verification)
+            return {"status": "formal_failed", "builder": builder, "verification": verification,
+                    "critic": {}, "roles": invoked}
+    else:
+        with gate("builder"):
+            builder = build(engine, condition)
     with gate("verification"):
         verification = verify(engine, condition)
+        if revised and verification["formal_gate_passed"]:
+            from formal_context import extract, protected_declarations
+            context, audit = extract(engine, condition, "final", evaluation=True)
+            before = read(engine.directory / condition / "formal-audit/formalizer/context.json")
+            audit["changed_declarations"] = protected_declarations(before, context)
+            audit["passed"] = audit["passed"] and not audit["changed_declarations"]
+            verification["formal_audit"] = audit
+            verification["formal_gate_passed"] = audit["passed"]
+            from engine import save
+            save(engine.directory / condition / "evaluation/verification.json", verification)
+            if not audit["passed"]:
+                log = engine.directory / condition / "evaluation/verification.log"
+                log.write_text(log.read_text() + "\nTrusted formal audit failed: " + json.dumps(audit) + "\n")
     result = {"builder": builder, "verification": verification, "critic": {}, "status": "formal_failed"}
+    if revised:
+        result["roles"] = builder["roles"]
     if not verification["formal_gate_passed"]:
         return result
     with gate("critic"):
         metrics, report = critique(engine, condition)
+    if revised:
+        from formal_context import translation_bundle, source_hashes
+        from roundtrip import evaluate, route
+        bundle = translation_bundle(context, builder["statement"])
+        rt, evaluator_metrics = evaluate(engine, condition, bundle)
+        if source_hashes(engine.directory / condition / "evaluation-workspace") != context["sources"]:
+            raise RuntimeError("Candidate changed after semantic evaluation")
+        status, decision = route(report, rt)
+        result.update(critic=metrics, report=decision, status=status,
+            direct_report=report, roundtrip=rt, roles={**builder["roles"], **evaluator_metrics})
+        return result
     result.update(critic=metrics, report=report,
                   status={"pass": "accepted", "fail": "critic_failed", "uncertain": "needs_human"}[report["overall_verdict"]])
     return result

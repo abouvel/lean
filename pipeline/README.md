@@ -3,6 +3,12 @@
 Experiments own their inputs and results. This directory runs the agents,
 enforces container boundaries, and checks their outputs.
 
+The opt-in [round-trip pipeline](ROUNDTRIP.md) separates planner, formalizer,
+prover, blind translator, and semantic judge, with mandatory elaborated axiom
+audits. It retains the direct critic during calibration. The [revision plan](REVISION_PLAN.md)
+records the research design and remaining expert-review requirements. The
+execution paths below describe the compatible legacy builder/critic mode.
+
 For multiple theorems and trials, use the [modular batch pipeline](BATCH.md).
 It reuses the same sequential proof pass inside isolated worker subprocesses,
 with a durable queue, stateless-first scheduling, independent model/build/RAM

@@ -6,6 +6,18 @@ import subprocess
 import time
 
 
+def export_permissions(root):
+    """Normalize disposable exported files, including atomic tempfile writes."""
+    root = Path(root)
+    for path in (root, *root.rglob("*")):
+        if path.is_symlink():
+            raise RuntimeError("Export symlink rejected")
+        # Bind-mount roots and host log files belong to the host uid. The
+        # non-root actor cannot chmod them; only its own new files need export.
+        if path.stat().st_uid == os.geteuid():
+            path.chmod(0o777 if path.is_dir() else 0o666)
+
+
 def builder_prompt(spec=Path("/spec"), *, condition):
     prompt = (spec / "PROMPT.txt").read_text()
     if condition == "retrieved":
@@ -15,7 +27,7 @@ def builder_prompt(spec=Path("/spec"), *, condition):
 
 def run_agent(prompt, *, kind, output=Path("/output"), stop_when=None):
     """Run one model session with identical logging/timeout handling for both roles."""
-    if kind not in ("builder", "reviewer"):
+    if kind not in ("builder", "reviewer", "planner", "formalizer", "prover", "translator", "judge"):
         raise ValueError(f"Unknown agent role: {kind}")
     if stop_when is not None and kind != "reviewer":
         raise ValueError("Checkpoint stopping is only available to reviewers")
@@ -74,6 +86,7 @@ def run_agent(prompt, *, kind, output=Path("/output"), stop_when=None):
                 process.kill()
                 process.wait()
             meta.update(exit_code=process.returncode, timed_out=True)
+    export_permissions(output)
     meta["wall_time_seconds"] = round(time.time() - started, 3)
     usage = None
     compiler_commands = 0

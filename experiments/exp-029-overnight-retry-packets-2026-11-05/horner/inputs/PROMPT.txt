@@ -1,0 +1,6 @@
+Formalize the mathematics in /spec/source.txt.
+Copy the supplied relative-error Model.lean prerequisite unchanged.
+Follow the role-specific workflow. The formalizer may use temporary sorry
+in proofs only. The completed candidate needs all definitions and proofs,
+with no placeholders or custom axioms. Use local Lean and Mathlib, and use
+the approved memory only when mounted. No Aristotle.

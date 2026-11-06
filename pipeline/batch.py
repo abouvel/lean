@@ -15,6 +15,7 @@ import sys
 import time
 
 from artifacts import validate as validate_artifact
+from metrics import summarize_job
 from resources import atomic_json
 from run import ROOT, PIPELINE, contained, digest, initialize, load_config, validate_name
 
@@ -99,7 +100,7 @@ def prepare(spec_path, target):
     runtime = target / "runtime-source/pipeline"
     runtime.mkdir(parents=True)
     for file in PIPELINE.iterdir():
-        if file.suffix in (".py", ".sh"):
+        if file.suffix in (".py", ".sh", ".lean"):
             shutil.copyfile(file, runtime / file.name)
     shutil.copytree(PIPELINE / "docker", runtime / "docker")
     jobs = []
@@ -224,6 +225,16 @@ def collect(directory, queue, plan):
             pair[job["condition"]] = {key: value[key] for key in ("job_id", "success", "outcome")}
             pair[job["condition"]]["metrics"] = value.get("record", {}).get("metrics", {"cost": "unknown", "tokens": "unknown"})
     atomic_json(directory / "comparison.json", {"schema_version": 1, "pairs": pairs})
+    rows = {row["job_id"]: row for row in queue.rows()}
+    scorecard = []
+    for job in plan["jobs"]:
+        job_id = job["job_id"]
+        if job_id in results:
+            row = rows[job_id]
+            scorecard.append(summarize_job(
+                results[job_id], directory / job["directory"], row["finished"] - row["started"]))
+    atomic_json(directory / "scorecard.json", {"schema_version": 1, "jobs": scorecard})
+
     lines = ["# Batch results", "", "| Job | Condition | Outcome | Evidence |", "| --- | --- | --- | --- |"]
     for job in reversed(plan["jobs"]):
         if job["job_id"] in results:

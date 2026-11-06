@@ -113,6 +113,13 @@ def run_pair(engine, attempt=execute):
                         result[label] = read(child.directory / condition / relative)
                     except (OSError, ValueError):
                         pass
+                if engine.config.get("revision"):
+                    result["roles"] = {}
+                    for role in ("planner", "formalizer", "prover", "translator", "judge"):
+                        try:
+                            result["roles"][role] = read(child.directory / condition / "roles" / role / "metrics.json")
+                        except (OSError, ValueError):
+                            pass
             result.update(number=number, wall_time_seconds=time.monotonic() - began,
                           evidence=str(child.directory.relative_to(engine.directory)))
             save(child.directory / "pass.json", result)
@@ -137,12 +144,27 @@ def run_pair(engine, attempt=execute):
         for item in passes:
             log = engine.directory / item["evidence"] / condition / "output/retrieval.md"
             item["retrieval_record"] = str(log.relative_to(engine.directory)) if log.exists() else "unknown"
+            structured = log.with_suffix(".json")
+            if structured.exists():
+                item["retrieval_record"] = str(structured.relative_to(engine.directory))
         for role in ("builder", "critic"):
             metrics[role + "_tokens"] = {}
             for key in ("input_tokens", "cached_input_tokens", "output_tokens", "reasoning_output_tokens"):
                 values = [item.get(role, {}).get("token_usage", {}) for item in passes]
                 numbers = [value.get(key, "unknown") if isinstance(value, dict) else "unknown" for value in values]
                 metrics[role + "_tokens"][key] = sum(numbers) if all(type(n) is int for n in numbers) else "unknown"
+        if engine.config.get("revision"):
+            metrics["roles"] = {}
+            for role in ("planner", "formalizer", "prover", "translator", "judge"):
+                invoked = [item["roles"][role] for item in passes if role in item.get("roles", {})]
+                metrics["roles"][role] = {"calls": len(invoked), "wall_time_seconds":
+                    sum(x["wall_time_seconds"] for x in invoked), "tokens": {}}
+                for key in ("input_tokens", "cached_input_tokens", "output_tokens", "reasoning_output_tokens"):
+                    values = [x.get("token_usage", {}) for x in invoked]
+                    values = [x.get(key, "unknown") if isinstance(x, dict) else "unknown" for x in values]
+                    metrics["roles"][role]["tokens"][key] = sum(values) if all(type(x) is int for x in values) else "unknown"
+            metrics["total_model_seconds"] = sum(x["wall_time_seconds"] for x in metrics["roles"].values()) + metrics["critic_seconds"]
+            metrics["total_model_calls"] = sum(x["calls"] for x in metrics["roles"].values()) + metrics["critic_calls"]
         record = {"schema_version": 1, "artifact_id": datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d") + "-" + condition,
                   "date": datetime.now(ZoneInfo("America/New_York")).date().isoformat(),
                   "experiment_id": engine.directory.name, "condition": condition,
@@ -160,6 +182,15 @@ def run_pair(engine, attempt=execute):
              "evidence": requirement["evidence"], "proposed_correction": requirement["correction"]}
             for item in passes for requirement in item.get("report", {}).get("requirements", [])
             if requirement["verdict"] != "pass"]
+        if engine.config.get("revision"):
+            record["time_limit"]["revision"] = engine.config["revision"]
+            opened = set()
+            for item in passes:
+                path = engine.directory / item["evidence"] / condition / "output/retrieval.json"
+                if path.exists():
+                    opened.update(x["artifact_id"] for x in read(path)["opened_artifacts"])
+            record["retrieved_artifacts"] = sorted(opened)
+            record["semantic_review_status"] = "automated-calibration; expert validation pending"
         write(engine.directory, record)
         comparison["conditions"][condition] = record
         save(engine.directory / "comparison.json", comparison)

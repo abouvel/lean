@@ -25,4 +25,8 @@ result = {"verification_command": "bash pipeline/verify.sh", "build_and_scans_ex
           "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."}
 (out / "verification.log").write_text(log)
 (out / "verification.json").write_text(json.dumps(result, indent=2) + "\n")
+# These are disposable container-owned exports. The host adds the elaborated
+# audit and may append a diagnostic; its UID differs from this container's UID.
+for name in ("verification.log", "verification.json"):
+    (out / name).chmod(0o666)
 print(json.dumps(result), flush=True)

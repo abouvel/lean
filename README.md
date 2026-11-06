@@ -34,3 +34,8 @@ See the [pipeline](pipeline/README.md) and [reproduction commands](pipeline/REPR
 for offline replay and fresh agents. Experiment-local `artifacts/index.md` files
 index lessons and run summaries; `memory/` is the separately frozen retrieval
 snapshot. There are no separate root-level project or artifact stores.
+
+The [round-trip pipeline](pipeline/ROUNDTRIP.md) implements separate production
+agents, blind back-translation, and semantic judgment in opt-in calibration mode.
+The [revision plan](pipeline/REVISION_PLAN.md) records the artifact-memory study
+design and remaining expert-review requirements.

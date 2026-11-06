@@ -45,7 +45,7 @@ class ResourcePool:
     def stage(self, name):
         # Agents can run Lean, so reserve a build slot throughout model calls.
         # Acquire model before Lean consistently to avoid lock-order deadlocks.
-        if name in ("builder", "critic", "connectivity"):
+        if name in ("builder", "critic", "connectivity", "planner", "formalizer", "prover", "translator", "judge"):
             with self.lease("model_calls"), self.lease("lean_builds"):
                 yield
         else:

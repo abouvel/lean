@@ -39,6 +39,8 @@ def load_config(path):
     if not path.is_relative_to(ROOT / "experiments"):
         raise RuntimeError("Config must be inside experiments/.")
     config = json.loads(path.read_text())
+    from roles import validate_settings
+    validate_settings(config)
     if config["conditions"] != ["stateless", "retrieved"]:
         raise RuntimeError("This runner supports the fixed stateless/retrieved pair.")
     if config.get("aristotle_enabled", False):
@@ -140,7 +142,7 @@ def initialize(target, source, config, replay):
              for p in (target / current[key]).rglob("*") if p.is_file()]
     files += [target / "experiment.json"]
     files += [p for p in PIPELINE.rglob("*") if p.is_file() and
-              (p.suffix in (".py", ".sh") or p.name.startswith("Dockerfile")) and
+              (p.suffix in (".py", ".sh", ".lean") or p.name.startswith("Dockerfile")) and
               "__pycache__" not in p.parts and "tests" not in p.parts]
     if replay:
         files += list(target.glob("*/workspace/Research/**/*.lean"))

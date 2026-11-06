@@ -1,0 +1,8 @@
+{
+  "cases": 6,
+  "roundtrip_correct": 5,
+  "false_passes": 1,
+  "false_rejections": 0,
+  "uncertain": 0,
+  "human_review": "pending"
+}

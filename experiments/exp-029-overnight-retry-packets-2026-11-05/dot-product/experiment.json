@@ -1,0 +1,35 @@
+{
+  "name": "exp-019-multi-agent-dot-product-task-2026-11-01",
+  "task_id": "multi-agent-dot-product-roundtrip-pilot",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "max_passes": 2,
+  "builder_seconds": 180,
+  "critic_seconds": 240,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "12g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "revision": {
+    "schema_version": 1,
+    "mode": "calibration",
+    "seconds": {
+      "planner": 90,
+      "formalizer": 150,
+      "prover": 180,
+      "translator": 180,
+      "judge": 180
+    },
+    "construction_policy": "Define rounded leaf multiplication and rounded tree reduction, then prove gamma(depth+1,u) perturbations relative to exact products. The perturbation witness may be existential; executable IEEE arithmetic is not required."
+  }
+}

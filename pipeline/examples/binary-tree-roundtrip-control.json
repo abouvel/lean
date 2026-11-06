@@ -1,0 +1,36 @@
+{
+  "source": "experiments/exp-009-critic-live-benchmark-2026-10-28",
+  "baseline": "experiments/exp-029-overnight-retry-packets-2026-11-05/dot-product/experiment.json",
+  "cases": [
+    {
+      "id": "case-01",
+      "fixture": "known-complete",
+      "expected": "pass",
+      "targets": [
+        "Bhola.theorem_3_1_global",
+        "Bhola.algorithm1_spec",
+        "Bhola.depth_spec"
+      ],
+      "construction_names": [
+        "Bhola.algorithm",
+        "Bhola.stagesValues",
+        "Bhola.roundValues",
+        "Bhola.pairValues"
+      ]
+    },
+    {
+      "id": "case-02",
+      "fixture": "missing-original-input-link",
+      "expected": "fail",
+      "targets": [
+        "Bhola.algorithm_leaf_backward_error",
+        "Bhola.algorithm_offset"
+      ],
+      "construction_names": [
+        "Bhola.algorithm",
+        "Bhola.rounds",
+        "Bhola.level"
+      ]
+    }
+  ]
+}

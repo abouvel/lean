@@ -1,0 +1,20 @@
+{
+  "starting_commit": "b5df08f54d45608c2aad01a58ac3dee5ff95d8f6",
+  "experiment_id": "finite-difference",
+  "hashes": {
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/evaluator/REVIEWER.txt": "a28a5d810bb54d2f6cb2c02f45caebc5ed578b08a39fee5931a8dc8d19ef0344",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/evaluator/requirements.json": "120d81250e13cdac5dda5a63710b5b238f5ec092e8fc0ca91ca156698ffb1969",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/experiment.json": "88e657ac53ff7002ea5bdb6e811de4a8a6c70c4ff6dff4661fa041c5a2213b30",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/inputs/PROMPT.txt": "2ce02c1fae0c0b762fdb3137f39f259db2029aee67261efa90abe99d7f2b024b",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/inputs/source.pdf": "f75528835f32249a4003b3ef87d398dc66d19a0d24ebafe7e45c1bf2a6074380",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/inputs/source.txt": "4081be7c8a8eeafa60fd6eb6194e423a051263554ceed60a3c9719e4f684c649",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+    "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/protocol.json": "d3a0e369fdb3dc2a7432a3cee938d2ab2e86dfb47b4751a4c010e737c1614113"
+  }
+}
