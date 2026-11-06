@@ -1,0 +1,216 @@
+{
+  "job_id": "case-01",
+  "condition": "stateless",
+  "outcome": "accepted",
+  "success": true,
+  "record": {
+    "task_id": "binary-tree-theorem-3.1-roundtrip-control",
+    "retrieved_artifacts": [],
+    "metrics": {
+      "first_success_pass": 1
+    },
+    "passes": [
+      {
+        "number": 1,
+        "verification": {
+          "verification_command": "bash pipeline/verify.sh",
+          "build_and_scans_exit_code": 0,
+          "nontrivial_submission": true,
+          "formal_gate_passed": true,
+          "semantic_review": "pending",
+          "wall_time_seconds": 217.968,
+          "source_files": [
+            "Research/Submission.lean"
+          ],
+          "source_lines": 490,
+          "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+          "formal_audit": {
+            "schema_version": 1,
+            "unapproved_axioms": [],
+            "protected_source_failures": [],
+            "candidate_hash": "49ac4e65f3c6e7edef6b3e179c0dfb9dafd8811d121bf33e04e5720c79dc9e6d",
+            "passed": true
+          }
+        },
+        "direct_report": {
+          "overall_verdict": "pass",
+          "phase": "final",
+          "target_evidence": "Research/Submission.lean:391\u2013408 proves theorem_3_1: for every nonempty real input list and operation satisfying ExecutionModel, with 0 \u2264 u and depth(length)*u < 1, there exist perturbations indexed by Fin xs.length whose sum equals algorithm add xs and whose absolute values satisfy gamma(depth(length),u)*|xs.get i|. Lines 411\u2013417 derive the global rounding-model corollary. Lines 431\u2013438 and 465\u2013472 certify the actual algorithm output and exact ceiling-logarithmic tree height.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+              "evidence": "Research/Submission.lean:391\u2013408 proves theorem_3_1 with the requested existential perturbations, reconstruction equality, and per-occurrence bound. Lines 377\u2013388 prove the underlying universal list result. Independent compilation of the current source succeeded; /evaluation/verification.json and verification.log also report a successful build and no unapproved axioms.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "algorithm-linkage",
+              "requirement": "The proved theorem applies to the requested algorithm and its output.",
+              "evidence": "Research/Submission.lean:53\u201370 defines numerical offset pairing and exactly depth xs.length rounds, returning the head. Lines 92\u2013105 prove pairing at ceil(current_length/2), with unchanged unmatched entries; 447\u2013450 identify this offset with ceil(n/2^(ell+1)). Lines 245\u2013252 link numerical execution to the symbolic tree; 465\u2013472 certify a singleton final stage and tree height equal to depth. Lines 45 and 475\u2013476 identify depth with Nat.clog 2 and its least-power characterization. /output/IndependentChecks.lean compiled successfully, checking acceptance levels [2,3,4,5,6], [7,9,4], [11,9], [20], singleton behavior and unchanged carries using an inexact operation.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "input-occurrences",
+              "requirement": "The result is connected to every occurrence in the original input.",
+              "evidence": "Research/Submission.lean:143\u2013170 preserves the entire leaf multiset by List.Perm; 227\u2013242 connects final-tree leaves to the original list. Lines 344\u2013374 construct one perturbed value per leaf via List.Forall\u2082; 383\u2013388 transport these back to original input order. Lines 394\u2013408 index perturbations by Fin xs.length, preserving duplicate occurrences. Independent checks cover five duplicate inputs, arbitrary singleton values and odd-length traces.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "componentwise-backward-error",
+              "requirement": "The requested componentwise backward-error conclusion is proved.",
+              "evidence": "Research/Submission.lean:255 defines gamma d u = d*u/(1-d*u). Lines 307\u2013326 prove the one-round perturbation bound, and 345\u2013374 induct over bounded tree depth. The actual theorem at 391\u2013408 states algorithm add xs = sum_i (xs.get i + Delta i) and forall i, |Delta i| \u2264 gamma (depth xs.length) u * |xs.get i|. This is a bound for each input occurrence, including zero values, and can be applied independently to each real coordinate of componentwise reduction.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "The candidate does not assume, circularly encode, or vacuously imply the conclusion.",
+              "evidence": "Research/Submission.lean:285\u2013294 defines ExecutionModel solely by local relative-error equations at actual internal tree additions, not by a backward-error conclusion. Main assumptions at 392\u2013393 are nonempty input, nonnegative unit roundoff, ExecutionModel and depth*u < 1. Lines 280\u2013281 and 296\u2013305 derive ExecutionModel from the standard operationwise model. /output/IndependentChecks.lean instantiates the target for every nonempty input with exact addition and u=0, demonstrating nonvacuity. Source imports Mathlib at line 1 and Research.lean imports Research.Submission. No sorry, admit or custom axiom declarations were found. Printed axioms of theorem_3_1, algorithm1_spec and depth_spec are only propext, Classical.choice and Quot.sound.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": [
+            "Floating-point arithmetic is abstracted by a real-valued addition operation and the standard relative-error model; hardware floating-point formats and overflow/underflow detection are not implemented. The scalar theorem applies independently to each component."
+          ]
+        },
+        "roundtrip": {
+          "schema_version": 2,
+          "candidate_hash": "49ac4e65f3c6e7edef6b3e179c0dfb9dafd8811d121bf33e04e5720c79dc9e6d",
+          "overall_verdict": "pass",
+          "phase": "final",
+          "lean_implies_source": true,
+          "source_implies_lean": true,
+          "relation": "faithful",
+          "delivery_complete": true,
+          "construction_complete": true,
+          "missing_formal_steps": [],
+          "target_evidence": "The final target Bhola.theorem_3_1_global directly asserts the entire requested backward-error theorem for the explicitly defined offset-pairing reduction on arbitrary nonempty original inputs. Bhola.depth_spec supplies the required ceiling logarithmic depth. Bhola.algorithm1_spec explicitly links the actual rounds and returned value to a tree preserving all original input multiplicities. No missing composition of supporting error lemmas is needed to obtain the final claim. Existential perturbations are legitimate for this backward-error task; the algorithm itself is explicitly defined by list recursion.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+              "evidence": "Bhola.theorem_3_1_global explicitly quantifies over every nonempty finite real input list and already concludes exact perturbed-sum equality for the actual algorithm output and every individual perturbation bound. Bhola.depth_spec identifies the depth as ceiling(log2(n)) for positive n.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "algorithm-linkage",
+              "requirement": "The proved theorem applies to the requested algorithm and its output.",
+              "evidence": "The error target names Bhola.algorithm(add,xs). roundValues splits the current list at its ceiling half-length, adds corresponding entries across that offset, and carries unmatched entries unchanged. stagesValues repeats this exactly depth(length(xs)) times. Iterated ceiling halves give current length ceil(n/2^ell), hence offset ceil(n/2^(ell+1)), as required by Algorithm 1. algorithm1_spec explicitly identifies the final singleton and algorithm output.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "input-occurrences",
+              "requirement": "The result is connected to every occurrence in the original input.",
+              "evidence": "The error target defines x_i=xs[i] for every i in Fin(length(xs)) and supplies Delta at each original index. Both its exact sum and individual bounds use those original entries. Repeated equal values remain separate indexed occurrences. algorithm1_spec additionally requires a permutation of xs preserving multiplicities.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "componentwise-backward-error",
+              "requirement": "The requested componentwise backward-error conclusion is proved.",
+              "evidence": "Bhola.theorem_3_1_global explicitly states algorithm(add,xs)=sum_i(xs[i]+Delta(i)) and for every i, |Delta(i)|<=((d*u)/(1-d*u))*|xs[i]|. Together with the explicit depth characterization, these are precisely the requested additive componentwise backward-error conclusions.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "The candidate does not assume, circularly encode, or vacuously imply the conclusion.",
+              "evidence": "The numerical hypotheses are u>=0, d*u<1, and the elementary relative addition model: for each a,b there exists delta with |delta|<=u and add(a,b)=(a+b)*(1+delta). This models the standard rounding assumption from the source, with overflow and underflow excluded by model validity; it does not assume any accumulated error bound. Structural targets require no algebraic or rounding assumptions. There is no input sign restriction, and singleton inputs are covered.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "roles": {
+          "translator": {
+            "condition": "blind",
+            "kind": "translator",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793981241.3198555,
+            "time_limit_seconds": 180,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 61.285,
+            "token_usage": {
+              "input_tokens": 51586,
+              "cached_input_tokens": 40448,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2396,
+              "reasoning_output_tokens": 60
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "judge": {
+            "condition": "blind",
+            "kind": "judge",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793981303.6624787,
+            "time_limit_seconds": 180,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 62.671,
+            "token_usage": {
+              "input_tokens": 65900,
+              "cached_input_tokens": 58624,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2544,
+              "reasoning_output_tokens": 226
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          }
+        },
+        "critic": {
+          "condition": "stateless",
+          "kind": "reviewer",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium",
+          "started_unix": 1793981126.6813815,
+          "time_limit_seconds": 240,
+          "api_cost": "unknown",
+          "aristotle_calls": 0,
+          "exit_code": 0,
+          "timed_out": false,
+          "wall_time_seconds": 113.829,
+          "token_usage": {
+            "input_tokens": 251055,
+            "cached_input_tokens": 195328,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3623,
+            "reasoning_output_tokens": 762
+          },
+          "compiler_command_events": 4,
+          "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "jobs": [
+    {
+      "job_id": "case-01",
+      "task_id": "binary-tree-theorem-3.1-roundtrip-control",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+          "evidence": "Bhola.theorem_3_1_global explicitly quantifies over every nonempty finite real input list and already concludes exact perturbed-sum equality for the actual algorithm output and every individual perturbation bound. Bhola.depth_spec identifies the depth as ceiling(log2(n)) for positive n.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "algorithm-linkage",
+          "requirement": "The proved theorem applies to the requested algorithm and its output.",
+          "evidence": "The error target names Bhola.algorithm(add,xs). roundValues splits the current list at its ceiling half-length, adds corresponding entries across that offset, and carries unmatched entries unchanged. stagesValues repeats this exactly depth(length(xs)) times. Iterated ceiling halves give current length ceil(n/2^ell), hence offset ceil(n/2^(ell+1)), as required by Algorithm 1. algorithm1_spec explicitly identifies the final singleton and algorithm output.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "input-occurrences",
+          "requirement": "The result is connected to every occurrence in the original input.",
+          "evidence": "The error target defines x_i=xs[i] for every i in Fin(length(xs)) and supplies Delta at each original index. Both its exact sum and individual bounds use those original entries. Repeated equal values remain separate indexed occurrences. algorithm1_spec additionally requires a permutation of xs preserving multiplicities.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "componentwise-backward-error",
+          "requirement": "The requested componentwise backward-error conclusion is proved.",
+          "evidence": "Bhola.theorem_3_1_global explicitly states algorithm(add,xs)=sum_i(xs[i]+Delta(i)) and for every i, |Delta(i)|<=((d*u)/(1-d*u))*|xs[i]|. Together with the explicit depth characterization, these are precisely the requested additive componentwise backward-error conclusions.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "The candidate does not assume, circularly encode, or vacuously imply the conclusion.",
+          "evidence": "The numerical hypotheses are u>=0, d*u<1, and the elementary relative addition model: for each a,b there exists delta with |delta|<=u and add(a,b)=(a+b)*(1+delta). This models the standard rounding assumption from the source, with overflow and underflow excluded by model validity; it does not assume any accumulated error bound. Structural targets require no algebraic or rounding assumptions. There is no input sign restriction, and singleton inputs are covered.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "49ac4e65f3c6e7edef6b3e179c0dfb9dafd8811d121bf33e04e5720c79dc9e6d",
+      "first_success_pass": 1,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 484.8003208779992,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 113.829,
+          "tokens": {
+            "input_tokens": 251055,
+            "cached_input_tokens": 195328,
+            "output_tokens": 3623,
+            "reasoning_output_tokens": 762
+          }
+        },
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 62.671,
+          "tokens": {
+            "input_tokens": 65900,
+            "cached_input_tokens": 58624,
+            "output_tokens": 2544,
+            "reasoning_output_tokens": 226
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 61.285,
+          "tokens": {
+            "input_tokens": 51586,
+            "cached_input_tokens": 40448,
+            "output_tokens": 2396,
+            "reasoning_output_tokens": 60
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 368541,
+        "cached_input_tokens": 294400,
+        "output_tokens": 8563,
+        "reasoning_output_tokens": 1048
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "expected_verdict": "pass",
+      "control_passed": true
+    },
+    {
+      "job_id": "case-02",
+      "task_id": "binary-tree-theorem-3.1-roundtrip-control",
+      "condition": "stateless",
+      "outcome": "critic_failed",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "fail",
+      "roundtrip": "fail",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+          "evidence": "The universal backward-error target ends at map(first,ps)=F(t). The other target states an offset identity. Neither target concludes a perturbation representation aligned with original xs.",
+          "verdict": "fail",
+          "defect_categories": [
+            "missing-final-theorem"
+          ],
+          "correction": "Deliver the final backward-error theorem indexed by the original input occurrences."
+        },
+        {
+          "requirement_id": "algorithm-linkage",
+          "requirement": "The proved theorem applies to the requested algorithm and its output.",
+          "evidence": "The target states algorithm(xs,err)=some(t) and bounds E(t). The algorithm executes h=clog_2(length(xs)) rounds. Each level pairs j with j+ceil(current_length/2), uses (E(a)+E(b))*(1+err), and carries unmatched trees unchanged. algorithm_offset identifies this offset with ceil(n/2^(k+1)). This matches Algorithm 1 with zero-based indexing.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "input-occurrences",
+          "requirement": "The result is connected to every occurrence in the original input.",
+          "evidence": "The construction starts with map(leaf,xs), but neither target asserts a permutation between F(t) and xs. In particular, no target states preservation of all leaf occurrences through rounds or that the returned first tree contains every original occurrence. The length/offset identity alone does not state these links.",
+          "verdict": "fail",
+          "defect_categories": [
+            "missing-original-input-link"
+          ],
+          "correction": "Prove that the returned tree leaves are a permutation of xs, preserving duplicate occurrences, and transport perturbations along it."
+        },
+        {
+          "requirement_id": "componentwise-backward-error",
+          "requirement": "The requested componentwise backward-error conclusion is proved.",
+          "evidence": "For ps over F(t), the target states E(t)=sum(a+e) and |e|<=gamma(h,u)*|a| for every pair, with the correct gamma and positive denominator. These are the correct inequalities on tree leaves, including zero leaves and repetitions. The final targets omit their transport to original input occurrences.",
+          "verdict": "fail",
+          "defect_categories": [
+            "weakened-conclusion",
+            "missing-original-input-link"
+          ],
+          "correction": "Deliver a perturbation list aligned with xs, its perturbed-sum equality for E(t), and every required componentwise bound."
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "The candidate does not assume, circularly encode, or vacuously imply the conclusion.",
+          "evidence": "The hypotheses are nonempty xs, u>=0, bounded local errors, and h*u<1. These represent the source standard floating-point model without overflow or underflow. Arbitrary bounded err arrays model its local errors; unused entries may be zero. There are no input sign, magnitude, multiplicity, or special-length restrictions and no assumed perturbation conclusion.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": false,
+      "construction_complete": true,
+      "candidate_hash": "1b5d25cac19bd58543aa4d7585749cfa59be3484c9fda5443433102081c3287f",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 294.08128148000105,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 30.181,
+          "tokens": {
+            "input_tokens": "unknown",
+            "cached_input_tokens": "unknown",
+            "output_tokens": "unknown",
+            "reasoning_output_tokens": "unknown"
+          }
+        },
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 80.679,
+          "tokens": {
+            "input_tokens": 81434,
+            "cached_input_tokens": 65536,
+            "output_tokens": 3088,
+            "reasoning_output_tokens": 386
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 93.87,
+          "tokens": {
+            "input_tokens": 72035,
+            "cached_input_tokens": 63104,
+            "output_tokens": 3739,
+            "reasoning_output_tokens": 120
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "expected_verdict": "fail",
+      "control_passed": true
+    }
+  ]
+}

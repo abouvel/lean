@@ -1,0 +1,54 @@
+{
+  "source": "experiments/exp-009-critic-live-benchmark-2026-10-28",
+  "baseline": "experiments/exp-029-overnight-retry-packets-2026-11-05/dot-product/experiment.json",
+  "cases": [
+    {
+      "id": "case-01",
+      "fixture": "known-complete",
+      "expected": "pass",
+      "targets": [
+        "Bhola.theorem_3_1_global",
+        "Bhola.algorithm1_spec",
+        "Bhola.depth_spec"
+      ],
+      "construction_names": [
+        "Bhola.algorithm",
+        "Bhola.stagesValues",
+        "Bhola.roundValues",
+        "Bhola.pairValues"
+      ]
+    },
+    {
+      "id": "case-02",
+      "fixture": "missing-original-input-link",
+      "expected": "fail",
+      "targets": [
+        "Bhola.algorithm_leaf_backward_error",
+        "Bhola.algorithm_offset"
+      ],
+      "construction_names": [
+        "Bhola.algorithm",
+        "Bhola.rounds",
+        "Bhola.level"
+      ]
+    }
+  ],
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "role_seconds": {
+    "planner": 90,
+    "formalizer": 150,
+    "prover": 180,
+    "translator": 180,
+    "judge": 180
+  },
+  "critic_seconds": 240,
+  "allowed_tools": "Isolated Lean, blind translator/judge, direct critic; no builder or research memory.",
+  "verification_command": "bash pipeline/verify.sh",
+  "acceptance_tests": [
+    "Both fixed submissions pass the offline build, scans, and axiom audit.",
+    "Both reviewers accept the complete original-input theorem.",
+    "Both reviewers reject the compiling submission missing the original-input link.",
+    "Both results expose measured time, roles, tokens, and requirement evidence; expert verdicts stay pending."
+  ]
+}
