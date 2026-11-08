@@ -1,0 +1,26 @@
+{
+  "verification_command": "bash pipeline/verify.sh",
+  "build_and_scans_exit_code": 0,
+  "nontrivial_submission": true,
+  "formal_gate_passed": true,
+  "semantic_review": "pending",
+  "wall_time_seconds": 46.468,
+  "source_files": [
+    "Research/Submission.lean",
+    "Research/Projects/BinaryTreeReduction/Tree.lean",
+    "Research/Projects/BinaryTreeReduction/Reduction.lean",
+    "Research/Projects/BinaryTreeReduction/Algorithm.lean",
+    "Research/Common/FloatingPoint/Gamma.lean",
+    "Research/Common/FloatingPoint/Model.lean"
+  ],
+  "source_lines": 774,
+  "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+  "formal_audit": {
+    "schema_version": 1,
+    "unapproved_axioms": [],
+    "protected_source_failures": [],
+    "candidate_hash": "1a953294605bcf8dde783ce1fc42413544c4ab4fc8e4316225db3b9c77494b08",
+    "passed": true,
+    "changed_declarations": []
+  }
+}

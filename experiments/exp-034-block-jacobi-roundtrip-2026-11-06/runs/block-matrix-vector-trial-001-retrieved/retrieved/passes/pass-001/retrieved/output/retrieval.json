@@ -1,0 +1,35 @@
+{
+  "search_queries": [
+    "block_matrix_vector_product|block_dot_product_sequential|theta|Sequential Reduction",
+    "AGENTS.md",
+    "*.lean",
+    "*.toml",
+    "label\\{theorem:block_matrix_vector_product\\}"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Make positivity of 1 - K*u explicit before clearing denominators in the gamma bound; use abs_add_le for real triangle inequalities when needed. This artifact supplies no target-specific mathematical result.",
+      "role": "planner"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for the rounding-product induction and established positive denominators before applying division inequalities in the gamma lemmas.",
+      "role": "prover"
+    }
+  ]
+}

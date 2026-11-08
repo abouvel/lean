@@ -1,0 +1,14 @@
+{
+  "inputs/source.pdf": "f75528835f32249a4003b3ef87d398dc66d19a0d24ebafe7e45c1bf2a6074380",
+  "inputs/PROMPT.txt": "c28778eb9bdf428bd605b3f822e3d3ca161ab47dbc351473aae84ea43a0ed6c0",
+  "inputs/source.txt": "4081be7c8a8eeafa60fd6eb6194e423a051263554ceed60a3c9719e4f684c649",
+  "memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+  "memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+  "evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+  "evaluator/requirements.json": "120d81250e13cdac5dda5a63710b5b238f5ec092e8fc0ca91ca156698ffb1969",
+  "evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+  "evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+  "evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+  "evaluator/REVIEWER.txt": "138912737815ae87af04d35a9148e50d00d9360b58980d48f55fc989e56c34e3",
+  "evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "block-jacobi-block-dot-product",
+  "task_id": "block-dot-product",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "max_passes": 2,
+  "builder_seconds": 900,
+  "critic_seconds": 300,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "12g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "revision": {
+    "schema_version": 1,
+    "mode": "calibration",
+    "seconds": {
+      "planner": 180,
+      "formalizer": 420,
+      "prover": 900,
+      "translator": 240,
+      "judge": 240
+    },
+    "construction_policy": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums. Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T))))."
+  }
+}

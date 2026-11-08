@@ -1,0 +1,37 @@
+{
+  "task_id": "block-matrix-vector",
+  "source_label": "theorem:block_matrix_vector_product",
+  "source_lines": [
+    353,
+    393
+  ],
+  "source_sha256": "6e61d2a17d4ffe5ca618a4db312c205ae83bf4902f02aa6b85c880d01bcc4bb1",
+  "starting_commit": "a911f8e142b128c47eb015921ead27ec93f97402",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "trials_per_condition": 1,
+  "allowed_tools": "Local Lean and Mathlib, supplied paper, and approved notes in retrieved production roles.",
+  "role_budgets_seconds": {
+    "planner": 180,
+    "formalizer": 420,
+    "prover": 900,
+    "translator": 240,
+    "judge": 240
+  },
+  "critic_seconds": 300,
+  "max_passes": 2,
+  "job_seconds": 5400,
+  "verification_command": "bash pipeline/verify.sh",
+  "acceptance_tests": {
+    "target-completeness": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+    "construction-correctness": "Define the rowwise size-T block matrix-vector product with sequential reduction and zero padding.",
+    "target-bound": "Prove the perturbation matrix identity and the entrywise gamma(T + ceil(n/T) - 1) bound.",
+    "original-input-link": "Connect the result to the actual construction and the original mathematical inputs.",
+    "assumption-integrity": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition."
+  },
+  "review_policy": "Formal pass and agreement from both semantic evaluators. Expert verdict pending."
+}

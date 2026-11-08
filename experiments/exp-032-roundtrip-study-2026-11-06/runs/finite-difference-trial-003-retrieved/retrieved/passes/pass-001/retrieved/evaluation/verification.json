@@ -1,0 +1,21 @@
+{
+  "verification_command": "bash pipeline/verify.sh",
+  "build_and_scans_exit_code": 0,
+  "nontrivial_submission": true,
+  "formal_gate_passed": true,
+  "semantic_review": "pending",
+  "wall_time_seconds": 4.232,
+  "source_files": [
+    "Research/Submission.lean"
+  ],
+  "source_lines": 37,
+  "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+  "formal_audit": {
+    "schema_version": 1,
+    "unapproved_axioms": [],
+    "protected_source_failures": [],
+    "candidate_hash": "cfd1f0a8fcfa4469b7fb148f68918af93b0afcd8d1a2e00cde586c7015bbf08e",
+    "passed": true,
+    "changed_declarations": []
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "block-jacobi-mixed-precision-block-jacobi",
+  "task_id": "mixed-precision-block-jacobi",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "max_passes": 2,
+  "builder_seconds": 900,
+  "critic_seconds": 300,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "12g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "revision": {
+    "schema_version": 1,
+    "mode": "calibration",
+    "seconds": {
+      "planner": 180,
+      "formalizer": 420,
+      "prover": 900,
+      "translator": 240,
+      "judge": 240
+    },
+    "construction_policy": "Define the mixed-precision update and its specified matrix-vector, residual, Cholesky correction, and update operations. Prove the exact alpha/beta recurrence, the finite-iterate bound, and the limsup consequence under the stated hypotheses."
+  }
+}

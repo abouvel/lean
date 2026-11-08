@@ -1,0 +1,43 @@
+{
+  "search_queries": [
+    "mixed_precision_update_form|mat\\{g\\}|Delta.*mat\\{d\\}|c_1|c_2",
+    "mixed_precision_update|sqrt|Cholesky|urd_c|Delta",
+    "def PosDef|def PosSemidef",
+    "rg --files -g AGENTS.md -g *.lean /workspace/Research",
+    "gamma|Cholesky|sqrt|square root",
+    "def PosDef|def PosSemidef",
+    "abs_mulVec|mulVec.*abs|abs.*mulVec",
+    "prod.*sub.*one|abs.*prod.*one|prod.*gamma|gamma.*prod",
+    "sum_map.*le|sum_le_sum",
+    "lemma mul_le_mul_iff_(left|right)\u2080|theorem mul_le_mul_iff_(left|right)\u2080",
+    "blockDiagonal.*posDef|PosDef.*blockDiagonal|posDef.*blockDiagonal",
+    "reindex.*(PosDef|posDef)|PosDef.*reindex",
+    "\\bsorry\\b|\\baxiom\\b|admit"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require positivity of 1-eta and other denominators explicitly before rational coefficient manipulations; use the memory only as generic Lean engineering guidance, not target evidence.",
+      "role": "planner"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Established positive gamma and absorption denominators explicitly before clearing denominators in the new arithmetic helper proofs.",
+      "role": "prover"
+    }
+  ]
+}

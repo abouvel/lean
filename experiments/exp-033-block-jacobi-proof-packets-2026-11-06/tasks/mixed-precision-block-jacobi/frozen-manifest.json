@@ -1,0 +1,22 @@
+{
+  "starting_commit": "a911f8e142b128c47eb015921ead27ec93f97402",
+  "experiment_id": "mixed-precision-block-jacobi",
+  "hashes": {
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/evaluator/REVIEWER.txt": "ba95c41e7b95443a57e0068b32a700e56df92b80f95fa0baff346f0c081a29d6",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/evaluator/requirements.json": "da8ddd3ba8d479a1f3be627f0fb47cc3ddc0f967145a446aaa6d121664b7d17f",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/experiment.json": "d49970c3bb32d1bb76a6b5ead91ba23b61884eeeac6ad3878c34bda4911501f4",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/inputs/PROMPT.txt": "fdd19f7e8ec8facfd5cd03ce17701d27bbfa38a6538d0d80d95c233dcacf5774",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/inputs/paper.tex": "6e61d2a17d4ffe5ca618a4db312c205ae83bf4902f02aa6b85c880d01bcc4bb1",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/inputs/references.bib": "70c5a06292fdf4172602bfa6428a123c1c38a55992aed3246c57a49920ee5fa6",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/inputs/source.pdf": "b93d44db05250bf799848305a25271090e0248e6818bc3cd62e9a42fc32f425b",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/inputs/source.txt": "0e612e4dea7375594b9e14db825ac3fcefe5142bcda8c7cd6873ff76935f2757",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+    "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/protocol.json": "83b694bdf28d2e91e0a5d83ca431b9194605b02012205b88c4e4519a4fbb2aa5"
+  }
+}

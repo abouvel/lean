@@ -1,0 +1,22 @@
+{
+  "verification_command": "bash pipeline/verify.sh",
+  "build_and_scans_exit_code": 0,
+  "nontrivial_submission": true,
+  "formal_gate_passed": true,
+  "semantic_review": "pending",
+  "wall_time_seconds": 15.66,
+  "source_files": [
+    "Research/Submission.lean",
+    "Research/Common/FloatingPoint/Model.lean"
+  ],
+  "source_lines": 142,
+  "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+  "formal_audit": {
+    "schema_version": 1,
+    "unapproved_axioms": [],
+    "protected_source_failures": [],
+    "candidate_hash": "e2760682edeef69becb5089f7225dc112f041969b90666d1ea8ed89195914455",
+    "passed": true,
+    "changed_declarations": []
+  }
+}

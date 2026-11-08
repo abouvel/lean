@@ -1,0 +1,33 @@
+{
+  "search_queries": [
+    "traingular|Triangular|Triangular Update|theta_n|lemma:product",
+    "rg --files /spec /memory /workspace -g 'AGENTS.md' -g 'lakefile*' -g 'lean-toolchain' -g '*.lean' -g 'source.txt' -g 'plan.json' -g 'feedback.json' -g 'index.md'",
+    "rg --files /spec/support"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require explicit positivity of gamma denominators before clearing them in product bounds and monotonicity arguments.",
+      "role": "planner"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Established positive denominators explicitly before using division inequalities and field simplification in the rounding-product and gamma bounds.",
+      "role": "prover"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "search_queries": [
+    "mixed_precision_update|mat.g|delta|urd_c"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require explicit positivity of 1-eta and 1-alpha and of gamma denominators before clearing denominators or applying rational-inequality tactics.",
+      "role": "planner"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Flag positivity of 1-eta and, under alpha<1, 1-alpha as explicit proof obligations in the handoff; the source hypotheses provide the strict inequalities needed before clearing divisions.",
+      "role": "formalizer"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for real absolute-value triangle inequalities in the norm and residual helper proofs.",
+      "role": "prover"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Established positive denominators from the gamma domain and alpha<1 before the division and geometric-recurrence arguments.",
+      "role": "prover"
+    }
+  ]
+}

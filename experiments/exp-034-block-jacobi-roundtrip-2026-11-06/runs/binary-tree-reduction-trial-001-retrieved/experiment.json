@@ -1,0 +1,35 @@
+{
+  "name": "binary-tree-reduction-trial-001-retrieved",
+  "task_id": "binary-tree-reduction",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "max_passes": 2,
+  "builder_seconds": 900,
+  "critic_seconds": 300,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "12g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "revision": {
+    "schema_version": 1,
+    "mode": "calibration",
+    "seconds": {
+      "planner": 180,
+      "formalizer": 420,
+      "prover": 900,
+      "translator": 240,
+      "judge": 240
+    },
+    "construction_policy": "Define the paper's offset-paired binary reduction with unchanged carries. Prove the componentwise gamma(ceil(log2 n)) bound for perturbations of the original input occurrences."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "search_queries": [],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Repeated the imported theorem axiom audit after lake build completed, because the earlier concurrent audit had read a stale .olean file.",
+      "role": "prover"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "search_queries": [
+    "cholesky_factorization|Cholesky Factorization|sqrt|square root",
+    "def PosDef|def IsSymm"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require explicit positive gamma denominators before clearing denominators in rounding-product and monotonicity proofs.",
+      "role": "planner"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for real triangle inequalities and established positive denominators before clearing rational inequalities.",
+      "role": "prover"
+    }
+  ]
+}

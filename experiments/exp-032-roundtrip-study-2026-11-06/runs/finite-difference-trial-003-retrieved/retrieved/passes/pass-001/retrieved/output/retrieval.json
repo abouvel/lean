@@ -1,0 +1,23 @@
+{
+  "search_queries": [
+    "exists_hasDerivAt_eq_slope|exists.*slope|exists_deriv_eq_slope",
+    "slope|exists_hasDerivAt|exists_deriv",
+    "theorem exists_hasDerivAt_eq_slope|lemma exists_hasDerivAt_eq_slope",
+    "\\bsorry\\b|\\badmit\\b|^axiom "
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

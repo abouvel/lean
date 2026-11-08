@@ -1,0 +1,33 @@
+{
+  "search_queries": [
+    "AGENTS.md, source.txt, plan.json, feedback.json, index.md, lakefile.*, lean-toolchain, *.lean",
+    "sorry|axiom",
+    "sorry|axiom|admit"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Use abs_add_le as the proposed Lean triangle-inequality lemma for the local rounding and perturbation estimates, subject to local compilation.",
+      "role": "planner"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for the triangle inequalities in the local perturbation estimate, then validated the proof with the Lean compiler.",
+      "role": "prover"
+    }
+  ]
+}

@@ -1,0 +1,2466 @@
+{
+  "schema_version": 1,
+  "jobs": [
+    {
+      "job_id": "binary-tree-reduction-trial-001-stateless",
+      "task_id": "binary-tree-reduction",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The reported final target Research.BinaryTreeReduction.parallel_binary_tree_reduction explicitly asserts both computed(x,\u03b4)=\u2211i(x(i)+\u0394x(i)) and the componentwise bound for every original input and coordinate. It covers all positive n at depth(n)=ceil(log2 n). No composition of supporting lemmas is needed to obtain a missing final conclusion.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the paper's offset-paired binary reduction with unchanged carries.",
+          "evidence": "stageSize(n,\u2113)=ceil(n/2^\u2113). Writing m=stageSize(n,\u2113+1), s=stageSize(n,\u2113), stage pairs k and k+m when k<m and k+m<s, multiplies their sum by 1+\u03b4(\u2113,k,c), and copies unpaired entries unchanged. This is the paper algorithm under zero-based indexing. Inactive positions are zeroed but never used as available partners. computed returns position 0 after depth(n) stages. The recurrence is an actual definition, not an abstract choice.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the componentwise gamma(ceil(log2 n)) bound for perturbations of the original input occurrences.",
+          "evidence": "The final target explicitly states |\u0394x(i,c)|\u2264gamma(depth(n),u)|x(i,c)| for every i\u2208Fin n and every coordinate c, with gamma(d,u)=d*u/(1-d*u). depth(n) is the least d with n\u22642^d for positive n, so the bound has exactly the requested ceiling-logarithm constant. The hypothesis d*u<1 makes its denominator positive. n=1 is covered with d=0 and zero perturbation bound.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "stage initializes position k<n with the original x(k,c). The final target uses computed(x,\u03b4), defined as that very recurrence at depth(n), position 0, and sums perturbations of the same original Fin n input occurrences. Thus the output equality and bound are directly linked to the submitted algorithm and inputs.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The target allows arbitrary real inputs and arbitrary coordinate types, every positive n, nonnegative unit roundoff u, and d*u<1. Positive n is the domain of the source logarithm. LocalRoundingModel supplies only |\u03b4|\u2264u at active paired additions before the output stage, exactly the standard relative-error model supplied by the source under no overflow or underflow. Unchanged carries impose no rounding assumption. No desired backward-error equality or gamma estimate is assumed. Existential perturbations are legitimate for this backward-error theorem; the source does not require the theorem to name backwardPerturbation as its witness.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "3d2fd3dca468199113d70ebae26263376e96e64d9727e8f42b780504da58c29e",
+      "first_success_pass": 1,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 655.7740762233734,
+      "proof_loop_seconds": 628.2783056240005,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 72.003,
+          "tokens": {
+            "input_tokens": 197497,
+            "cached_input_tokens": 162816,
+            "output_tokens": 2536,
+            "reasoning_output_tokens": 252
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 100.279,
+          "tokens": {
+            "input_tokens": 215622,
+            "cached_input_tokens": 180992,
+            "output_tokens": 3437,
+            "reasoning_output_tokens": 581
+          }
+        },
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 61.793,
+          "tokens": {
+            "input_tokens": 72129,
+            "cached_input_tokens": 62976,
+            "output_tokens": 2548,
+            "reasoning_output_tokens": 125
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 58.006,
+          "tokens": {
+            "input_tokens": 95528,
+            "cached_input_tokens": 81152,
+            "output_tokens": 1889,
+            "reasoning_output_tokens": 100
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 181.035,
+          "tokens": {
+            "input_tokens": 320935,
+            "cached_input_tokens": 301568,
+            "output_tokens": 5122,
+            "reasoning_output_tokens": 921
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 116.922,
+          "tokens": {
+            "input_tokens": 72582,
+            "cached_input_tokens": 54528,
+            "output_tokens": 5449,
+            "reasoning_output_tokens": 98
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 974293,
+        "cached_input_tokens": 844032,
+        "output_tokens": 20981,
+        "reasoning_output_tokens": 2077
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "binary-tree-reduction-trial-001-retrieved",
+      "task_id": "binary-tree-reduction",
+      "condition": "retrieved",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "2f95ced71731df62a40d8e2d628e2eef24d296827e6c6fba397f47529b0cfc20",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": true,
+      "job_elapsed_seconds": 3586.030982017517,
+      "proof_loop_seconds": 767.6548438259924,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 3072.922,
+          "tokens": {
+            "input_tokens": "unknown",
+            "cached_input_tokens": "unknown",
+            "output_tokens": "unknown",
+            "reasoning_output_tokens": "unknown"
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 138.268,
+          "tokens": {
+            "input_tokens": 230240,
+            "cached_input_tokens": 206848,
+            "output_tokens": 4598,
+            "reasoning_output_tokens": 1011
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 78.61,
+          "tokens": {
+            "input_tokens": 106438,
+            "cached_input_tokens": 96384,
+            "output_tokens": 3230,
+            "reasoning_output_tokens": 183
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 194.93,
+          "tokens": {
+            "input_tokens": 289748,
+            "cached_input_tokens": 243072,
+            "output_tokens": 5535,
+            "reasoning_output_tokens": 803
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Explicitly require denominator positivity before manipulating rational gamma inequalities in the product-bound helper; the artifact is generic guidance, not evidence for the target theorem.",
+          "role": "planner"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Used abs_add_le for the product-error induction and established positive gamma denominators before applying division inequalities.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "block-dot-product-trial-001-stateless",
+      "task_id": "block-dot-product",
+      "condition": "stateless",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "1da037325eb3b769654318351379dd168658add1d63e06ed9a5279d4783d238d",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 672.6515493392944,
+      "proof_loop_seconds": 645.0702480839973,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 73.945,
+          "tokens": {
+            "input_tokens": 275699,
+            "cached_input_tokens": 230400,
+            "output_tokens": 2730,
+            "reasoning_output_tokens": 211
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 127.173,
+          "tokens": {
+            "input_tokens": 151935,
+            "cached_input_tokens": 134912,
+            "output_tokens": 4926,
+            "reasoning_output_tokens": 1323
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 73.438,
+          "tokens": {
+            "input_tokens": 80258,
+            "cached_input_tokens": 69632,
+            "output_tokens": 2420,
+            "reasoning_output_tokens": 136
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 334.247,
+          "tokens": {
+            "input_tokens": 718565,
+            "cached_input_tokens": 685056,
+            "output_tokens": 11143,
+            "reasoning_output_tokens": 2464
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "block-dot-product-trial-001-retrieved",
+      "task_id": "block-dot-product",
+      "condition": "retrieved",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "7f4fef968b46c3ef426e2e042f37748ab27ece5c3665be5664425a4f35305305",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 614.663215637207,
+      "proof_loop_seconds": 570.2835089529981,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 79.659,
+          "tokens": {
+            "input_tokens": 219379,
+            "cached_input_tokens": 200192,
+            "output_tokens": 2525,
+            "reasoning_output_tokens": 435
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 115.37,
+          "tokens": {
+            "input_tokens": 244884,
+            "cached_input_tokens": 212864,
+            "output_tokens": 3733,
+            "reasoning_output_tokens": 721
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 58.185,
+          "tokens": {
+            "input_tokens": 86747,
+            "cached_input_tokens": 75520,
+            "output_tokens": 2207,
+            "reasoning_output_tokens": 172
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 251.235,
+          "tokens": {
+            "input_tokens": 600536,
+            "cached_input_tokens": 583680,
+            "output_tokens": 8432,
+            "reasoning_output_tokens": 1768
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Explicitly require positive gamma denominators before clearing rational inequalities in the finite-product helper.",
+          "role": "planner"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Used abs_add_le for the absolute-value triangle inequality and established positive denominators explicitly before applying division inequalities.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "sequential-block-dot-trial-001-stateless",
+      "task_id": "sequential-block-dot",
+      "condition": "stateless",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "bd2b6e92a989f362b70b5b35511f822a2744e67fedf05003a3c50988dbde9c05",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 578.4105863571167,
+      "proof_loop_seconds": 550.7318270140095,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 58.426,
+          "tokens": {
+            "input_tokens": 207684,
+            "cached_input_tokens": 189312,
+            "output_tokens": 1872,
+            "reasoning_output_tokens": 143
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 143.828,
+          "tokens": {
+            "input_tokens": 174197,
+            "cached_input_tokens": 149504,
+            "output_tokens": 4559,
+            "reasoning_output_tokens": 964
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 52.27,
+          "tokens": {
+            "input_tokens": 79644,
+            "cached_input_tokens": 59264,
+            "output_tokens": 1994,
+            "reasoning_output_tokens": 43
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 260.877,
+          "tokens": {
+            "input_tokens": 638983,
+            "cached_input_tokens": 587392,
+            "output_tokens": 7847,
+            "reasoning_output_tokens": 1750
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "sequential-block-dot-trial-001-retrieved",
+      "task_id": "sequential-block-dot",
+      "condition": "retrieved",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "89ea5e9e971371faf2c6fc9415bf73b37b20c91250d788d72c550a382e93948f",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 567.4719786643982,
+      "proof_loop_seconds": 528.6517222140101,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 71.847,
+          "tokens": {
+            "input_tokens": 279735,
+            "cached_input_tokens": 246912,
+            "output_tokens": 2333,
+            "reasoning_output_tokens": 227
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 93.945,
+          "tokens": {
+            "input_tokens": 142620,
+            "cached_input_tokens": 133120,
+            "output_tokens": 3309,
+            "reasoning_output_tokens": 593
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 50.178,
+          "tokens": {
+            "input_tokens": 87901,
+            "cached_input_tokens": 71424,
+            "output_tokens": 1998,
+            "reasoning_output_tokens": 70
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 257.992,
+          "tokens": {
+            "input_tokens": 702784,
+            "cached_input_tokens": 671872,
+            "output_tokens": 8597,
+            "reasoning_output_tokens": 1312
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Require explicit denominator positivity before clearing gamma rational inequalities; use the generic Lean arithmetic guidance only, not as evidence for the target result.",
+          "role": "planner"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Used abs_add_le for the product-error induction and established positive denominators before clearing rational inequalities.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "block-matrix-vector-trial-001-stateless",
+      "task_id": "block-matrix-vector",
+      "condition": "stateless",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "555d97febc7d6250aea7f65623259f50439177ca2a0f9d4af54e342e75ad0311",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 532.161203622818,
+      "proof_loop_seconds": 505.6847426530003,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 70.141,
+          "tokens": {
+            "input_tokens": 238549,
+            "cached_input_tokens": 219520,
+            "output_tokens": 2409,
+            "reasoning_output_tokens": 291
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 98.459,
+          "tokens": {
+            "input_tokens": 160223,
+            "cached_input_tokens": 147328,
+            "output_tokens": 3886,
+            "reasoning_output_tokens": 514
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 65.519,
+          "tokens": {
+            "input_tokens": 84978,
+            "cached_input_tokens": 73728,
+            "output_tokens": 2359,
+            "reasoning_output_tokens": 153
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 236.339,
+          "tokens": {
+            "input_tokens": 634015,
+            "cached_input_tokens": 592256,
+            "output_tokens": 8066,
+            "reasoning_output_tokens": 1967
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "block-matrix-vector-trial-001-retrieved",
+      "task_id": "block-matrix-vector",
+      "condition": "retrieved",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "4164d580e5d83a4d6ccc2201c1deca9293cc123fa74a1fd0347b08295371f312",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 588.0417757034302,
+      "proof_loop_seconds": 558.5984653760097,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 59.391,
+          "tokens": {
+            "input_tokens": 181166,
+            "cached_input_tokens": 154496,
+            "output_tokens": 2124,
+            "reasoning_output_tokens": 125
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 116.356,
+          "tokens": {
+            "input_tokens": 154616,
+            "cached_input_tokens": 146176,
+            "output_tokens": 4786,
+            "reasoning_output_tokens": 967
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 65.559,
+          "tokens": {
+            "input_tokens": 84195,
+            "cached_input_tokens": 73856,
+            "output_tokens": 2095,
+            "reasoning_output_tokens": 137
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 282.247,
+          "tokens": {
+            "input_tokens": 673893,
+            "cached_input_tokens": 640384,
+            "output_tokens": 8607,
+            "reasoning_output_tokens": 2578
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Make positivity of 1 - K*u explicit before clearing denominators in the gamma bound; use abs_add_le for real triangle inequalities when needed. This artifact supplies no target-specific mathematical result.",
+          "role": "planner"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Used abs_add_le for the rounding-product induction and established positive denominators before applying division inequalities in the gamma lemmas.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "triangular-update-trial-001-stateless",
+      "task_id": "triangular-update",
+      "condition": "stateless",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "3d5fca98a7b9ef779991e8aed0ab32f36f2b060243177cb2912f43f90a207249",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 536.676430940628,
+      "proof_loop_seconds": 508.70718064501125,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 62.627,
+          "tokens": {
+            "input_tokens": 205427,
+            "cached_input_tokens": 185344,
+            "output_tokens": 1923,
+            "reasoning_output_tokens": 190
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 105.965,
+          "tokens": {
+            "input_tokens": 149728,
+            "cached_input_tokens": 124928,
+            "output_tokens": 3947,
+            "reasoning_output_tokens": 668
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 55.441,
+          "tokens": {
+            "input_tokens": 75983,
+            "cached_input_tokens": 65408,
+            "output_tokens": 2075,
+            "reasoning_output_tokens": 76
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 248.06,
+          "tokens": {
+            "input_tokens": 305782,
+            "cached_input_tokens": 294144,
+            "output_tokens": 8337,
+            "reasoning_output_tokens": 2375
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "triangular-update-trial-001-retrieved",
+      "task_id": "triangular-update",
+      "condition": "retrieved",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "Both triangular_update_constructed and triangular_update already conclude the exact backward equation and all componentwise gamma(k) bounds for arbitrary admissible inputs. The latter covers every yhat satisfying IsEvaluation; no missing composition of supporting lemmas is needed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the sequential inner product followed by the rounded subtraction and division in the scalar update.",
+          "evidence": "roundedProduct is P_i=a_i b_i(1+xi_i). sequentialDot starts S_1=P_0 and continues S_(m+1)=(S_m+P_m)(1+delta_m). computedValue uses S_(k-1), rounded subtraction with factor 1+eta, then division by b_(k-1) with factor 1+zeta. LocalErrors bounds exactly the errors used by these operations. These explicit recurrences encode the source standard relative-error model; a concrete floating-point format is not required by that model.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the stated perturbed equation, including the pivot, and all componentwise gamma(k) bounds.",
+          "evidence": "Both targets assert sum_(i=0)^(k-2) a_i(b_i+Delta b_i)+yhat(b_(k-1)+Delta b_(k-1))=c and |Delta b_i| <= [ku/(1-ku)]|b_i| for every i in Fin k. The explicit perturbation uses the accumulated product/addition weight on each nonpivot component and the reciprocal of (1+eta)(1+zeta) on the pivot. Thus the equality, pivot, component range, and constant all match the source.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The constructed target sets yhat to computedValue for the same a,b,c and error tuple used in perturbation. IsEvaluation requires this very yhat to equal computedValue for those original inputs and bounded error witnesses. BackwardEquation retains a and c, perturbs b, and multiplies its final entry by yhat. There is no unrelated output or replacement input.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The targets retain k >= 2, ku < 1, arbitrary real a,b,c, and nonzero pivot. Nonnegative u is inherent in unit roundoff. The source no-overflow/no-underflow condition licenses precisely the local relative-error model used by the translation. IsEvaluation assumes only operation recurrences and local error bounds, not any backward equation or accumulated bound. Unused error coordinates cannot affect the result. Total division outside the target hypotheses is harmless: the pivot and both final error factors are nonzero within them.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "d185eee57e6feae45a7d7cefa47eb9a85e661c098c57ff5fbd13cba8568356d7",
+      "first_success_pass": 1,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 4159.71999502182,
+      "proof_loop_seconds": 980.3274922980054,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 67.644,
+          "tokens": {
+            "input_tokens": 228543,
+            "cached_input_tokens": 207488,
+            "output_tokens": 2278,
+            "reasoning_output_tokens": 291
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 126.772,
+          "tokens": {
+            "input_tokens": 234326,
+            "cached_input_tokens": 223104,
+            "output_tokens": 4630,
+            "reasoning_output_tokens": 1110
+          }
+        },
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 60.82,
+          "tokens": {
+            "input_tokens": 69646,
+            "cached_input_tokens": 63360,
+            "output_tokens": 2680,
+            "reasoning_output_tokens": 242
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 74.058,
+          "tokens": {
+            "input_tokens": 113152,
+            "cached_input_tokens": 104448,
+            "output_tokens": 3164,
+            "reasoning_output_tokens": 204
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 3645.872,
+          "tokens": {
+            "input_tokens": 416255,
+            "cached_input_tokens": 383872,
+            "output_tokens": 7128,
+            "reasoning_output_tokens": 1182
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 113.842,
+          "tokens": {
+            "input_tokens": 76831,
+            "cached_input_tokens": 67200,
+            "output_tokens": 5337,
+            "reasoning_output_tokens": 115
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 1138753,
+        "cached_input_tokens": 1049472,
+        "output_tokens": 25217,
+        "reasoning_output_tokens": 3144
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Require explicit positive denominators before proving gamma and reciprocal-factor inequalities in Lean.",
+          "role": "planner"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Established positive denominators explicitly before applying division inequalities in the product bounds.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "triangular-solve-trial-001-stateless",
+      "task_id": "triangular-solve",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The sole target solution_of_a_triangular_system explicitly asserts existence of Delta with the system identity, entrywise bound, and matching triangular structure together, for both directions and all dimensions. These are final target conclusions, not conclusions requiring composition of helper lemmas.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the rounded forward or backward substitution corresponding to lower or upper triangular inputs.",
+          "evidence": "forwardSubstitution folds forwardStep over indices 0 through n-1 from the zero vector. forwardRow performs direct division for row zero and otherwise a sequential dot product, subtraction from b_i, and division by T_ii. backwardSubstitution reverses matrix indices and b, runs forward substitution, then reverses the result; thus original rows and their already computed terms are visited in descending order. These are explicit arithmetic constructions with call logs.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the perturbed system identity, gamma(n) componentwise bound, and preservation of the triangular structure.",
+          "evidence": "The target explicitly asserts (T+Delta)x=b, all-entry inequalities |Delta_ij|<=gamma(n,u)*|T_ij|, and IsTriangular(direction,Delta). gamma(n,u) is exactly n*u/(1-n*u). IsTriangular forces zeros above the diagonal for lower and below it for upper.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The target sets run=substitution(direction,ar,T,b) and x=run.value. The same T and b occur in the perturbed identity and bound. Execution.SatisfiesModel applies to the actual run.calls, which the construction accumulates from the operations producing its returned vector. No independently chosen solution replaces the computed vector.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The target assumes 0<=u, n*u<1, det(T)!=0, the specified triangular direction, and the relative-error model for actual calls. Nonnegative u is inherent in unit roundoff. Local call constraints encode the source arithmetic model in the no-overflow/no-underflow setting without assuming the requested error bound. Although the model exempts division by zero, each algorithm division is by a nonzero diagonal entry of nonsingular triangular T. Both directions and all dimensions are covered, including the harmless empty case.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "24a0e646799958ca1b5c0ff8511eeec518c62c7ea4ac7dccad7e7d806eab158c",
+      "first_success_pass": 1,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 1198.942180633545,
+      "proof_loop_seconds": 1171.0856021880027,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 73.753,
+          "tokens": {
+            "input_tokens": 279564,
+            "cached_input_tokens": 251136,
+            "output_tokens": 2323,
+            "reasoning_output_tokens": 228
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 150.602,
+          "tokens": {
+            "input_tokens": 185861,
+            "cached_input_tokens": 173824,
+            "output_tokens": 5825,
+            "reasoning_output_tokens": 1826
+          }
+        },
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 59.105,
+          "tokens": {
+            "input_tokens": 68279,
+            "cached_input_tokens": 60160,
+            "output_tokens": 2372,
+            "reasoning_output_tokens": 107
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 82.872,
+          "tokens": {
+            "input_tokens": 191561,
+            "cached_input_tokens": 170880,
+            "output_tokens": 2959,
+            "reasoning_output_tokens": 148
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 624.567,
+          "tokens": {
+            "input_tokens": 1414589,
+            "cached_input_tokens": 1378304,
+            "output_tokens": 19576,
+            "reasoning_output_tokens": 4781
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 123.215,
+          "tokens": {
+            "input_tokens": 90154,
+            "cached_input_tokens": 76288,
+            "output_tokens": 5742,
+            "reasoning_output_tokens": 94
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 2230008,
+        "cached_input_tokens": 2110592,
+        "output_tokens": 38797,
+        "reasoning_output_tokens": 7184
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "triangular-solve-trial-001-retrieved",
+      "task_id": "triangular-solve",
+      "condition": "retrieved",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "433d6e961453bec14dc195deb1736b443c42b87a53565797877263772d9a2554",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 154244.3395102024,
+      "proof_loop_seconds": 1075.7429108560027,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 72.339,
+          "tokens": {
+            "input_tokens": 247917,
+            "cached_input_tokens": 224128,
+            "output_tokens": 2082,
+            "reasoning_output_tokens": 216
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 125.262,
+          "tokens": {
+            "input_tokens": 229875,
+            "cached_input_tokens": 215552,
+            "output_tokens": 4816,
+            "reasoning_output_tokens": 854
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 79.65,
+          "tokens": {
+            "input_tokens": 99427,
+            "cached_input_tokens": 85376,
+            "output_tokens": 3395,
+            "reasoning_output_tokens": 118
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 153873.997,
+          "tokens": {
+            "input_tokens": 1111727,
+            "cached_input_tokens": 1054976,
+            "output_tokens": 13987,
+            "reasoning_output_tokens": 3364
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Require explicit positivity of gamma denominators before clearing them in product bounds and monotonicity arguments.",
+          "role": "planner"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Established positive denominators explicitly before using division inequalities and field simplification in the rounding-product and gamma bounds.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "cholesky-factorization-trial-001-stateless",
+      "task_id": "cholesky-factorization",
+      "condition": "stateless",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "f727cc9db97b3e8d68856aaca573b6f668d972af5ab14f0467cd7511d42b97ef",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 1268.9243440628052,
+      "proof_loop_seconds": 959.2830812180036,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 78.914,
+          "tokens": {
+            "input_tokens": 324822,
+            "cached_input_tokens": 293120,
+            "output_tokens": 2402,
+            "reasoning_output_tokens": 278
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 148.988,
+          "tokens": {
+            "input_tokens": 233381,
+            "cached_input_tokens": 221184,
+            "output_tokens": 5223,
+            "reasoning_output_tokens": 940
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 63.673,
+          "tokens": {
+            "input_tokens": 126754,
+            "cached_input_tokens": 110976,
+            "output_tokens": 2395,
+            "reasoning_output_tokens": 161
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 893.145,
+          "tokens": {
+            "input_tokens": 995290,
+            "cached_input_tokens": 968576,
+            "output_tokens": 12190,
+            "reasoning_output_tokens": 2202
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "cholesky-factorization-trial-001-retrieved",
+      "task_id": "cholesky-factorization",
+      "condition": "retrieved",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "4b7b69d0999087608c59bf55234737a68bd6ccf6fe9d885cb18a9b7111f9dec5",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 965.8437495231628,
+      "proof_loop_seconds": 927.1102389009902,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 74.505,
+          "tokens": {
+            "input_tokens": 243213,
+            "cached_input_tokens": 214272,
+            "output_tokens": 2414,
+            "reasoning_output_tokens": 240
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 165.13,
+          "tokens": {
+            "input_tokens": 227956,
+            "cached_input_tokens": 213888,
+            "output_tokens": 4837,
+            "reasoning_output_tokens": 1485
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 106.88,
+          "tokens": {
+            "input_tokens": 124232,
+            "cached_input_tokens": 113792,
+            "output_tokens": 3950,
+            "reasoning_output_tokens": 237
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 512.456,
+          "tokens": {
+            "input_tokens": 1255419,
+            "cached_input_tokens": 1199872,
+            "output_tokens": 17886,
+            "reasoning_output_tokens": 5241
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Require explicit positive gamma denominators before clearing denominators in rounding-product and monotonicity proofs.",
+          "role": "planner"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Used abs_add_le for real triangle inequalities and established positive denominators before clearing rational inequalities.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "cholesky-solve-trial-001-stateless",
+      "task_id": "cholesky-solve",
+      "condition": "stateless",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "5f09f554b13196136023c37522200efa150094ef2471de6d916098a094bd8663",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 904.8342447280884,
+      "proof_loop_seconds": 871.0284823149996,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 96.751,
+          "tokens": {
+            "input_tokens": 477645,
+            "cached_input_tokens": 427392,
+            "output_tokens": 2660,
+            "reasoning_output_tokens": 480
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 144.427,
+          "tokens": {
+            "input_tokens": 298196,
+            "cached_input_tokens": 270720,
+            "output_tokens": 4618,
+            "reasoning_output_tokens": 694
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 53.851,
+          "tokens": {
+            "input_tokens": 84211,
+            "cached_input_tokens": 63488,
+            "output_tokens": 2150,
+            "reasoning_output_tokens": 46
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 516.068,
+          "tokens": {
+            "input_tokens": 1356525,
+            "cached_input_tokens": 1310592,
+            "output_tokens": 18778,
+            "reasoning_output_tokens": 4729
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "cholesky-solve-trial-001-retrieved",
+      "task_id": "cholesky-solve",
+      "condition": "retrieved",
+      "outcome": "infrastructure_error",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": "4cd60a945747fee615a6653ee410a0a6050f992b8e7375fc18219e6eefb762c7",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": null,
+      "job_elapsed_seconds": 1037.8307571411133,
+      "proof_loop_seconds": 1001.8591032139957,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 96.661,
+          "tokens": {
+            "input_tokens": 318251,
+            "cached_input_tokens": 280064,
+            "output_tokens": 3058,
+            "reasoning_output_tokens": 985
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 167.072,
+          "tokens": {
+            "input_tokens": 290344,
+            "cached_input_tokens": 254848,
+            "output_tokens": 5666,
+            "reasoning_output_tokens": 1514
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 62.66,
+          "tokens": {
+            "input_tokens": 84815,
+            "cached_input_tokens": 58368,
+            "output_tokens": 2211,
+            "reasoning_output_tokens": 98
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 612.825,
+          "tokens": {
+            "input_tokens": 1307272,
+            "cached_input_tokens": 1274112,
+            "output_tokens": 22365,
+            "reasoning_output_tokens": 6508
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Plan gamma arithmetic around explicit positivity of denominators before clearing rational inequalities; use abs_add_le for scalar absolute-value estimates underlying componentwise bounds.",
+          "role": "planner"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Established positive denominators explicitly before clearing fractions in the gamma inequalities, and used abs_add_le for real absolute-value bounds.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "real-block-jacobi-trial-001-stateless",
+      "task_id": "real-block-jacobi",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The sole target block_jacobi_real explicitly asserts all conclusions simultaneously. Conclusions (2), (4), (5), (6), (7), and (8) cover the update equations, both error identities, both bounds, spectral-radius equality, convergence equivalence, and sufficient contraction condition. No missing final composition is needed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+          "evidence": "correction(A,D,b,u)=D^{-1}(b-Au); update=u+correction; iterate recursively has y_0=x0 and y_{k+1}=update(y_k); correctionSequence has c_{k+1}=correction(y_k). Target (2) asserts D c_{k+1}=b-A y_k and y_{k+1}=y_k+c_{k+1}. Nonzero det(D) makes the totalized inverse the ordinary inverse. The unused c_0=0 adds no restriction on the source iteration.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+          "evidence": "Target (4) explicitly asserts for every x0 and natural k: e_{k+1}=Pe_k, e_k=P^k e_0, |e_k|<=|P|^k|e_0| componentwise, and ||e_k||_infinity<=L^k||e_0||_infinity. L is the maximum absolute row sum; |P| is entrywise absolute value before matrix exponentiation. Target (5) asserts rho(P)=rho(D^{-1}N); (6) asserts convergence for every initial guess iff rho(P)<1. Targets (7)-(8) assert the Lipschitz estimate and convergence plus a contraction constant q=L<1 when L<1.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The target uses the same quantified A,D,N,b,x, assumes A=D+N and Ax=b, and defines P=-D^{-1}N. Error is iterate(A,D,b,x0,k)-x. ConvergesForEveryInitialGuess quantifies all x0 and convergence of precisely these iterates to this supplied x. The block support assumptions and conclusion (1) identify D and N with the diagonal and off-diagonal blocks of A.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The hypotheses are exactly the block splitting, det(D)!=0, and Ax=b. Arbitrary finite block labels encode any block partition without requiring contiguous fibers or surjectivity. No invertibility of A, convergence, desired estimate, or spectral-radius restriction is assumed. L<1 is required only for the conditional sufficient condition. All initial vectors and natural time indices are included. Complex spectral radius in extended nonnegative reals agrees with the ordinary finite-dimensional radius; the zero-dimensional conventions are consistent. Additional splitting identification and uniqueness follow from the splitting and invertibility and introduce no new premise.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "af08893cd92cae308e358dbbc230fb46b67d04f3351c0eec61fb7f8cee90f4e6",
+      "first_success_pass": 1,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 1043.5914316177368,
+      "proof_loop_seconds": 994.103289849998,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 109.05,
+          "tokens": {
+            "input_tokens": 341611,
+            "cached_input_tokens": 314752,
+            "output_tokens": 2932,
+            "reasoning_output_tokens": 176
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 145.123,
+          "tokens": {
+            "input_tokens": 322448,
+            "cached_input_tokens": 308736,
+            "output_tokens": 4721,
+            "reasoning_output_tokens": 859
+          }
+        },
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 62.22,
+          "tokens": {
+            "input_tokens": 67037,
+            "cached_input_tokens": 49664,
+            "output_tokens": 2644,
+            "reasoning_output_tokens": 109
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 80.592,
+          "tokens": {
+            "input_tokens": 224069,
+            "cached_input_tokens": 198784,
+            "output_tokens": 3030,
+            "reasoning_output_tokens": 117
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 343.051,
+          "tokens": {
+            "input_tokens": 1969234,
+            "cached_input_tokens": 1899776,
+            "output_tokens": 10103,
+            "reasoning_output_tokens": 1610
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 126.11,
+          "tokens": {
+            "input_tokens": 80120,
+            "cached_input_tokens": 69504,
+            "output_tokens": 5761,
+            "reasoning_output_tokens": 158
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 3004519,
+        "cached_input_tokens": 2841216,
+        "output_tokens": 29191,
+        "reasoning_output_tokens": 3029
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "real-block-jacobi-trial-001-retrieved",
+      "task_id": "real-block-jacobi",
+      "condition": "retrieved",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The sole target block_jacobi_real explicitly asserts all requested conclusions in four conjuncts: the update equations, error identities and bounds, spectral-radius equality, convergence equivalence for every initial guess, and sufficient convergence and contraction. These are final target assertions, not supporting lemmas requiring further composition.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+          "evidence": "correctionAt(A,D,b,y)=D^(-1)(b-Ay); update(y)=y+correctionAt(y); iterate starts at x\u2080 and recursively applies this update. Target (1) explicitly asserts D c_k=b-Ay_k and y_(k+1)=y_k+c_k. Its c_k denotes the source correction c^{k+1}, an equivalent index convention. Under nonsingularity, applying the inverse of block-diagonal D is exactly the prescribed block solve.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+          "evidence": "Target (1) asserts e_(k+1)=T e_k, e_k=T^k e_0, the coordinatewise inequality |(e_k)_i|\u2264((|T|)^k |e_0|)_i, and ||e_k||\u221e\u2264||T||\u221e^k ||e_0||\u221e for every x\u2080,k,i. Targets (2)-(3) assert rho(T)=rho(D^(-1)N) and convergence for every initial vector iff rho(T)<1. Target (4) explicitly supplies convergence and ||U(u)-U(v)||\u221e\u2264||T||\u221e ||u-v||\u221e when 0\u2264||T||\u221e<1. The norms have the required maximum-coordinate and maximum-row-sum definitions. The complexified finite matrix has finite spectral radius, so the real conversion preserves it.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The theorem uses the specified A,D,N,b,x with A=D+N and Ax=b; T=-D^(-1)N and e_k=iterate(A,D,b,x\u2080,k)-x. All initial guesses are universal and convergence is to that same specified x. The final Lipschitz bound concerns the actual update U(y)=y+D^(-1)(b-Ay). Block labels encode the original within-block D and off-block N support.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The base hypotheses are precisely the decomposition and block support, nonsingularity expressed as det D a unit over R, and Ax=b. There is no additional convergence or spectral premise. The norm condition is only the antecedent of the sufficient-condition conclusion. Arbitrary block labels impose no size or label restrictions. All natural indices and initial vectors are covered. Including dimension zero is consistent: the unique vector sequence converges, both norms and the spectral radius are zero, and the identities hold. Product-topology convergence equals infinity-norm convergence in finite dimensions.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "e7fdc27fc7008789161c8ea575e8e4b7c75fdd7eb1f1a0223873fed68fc939ac",
+      "first_success_pass": 1,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 815.6641550064087,
+      "proof_loop_seconds": 774.232182962005,
+      "roles": {
+        "direct_critic": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 77.651,
+          "tokens": {
+            "input_tokens": 294171,
+            "cached_input_tokens": 273536,
+            "output_tokens": 2504,
+            "reasoning_output_tokens": 216
+          }
+        },
+        "formalizer": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 111.822,
+          "tokens": {
+            "input_tokens": 179581,
+            "cached_input_tokens": 165632,
+            "output_tokens": 3831,
+            "reasoning_output_tokens": 637
+          }
+        },
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 56.587,
+          "tokens": {
+            "input_tokens": 65990,
+            "cached_input_tokens": 49664,
+            "output_tokens": 2492,
+            "reasoning_output_tokens": 90
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 59.215,
+          "tokens": {
+            "input_tokens": 90840,
+            "cached_input_tokens": 83072,
+            "output_tokens": 1982,
+            "reasoning_output_tokens": 75
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 297.298,
+          "tokens": {
+            "input_tokens": 1427443,
+            "cached_input_tokens": 1368576,
+            "output_tokens": 10098,
+            "reasoning_output_tokens": 1783
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 111.115,
+          "tokens": {
+            "input_tokens": 97484,
+            "cached_input_tokens": 87680,
+            "output_tokens": 4977,
+            "reasoning_output_tokens": 210
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 2155509,
+        "cached_input_tokens": 2028160,
+        "output_tokens": 25884,
+        "reasoning_output_tokens": 3011
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Repeated the imported theorem axiom audit after lake build completed, because the earlier concurrent audit had read a stale .olean file.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "mixed-precision-block-jacobi-trial-001-stateless",
+      "task_id": "mixed-precision-block-jacobi",
+      "condition": "stateless",
+      "outcome": "formal_failed",
+      "automated_success": false,
+      "lean_verification": "fail",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": null,
+      "first_success_pass": null,
+      "attempts": 2,
+      "repair_attempts": 1,
+      "timed_out": false,
+      "job_elapsed_seconds": 2226.843805551529,
+      "proof_loop_seconds": 2161.3917375290184,
+      "roles": {
+        "formalizer": {
+          "sessions_with_metrics": 2,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 535.033,
+          "tokens": {
+            "input_tokens": 1342889,
+            "cached_input_tokens": 1284096,
+            "output_tokens": 17673,
+            "reasoning_output_tokens": 6166
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 2,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 151.816,
+          "tokens": {
+            "input_tokens": 347415,
+            "cached_input_tokens": 290816,
+            "output_tokens": 5678,
+            "reasoning_output_tokens": 182
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 2,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 1118.451,
+          "tokens": {
+            "input_tokens": 4302824,
+            "cached_input_tokens": 4213248,
+            "output_tokens": 35608,
+            "reasoning_output_tokens": 13094
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 5993128,
+        "cached_input_tokens": 5788160,
+        "output_tokens": 58959,
+        "reasoning_output_tokens": 19442
+      },
+      "artifacts_opened": [],
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    },
+    {
+      "job_id": "mixed-precision-block-jacobi-trial-001-retrieved",
+      "task_id": "mixed-precision-block-jacobi",
+      "condition": "retrieved",
+      "outcome": "formal_failed",
+      "automated_success": false,
+      "lean_verification": "fail",
+      "direct_critic": "not_run",
+      "roundtrip": "not_run",
+      "reviewer_disagreement": null,
+      "roundtrip_requirements": [],
+      "roundtrip_relation": null,
+      "delivery_complete": null,
+      "construction_complete": null,
+      "candidate_hash": null,
+      "first_success_pass": null,
+      "attempts": 2,
+      "repair_attempts": 1,
+      "timed_out": false,
+      "job_elapsed_seconds": 1677.257192850113,
+      "proof_loop_seconds": 1640.9030791569967,
+      "roles": {
+        "formalizer": {
+          "sessions_with_metrics": 2,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 301.048,
+          "tokens": {
+            "input_tokens": 578437,
+            "cached_input_tokens": 512896,
+            "output_tokens": 11510,
+            "reasoning_output_tokens": 2812
+          }
+        },
+        "planner": {
+          "sessions_with_metrics": 2,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 138.922,
+          "tokens": {
+            "input_tokens": 224945,
+            "cached_input_tokens": 184704,
+            "output_tokens": 5108,
+            "reasoning_output_tokens": 197
+          }
+        },
+        "prover": {
+          "sessions_with_metrics": 2,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 1096.118,
+          "tokens": {
+            "input_tokens": 3603903,
+            "cached_input_tokens": 3512832,
+            "output_tokens": 38590,
+            "reasoning_output_tokens": 13970
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 4407285,
+        "cached_input_tokens": 4210432,
+        "output_tokens": 55208,
+        "reasoning_output_tokens": 16979
+      },
+      "artifacts_opened": [
+        "pilot-general-lean-001"
+      ],
+      "reported_artifact_decisions": [
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Require explicit positivity of 1-eta and 1-alpha and of gamma denominators before clearing denominators or applying rational-inequality tactics.",
+          "role": "planner"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Flag positivity of 1-eta and, under alpha<1, 1-alpha as explicit proof obligations in the handoff; the source hypotheses provide the strict inequalities needed before clearing divisions.",
+          "role": "formalizer"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Used abs_add_le for real absolute-value triangle inequalities in the norm and residual helper proofs.",
+          "role": "prover"
+        },
+        {
+          "pass": 1,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Established positive denominators from the gamma domain and alpha<1 before the division and geometric-recurrence arguments.",
+          "role": "prover"
+        },
+        {
+          "pass": 2,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Require positivity of 1-eta and other denominators explicitly before rational coefficient manipulations; use the memory only as generic Lean engineering guidance, not target evidence.",
+          "role": "planner"
+        },
+        {
+          "pass": 2,
+          "artifact_id": "pilot-general-lean-001",
+          "decision": "Established positive gamma and absorption denominators explicitly before clearing denominators in the new arithmetic helper proofs.",
+          "role": "prover"
+        }
+      ],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null
+    }
+  ]
+}

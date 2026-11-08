@@ -1,0 +1,16 @@
+{
+  "inputs/source.pdf": "fae09e0398dc416240a5471134b2dabdf7b313ed7c3b96b5c3b04576f68716dc",
+  "inputs/references.bib": "70c5a06292fdf4172602bfa6428a123c1c38a55992aed3246c57a49920ee5fa6",
+  "inputs/paper.tex": "6e61d2a17d4ffe5ca618a4db312c205ae83bf4902f02aa6b85c880d01bcc4bb1",
+  "inputs/PROMPT.txt": "5330dacf5c4dd74673e743930ff36b5aa6d010034c0e86a0a12aa8cf92d22119",
+  "inputs/source.txt": "1703dd93f6fb661599e0d214f0adb68858be740a3109cdbe0538f7c9007f7ca7",
+  "memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+  "memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+  "evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+  "evaluator/requirements.json": "34c128b27142b2d929580054cafb52558831136e0a8b64f1f900c7d40b3858a6",
+  "evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+  "evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+  "evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+  "evaluator/REVIEWER.txt": "f364ed4213509e3b08616e55d843170ad3a413f4e50f099eabe5808d3b07f838",
+  "evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+}

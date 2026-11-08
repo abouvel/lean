@@ -1,0 +1,38 @@
+{
+  "search_queries": [
+    "AGENTS.md lakefile lean-toolchain",
+    "files in /spec/support and /workspace",
+    "sorry|admit|axiom"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Plan to use Mathlib abs_add_le for triangle inequalities in the auxiliary rounding estimate; this is a generic implementation hint, not evidence for the target theorem.",
+      "role": "planner"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Use lake build to rebuild the newly copied imported model and validate the skeleton together, avoiding reliance on stale imported declarations.",
+      "role": "formalizer"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for the real absolute-value triangle inequalities in rounding_perturbation.",
+      "role": "prover"
+    }
+  ]
+}

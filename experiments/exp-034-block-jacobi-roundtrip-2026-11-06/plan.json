@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "experiment_id": "exp-034-block-jacobi-roundtrip-2026-11-06",
+  "repository_root": "/home/abouvel/fall26/research",
+  "order": "stateless-phase-first",
+  "limits": {
+    "jobs": 1,
+    "model_calls": 1,
+    "lean_builds": 1,
+    "ram_gib": 15,
+    "job_seconds": 5400
+  },
+  "tasks": [
+    {
+      "id": "binary-tree-reduction",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/binary-tree-reduction/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    },
+    {
+      "id": "block-dot-product",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/block-dot-product/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    },
+    {
+      "id": "sequential-block-dot",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/sequential-block-dot/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    },
+    {
+      "id": "block-matrix-vector",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/block-matrix-vector/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    },
+    {
+      "id": "triangular-update",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/triangular-update/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    },
+    {
+      "id": "triangular-solve",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/triangular-solve/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    },
+    {
+      "id": "cholesky-factorization",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/cholesky-factorization/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    },
+    {
+      "id": "cholesky-solve",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/cholesky-solve/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    },
+    {
+      "id": "real-block-jacobi",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/real-block-jacobi/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    },
+    {
+      "id": "mixed-precision-block-jacobi",
+      "config": "experiments/exp-033-block-jacobi-proof-packets-2026-11-06/tasks/mixed-precision-block-jacobi/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Only pilot-general-lean-001, with generic triangle inequality, positive denominator, and stale-build notes. No prior Lean candidate or target proof. Both conditions receive the same supplied manuscript."
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "binary-tree-reduction-trial-001-stateless",
+      "pair_id": "binary-tree-reduction-trial-001",
+      "task_id": "binary-tree-reduction",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/binary-tree-reduction-trial-001-stateless"
+    },
+    {
+      "job_id": "binary-tree-reduction-trial-001-retrieved",
+      "pair_id": "binary-tree-reduction-trial-001",
+      "task_id": "binary-tree-reduction",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/binary-tree-reduction-trial-001-retrieved"
+    },
+    {
+      "job_id": "block-dot-product-trial-001-stateless",
+      "pair_id": "block-dot-product-trial-001",
+      "task_id": "block-dot-product",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/block-dot-product-trial-001-stateless"
+    },
+    {
+      "job_id": "block-dot-product-trial-001-retrieved",
+      "pair_id": "block-dot-product-trial-001",
+      "task_id": "block-dot-product",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/block-dot-product-trial-001-retrieved"
+    },
+    {
+      "job_id": "sequential-block-dot-trial-001-stateless",
+      "pair_id": "sequential-block-dot-trial-001",
+      "task_id": "sequential-block-dot",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/sequential-block-dot-trial-001-stateless"
+    },
+    {
+      "job_id": "sequential-block-dot-trial-001-retrieved",
+      "pair_id": "sequential-block-dot-trial-001",
+      "task_id": "sequential-block-dot",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/sequential-block-dot-trial-001-retrieved"
+    },
+    {
+      "job_id": "block-matrix-vector-trial-001-stateless",
+      "pair_id": "block-matrix-vector-trial-001",
+      "task_id": "block-matrix-vector",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/block-matrix-vector-trial-001-stateless"
+    },
+    {
+      "job_id": "block-matrix-vector-trial-001-retrieved",
+      "pair_id": "block-matrix-vector-trial-001",
+      "task_id": "block-matrix-vector",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/block-matrix-vector-trial-001-retrieved"
+    },
+    {
+      "job_id": "triangular-update-trial-001-stateless",
+      "pair_id": "triangular-update-trial-001",
+      "task_id": "triangular-update",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/triangular-update-trial-001-stateless"
+    },
+    {
+      "job_id": "triangular-update-trial-001-retrieved",
+      "pair_id": "triangular-update-trial-001",
+      "task_id": "triangular-update",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/triangular-update-trial-001-retrieved"
+    },
+    {
+      "job_id": "triangular-solve-trial-001-stateless",
+      "pair_id": "triangular-solve-trial-001",
+      "task_id": "triangular-solve",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/triangular-solve-trial-001-stateless"
+    },
+    {
+      "job_id": "triangular-solve-trial-001-retrieved",
+      "pair_id": "triangular-solve-trial-001",
+      "task_id": "triangular-solve",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/triangular-solve-trial-001-retrieved"
+    },
+    {
+      "job_id": "cholesky-factorization-trial-001-stateless",
+      "pair_id": "cholesky-factorization-trial-001",
+      "task_id": "cholesky-factorization",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/cholesky-factorization-trial-001-stateless"
+    },
+    {
+      "job_id": "cholesky-factorization-trial-001-retrieved",
+      "pair_id": "cholesky-factorization-trial-001",
+      "task_id": "cholesky-factorization",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/cholesky-factorization-trial-001-retrieved"
+    },
+    {
+      "job_id": "cholesky-solve-trial-001-stateless",
+      "pair_id": "cholesky-solve-trial-001",
+      "task_id": "cholesky-solve",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/cholesky-solve-trial-001-stateless"
+    },
+    {
+      "job_id": "cholesky-solve-trial-001-retrieved",
+      "pair_id": "cholesky-solve-trial-001",
+      "task_id": "cholesky-solve",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/cholesky-solve-trial-001-retrieved"
+    },
+    {
+      "job_id": "real-block-jacobi-trial-001-stateless",
+      "pair_id": "real-block-jacobi-trial-001",
+      "task_id": "real-block-jacobi",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/real-block-jacobi-trial-001-stateless"
+    },
+    {
+      "job_id": "real-block-jacobi-trial-001-retrieved",
+      "pair_id": "real-block-jacobi-trial-001",
+      "task_id": "real-block-jacobi",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/real-block-jacobi-trial-001-retrieved"
+    },
+    {
+      "job_id": "mixed-precision-block-jacobi-trial-001-stateless",
+      "pair_id": "mixed-precision-block-jacobi-trial-001",
+      "task_id": "mixed-precision-block-jacobi",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/mixed-precision-block-jacobi-trial-001-stateless"
+    },
+    {
+      "job_id": "mixed-precision-block-jacobi-trial-001-retrieved",
+      "pair_id": "mixed-precision-block-jacobi-trial-001",
+      "task_id": "mixed-precision-block-jacobi",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/mixed-precision-block-jacobi-trial-001-retrieved"
+    }
+  ],
+  "created_unix": 1793983261.22799
+}

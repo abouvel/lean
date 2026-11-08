@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "experiment_id": "exp-032-roundtrip-study-2026-11-06",
+  "repository_root": "/home/abouvel/fall26/research",
+  "order": "stateless-phase-first",
+  "limits": {
+    "jobs": 1,
+    "model_calls": 1,
+    "lean_builds": 1,
+    "ram_gib": 15,
+    "job_seconds": 3600
+  },
+  "tasks": [
+    {
+      "id": "dot-product",
+      "config": "experiments/exp-029-overnight-retry-packets-2026-11-05/dot-product/experiment.json",
+      "trials": 3,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Frozen pilot-general-lean-001 only: generic absolute-value, denominator, and stale-import guidance. No dot-product solution, prior candidate, evaluator output, or other-condition evidence is provided."
+      }
+    },
+    {
+      "id": "horner",
+      "config": "experiments/exp-029-overnight-retry-packets-2026-11-05/horner/experiment.json",
+      "trials": 3,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Reviewed pilot-general-lean-001. It contains generic absolute-value, denominator, and build guidance. It contains no Horner or finite-difference target, construction, or proof."
+      }
+    },
+    {
+      "id": "finite-difference",
+      "config": "experiments/exp-029-overnight-retry-packets-2026-11-05/finite-difference/experiment.json",
+      "trials": 3,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Reviewed pilot-general-lean-001. It contains generic absolute-value, denominator, and build guidance. It contains no Horner or finite-difference target, construction, or proof."
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "dot-product-trial-001-stateless",
+      "pair_id": "dot-product-trial-001",
+      "task_id": "multi-agent-dot-product-roundtrip-pilot",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/dot-product-trial-001-stateless"
+    },
+    {
+      "job_id": "dot-product-trial-001-retrieved",
+      "pair_id": "dot-product-trial-001",
+      "task_id": "multi-agent-dot-product-roundtrip-pilot",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/dot-product-trial-001-retrieved"
+    },
+    {
+      "job_id": "dot-product-trial-002-stateless",
+      "pair_id": "dot-product-trial-002",
+      "task_id": "multi-agent-dot-product-roundtrip-pilot",
+      "trial": 2,
+      "condition": "stateless",
+      "directory": "runs/dot-product-trial-002-stateless"
+    },
+    {
+      "job_id": "dot-product-trial-002-retrieved",
+      "pair_id": "dot-product-trial-002",
+      "task_id": "multi-agent-dot-product-roundtrip-pilot",
+      "trial": 2,
+      "condition": "retrieved",
+      "directory": "runs/dot-product-trial-002-retrieved"
+    },
+    {
+      "job_id": "dot-product-trial-003-stateless",
+      "pair_id": "dot-product-trial-003",
+      "task_id": "multi-agent-dot-product-roundtrip-pilot",
+      "trial": 3,
+      "condition": "stateless",
+      "directory": "runs/dot-product-trial-003-stateless"
+    },
+    {
+      "job_id": "dot-product-trial-003-retrieved",
+      "pair_id": "dot-product-trial-003",
+      "task_id": "multi-agent-dot-product-roundtrip-pilot",
+      "trial": 3,
+      "condition": "retrieved",
+      "directory": "runs/dot-product-trial-003-retrieved"
+    },
+    {
+      "job_id": "horner-trial-001-stateless",
+      "pair_id": "horner-trial-001",
+      "task_id": "horner-roundtrip-pilot",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/horner-trial-001-stateless"
+    },
+    {
+      "job_id": "horner-trial-001-retrieved",
+      "pair_id": "horner-trial-001",
+      "task_id": "horner-roundtrip-pilot",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/horner-trial-001-retrieved"
+    },
+    {
+      "job_id": "horner-trial-002-stateless",
+      "pair_id": "horner-trial-002",
+      "task_id": "horner-roundtrip-pilot",
+      "trial": 2,
+      "condition": "stateless",
+      "directory": "runs/horner-trial-002-stateless"
+    },
+    {
+      "job_id": "horner-trial-002-retrieved",
+      "pair_id": "horner-trial-002",
+      "task_id": "horner-roundtrip-pilot",
+      "trial": 2,
+      "condition": "retrieved",
+      "directory": "runs/horner-trial-002-retrieved"
+    },
+    {
+      "job_id": "horner-trial-003-stateless",
+      "pair_id": "horner-trial-003",
+      "task_id": "horner-roundtrip-pilot",
+      "trial": 3,
+      "condition": "stateless",
+      "directory": "runs/horner-trial-003-stateless"
+    },
+    {
+      "job_id": "horner-trial-003-retrieved",
+      "pair_id": "horner-trial-003",
+      "task_id": "horner-roundtrip-pilot",
+      "trial": 3,
+      "condition": "retrieved",
+      "directory": "runs/horner-trial-003-retrieved"
+    },
+    {
+      "job_id": "finite-difference-trial-001-stateless",
+      "pair_id": "finite-difference-trial-001",
+      "task_id": "finite-difference-roundtrip-pilot",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/finite-difference-trial-001-stateless"
+    },
+    {
+      "job_id": "finite-difference-trial-001-retrieved",
+      "pair_id": "finite-difference-trial-001",
+      "task_id": "finite-difference-roundtrip-pilot",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/finite-difference-trial-001-retrieved"
+    },
+    {
+      "job_id": "finite-difference-trial-002-stateless",
+      "pair_id": "finite-difference-trial-002",
+      "task_id": "finite-difference-roundtrip-pilot",
+      "trial": 2,
+      "condition": "stateless",
+      "directory": "runs/finite-difference-trial-002-stateless"
+    },
+    {
+      "job_id": "finite-difference-trial-002-retrieved",
+      "pair_id": "finite-difference-trial-002",
+      "task_id": "finite-difference-roundtrip-pilot",
+      "trial": 2,
+      "condition": "retrieved",
+      "directory": "runs/finite-difference-trial-002-retrieved"
+    },
+    {
+      "job_id": "finite-difference-trial-003-stateless",
+      "pair_id": "finite-difference-trial-003",
+      "task_id": "finite-difference-roundtrip-pilot",
+      "trial": 3,
+      "condition": "stateless",
+      "directory": "runs/finite-difference-trial-003-stateless"
+    },
+    {
+      "job_id": "finite-difference-trial-003-retrieved",
+      "pair_id": "finite-difference-trial-003",
+      "task_id": "finite-difference-roundtrip-pilot",
+      "trial": 3,
+      "condition": "retrieved",
+      "directory": "runs/finite-difference-trial-003-retrieved"
+    }
+  ],
+  "created_unix": 1793980857.8909523
+}

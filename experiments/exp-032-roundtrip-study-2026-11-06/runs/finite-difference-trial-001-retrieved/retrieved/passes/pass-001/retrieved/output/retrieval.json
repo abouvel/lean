@@ -1,0 +1,24 @@
+{
+  "search_queries": [
+    "exists_hasDerivAt_eq_slope|exists_deriv_eq_slope",
+    "File discovery for AGENTS.md, source.txt, plan.json, feedback.json, index.md, lakefile*, lean-toolchain",
+    "Supporting source file discovery under /spec/support and /workspace/Research",
+    "exists_hasDerivAt_eq_slope",
+    "sorry|admit|axiom"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}
