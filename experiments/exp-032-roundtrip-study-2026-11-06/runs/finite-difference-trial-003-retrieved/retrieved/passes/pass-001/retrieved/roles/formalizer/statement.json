@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.forwardDifference_error_bound"
+  ],
+  "construction_names": [
+    "Research.forwardDifference"
+  ],
+  "source_mapping": "/spec/source.txt: forwardDifference defines (f (x + h) - f x) / h. forwardDifference_error_bound universally quantifies f, D : \u211d \u2192 \u211d and x, h, L : \u211d, with exactly the positive-step, nonnegative-L, closed-interval continuity, interior HasDerivAt, and interior variation assumptions, concluding |forwardDifference f x h - D x| \u2264 L * h. D x is only a reference value; no endpoint derivative or continuity of D is assumed. No supporting source files were supplied. No feedback.json is present. Statement revision: none; this is the initial statement matching the original source. The proof is temporary sorry scaffolding for the next role."
+}

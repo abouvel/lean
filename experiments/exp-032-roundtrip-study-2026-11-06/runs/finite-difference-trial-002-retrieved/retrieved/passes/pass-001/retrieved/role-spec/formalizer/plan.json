@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "strategy": "Define the forward difference as (f (x+h) - f x) / h. The required construction is an interior mean-value witness c in (x,x+h) at which D c equals this quotient. Obtain it from Mathlib exists_hasDerivAt_eq_slope, instantiated with f, D, a=x and b=x+h; its hypotheses exactly match closed-interval continuity and interior HasDerivAt assumptions. Normalize (x+h)-x to h. Then specialize the local variation bound at c and use 0 <= c-x <= h and L >= 0 to bound L*abs(c-x) by L*h. Rewrite the quotient using the witness equality to obtain the requested error bound. This is a planning outline, not a completed target proof.",
+  "obligations": [
+    {
+      "id": "definition_and_statement",
+      "description": "Introduce a forward-difference definition for real f, x, h equal to (f (x+h) - f x) / h, and state the universally quantified error theorem with exactly h>0, L>=0, ContinuousOn f (Set.Icc x (x+h)), interior HasDerivAt f (D t) t, and the given interior variation bound."
+    },
+    {
+      "id": "endpoint_scope",
+      "description": "Preserve D as an arbitrary real-valued function whose value D x is only a reference value. Do not assume a derivative at x or x+h, continuity of D, global differentiability, or any additional regularity."
+    },
+    {
+      "id": "interval_order",
+      "description": "Derive x < x+h from h>0 so the mean value theorem applies on this nondegenerate interval; h is consequently nonzero."
+    },
+    {
+      "id": "mean_value_construction",
+      "description": "Import Mathlib.Analysis.Calculus.Deriv.MeanValue and apply exists_hasDerivAt_eq_slope f D with the interval order, closed-interval continuity, and the supplied interior derivative hypothesis. Retain both c in Set.Ioo x (x+h) and D c = (f (x+h)-f x)/((x+h)-x)."
+    },
+    {
+      "id": "quotient_identification",
+      "description": "Normalize (x+h)-x=h in the witness equality, connecting the constructed interior derivative value D c to the defined forward difference."
+    },
+    {
+      "id": "distance_control",
+      "description": "From c in (x,x+h), derive c-x>0 and c-x<=h, rewrite abs(c-x)=c-x, and use nonnegative L to prove L*abs(c-x)<=L*h. Explicit sign facts support abs_of_nonneg and mul_le_mul_of_nonneg_left; linear arithmetic handles endpoint subtraction."
+    },
+    {
+      "id": "error_transfer",
+      "description": "Specialize the assumed inequality abs(D c-D x)<=L*abs(c-x), combine it with the distance bound by transitivity, and transfer it through the mean-value identity to the requested absolute forward-difference error."
+    },
+    {
+      "id": "completion_checks",
+      "description": "The builder must check the final Lean declaration against local Mathlib with all definitions and proofs present, no sorry or custom axioms, and confirm that no endpoint derivative assumption or stronger variation hypothesis was introduced."
+    }
+  ]
+}

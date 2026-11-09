@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the actual block-dot-product computation over real inputs under the standard local relative-rounding model. Define zero-padded blocks from the original vectors, sequentially evaluate each block starting with its first rounded product, and evaluate their partial sums with a binary reduction whose leaves cover every block once and whose depth is ceil(log2(ceil(n/T))). Derive, rather than assume, the expansion of the computed root into original input products times products of local rounding factors. Each term has at most T block factors and at most the tree-depth many reduction factors. Prove the finite-product gamma bound from the local error bounds and the source smallness hypothesis. Construct both perturbation vectors from the resulting per-input coefficient minus one, and reindex the padded expansion back to the original inputs. The final result must provide both backward-error representations with the exact source constant. This is a plan only, not a completed target proof.",
+  "obligations": [
+    {
+      "id": "source_scope",
+      "description": "Use /spec/source.txt as the authoritative selected theorem and /spec/paper.tex as supporting proof context. No /spec/feedback.json is present at planning time. Preserve both existential backward-error representations, all original input dependence, the zero-padding convention, and gamma_(T+ell). Earlier paper bounds must be proved as helpers, not added as assumptions. Use local Lean and Mathlib; no custom axioms, placeholders in the final candidate, or Aristotle."
+    },
+    {
+      "id": "parameters_and_domain",
+      "description": "Make the implicit well-defined domain explicit: n and T are natural sizes with n positive and T positive for the paper expression log2(ceil(n/T)); unit roundoff u is nonnegative. Record these as the meaning of vector size, block size, and unit roundoff, not numerical stability restrictions. If allowing n=0, specify and justify a separate empty-sum/zero-reduction convention because the source logarithm at zero is undefined; do not silently replace the source domain. Retain only the stated numerical smallness (T+ell)*u < 1 and local rounding assumptions."
+    },
+    {
+      "id": "integer_sizes",
+      "description": "Define m = ceil(n/T) using exact natural ceiling division and ell = ceil(log2 m). A convenient exact implementation is the least natural ell with m <= 2^ell. Prove its equivalence to the paper logarithmic ceiling for positive m, including m=1 giving ell=0. Prove n <= m*T and the block indexing bounds; do not leave m or ell as unrelated free parameters in the public theorem."
+    },
+    {
+      "id": "padding_and_reindexing",
+      "description": "For x,y : Fin n -> Real define padded entries at natural k to be the original entries when k<n and zero otherwise. Block j contains k=j*T+t for j<m and t<T. Prove each original index occurs exactly once, via quotient and remainder by positive T, and prove that all other block slots contribute zero. Establish finite-sum reindexing from all padded block slots to Fin n."
+    },
+    {
+      "id": "rounding_execution_model",
+      "description": "Represent rounded multiplication and addition by executable evaluation functions or an operation-by-operation execution relation with local witnesses delta satisfying abs(delta)<=u and output=(exact operation)*(1+delta). These are the supplied standard floating-point model under no overflow/underflow. Quantify over every admissible execution, and connect the final yhat to its computed root. Do not define yhat as a desired perturbed sum, or assume a global error expansion or the desired backward bound."
+    },
+    {
+      "id": "sequential_blocks",
+      "description": "Construct each computed block from its T rounded products and sequential addition of products 2 through T to the first rounded product. Avoid a rounded initial addition to zero, which the abstract relative model alone need not make exact and which could introduce an extra factor. Derive the sequential expansion by induction. For zero-based slot t the coefficient consists of one product-rounding factor and the addition factors at indices s with max(1,t)<=s<T; there are 1+(T-max(1,t)) <= T factors. Handle T=1 directly as one rounded multiplication. The paper count T-max(2,t)+2 with one-based t should not be used blindly at T=1, where the multiplication still contributes one factor."
+    },
+    {
+      "id": "binary_tree_construction",
+      "description": "Construct the reduction of the m computed partial sums, with height ell and with every partial sum occurring once. A tree datatype with real block leaves, exact zero padding if used, and rounded internal additions can expose evaluation, leaf coverage, and path length. Prove that the chosen balanced construction has depth ell; for the paper shrinking-array schedule, show its ceil-halving levels and unavailable-entry carry steps realize such a tree. Alternatively prove a general result for every covering binary tree of height at most ell and instantiate a concrete balanced reduction. Do not merely postulate leaf path coefficients. Carrying an unmatched entry is exact and contributes no factor; it can be represented by a factor one for a fixed-length path."
+    },
+    {
+      "id": "tree_expansion",
+      "description": "Prove inductively from rounded internal additions that the root is the sum of each computed block partial times its leaf-to-root product of rounding factors. Establish at most ell factors per path, including ell=0 and m=1. This supplies the earlier binary-tree theorem if needed, but the required path-product expansion must be available to combine with the block computation."
+    },
+    {
+      "id": "product_bound",
+      "description": "Prove a finite-product lemma: for k<=K, 0<=u, K*u<1, and k errors with abs(delta)<=u, abs(product(1+delta)-1) <= (K*u)/(1-K*u). Prove it from elementary inequalities or induction, rather than assuming the paper theta bound. One route inducts at exact length k, splitting the new error into the old coefficient error and delta times the old coefficient, then bounds gamma_k+u+gamma_k*u by gamma_(k+1) using positive denominators. Establish gamma monotonicity on the admissible range or pad missing factors with delta=0 to reach K. Only positive exponents are needed here; do not expand scope to reciprocal factors."
+    },
+    {
+      "id": "combined_input_coefficients",
+      "description": "Substitute the sequential expansion into the tree expansion and distribute the common block path product. For every original i use its uniquely determined block and slot to define C_i as the concatenated product of multiplication, sequential addition, and tree-path rounding factors. Derive yhat = sum_i x_i*y_i*C_i from the algorithm and padding lemmas. Show the concatenated length is <=K=T+ell and hence abs(C_i-1)<=gamma_K using the product lemma. Do not replace this by a standalone hypothesis that C_i or backward perturbations already satisfy the target bound."
+    },
+    {
+      "id": "perturbation_construction",
+      "description": "Define DeltaX_i=(C_i-1)*x_i and DeltaY_i=(C_i-1)*y_i. Use the same derived coefficients to obtain both sum identities and pointwise bounds abs(DeltaX_i)<=gamma_K*abs(x_i) and abs(DeltaY_i)<=gamma_K*abs(y_i). This construction avoids dividing by either input and covers zero inputs, cancellation, negative inputs, and padded zeros. Assert existence of both representations, not just a disjunction that supplies one."
+    },
+    {
+      "id": "integration_and_blockers",
+      "description": "The public selected theorem must instantiate the actual block and reduction constructors on the original x,y,n,T and quantify over all admissible rounding executions, with m and ell defined from n,T. Check T=1, T>n, a partially filled last block, a non-power-of-two block count, m=1, and u=0 when verifying the definitions and counts. Compile the full Lean target and helpers with local Lean/Mathlib and inspect for placeholders or extra stability hypotheses. If the source or execution convention cannot be faithfully represented, record the exact missing condition or failed obligation instead of weakening the theorem. Do not substitute an unrelated scalar inequality for the construction and its theorem."
+    }
+  ]
+}

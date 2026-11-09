@@ -1,0 +1,1 @@
+Saved [translation.json](/output/translation.json) atomically with status `complete`, covering the target theorem and all 14 constructions.

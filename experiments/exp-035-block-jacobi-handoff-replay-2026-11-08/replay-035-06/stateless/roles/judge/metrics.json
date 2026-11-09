@@ -1,0 +1,22 @@
+{
+  "condition": "blind",
+  "kind": "judge",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "started_unix": 1794179585.1218057,
+  "time_limit_seconds": 240,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_time_seconds": 60.127,
+  "token_usage": {
+    "input_tokens": 69900,
+    "cached_input_tokens": 61312,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2409,
+    "reasoning_output_tokens": 162
+  },
+  "compiler_command_events": 0,
+  "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+}

@@ -1,0 +1,499 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "49ac4e65f3c6e7edef6b3e179c0dfb9dafd8811d121bf33e04e5720c79dc9e6d",
+  "targets": [
+    "Bhola.theorem_3_1_global",
+    "Bhola.algorithm1_spec",
+    "Bhola.depth_spec"
+  ],
+  "construction_names": [
+    "Bhola.algorithm",
+    "Bhola.stagesValues",
+    "Bhola.roundValues",
+    "Bhola.pairValues"
+  ],
+  "declarations": [
+    {
+      "body": "fun add u =>\n  \u2200 (a b : Real),\n    \u2203 \u03b4,\n      And (LE.le.{0} (abs.{0} \u03b4) u)\n        (Eq.{1} (add a b) (HMul.hMul.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} a b) (HAdd.hAdd.{0, 0, 0} 1 \u03b4)))",
+      "dependencies": [
+        "Real",
+        "Real",
+        "Exists",
+        "And",
+        "LE.le",
+        "Real.instLE",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "Eq",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "OfNat.ofNat",
+        "One.toOfNat1",
+        "Real.instOne"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.RoundingModel",
+      "type": "(Real \u2192 Real \u2192 Real) \u2192 Real \u2192 Prop"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Bhola.Tree.leaf",
+        "Bhola.Tree.node"
+      ],
+      "kind": "inductive",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree",
+      "type": "Type"
+    },
+    {
+      "body": "fun {motive} t =>\n  Bhola.Tree.rec.{(max 1 u) + 1} (fun a => PUnit.{max 1 u})\n    (fun a a_1 a_ih a_ih_1 =>\n      PProd.{max 1 u, max 1 u} (PProd.{u, max 1 u} (motive a) a_ih) (PProd.{u, max 1 u} (motive a_1) a_ih_1))\n    t",
+      "dependencies": [
+        "Bhola.Tree",
+        "Bhola.Tree",
+        "Bhola.Tree.rec",
+        "Real",
+        "PUnit",
+        "PProd"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.below",
+      "type": "{motive : Bhola.Tree \u2192 Sort u} \u2192 Bhola.Tree \u2192 Sort (max 1 u)"
+    },
+    {
+      "body": "fun {motive} t F_1 => (Bhola.Tree.brecOn.go.{u} t F_1).1",
+      "dependencies": [
+        "Bhola.Tree",
+        "Bhola.Tree.below",
+        "Bhola.Tree",
+        "Bhola.Tree.below",
+        "Bhola.Tree.brecOn.go"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.brecOn",
+      "type": "{motive : Bhola.Tree \u2192 Sort u} \u2192 (t : Bhola.Tree) \u2192 ((t : Bhola.Tree) \u2192 Bhola.Tree.below.{u} t \u2192 motive t) \u2192 motive t"
+    },
+    {
+      "body": "fun {motive} t F_1 =>\n  Bhola.Tree.rec.{max 1 u} (fun a => \u27e8F_1 (Bhola.Tree.leaf a) PUnit.unit.{max 1 u}, PUnit.unit.{max 1 u}\u27e9)\n    (fun a a_1 a_ih a_ih_1 => \u27e8F_1 (Bhola.Tree.node a a_1) \u27e8a_ih, a_ih_1\u27e9, a_ih, a_ih_1\u27e9) t",
+      "dependencies": [
+        "Bhola.Tree",
+        "Bhola.Tree.below",
+        "PProd",
+        "Bhola.Tree",
+        "Bhola.Tree.below",
+        "Bhola.Tree.rec",
+        "PProd",
+        "Real",
+        "PProd.mk",
+        "Bhola.Tree.leaf",
+        "PUnit",
+        "PUnit.unit",
+        "Bhola.Tree.node"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.brecOn.go",
+      "type": "{motive : Bhola.Tree \u2192 Sort u} \u2192\n  (t : Bhola.Tree) \u2192\n    ((t : Bhola.Tree) \u2192 Bhola.Tree.below.{u} t \u2192 motive t) \u2192 PProd.{u, max 1 u} (motive t) (Bhola.Tree.below.{u} t)"
+    },
+    {
+      "body": "fun {motive} t leaf node => Bhola.Tree.rec.{u} (fun a => leaf a) (fun a a_1 a_ih a_ih_1 => node a a_1) t",
+      "dependencies": [
+        "Bhola.Tree",
+        "Real",
+        "Bhola.Tree.leaf",
+        "Bhola.Tree.node",
+        "Bhola.Tree",
+        "Real",
+        "Bhola.Tree.leaf",
+        "Bhola.Tree.node",
+        "Bhola.Tree.rec"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.casesOn",
+      "type": "{motive : Bhola.Tree \u2192 Sort u} \u2192\n  (t : Bhola.Tree) \u2192\n    ((a : Real) \u2192 motive (Bhola.Tree.leaf a)) \u2192 ((a a_1 : Bhola.Tree) \u2192 motive (Bhola.Tree.node a a_1)) \u2192 motive t"
+    },
+    {
+      "body": "fun add x =>\n  Bhola.Tree.brecOn.{1} x fun x f =>\n    (match (motive := (x : Bhola.Tree) \u2192 Bhola.Tree.below.{1} x \u2192 Real) x with\n      | Bhola.Tree.leaf x => fun x_1 => x\n      | Bhola.Tree.node a b => fun x => add x.1.1 x.2.1)\n      f",
+      "dependencies": [
+        "Real",
+        "Bhola.Tree",
+        "Real",
+        "Bhola.Tree",
+        "Bhola.Tree.brecOn",
+        "Bhola.Tree.below",
+        "Bhola.Tree.leaves.match_1",
+        "Bhola.Tree.leaf",
+        "Bhola.Tree.node"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.eval",
+      "type": "(Real \u2192 Real \u2192 Real) \u2192 Bhola.Tree \u2192 Real"
+    },
+    {
+      "body": "fun x =>\n  Bhola.Tree.brecOn.{1} x fun x f =>\n    (match (motive := (x : Bhola.Tree) \u2192 Bhola.Tree.below.{1} x \u2192 Nat) x with\n      | Bhola.Tree.leaf a => fun x => 0\n      | Bhola.Tree.node a b => fun x => HAdd.hAdd.{0, 0, 0} (Max.max.{0} x.1.1 x.2.1) 1)\n      f",
+      "dependencies": [
+        "Bhola.Tree",
+        "Nat",
+        "Bhola.Tree",
+        "Bhola.Tree.brecOn",
+        "Nat",
+        "Bhola.Tree.below",
+        "Bhola.Tree.leaves.match_1",
+        "Real",
+        "Bhola.Tree.leaf",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Bhola.Tree.node",
+        "HAdd.hAdd",
+        "instHAdd",
+        "instAddNat",
+        "Max.max",
+        "Nat.instMax"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.height",
+      "type": "Bhola.Tree \u2192 Nat"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "Bhola.Tree"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.leaf",
+      "type": "Real \u2192 Bhola.Tree"
+    },
+    {
+      "body": "fun x =>\n  Bhola.Tree.brecOn.{1} x fun x f =>\n    (match (motive := (x : Bhola.Tree) \u2192 Bhola.Tree.below.{1} x \u2192 List.{0} Real) x with\n      | Bhola.Tree.leaf x => fun x_1 => List.cons.{0} x List.nil.{0}\n      | Bhola.Tree.node a b => fun x => HAppend.hAppend.{0, 0, 0} x.1.1 x.2.1)\n      f",
+      "dependencies": [
+        "Bhola.Tree",
+        "List",
+        "Real",
+        "Bhola.Tree",
+        "Bhola.Tree.brecOn",
+        "List",
+        "Real",
+        "Bhola.Tree.below",
+        "Bhola.Tree.leaves.match_1",
+        "Bhola.Tree.leaf",
+        "List.cons",
+        "List.nil",
+        "Bhola.Tree.node",
+        "HAppend.hAppend",
+        "instHAppendOfAppend",
+        "List.instAppend"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.leaves",
+      "type": "Bhola.Tree \u2192 List.{0} Real"
+    },
+    {
+      "body": "fun motive x h_1 h_2 => Bhola.Tree.casesOn.{u_1} x (fun a => h_1 a) fun a a_1 => h_2 a a_1",
+      "dependencies": [
+        "Bhola.Tree",
+        "Real",
+        "Bhola.Tree.leaf",
+        "Bhola.Tree.node",
+        "Bhola.Tree",
+        "Real",
+        "Bhola.Tree.leaf",
+        "Bhola.Tree.node",
+        "Bhola.Tree.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.leaves.match_1",
+      "type": "(motive : Bhola.Tree \u2192 Sort u_1) \u2192\n  (x : Bhola.Tree) \u2192\n    ((x : Real) \u2192 motive (Bhola.Tree.leaf x)) \u2192 ((a b : Bhola.Tree) \u2192 motive (Bhola.Tree.node a b)) \u2192 motive x"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Bhola.Tree"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "Bhola.Tree.node",
+      "type": "Bhola.Tree \u2192 Bhola.Tree \u2192 Bhola.Tree"
+    },
+    {
+      "body": "fun add xs => List.headD.{0} (Bhola.stagesValues add (Bhola.depth (List.length.{0} xs)) xs) 0",
+      "dependencies": [
+        "Real",
+        "List",
+        "Real",
+        "List",
+        "List.headD",
+        "Bhola.stagesValues",
+        "Bhola.depth",
+        "List.length",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.algorithm",
+      "type": "(Real \u2192 Real \u2192 Real) \u2192 List.{0} Real \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "List",
+        "Ne",
+        "List.nil",
+        "Exists",
+        "Bhola.Tree",
+        "And",
+        "Eq",
+        "Bhola.stagesValues",
+        "Bhola.depth",
+        "List.length",
+        "List.cons",
+        "Bhola.Tree.eval",
+        "List.Perm",
+        "Bhola.Tree.leaves",
+        "Nat",
+        "Bhola.Tree.height",
+        "Bhola.algorithm"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Bhola.algorithm1_spec",
+      "type": "\u2200 (add : Real \u2192 Real \u2192 Real) (xs : List.{0} Real),\n  Ne.{1} xs List.nil.{0} \u2192\n    \u2203 t,\n      And\n        (Eq.{1} (Bhola.stagesValues add (Bhola.depth (List.length.{0} xs)) xs)\n          (List.cons.{0} (Bhola.Tree.eval add t) List.nil.{0}))\n        (And (List.Perm.{0} (Bhola.Tree.leaves t) xs)\n          (And (Eq.{1} (Bhola.Tree.height t) (Bhola.depth (List.length.{0} xs)))\n            (Eq.{1} (Bhola.algorithm add xs) (Bhola.Tree.eval add t))))"
+    },
+    {
+      "body": "fun n => Nat.clog 2 n",
+      "dependencies": [
+        "Nat",
+        "Nat",
+        "Nat.clog",
+        "OfNat.ofNat",
+        "instOfNatNat"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.depth",
+      "type": "Nat \u2192 Nat"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Nat",
+        "Iff",
+        "LE.le",
+        "instLENat",
+        "Bhola.depth",
+        "HPow.hPow",
+        "instHPow",
+        "Monoid.toNatPow",
+        "Nat.instMonoid",
+        "OfNat.ofNat",
+        "instOfNatNat"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Bhola.depth_spec",
+      "type": "\u2200 (n k : Nat), Iff (LE.le.{0} (Bhola.depth n) k) (LE.le.{0} n (HPow.hPow.{0, 0, 0} 2 k))"
+    },
+    {
+      "body": "fun d u => HDiv.hDiv.{0, 0, 0} (HMul.hMul.{0, 0, 0} (\u2191d) u) (HSub.hSub.{0, 0, 0} 1 (HMul.hMul.{0, 0, 0} (\u2191d) u))",
+      "dependencies": [
+        "Nat",
+        "Real",
+        "Nat",
+        "Real",
+        "HDiv.hDiv",
+        "instHDiv",
+        "DivInvMonoid.toDiv",
+        "Real.instDivInvMonoid",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Nat.cast",
+        "Real.instNatCast",
+        "HSub.hSub",
+        "instHSub",
+        "Real.instSub",
+        "OfNat.ofNat",
+        "One.toOfNat1",
+        "Real.instOne"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.gamma",
+      "type": "Nat \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun add x x_1 =>\n  List.brecOn.{1, 0} (motive := fun x => List.{0} Real \u2192 List.{0} Real) x\n    (fun x f x_2 =>\n      (match (motive :=\n          (x : List.{0} Real) \u2192\n            List.{0} Real \u2192 List.below.{1, 0} (motive := fun x => List.{0} Real \u2192 List.{0} Real) x \u2192 List.{0} Real)\n          x, x_2 with\n        | List.nil.{0}, ys => fun x => ys\n        | xs, List.nil.{0} => fun x => xs\n        | List.cons.{0} a xs, List.cons.{0} b ys => fun x => List.cons.{0} (add a b) (x.1 ys))\n        f)\n    x_1",
+      "dependencies": [
+        "Real",
+        "List",
+        "Real",
+        "List",
+        "List.brecOn",
+        "List.below",
+        "Bhola.pairValues.match_1",
+        "List.nil",
+        "List.cons"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.pairValues",
+      "type": "(Real \u2192 Real \u2192 Real) \u2192 List.{0} Real \u2192 List.{0} Real \u2192 List.{0} Real"
+    },
+    {
+      "body": "fun motive x x_1 h_1 h_2 h_3 =>\n  List.casesOn.{u_1, 0} x (h_1 x_1) fun head tail =>\n    List.casesOn.{u_1, 0} x_1 (h_2 (List.cons.{0} head tail)) fun head_1 tail_1 => h_3 head tail head_1 tail_1",
+      "dependencies": [
+        "List",
+        "Real",
+        "List.nil",
+        "List.cons",
+        "List",
+        "Real",
+        "List.nil",
+        "List.cons",
+        "List.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.pairValues.match_1",
+      "type": "(motive : List.{0} Real \u2192 List.{0} Real \u2192 Sort u_1) \u2192\n  (x x_1 : List.{0} Real) \u2192\n    ((ys : List.{0} Real) \u2192 motive List.nil.{0} ys) \u2192\n      ((xs : List.{0} Real) \u2192 motive xs List.nil.{0}) \u2192\n        ((a : Real) \u2192\n            (xs : List.{0} Real) \u2192\n              (b : Real) \u2192 (ys : List.{0} Real) \u2192 motive (List.cons.{0} a xs) (List.cons.{0} b ys)) \u2192\n          motive x x_1"
+    },
+    {
+      "body": "fun add xs =>\n  have h := HDiv.hDiv.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} (List.length.{0} xs) 1) 2;\n  Bhola.pairValues add (List.take.{0} h xs) (List.drop.{0} h xs)",
+      "dependencies": [
+        "Real",
+        "List",
+        "Real",
+        "List",
+        "Nat",
+        "HDiv.hDiv",
+        "instHDiv",
+        "Nat.instDiv",
+        "HAdd.hAdd",
+        "instHAdd",
+        "instAddNat",
+        "List.length",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Bhola.pairValues",
+        "List.take",
+        "List.drop"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.roundValues",
+      "type": "(Real \u2192 Real \u2192 Real) \u2192 List.{0} Real \u2192 List.{0} Real"
+    },
+    {
+      "body": "fun add x x_1 =>\n  Nat.brecOn.{1} (motive := fun x => List.{0} Real \u2192 List.{0} Real) x\n    (fun x f x_2 =>\n      (match (motive :=\n          (x : Nat) \u2192\n            List.{0} Real \u2192 Nat.below.{1} (motive := fun x => List.{0} Real \u2192 List.{0} Real) x \u2192 List.{0} Real)\n          x, x_2 with\n        | 0, xs => fun x => xs\n        | Nat.succ k, xs => fun x => x.1 (Bhola.roundValues add xs))\n        f)\n    x_1",
+      "dependencies": [
+        "Real",
+        "Nat",
+        "List",
+        "Real",
+        "Nat",
+        "List",
+        "Nat.brecOn",
+        "Nat.below",
+        "Bhola.stagesValues.match_1",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Nat.succ",
+        "Bhola.roundValues"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.stagesValues",
+      "type": "(Real \u2192 Real \u2192 Real) \u2192 Nat \u2192 List.{0} Real \u2192 List.{0} Real"
+    },
+    {
+      "body": "fun motive x x_1 h_1 h_2 => Nat.casesOn.{u_1} x (h_1 x_1) fun n => h_2 n x_1",
+      "dependencies": [
+        "Nat",
+        "List",
+        "Real",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Nat.succ",
+        "Nat",
+        "List",
+        "Real",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Nat.succ",
+        "Nat.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Bhola.stagesValues.match_1",
+      "type": "(motive : Nat \u2192 List.{0} Real \u2192 Sort u_1) \u2192\n  (x : Nat) \u2192\n    (x_1 : List.{0} Real) \u2192\n      ((xs : List.{0} Real) \u2192 motive 0 xs) \u2192 ((k : Nat) \u2192 (xs : List.{0} Real) \u2192 motive (Nat.succ k) xs) \u2192 motive x x_1"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "List",
+        "Ne",
+        "List.nil",
+        "LE.le",
+        "Real.instLE",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "Bhola.RoundingModel",
+        "LT.lt",
+        "Real.instLT",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Nat.cast",
+        "Real.instNatCast",
+        "Bhola.depth",
+        "List.length",
+        "One.toOfNat1",
+        "Real.instOne",
+        "Exists",
+        "Fin",
+        "And",
+        "Eq",
+        "Bhola.algorithm",
+        "Finset.sum",
+        "Real.instAddCommMonoid",
+        "Finset.univ",
+        "Fin.fintype",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "List.get",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "Bhola.gamma"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Bhola.theorem_3_1_global",
+      "type": "\u2200 (add : Real \u2192 Real \u2192 Real) (xs : List.{0} Real),\n  Ne.{1} xs List.nil.{0} \u2192\n    \u2200 {u : Real},\n      LE.le.{0} 0 u \u2192\n        Bhola.RoundingModel add u \u2192\n          LT.lt.{0} (HMul.hMul.{0, 0, 0} (\u2191(Bhola.depth (List.length.{0} xs))) u) 1 \u2192\n            \u2203 \u0394,\n              And (Eq.{1} (Bhola.algorithm add xs) (\u2211 i, HAdd.hAdd.{0, 0, 0} (List.get.{0} xs i) (\u0394 i)))\n                (\u2200 (i : Fin (List.length.{0} xs)),\n                  LE.le.{0} (abs.{0} (\u0394 i))\n                    (HMul.hMul.{0, 0, 0} (Bhola.gamma (Bhola.depth (List.length.{0} xs)) u)\n                      (abs.{0} (List.get.{0} xs i))))"
+    }
+  ],
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.28.0",
+    "manifest_sha256": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+  }
+}

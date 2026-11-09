@@ -1,0 +1,65 @@
+{
+  "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "declarations": [
+    {
+      "body": "0",
+      "dependencies": [
+        "Real",
+        "OfNat.ofNat",
+        "Real",
+        "Zero.toOfNat0",
+        "Real.instZero"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.answer",
+      "type": "Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Eq",
+        "Real",
+        "Research.answer",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Research.answer.eq_1",
+      "type": "Eq.{1} Research.answer 0"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Eq",
+        "Real",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Research.answer",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Research.answer_correct",
+      "type": "Eq.{1} (HMul.hMul.{0, 0, 0} Research.answer Research.answer) 0"
+    }
+  ],
+  "schema_version": 1,
+  "sources": {
+    "Research/Submission.lean": "2cfc6a3bb8ab87a993da58d5303ae52a29fbcc5f389201a95c108d9cb02dc294"
+  },
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.28.0",
+    "manifest_sha256": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+  },
+  "candidate_hash": "ed6f80dcb2f753266f3e66b6b9b882d1f7d23b84f78619db800e7d7eab889538"
+}

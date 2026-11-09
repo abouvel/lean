@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "strategy": "Define exact Horner evaluation, rounded Horner evaluation and the prescribed exact-data envelope by structural recursion. Derive a general rounding-error estimate relative to an exact reference value from the supplied model. Apply this estimate first at multiplication and then at addition, and connect the resulting two local error bounds to the envelope by structural induction on the coefficient list. The two applications explain precisely the nested factors 1+u in the required construction and establish its connection to the global forward-error theorem. This plan does not supply the completed target proof. The supplied prerequisite must be copied unchanged. No /spec/feedback.json was present.",
+  "obligations": [
+    {
+      "id": "prerequisite",
+      "description": "Copy /spec/support/Research/Common/FloatingPoint/Model.lean unchanged into the corresponding project module and import it. Use its Model, u_nonneg and round_spec. Introduce no replacement model or custom axioms."
+    },
+    {
+      "id": "exact_evaluator",
+      "description": "Construct P : List \u211d \u2192 \u211d \u2192 \u211d by structural recursion: P [] x = 0 and P (a :: tail) x = a + x * P tail x. Preserve increasing degree order."
+    },
+    {
+      "id": "rounded_evaluator",
+      "description": "Construct Q parameterized by Model, with Q m [] x = 0 and Q m (a :: tail) x = m.round (a + m.round (x * Q m tail x)). Use exactly one rounded multiplication and one rounded addition per cons step."
+    },
+    {
+      "id": "envelope",
+      "description": "Construct E : List \u211d \u2192 \u211d \u2192 \u211d \u2192 \u211d using only exact data and u. Set E [] x u = 0. With v = P tail x and e = E tail x u, set E (a :: tail) x u = u * |a + x*v| + (1+u) * (u * |x*v| + (1+u) * |x| * e). Do not use Q or round in E."
+    },
+    {
+      "id": "reference_estimate",
+      "description": "Establish the auxiliary reference-value estimate |m.round z - t| \u2264 m.u * |t| + (1+m.u) * |z-t| for arbitrary real z,t using the relative-error witness, triangle inequalities and absolute-value products. Track nonnegative factors from m.u_nonneg. Do not assume continuity or a Lipschitz property of round."
+    },
+    {
+      "id": "multiplication_step",
+      "description": "Use the tail induction hypothesis and abs_mul to bound |x * Q m tail x - x * P tail x| by |x| * E tail x m.u. Apply the reference estimate to obtain |m.round (x * Q m tail x) - x * P tail x| \u2264 m.u * |x * P tail x| + (1+m.u) * |x| * E tail x m.u. Supply nonnegativity when multiplying inequalities."
+    },
+    {
+      "id": "forward_error_theorem",
+      "description": "State the result for every Model m, finite coefficient list and real x: |Q m coefficients x - P coefficients x| \u2264 E coefficients x m.u. Use list induction. The empty case reduces to zero. At cons apply the reference estimate to the rounded addition with reference a + x * P tail x, cancel the common a in its input difference and insert the multiplication bound through the nonnegative factor 1+m.u. Normalize to the exact envelope recurrence."
+    },
+    {
+      "id": "scope_and_validation",
+      "description": "Ensure the theorem has no extra smallness, sign, nonzero-input or exact-arithmetic hypotheses. All definitions must be total. If auxiliary envelope nonnegativity is useful, derive it from u \u2265 0 instead of requiring it as an extra assumption. The completed formalization must compile with local Lean and Mathlib and contain no sorry, placeholders or additional axioms."
+    }
+  ]
+}

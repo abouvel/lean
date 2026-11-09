@@ -1,0 +1,114 @@
+{
+  "condition": "stateless",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 534.858,
+  "compiler_command_events": 18,
+  "token_usage": {
+    "input_tokens": 950758,
+    "cached_input_tokens": 889600,
+    "output_tokens": 18489,
+    "reasoning_output_tokens": 3923
+  },
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990744.6538703,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 73.438,
+      "token_usage": {
+        "input_tokens": 80258,
+        "cached_input_tokens": 69632,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2420,
+        "reasoning_output_tokens": 136
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990818.6091447,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 127.173,
+      "token_usage": {
+        "input_tokens": 151935,
+        "cached_input_tokens": 134912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4926,
+        "reasoning_output_tokens": 1323
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990955.2668834,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 334.247,
+      "token_usage": {
+        "input_tokens": 718565,
+        "cached_input_tokens": 685056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11143,
+        "reasoning_output_tokens": 2464
+      },
+      "compiler_command_events": 14,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "BlockDotProduct.block_dot_product",
+      "BlockDotProduct.block_dot_product_balanced"
+    ],
+    "construction_names": [
+      "BlockDotProduct.blockCount",
+      "BlockDotProduct.reductionDepth",
+      "BlockDotProduct.gamma",
+      "BlockDotProduct.padded",
+      "BlockDotProduct.RoundingErrors",
+      "BlockDotProduct.RoundingErrors.Admissible",
+      "BlockDotProduct.roundedProduct",
+      "BlockDotProduct.blockPrefix",
+      "BlockDotProduct.blockPartial",
+      "BlockDotProduct.ReductionTree",
+      "BlockDotProduct.ReductionTree.leaves",
+      "BlockDotProduct.ReductionTree.height",
+      "BlockDotProduct.ValidSchedule",
+      "BlockDotProduct.join",
+      "BlockDotProduct.balancedTree",
+      "BlockDotProduct.canonicalTree",
+      "BlockDotProduct.evaluateTree",
+      "BlockDotProduct.computedResult"
+    ],
+    "source_mapping": "Authoritative source: /spec/source.txt, selected theorem:block_dot_product; proof context: /spec/paper.tex. Statements and actual construction bodies are in Research/Submission.lean, namespace BlockDotProduct. blockCount = (n+T-1)/T is exact ceiling division for T>0; reductionDepth = Nat.clog 2 blockCount is the exact ceiling binary logarithm. Inputs are Fin n -> Real with explicit n>0, T>0, and nonnegative unit roundoff. padded implements the final-block zero extension. RoundingErrors and Admissible encode only operation-local relative errors under the no-overflow/no-underflow model. blockPrefix starts with the first rounded multiplication and then rounds each sequential addition. ReductionTree, ValidSchedule, and evaluateTree implement arbitrary binary reduction schedules with each block present exactly once and height at most the source depth. canonicalTree constructs a consecutive balanced reduction with exact carries for absent children; canonicalTree_valid is a separate proof obligation. block_dot_product supplies both existential perturbation representations and both pointwise bounds simultaneously, with gamma_(T+ell), for all admissible executions and valid schedules. block_dot_product_balanced instantiates this theorem with the concrete canonical construction and has a complete corollary proof. Statement revision record: /spec/feedback.json was absent; there is no previous statement to revise. Relative to the fallible plan, the formal statement explicitly includes a general covering-tree theorem plus a concrete balanced corollary, uses heap addresses for local tree errors, and avoids postulating global coefficient bounds. No mathematical conclusion is weakened or added as a hypothesis. Temporary sorry scaffolding occurs only in canonicalTree_valid and block_dot_product; every construction has an actual body. /spec/support contains no files; its directory structure was copied. Supporting paper.tex, references.bib, source.txt, and source.pdf were copied byte-for-byte into Research."
+  }
+}

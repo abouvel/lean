@@ -1,0 +1,20 @@
+{
+  "experiment_id": "exp-022-construction-roundtrip-calibration-2026-11-01",
+  "kind": "explicit-construction-contract-calibration",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "seconds_per_evaluator": 150,
+  "expected_verdicts": {
+    "known-complete": "pass",
+    "existence-only": "fail",
+    "choice-answer": "fail"
+  },
+  "construction_names": [
+    "Research.answer"
+  ],
+  "human_review": "pending",
+  "acceptance_tests": [
+    "All cases compile and pass the standard axiom policy",
+    "Direct and round-trip judges distinguish explicit construction from existence-only and abstract selection"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "search_queries": [],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Established positive denominators explicitly before using division inequalities and field simplification in the rounding-product and gamma bounds."
+    }
+  ]
+}

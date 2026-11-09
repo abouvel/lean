@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "5f09f554b13196136023c37522200efa150094ef2471de6d916098a094bd8663",
+  "status": "complete",
+  "statement": "The target is a conditional componentwise backward-error statement for real square matrices and vectors satisfying explicitly specified relative-error trace relations. For every dimension n, under 0<=u, (n+1)u<1, positive definiteness and symmetry of A, and a supplied SolveTrace for A,b,R,y,x, there exists a matrix perturbation DeltaA making x an exact solution of (A+DeltaA)x=b, with the two entrywise bounds stated in the target. The trace objects are propositions recording possible rounded operations; they do not define a deterministic solver. The two named perturbation constructions are algebraic matrix expressions, and the target does not name them as its existential witness.",
+  "targets": [
+    {
+      "name": "Research.CholeskySolve.cholesky_solve",
+      "statement": "For every natural number n (including zero), every real u, every real n by n matrices A,R, and every real vectors b,y,x indexed by I_n={0,...,n-1}, assume 0<=u, (n+1)u<1, A is positive definite (in the real matrix sense: symmetric and v^T A v>0 for every nonzero real vector v indexed by I_n), A^T=A, and SolveTrace(u,A,b,R,y,x). Then there exists a real n by n matrix DeltaA such that (A+DeltaA)x=b and, for every i,j in I_n, |DeltaA_ij| <= C B_ij and C B_ij <= D B_ij, where gamma(u,k)=ku/(1-ku), C=gamma(u,n+1)+2 gamma(u,n)+gamma(u,n)^2, D=3 gamma(u,n+1)+gamma(u,n)^2, and B=entrywiseAbs(R^T) entrywiseAbs(R), so B_ij=sum over k in I_n of |R_ki| |R_kj|. All products in B are ordinary matrix products; C,D multiply entries as real scalars. The equation means sum over j in I_n of (A_ij+DeltaA_ij)x_j=b_i for every i. The supplied SolveTrace is exactly the factorization/forward/backward certificate described in the constructions; the theorem is conditional on its existence for the supplied R,y,x, and does not itself construct those quantities. No symmetry or positive definiteness is required of DeltaA, and its existence is not tied in the theorem statement to a particular named perturbation definition."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.CholeskySolve.gamma",
+      "description": "For every real u and natural number k, gamma(u,k) = (k u)/(1-k u), with k coerced to a real number. This definition has no domain restriction; real division is total in the formal system, so division by zero has value zero. The theorem hypotheses ensure positive denominators for k=n and k=n+1."
+    },
+    {
+      "name": "Research.CholeskySolve.entrywiseAbs",
+      "description": "For every natural number n and real n by n matrix A, entrywiseAbs(A) is the matrix with entry |A_ij| for i,j in I_n={0,...,n-1}."
+    },
+    {
+      "name": "Research.CholeskySolve.Rounded",
+      "description": "For real u, exact, computed, Rounded(u,exact,computed) is the proposition that there exists a real delta with |delta| <= u and computed = exact*(1+delta). It is a relative-error relation, not a deterministic rounding function or a specified floating-point format."
+    },
+    {
+      "name": "Research.CholeskySolve.DotTrace",
+      "description": "An inductively generated proposition DotTrace(u,terms,z), with real u, a finite ordered list terms of pairs of reals, and real z. It has exactly three constructors: nil gives DotTrace(u,[],0) for any real u; single takes reals a,b,p and a proof of Rounded(u,a*b,p), and gives DotTrace(u,[(a,b)],p); snoc takes a nonempty list xs, reals a,b,s,p,t, and proofs of DotTrace(u,xs,s), Rounded(u,a*b,p), and Rounded(u,s+p,t), and gives DotTrace(u,xs++[(a,b)],t). Thus products are rounded individually and then accumulated in list order with rounded additions; the first product is not added to an initial zero. These constructors describe possible traces, not an algorithm choosing numerical outputs."
+    },
+    {
+      "name": "Research.CholeskySolve.ResidualTrace",
+      "description": "For real u,c,s and a list terms of pairs of reals, ResidualTrace(u,c,terms,s) means s=c if terms is empty. If terms is nonempty, it means there exists a real p such that DotTrace(u,terms,p) and Rounded(u,c-p,s). In particular, the empty-list case involves no rounded subtraction."
+    },
+    {
+      "name": "Research.CholeskySolve.UpdateTrace",
+      "description": "For real u,c,d,z and a list terms of pairs of reals, UpdateTrace(u,c,d,terms,z) means d != 0 and there exists a real s with ResidualTrace(u,c,terms,s) and Rounded(u,s/d,z). This is a proposition about a residual and a rounded division, not a function computing z."
+    },
+    {
+      "name": "Research.CholeskySolve.DiagonalTrace",
+      "description": "For real u,c,z and a list terms of pairs of reals, DiagonalTrace(u,c,terms,z) means there exists a real s with ResidualTrace(u,c,terms,s), s>0, Rounded(u,sqrt(s),z), and z>0. It specifies a positive residual and positive rounded square root."
+    },
+    {
+      "name": "Research.CholeskySolve.factorTerms",
+      "description": "For any natural n, real n by n matrix R, and i,j in I_n, factorTerms(R,i,j) is the ordered list [(R_ki,R_kj) : k=0,...,i-1], obtained by filtering the increasing enumeration of I_n by k<i. The cutoff is i regardless of j, and no triangularity hypothesis is imposed by this list definition."
+    },
+    {
+      "name": "Research.CholeskySolve.forwardTerms",
+      "description": "For any natural n, real n by n matrix T, real vector y indexed by I_n, and i in I_n, forwardTerms(T,y,i) is the ordered list [(T_ik,y_k) : k=0,...,i-1]."
+    },
+    {
+      "name": "Research.CholeskySolve.backwardTerms",
+      "description": "For any natural n, real n by n matrix T, real vector x indexed by I_n, and i in I_n, backwardTerms(T,x,i) is the ordered list [(T_ik,x_k) : k=i+1,...,n-1] in increasing k order, including for the backward trace."
+    },
+    {
+      "name": "Research.CholeskySolve.FactorTrace",
+      "description": "An inductive proposition FactorTrace(u,A,R), with implicit natural n, real u, and real n by n matrices A,R. Its sole constructor mk takes three proof fields: (1) for every i,j in I_n, j<i implies R_ij=0; (2) for every j in I_n, DiagonalTrace(u,A_jj,factorTerms(R,j,j),R_jj); (3) for every i,j in I_n with i<j, UpdateTrace(u,A_ij,R_ii,factorTerms(R,i,j),R_ij). These fields specify an upper triangular R with positive diagonal and local rounded residual, square-root, and division relations. They use only the diagonal and upper triangular entries of A. The constructor packages these relations and does not compute R or assert a trace exists for arbitrary A."
+    },
+    {
+      "name": "Research.CholeskySolve.ForwardTrace",
+      "description": "For implicit natural n, real u, real n by n matrix T, and real vectors b,y indexed by I_n, ForwardTrace(u,T,b,y) is the conjunction of: for every i,j with i<j, T_ij=0 (T is lower triangular); and for every i in I_n, UpdateTrace(u,b_i,T_ii,forwardTerms(T,y,i),y_i). It is a relation constraining a supplied y, with nonzero diagonal divisors supplied by UpdateTrace, rather than an algorithm producing y."
+    },
+    {
+      "name": "Research.CholeskySolve.BackwardTrace",
+      "description": "For implicit natural n, real u, real n by n matrix T, and real vectors b,x indexed by I_n, BackwardTrace(u,T,b,x) is the conjunction of: for every i,j with j<i, T_ij=0 (T is upper triangular); and for every i in I_n, UpdateTrace(u,b_i,T_ii,backwardTerms(T,x,i),x_i). It constrains a supplied x via nonzero diagonal divisions. Within each residual, terms are accumulated in increasing k order; no temporal order of row computations is specified."
+    },
+    {
+      "name": "Research.CholeskySolve.SolveTrace",
+      "description": "An inductive proposition SolveTrace(u,A,b,R,y,x), with implicit natural n, real u, real n by n matrices A,R and real vectors b,y,x indexed by I_n. Its sole constructor mk has three proof fields: FactorTrace(u,A,R), ForwardTrace(u,R^T,b,y), and BackwardTrace(u,R,y,x). Thus it packages local rounded factorization relations, a forward solve relation using R^T, and a backward solve relation using R. It is a certificate relation on given matrices and vectors, not an algorithm returning them. This is the trace hypothesis in cholesky_solve."
+    },
+    {
+      "name": "Research.CholeskySolve.factorPerturbation",
+      "description": "For implicit natural n and arbitrary real n by n matrices A,R, factorPerturbation(A,R) = R^T R - A, using ordinary matrix multiplication. Consequently A + factorPerturbation(A,R) = R^T R identically, without any trace assumption."
+    },
+    {
+      "name": "Research.CholeskySolve.solvePerturbation",
+      "description": "For implicit natural n and arbitrary real n by n matrices A,R,EL,EU, solvePerturbation(A,R,EL,EU) = (R^T R-A) + R^T EU + EL R + EL EU = (R^T+EL)(R+EU)-A. Its definition imposes no size, triangularity, or solve conditions on EL or EU. If (R^T+EL)y=b and (R+EU)x=y, this algebraic expression gives (A+solvePerturbation(A,R,EL,EU))x=b. The target theorem only existentially quantifies a perturbation DeltaA: its statement does not identify DeltaA with this expression or with factorPerturbation, or supply EL,EU."
+    }
+  ],
+  "assumptions": [
+    "All matrix and vector entries, u, rounding errors, residuals, and intermediate numerical values are real. Dimension n is any natural number; indices lie in I_n={0,...,n-1}. Matrices are square of size n, and vectors are functions I_n to the reals. Matrix multiplication and matrix-vector multiplication use finite sums over I_n; transpose swaps indices.",
+    "The target universally quantifies u,A,b,R,y,x, with n implicit. Its explicit hypotheses are 0<=u, (n+1)u<1, Matrix.PosDef(A), A^T=A, and SolveTrace(u,A,b,R,y,x). Symmetry is listed explicitly even though real positive definiteness also includes symmetry.",
+    "Rounded operations use existential real relative errors delta satisfying |delta|<=u; no particular floating-point set, rounding rule, or deterministic selection is assumed. Different operations may have different errors.",
+    "Nonzero divisors, strictly positive diagonal residuals, strictly positive computed diagonal entries, and triangularity are requirements of the trace relations as detailed in the constructions. No extra assumption n>0 or b!=0 is imposed.",
+    "The standalone construction definitions have only their stated parameter types and local relational conditions; the target numerical bounds on u and the positive definiteness of A are not global preconditions on those definitions."
+  ],
+  "missing_context": []
+}

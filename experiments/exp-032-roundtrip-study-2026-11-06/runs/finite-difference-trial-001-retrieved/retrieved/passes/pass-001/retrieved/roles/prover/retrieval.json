@@ -1,0 +1,13 @@
+{
+  "search_queries": [
+    "exists_hasDerivAt_eq_slope",
+    "sorry|admit|axiom"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "1da037325eb3b769654318351379dd168658add1d63e06ed9a5279d4783d238d",
+  "status": "complete",
+  "statement": "Both targets assert componentwise backward-error representations for an explicitly constructed real-arithmetic model of a blocked dot product. Each block accumulates T zero-padded, error-scaled products sequentially; an addressed binary tree then combines block results with further supplied error factors. For positive n,T, nonnegative u, admissible error fields and (T+reductionDepth(n,T))*u<1, the result is an exact dot product after perturbing either input separately, with componentwise relative bound gamma(u,T+reductionDepth(n,T)). The general theorem uses any tree satisfying the leaf-permutation and height conditions; the balanced theorem uses the explicitly defined canonical tree.",
+  "targets": [
+    {
+      "name": "BlockDotProduct.block_dot_product",
+      "statement": "For every implicit n,T in N with n>0 and T>0, every x,y:Fin n->R, every real u>=0 and every e:RoundingErrors with Admissible(e,u), set m=blockCount(n,T)=ceil(n/T), d=reductionDepth(n,T)=Nat.clog(2,m), K=T+d and g=gamma(u,K)=K*u/(1-K*u). Assume K*u<1, where K is cast to R. For every tree:ReductionTree satisfying ValidSchedule(n,T,tree), that is, leaves(tree) is a permutation of [0,...,m-1] and height(tree)<=d, put C=computedResult(x,y,T,e,tree). There exist Delta_x,Delta_y:Fin n->R such that simultaneously C=sum over i in Fin n of (x(i)+Delta_x(i))*y(i), for every i in Fin n |Delta_x(i)|<=g*|x(i)|, C=sum over i in Fin n of x(i)*(y(i)+Delta_y(i)), and for every i in Fin n |Delta_y(i)|<=g*|y(i)|. These give two separate exact dot-product representations of the same scalar; an expression perturbing both inputs together is not asserted."
+    },
+    {
+      "name": "BlockDotProduct.block_dot_product_balanced",
+      "statement": "For every implicit n,T in N with n>0 and T>0, every x,y:Fin n->R, every real u>=0 and every e:RoundingErrors with Admissible(e,u), set m=blockCount(n,T)=ceil(n/T), d=reductionDepth(n,T)=Nat.clog(2,m), K=T+d and g=gamma(u,K)=K*u/(1-K*u). Assume K*u<1, where K is cast to R. Put tree=canonicalTree(n,T)=balancedTree(m,d,0) and C=computedResult(x,y,T,e,tree). This statement has no additional tree parameter or schedule hypothesis. There exist Delta_x,Delta_y:Fin n->R such that simultaneously C=sum over i in Fin n of (x(i)+Delta_x(i))*y(i), for every i in Fin n |Delta_x(i)|<=g*|x(i)|, C=sum over i in Fin n of x(i)*(y(i)+Delta_y(i)), and for every i in Fin n |Delta_y(i)|<=g*|y(i)|. These give two separate exact dot-product representations of the same scalar; an expression perturbing both inputs together is not asserted."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "BlockDotProduct.blockCount",
+      "description": "For n,T in N={0,1,...}, blockCount(n,T)=((n+T) dotminus 1) div T, using truncated natural subtraction and natural integer division, with division by zero equal to zero. For T>0 this is ceil(n/T)."
+    },
+    {
+      "name": "BlockDotProduct.reductionDepth",
+      "description": "For n,T in N, reductionDepth(n,T)=Nat.clog(2,blockCount(n,T)), the least d in N such that blockCount(n,T)<=2^d. In particular it is zero for blockCount zero or one."
+    },
+    {
+      "name": "BlockDotProduct.gamma",
+      "description": "For u in R and k in N, gamma(u,k)=(k*u)/(1-k*u), casting k to R. This is a total real-field expression, with division by zero equal to zero; the theorem hypotheses ensure a positive denominator at the index used."
+    },
+    {
+      "name": "BlockDotProduct.padded",
+      "description": "For implicit n in N, x:Fin n->R and k in N, padded(x,k)=x(k) if k<n and zero otherwise. Here Fin n means {0,...,n-1}."
+    },
+    {
+      "name": "BlockDotProduct.RoundingErrors",
+      "description": "A structure with one constructor mk taking three functions, its fields mul:N x N->R, blockAdd:N x N->R, and treeAdd:N->R. The first two are indexed by block j and position t; the third by tree address a. This is data, not an algorithm: the fields are arbitrary real numbers with no bounds or machine-rounding constraint built into the structure."
+    },
+    {
+      "name": "BlockDotProduct.RoundingErrors.Admissible",
+      "description": "For e:RoundingErrors and real u, Admissible(e,u) is the conjunction of: for every j,t in N, |e.mul(j,t)|<=u; for every j,t in N, |e.blockAdd(j,t)|<=u; and for every a in N, |e.treeAdd(a)|<=u. These include unused indices."
+    },
+    {
+      "name": "BlockDotProduct.roundedProduct",
+      "description": "For implicit n in N, x,y:Fin n->R, T,j,t in N and e:RoundingErrors, roundedProduct(x,y,T,e,j,t)=padded(x,j*T+t)*padded(y,j*T+t)*(1+e.mul(j,t)). This is exact real arithmetic with a supplied factor, not a machine rounding operation. Its domain does not require t<T or j<blockCount(n,T)."
+    },
+    {
+      "name": "BlockDotProduct.blockPrefix",
+      "description": "For implicit n in N, x,y:Fin n->R, T,j in N and e:RoundingErrors, put p_t=roundedProduct(x,y,T,e,j,t). For q in N, B(q)=blockPrefix(x,y,T,e,j,q) is defined recursively by B(0)=0, B(1)=p_0, and B(k+2)=(B(k+1)+p_(k+1))*(1+e.blockAdd(j,k+1)) for every k in N. Thus it accumulates products in increasing position order, applying an addition error factor starting with the second product, with no addition error for initialization. No q<=T restriction is imposed."
+    },
+    {
+      "name": "BlockDotProduct.blockPartial",
+      "description": "For implicit n in N, x,y:Fin n->R, T,j in N and e:RoundingErrors, blockPartial(x,y,T,e,j)=blockPrefix(x,y,T,e,j,T). It sequentially accumulates T padded products at indices j*T through j*T+T-1, with the factors specified by blockPrefix; for T=0 it is zero."
+    },
+    {
+      "name": "BlockDotProduct.ReductionTree",
+      "description": "An inductive data type of finite ordered binary trees with constructors empty, leaf(j) for any natural label j, and node(l,r) for any two ReductionTrees. It permits repeated labels, labels outside any block range and empty subtrees. It has no intrinsic schedule or balance condition and is distinct from a tree-building or evaluation algorithm."
+    },
+    {
+      "name": "BlockDotProduct.ReductionTree.leaves",
+      "description": "A function ReductionTree->List N defined by leaves(empty)=[], leaves(leaf(j))=[j], and leaves(node(l,r))=leaves(l) concatenated with leaves(r). It retains order and multiplicity."
+    },
+    {
+      "name": "BlockDotProduct.ReductionTree.height",
+      "description": "A function ReductionTree->N defined by height(empty)=height(leaf(j))=0 and height(node(l,r))=max(height(l),height(r))+1. Nodes with empty children still contribute to height."
+    },
+    {
+      "name": "BlockDotProduct.ValidSchedule",
+      "description": "For n,T in N and tree:ReductionTree, ValidSchedule(n,T,tree) means that leaves(tree) is a list permutation of [0,...,blockCount(n,T)-1] and height(tree)<=reductionDepth(n,T). Each block label must occur exactly once, in any order meeting the height bound. This is a predicate, not an algorithm."
+    },
+    {
+      "name": "BlockDotProduct.join",
+      "description": "For l,r:ReductionTree, join(empty,r)=r; for nonempty l, join(l,empty)=l; when both are nonempty, join(l,r)=node(l,r). In particular join(empty,empty)=empty. It discards empty arguments at this join and does not recursively simplify arbitrary input subtrees."
+    },
+    {
+      "name": "BlockDotProduct.balancedTree",
+      "description": "For m,d,start in N, let F(m,d,start)=balancedTree(m,d,start). F(m,0,start)=leaf(start) if start<m and empty otherwise. For every d in N, F(m,d+1,start)=join(F(m,d,start),F(m,d,start+2^d)). It recursively splits the integer interval [start,start+2^d) in halves, keeps labels below m, and discards empty branches using join. Its leaves are the increasing labels in that interval that are below m. Parameters are unrestricted; this builds a tree rather than evaluating any numerical sum."
+    },
+    {
+      "name": "BlockDotProduct.canonicalTree",
+      "description": "For n,T in N, canonicalTree(n,T)=balancedTree(blockCount(n,T),reductionDepth(n,T),0). It constructs the recursively split tree over all block labels, discarding branches beyond the last block. This is the specific tree used in block_dot_product_balanced."
+    },
+    {
+      "name": "BlockDotProduct.evaluateTree",
+      "description": "For partials:N->R, e:RoundingErrors, tree:ReductionTree and address a in N, write E(tree,a)=evaluateTree(partials,e,tree,a). E(empty,a)=0, E(leaf(j),a)=partials(j), and E(node(l,r),a)=(E(l,2*a)+E(r,2*a+1))*(1+e.treeAdd(a)). Every node applies this factor even with an empty child; leaves apply no tree factor. Addresses are unrestricted and leaf labels need not be valid block indices."
+    },
+    {
+      "name": "BlockDotProduct.computedResult",
+      "description": "For implicit n in N, x,y:Fin n->R, T in N, e:RoundingErrors and tree:ReductionTree, computedResult(x,y,T,e,tree)=evaluateTree((j maps to blockPartial(x,y,T,e,j)),e,tree,1). It uses sequential sums of T padded error-scaled products at the requested block labels, then combines those results according to the supplied ordered tree, with root address 1 and child addresses 2*a and 2*a+1. This is a supplied-error model in real arithmetic. ValidSchedule is required in the general theorem but is not a precondition of this definition."
+    }
+  ],
+  "assumptions": [
+    "All natural parameters range over N={0,1,...}; Fin n={0,...,n-1}. All vectors, perturbations and error fields have real values. Sums over Fin n include each index exactly once.",
+    "Both theorems universally quantify implicit n,T in N subject to 0<n and 0<T, and universally quantify x,y:Fin n->R and u in R subject to 0<=u. There is no restriction T<=n.",
+    "Both theorems quantify e:RoundingErrors and require Admissible(e,u), bounding each of its three fields by u in absolute value at every natural index, including indices unused by the calculation.",
+    "Both theorems require (T+reductionDepth(n,T))*u<1, with the natural coefficient cast to R.",
+    "The general theorem universally quantifies tree:ReductionTree with ValidSchedule(n,T,tree); the balanced theorem fixes canonicalTree(n,T) and has no separate schedule hypothesis.",
+    "No machine format, deterministic rounding rule, independence of errors, or relation among error fields is assumed. The constructions have the unrestricted total domains stated in their descriptions; their definitions do not require the target hypotheses."
+  ],
+  "missing_context": []
+}

@@ -1,0 +1,109 @@
+Source: Sahil Bhola, Self-contained Proof for a Mixed-precision Block Jacobi Algorithm.
+
+Selected deliverable: the full active result labeled theorem:cholesky_factorization in main.tex (lines 500-545).
+
+The original mathematical proof is available in paper.tex. The selected statement below is authoritative. Earlier statements and notation supply context. A referenced result may be proved as a helper. Do not assume a desired algorithmic bound or an unproved paper lemma as an added hypothesis.
+
+SELECTED STATEMENT (verbatim LaTeX, proof omitted)
+\begin{theorem}[Cholesky Factorization]\label{theorem:cholesky_factorization}
+Let $\mat{a}\ireal{n\times n}$ be symmetric positive definite, and suppose
+that the Cholesky algorithm applied to $\mat{a}$ completes successfully in
+floating-point arithmetic, producing an upper-triangular factor
+$\widehat{\mat{r}}$. Assume that no overflow or underflow occurs and that
+$(n+1)\urd<1$. Then there exists a symmetric perturbation $\Delta\mat{a}$
+such that
+\begin{align}
+    \widehat{\mat{r}}^{T}\widehat{\mat{r}}
+    &=\mat{a}+\Delta\mat{a},
+    &
+    \abs{\Delta\mat{a}}
+    &\leq
+    \gamma_{n+1}
+    \abs{\widehat{\mat{r}}^{T}}
+    \abs{\widehat{\mat{r}}},
+\end{align}
+where the inequality is interpreted componentwise and
+$\gamma_{n+1}=(n+1)\urd/(1-(n+1)\urd)$.
+\end{theorem}
+
+SECTION CONTEXT
+\subsection{Cholesky Factorization}\label{sec:cholesky_factorization}
+To solve a linear system of equations via Cholesky factorization, we need to compute the Cholesky factors given by the recurrance relation
+\begin{align}
+    \mat{r}_{i,j} = \left(\mat{a}_{i,j} - \sum_{k=1}^{i-1} \mat{r}_{k,i}\mat{r}_{k,j}\right) / \mat{r}_{i,i}, \qquad i = 1,\cdots, j - 1 \\
+   \mat{r}_{j,j} =  \left(\mat{a}_{j,j} - \sum_{k=1}^{j-1} \mat{r}_{k,j}^2 \right)^{1/2}, \qquad j = 1,\dots,n. 
+\end{align}
+In the follwing result, we present the backward error analysis for performing Cholesky factorization, re-deriving~\cite[Theorem 10.4]{higham2002accuracy}.
+
+EARLIER STATEMENTS FOR CONTEXT
+\begin{lemma}[Traingular Update]\label{lemma:traingular_update}
+Let $k\geq2$, $c\in\R$, and $\vect{a},\vect{b}\ireal{k}$ with
+$\vect{b}_k\neq0$. Suppose that
+\begin{align}
+    y=\frac{c-\sum_{i=1}^{k-1}\vect{a}_i\vect{b}_i}{\vect{b}_k}
+\end{align}
+is evaluated in floating-point arithmetic by computing the inner product
+sequentially, followed by the subtraction and division. Assume that no
+overflow or underflow occurs and that $k\urd<1$. Then the computed result
+$\hat{y}$ satisfies the perturbed equation
+\begin{align}
+    \sum_{i=1}^{k-1}
+        \vect{a}_i\left(\vect{b}_i+\Delta\vect{b}_i\right)
+    +\hat{y}\left(\vect{b}_k+\Delta\vect{b}_k\right)
+    =c,
+\end{align}
+where
+\begin{align}
+    \abs{\Delta\vect{b}_i}
+    \leq \gamma_k\abs{\vect{b}_i},
+    \qquad i=1,\ldots,k,
+\end{align}
+and $\gamma_k=k\urd/(1-k\urd)$.
+\end{lemma}
+
+COMMON ROUNDING MODEL AND ERROR CONSTANTS
+\section{Floating-Point Model}
+We assume the standard floating-point model~\cite{higham2002accuracy}: for every elementary
+operation $\circ \in \{+,-,\times,/\}$,
+\begin{equation}
+    \fl(a \circ b) = (a \circ b)(1+\delta),
+    \qquad
+    \abs{\delta} \le \urd,
+    \label{eq:fp-model}
+\end{equation}
+where $\urd$ is the unit roundoff and $\delta$ is the relative roundoff error.
+Using~\cref{eq:fp-model} for numerical analysis we typicall obtain the product
+\begin{align}
+    \prod_{i=1}^n (1 + \delta_i)^{\rho_i} \define 1 + \theta_n, \qquad \rho = \pm 1,
+    \label{eq:theta_n}
+\end{align}
+where $n$ denotes the number of accumulated roundoff error terms.
+For numerical analysis, we seek reliable and sharp bounds for $\theta_n$.
+
+
+\section{Deterministic Rounding Error Analysis}
+The deterministic rounding error analysis proposes the following problem-size dependent constant
+\begin{align}
+\gamma_{n} \define \frac{n\urd}{1 - n\urd}, 
+\label{eq:drea}
+\end{align}
+for $n\urd < 1$.
+Here, $n$ is the number of accumulated error terms~\cite{higham2002accuracy}.
+The problem-size dependent constant is monotonic, that is, $\gamma_{n+1} > \gamma_{n}$ for $\urd > 0$.
+Performing backward/forward error analysis using~\cref{eq:drea} we obtain
+\begin{align}
+    \abs{\theta_n} \leq \gamma_n.
+\end{align}
+
+SOURCE NOTATION MACROS
+\newcommand{\urd}{\ensuremath{\mathrm{u}}}
+\newcommand{\define}{\ensuremath{\triangleq}}
+\newcommand{\vect}[1]{\mathbf{\MakeLowercase{#1}}}
+\newcommand{\mat}[1]{\mathbf{\MakeUppercase{#1}}}
+\newcommand{\ireal}[1]{\in\mathbb{R}^{#1}}
+\newcommand{\norm}[2][]{\left\|#2\right\|_{#1}}
+\DeclareMathOperator{\fl}{fl}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\widehatgamma}[1]{\widehat{\gamma}_{#1}}

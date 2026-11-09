@@ -1,0 +1,3 @@
+Created [Submission.lean](/workspace/Research/Submission.lean) with the complete theorem statement, explicit rounding traces, and construction bodies. Only the theorem proof uses `sorry`.
+
+`lake build` passes. Supporting sources were copied unchanged, and [statement.json](/output/statement.json) was saved atomically. The square-root rounding assumption is explicitly documented; no feedback file was present.

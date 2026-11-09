@@ -1,0 +1,115 @@
+Source: Sahil Bhola, Self-contained Proof for a Mixed-precision Block Jacobi Algorithm.
+
+Selected deliverable: the full active result labeled theorem:parallel_binary_tree_reduction in main.tex (lines 180-216).
+
+The original mathematical proof is available in paper.tex. The selected statement below is authoritative. Earlier statements and notation supply context. A referenced result may be proved as a helper. Do not assume a desired algorithmic bound or an unproved paper lemma as an added hypothesis.
+
+SELECTED STATEMENT (verbatim LaTeX, proof omitted)
+\begin{theorem}
+\label{theorem:parallel_binary_tree_reduction}
+Let
+\begin{align}
+    y=\sum_{i=1}^{n}\vect{x}_i
+\end{align}
+be evaluated componentwise using a binary-tree reduction of depth
+$\ell^\dagger=\ceil{\log_2 n}$ in floating-point arithmetic with unit
+roundoff $\urd$. Assume that no overflow or underflow occurs and that
+$\ell^\dagger\urd<1$. Then the computed result $\hat{y}$ satisfies
+\begin{align}
+    \hat{y}
+    =\sum_{i=1}^{n}\left(\vect{x}_i+\Delta\vect{x}_i\right),
+    \qquad
+    \abs{\Delta\vect{x}_i}
+    \leq \gamma_{\ell^\dagger}\abs{\vect{x}_i},
+    \quad i=1,\ldots,n,
+\end{align}
+where the inequalities are interpreted componentwise and
+$\gamma_{\ell^\dagger}=\ell^\dagger\urd/(1-\ell^\dagger\urd)$.
+\end{theorem}
+
+SECTION CONTEXT
+\section{Parallel Binary Tree Reduction}\label{sec:parallel_binary_tree_reduction}
+In parallel computing, the parallel reduction kernel is routinely observed.
+Mathematically, the kerenel computes $y = \sum_{i=1}^n \vect{x}_i$ as
+\begin{align}
+S_{k}^{\ell+1} = S_{k}^{\ell} + S_{k + \lceil\frac{n}{2^{\ell+1}}\rceil}^\ell, \qquad k = 1, \cdots, \lceil \frac{n}{2^{\ell+1}}\rceil,
+\end{align}
+such that $y = S_1^{\ell^\dagger}$.
+Here, $\ell^\dagger \define \lceil\log_2 n\rceil$ and $S_i^0 = \vect{x}_i$ for all $i$.
+Note that, for some values of $\ell$ and $n$, if $S_{k + \lceil\frac{n}{2^{\ell+1}}\rceil}^\ell$ is unavailable, it is considered as zero.
+Here, we perform the rounding error analysis of the parallel binary tree reduction, re-deriving the problem-size dependent constant $\gamma_{\lceil\log_2 n\rceil}$ as proposed by~\cite[p. 64]{higham2002accuracy}.
+
+
+\begin{algorithm}
+\caption{Parallel Binary-Tree Reduction}
+\label{alg:binary_tree_reduction}
+\begin{algorithmic}[1]
+\Require Input vector $\mathbf{x} = (x_1,\ldots,x_n)$
+\Ensure $y = \sum_{i=1}^{n} x_i$
+
+\State $S_k^0 \gets x_k$, \quad $k=1,\ldots,n$
+\State $\ell_t \gets \lceil \log_2 n \rceil$
+
+\For{$\ell = 0,\ldots,\ell_t-1$}
+    \ForAll{$k=1,\ldots,
+        \left\lceil n/2^{\ell+1}\right\rceil$ \textbf{in parallel}}
+        \State $j \gets k + \left\lceil n/2^{\ell+1}\right\rceil$
+        \If{$S_j^\ell$ is available}
+            \State $S_k^{\ell+1} \gets S_k^\ell + S_j^\ell$
+        \Else
+            \State $S_k^{\ell+1} \gets S_k^\ell$
+        \EndIf
+    \EndFor
+\EndFor
+
+\State $y \gets S_1^{\ell_t}$
+\State \Return $y$
+\end{algorithmic}
+\end{algorithm}
+
+COMMON ROUNDING MODEL AND ERROR CONSTANTS
+\section{Floating-Point Model}
+We assume the standard floating-point model~\cite{higham2002accuracy}: for every elementary
+operation $\circ \in \{+,-,\times,/\}$,
+\begin{equation}
+    \fl(a \circ b) = (a \circ b)(1+\delta),
+    \qquad
+    \abs{\delta} \le \urd,
+    \label{eq:fp-model}
+\end{equation}
+where $\urd$ is the unit roundoff and $\delta$ is the relative roundoff error.
+Using~\cref{eq:fp-model} for numerical analysis we typicall obtain the product
+\begin{align}
+    \prod_{i=1}^n (1 + \delta_i)^{\rho_i} \define 1 + \theta_n, \qquad \rho = \pm 1,
+    \label{eq:theta_n}
+\end{align}
+where $n$ denotes the number of accumulated roundoff error terms.
+For numerical analysis, we seek reliable and sharp bounds for $\theta_n$.
+
+
+\section{Deterministic Rounding Error Analysis}
+The deterministic rounding error analysis proposes the following problem-size dependent constant
+\begin{align}
+\gamma_{n} \define \frac{n\urd}{1 - n\urd}, 
+\label{eq:drea}
+\end{align}
+for $n\urd < 1$.
+Here, $n$ is the number of accumulated error terms~\cite{higham2002accuracy}.
+The problem-size dependent constant is monotonic, that is, $\gamma_{n+1} > \gamma_{n}$ for $\urd > 0$.
+Performing backward/forward error analysis using~\cref{eq:drea} we obtain
+\begin{align}
+    \abs{\theta_n} \leq \gamma_n.
+\end{align}
+
+SOURCE NOTATION MACROS
+\newcommand{\urd}{\ensuremath{\mathrm{u}}}
+\newcommand{\define}{\ensuremath{\triangleq}}
+\newcommand{\vect}[1]{\mathbf{\MakeLowercase{#1}}}
+\newcommand{\mat}[1]{\mathbf{\MakeUppercase{#1}}}
+\newcommand{\ireal}[1]{\in\mathbb{R}^{#1}}
+\newcommand{\norm}[2][]{\left\|#2\right\|_{#1}}
+\DeclareMathOperator{\fl}{fl}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\widehatgamma}[1]{\widehat{\gamma}_{#1}}

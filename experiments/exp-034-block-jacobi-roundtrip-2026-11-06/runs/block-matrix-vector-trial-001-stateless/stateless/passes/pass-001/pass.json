@@ -1,0 +1,226 @@
+{
+  "status": "infrastructure_error",
+  "error": "Construction is absent or is not a definition: BlockMatrixVector.RoundingTrace",
+  "builder": {
+    "condition": "stateless",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 400.317,
+    "compiler_command_events": 19,
+    "token_usage": {
+      "input_tokens": 879216,
+      "cached_input_tokens": 813312,
+      "output_tokens": 14311,
+      "reasoning_output_tokens": 2634
+    },
+    "roles": {
+      "planner": {
+        "condition": "stateless",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793991994.8780916,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 65.519,
+        "token_usage": {
+          "input_tokens": 84978,
+          "cached_input_tokens": 73728,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2359,
+          "reasoning_output_tokens": 153
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "stateless",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793992060.9481094,
+        "time_limit_seconds": 420,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 98.459,
+        "token_usage": {
+          "input_tokens": 160223,
+          "cached_input_tokens": 147328,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3886,
+          "reasoning_output_tokens": 514
+        },
+        "compiler_command_events": 3,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "stateless",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793992168.91361,
+        "time_limit_seconds": 900,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 236.339,
+        "token_usage": {
+          "input_tokens": 634015,
+          "cached_input_tokens": 592256,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 8066,
+          "reasoning_output_tokens": 1967
+        },
+        "compiler_command_events": 16,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "BlockMatrixVector.block_matrix_vector_product_constructed",
+        "BlockMatrixVector.block_matrix_vector_product"
+      ],
+      "construction_names": [
+        "BlockMatrixVector.blockCount",
+        "BlockMatrixVector.errorCount",
+        "BlockMatrixVector.gamma",
+        "BlockMatrixVector.padded",
+        "BlockMatrixVector.sequentialSum",
+        "BlockMatrixVector.RoundingTrace",
+        "BlockMatrixVector.RoundingTrace.Valid",
+        "BlockMatrixVector.roundedProduct",
+        "BlockMatrixVector.blockPartial",
+        "BlockMatrixVector.computed",
+        "BlockMatrixVector.pathCoefficient",
+        "BlockMatrixVector.perturbation"
+      ],
+      "source_mapping": "/spec/source.txt selected theorem:block_matrix_vector_product is formalized in /workspace/Research/Submission.lean. blockCount n T=(n+T-1)/T is ceil(n/T) for positive T; errorCount is T+blockCount-1; gamma is k*u/(1-k*u). A and x are arbitrary original real matrix/vector inputs, with unrestricted natural dimensions m,n, explicit positive block size T and nonnegative unit roundoff u. RoundingTrace.Valid imposes only per-executed-operation relative-error bounds, representing the standard model when no overflow or underflow occurs. computed evaluates zero-padded rounded products, first-term-initialized sequential block sums, and first-partial-initialized sequential outer sums; empty sums are zero. pathCoefficient explicitly multiplies each original term's operation factors, and perturbation A T E i j=A i j*(pathCoefficient T E i j-1). The constructed theorem asserts the actual output equals (A+perturbation).mulVec x and the componentwise gamma_(T+ceil(n/T)-1) bound. The existential target is the source theorem and follows directly from that constructed theorem. Only the constructed theorem proof has temporary sorry scaffolding; every construction has a body. /spec/paper.tex supplies the sequential path-factor interpretation; no paper lemma or algorithmic error bound is assumed. Supporting sources: /spec/support contained no files to copy. Statement revision record: initial statement only; /spec/feedback.json was absent. No source hypothesis or conclusion was weakened; positive T and u>=0 expose the implicit domains, and n=0 is covered by a zero-output convention."
+    }
+  },
+  "critic": {
+    "condition": "stateless",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1793992429.905306,
+    "time_limit_seconds": 300,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 70.141,
+    "token_usage": {
+      "input_tokens": 238549,
+      "cached_input_tokens": 219520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2409,
+      "reasoning_output_tokens": 291
+    },
+    "compiler_command_events": 2,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 14.685,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 315,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "555d97febc7d6250aea7f65623259f50439177ca2a0f9d4af54e342e75ad0311",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793991994.8780916,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 65.519,
+      "token_usage": {
+        "input_tokens": 84978,
+        "cached_input_tokens": 73728,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2359,
+        "reasoning_output_tokens": 153
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793992060.9481094,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 98.459,
+      "token_usage": {
+        "input_tokens": 160223,
+        "cached_input_tokens": 147328,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3886,
+        "reasoning_output_tokens": 514
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793992168.91361,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 236.339,
+      "token_usage": {
+        "input_tokens": 634015,
+        "cached_input_tokens": 592256,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8066,
+        "reasoning_output_tokens": 1967
+      },
+      "compiler_command_events": 16,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "number": 1,
+  "wall_time_seconds": 505.678830304998,
+  "evidence": "stateless/passes/pass-001"
+}

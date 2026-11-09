@@ -1,0 +1,1 @@
+Saved [plan.json](/output/plan.json) atomically with schema version 1, six obligations, and a strategy connecting the mean value theorem’s interior witness to the error bound. No completed proof was written, and `/workspace` was unchanged.

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the authoritative real-arithmetic theorem using finite real matrices and vectors, with explicit block structure and an invertible diagonal-block matrix D. Construct the correction and iterate from the original A, D, N, b and initial guess; define the error and P = -(D inverse * N) from those inputs. First establish the signed algebraic recurrence, then componentwise and induced-infinity-norm estimates. Separately prove or instantiate the finite-dimensional spectral-radius/power-convergence criterion using the complexification of the real iteration operator, and connect it to convergence for every real initial guess. Assemble all conclusions, including spectral-radius invariance under negation and the contraction assertion. Treat the paper proof as guidance only: its spectral assertion still requires justification. Do not replace spectral radius by a norm, add convergence as an assumption, or specialize to scalar blocks or one initial error. No feedback.json was present; the supporting-source directory contained no files. The generic memory artifact supplied no target-specific mathematical evidence.",
+  "obligations": [
+    {
+      "id": "inputs_and_blocks",
+      "description": "Represent n-dimensional real vectors and real square matrices, A = D + N, and a block partition (for example a map from coordinates to block labels). Encode D entries as zero between different blocks and N entries as zero within each block, with D nonsingular and A*x = b. Do not impose symmetry, positive definiteness, diagonal dominance, equal block sizes, or invertibility of A. A general algebraic helper may omit unused block hypotheses, but the final theorem must explicitly specialize to the stated block decomposition."
+    },
+    {
+      "id": "construct_actual_iteration",
+      "description": "Define correction c(k+1) = D inverse applied to (b - A*xk), and recursively define x(k+1) = xk + c(k+1) for arbitrary initial guess. Prove the correction solves the stated linear system using nonsingularity. Alternatively connect any sequences satisfying the two update equations to this constructed iteration by uniqueness. Define e(k) = xk - x and P = -(D inverse * N); do not assume an independent error sequence already satisfying the desired recurrence."
+    },
+    {
+      "id": "signed_recurrence",
+      "description": "Establish the residual identity b - A*xk = -A*e(k), use A = D + N and the inverse identity to obtain e(k+1) = P*e(k), preserving signs through cancellation. Deduce e(k) = (P^k)*e(0) for all natural k, including k = 0."
+    },
+    {
+      "id": "entrywise_estimate",
+      "description": "Define absolute values entrywise and order vectors coordinatewise. Establish the finite-sum triangle estimate abs(M*v) <= abs(M)*abs(v), positivity and monotonicity for multiplication by an entrywise nonnegative matrix, and propagate to abs(e(k)) <= (abs(P)^k)*abs(e(0)). Keep matrix multiplication and powers distinct from entrywise multiplication and powers."
+    },
+    {
+      "id": "infinity_norms",
+      "description": "Use the vector maximum-absolute-coordinate norm and the induced matrix infinity norm, equivalently the maximum absolute row sum. Prove or instantiate the compatible matrix-vector estimate and derive norm_inf(e(k)) <= norm_inf(P)^k * norm_inf(e(0)). The default norm on matrices as functions may be maximum entry norm, which is not the required induced matrix norm; explicitly justify all chosen norm instances or definitions."
+    },
+    {
+      "id": "spectral_radius_definition",
+      "description": "Define rho of a real matrix via its complex spectrum, equivalently the maximum modulus of its complex eigenvalues. Relate this definition to the complexified finite-dimensional linear operator used by any Mathlib spectral lemmas. Do not use only real eigenvalues. Address the empty coordinate type with the standard radius-zero convention, or justify that the source dimension convention excludes it without adding an unjustified hypothesis."
+    },
+    {
+      "id": "spectral_power_criterion",
+      "description": "Supply a proved helper that, for finite real matrices P, convergence P^k*v -> 0 for every real vector v is equivalent to rho(P) < 1. For sufficiency use an applicable proved spectral power theorem, or a finite-dimensional Jordan/triangular argument with polynomial-times-geometric decay. For necessity pass from convergence on real basis vectors to convergence of matrix powers and then complexification, excluding complex eigenvalues of modulus at least one. No unproved paper lemma or axiom may substitute for this helper."
+    },
+    {
+      "id": "all_initial_guesses",
+      "description": "Using the constructed iteration and e(k) = P^k*(x0-x), establish that convergence of xk to the specified solution x for every x0 is equivalent to decay of P^k*v for every real v. Explicitly realize each initial error v by x0 = x + v; convergence for only the supplied initial guess is insufficient."
+    },
+    {
+      "id": "sign_invariance",
+      "description": "Prove rho(-(D inverse * N)) = rho(D inverse * N), for example from the spectrum transformation under multiplication by -1 and equality of moduli. Combine the equality with the spectral power criterion to obtain the exact iff conclusion with strict threshold 1."
+    },
+    {
+      "id": "contraction_and_sufficiency",
+      "description": "Define the affine update map T(y) = y + D inverse*(b-A*y). Under norm_inf(P) < 1 show it has Lipschitz factor norm_inf(P), including factor zero, by identifying differences T(u)-T(v) = P*(u-v). Show convergence to x by the geometric error bound or an established rho <= norm_inf estimate. Preserve both the sufficient convergence claim and the contraction claim."
+    },
+    {
+      "id": "final_assembly_and_validation",
+      "description": "Expose a full theorem linking every stated conclusion to the original block-Jacobi inputs and update equations, with no custom axioms or placeholders. Check all universal quantifiers over k and initial guesses, actual componentwise and induced-norm meanings, the spectral iff in both directions, and contraction of the affine iteration. Compile against the local Lean/Mathlib environment; record any unavailable spectral infrastructure as a precise blocker rather than weakening the theorem."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.Horner.forward_error_bound"
+  ],
+  "construction_names": [
+    "Research.Horner.P",
+    "Research.Horner.Q",
+    "Research.Horner.E"
+  ],
+  "source_mapping": "/spec/source.txt is implemented in Research/Submission.lean: P is the exact empty/cons Horner recursion on increasing-degree coefficient lists; Q applies exactly the prescribed inner multiplication rounding and outer addition rounding at every cons; E has the exact specified recurrence using only P, the coefficients, x, and u. Research.Horner.forward_error_bound quantifies over every supplied Research.FloatingPoint.Model, coefficient list, and real x, with u_nonneg and round_spec supplied by the model and no extra hypotheses. /spec/support/Research/Common/FloatingPoint/Model.lean was copied unchanged to the corresponding Research module. The final theorem proof alone is temporary sorry scaffolding for the next role. Statement revision record: /spec/feedback.json was absent; no revision to the intended statement was needed."
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "obligations": [
+    {
+      "id": "definition",
+      "description": "Define the real forward difference as (f (x + h) - f x) / h, and state the bound universally for f D : \u211d \u2192 \u211d and x h L : \u211d."
+    },
+    {
+      "id": "hypotheses",
+      "description": "Preserve exactly h > 0, 0 \u2264 L, ContinuousOn f (Set.Icc x (x + h)), HasDerivAt f (D t) t for every t \u2208 Set.Ioo x (x + h), and |D t - D x| \u2264 L * |t - x| for those same interior t. D x is only a reference value; require neither endpoint derivative nor continuity of D."
+    },
+    {
+      "id": "interior_construction",
+      "description": "Construct a witness c \u2208 Set.Ioo x (x + h) using exists_hasDerivAt_eq_slope with derivative function D. Establish x < x + h from positivity of h. The witness must satisfy D c = (f (x + h) - f x) / ((x + h) - x). This mean-value point is the construction connecting the calculus assumptions to the numerical approximation."
+    },
+    {
+      "id": "normalize_slope",
+      "description": "Normalize (x + h) - x to h so that the witness equality identifies D c with the defined forward difference. Use the HasDerivAt version of the mean value theorem directly, avoiding any extra assumptions needed to identify D with deriv f globally."
+    },
+    {
+      "id": "distance_bound",
+      "description": "From the two strict inequalities supplied by c \u2208 Set.Ioo x (x + h), establish 0 \u2264 c - x and c - x \u2264 h. Rewrite |c - x| using nonnegativity and obtain L * |c - x| \u2264 L * h using 0 \u2264 L."
+    },
+    {
+      "id": "error_connection",
+      "description": "Apply the given local variation bound at the constructed interior point c, then transport it along the normalized slope equality and combine it with the distance estimate to obtain the requested absolute error \u2264 L * h."
+    },
+    {
+      "id": "formal_validation",
+      "description": "The eventual candidate must compile with local Lean and Mathlib, contain the definition and full theorem with all supplied hypotheses, and have no sorry, placeholders, custom axioms, or strengthened endpoint assumptions. This planning artifact does not supply the completed proof."
+    }
+  ],
+  "strategy": "Use the direct HasDerivAt form of Lagrange\u2019s mean value theorem from Mathlib.Analysis.Calculus.Deriv.MeanValue, whose local declaration was inspected: exists_hasDerivAt_eq_slope f D hab hfc hff'. Its interior witness converts the forward-difference error into the assumed variation of D at one interior point. Interval arithmetic and monotonicity of multiplication by the nonnegative L then yield the specified L*h bound. No integral remainder, endpoint derivative, or auxiliary smoothness construction is needed. No feedback.json or custom supporting prerequisite is present."
+}

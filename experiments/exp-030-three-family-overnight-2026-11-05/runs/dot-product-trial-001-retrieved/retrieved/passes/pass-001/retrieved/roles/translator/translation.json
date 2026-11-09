@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "72a54063b26f211b96bd4a00cef66d00aa235510c6e0fc2e5ba28e5ada310f24",
+  "status": "complete",
+  "statement": "For every relative-error rounding model and every finite nonempty binary tree of pairs of real numbers, the constructed result rounds each leaf product and then rounds the sum at each internal node following the supplied tree. If (d+1)u < 1, where d is the tree depth and u the model error bound, this result equals an exact sum of perturbed product leaves, with each product x replaced by y satisfying |y-x| <= ((d+1)u/(1-(d+1)u))|x|. These are perturbations of product values, not a construction of perturbations of the individual factors.",
+  "targets": [
+    {
+      "name": "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation",
+      "statement": "For every model M : Research.FloatingPoint.Model and every T : Tree(R x R), put u = M.u and d = depth(T) in N. Assume (d+1)u < 1, with the natural number d+1 cast to a real. Then there exists P : Tree(R) such that IsPerturbation(gamma(d+1,u), exactProductTree(T), P) and exactSum(P) = roundedDotProduct(M,T). For every k in N and v in R, gamma(k,v) = (k v)/(1-k v), with k cast to a real. The relation IsPerturbation(B,A,P) is inductively defined by: corresponding leaves x,y are related exactly when |y-x| <= B|x|, and nodes are related when both corresponding left subtrees and corresponding right subtrees are related. Thus A and P have exactly the same shape. exactSum(leaf(y)) = y and exactSum(node(L,R)) = exactSum(L)+exactSum(R). Concretely, if the leaves of T are (a_i,b_i), P has corresponding real leaves y_i satisfying |y_i-a_i b_i| <= gamma(d+1,u)|a_i b_i|, and the exact sum of the y_i equals the actual recursively rounded result described in roundedDotProduct. Every model quantified here contains a real u >= 0 and r : R -> R such that for every z in R there exists delta in R with |delta| <= u and r(z) = z(1+delta). There are no additional hypotheses on T or its leaf entries."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BinaryTreeReduction.exactProductTree",
+      "description": "A function Tree(R x R) -> Tree(R), defined by E(leaf(a,b)) = leaf(a*b) and E(node(L,R)) = node(E(L),E(R)). It replaces each paired leaf by its exact real product and preserves the whole tree shape. It performs no summation. This is the reference tree used in the target perturbation relation."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree",
+      "description": "For every model M and T : Tree(R x R), this returns a Tree(R) by mapping each leaf pair (a,b) to M.mul(a,b) = M.round(a*b) and preserving all nodes: Q_M(leaf(a,b)) = leaf(M.round(a*b)); Q_M(node(L,R)) = node(Q_M(L),Q_M(R)). It applies one rounding operation to each exact leaf product and performs no additions. Its output is the tree subsequently passed to roundedSum in roundedDotProduct."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedDotProduct",
+      "description": "For every model M and T : Tree(R x R), this returns the real roundedSum(M, roundedProductTree(M,T)). On real-valued trees, roundedSum(M,leaf(v)) = v and roundedSum(M,node(L,R)) = M.round(roundedSum(M,L)+roundedSum(M,R)), because M.add(x,y) = M.round(x+y). Equivalently D_M(leaf(a,b)) = M.round(a*b) and D_M(node(L,R)) = M.round(D_M(L)+D_M(R)). It rounds every leaf product and every internal-node addition according to the given tree, without choosing or balancing the tree. The target relates this very result to the exact sum of a tree whose leaves perturb those of exactProductTree within the stated bound."
+    }
+  ],
+  "assumptions": [
+    "Tree(A) is the inductively generated type with leaf : A -> Tree(A) and node : Tree(A) -> Tree(A) -> Tree(A). It consists of finite nonempty ordered binary trees with values at leaves, with no empty-tree constructor.",
+    "All input pair entries, leaf products, model outputs, perturbation values, and error bounds are real numbers. depth(leaf(a)) = 0 and depth(node(L,R)) = 1+max(depth(L),depth(R)); thus depth counts the maximum number of edges from root to leaf and is a natural number.",
+    "A model consists of u in R, a witness of 0 <= u, a function round : R -> R, and the property that for every z in R there exists delta in R with |delta| <= u and round(z) = z(1+delta). Delta may depend on z. No additional rounding format or arithmetic restrictions are supplied.",
+    "The sole additional theorem hypothesis is (depth(T)+1)u < 1. In particular, 1-(depth(T)+1)u is positive. There is no balancing requirement, fixed leaf count, or additional restriction on the real input pairs.",
+    "IsPerturbation bounds each product leaf separately and preserves tree shape. A zero exact-product leaf must remain zero. The existential conclusion is about a tree of real product values, not about paired factors."
+  ],
+  "missing_context": []
+}

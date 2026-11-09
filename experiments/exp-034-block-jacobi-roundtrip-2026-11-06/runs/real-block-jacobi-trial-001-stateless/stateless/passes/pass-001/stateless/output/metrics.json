@@ -1,0 +1,113 @@
+{
+  "condition": "stateless",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 568.766,
+  "compiler_command_events": 27,
+  "token_usage": {
+    "input_tokens": 2515751,
+    "cached_input_tokens": 2407296,
+    "output_tokens": 17854,
+    "reasoning_output_tokens": 2586
+  },
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793996460.0521913,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 80.592,
+      "token_usage": {
+        "input_tokens": 224069,
+        "cached_input_tokens": 198784,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3030,
+        "reasoning_output_tokens": 117
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793996541.713405,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 145.123,
+      "token_usage": {
+        "input_tokens": 322448,
+        "cached_input_tokens": 308736,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4721,
+        "reasoning_output_tokens": 859
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793996732.6388886,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 343.051,
+      "token_usage": {
+        "input_tokens": 1969234,
+        "cached_input_tokens": 1899776,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10103,
+        "reasoning_output_tokens": 1610
+      },
+      "compiler_command_events": 20,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "Research.BlockJacobi.block_jacobi_real"
+    ],
+    "construction_names": [
+      "Research.BlockJacobi.Vector",
+      "Research.BlockJacobi.RealMatrix",
+      "Research.BlockJacobi.IsBlockSplitting",
+      "Research.BlockJacobi.diagonalBlocks",
+      "Research.BlockJacobi.offDiagonalBlocks",
+      "Research.BlockJacobi.residual",
+      "Research.BlockJacobi.correction",
+      "Research.BlockJacobi.update",
+      "Research.BlockJacobi.iterate",
+      "Research.BlockJacobi.correctionSequence",
+      "Research.BlockJacobi.error",
+      "Research.BlockJacobi.iterationMatrix",
+      "Research.BlockJacobi.matrixAbs",
+      "Research.BlockJacobi.vectorAbs",
+      "Research.BlockJacobi.matrixInfNorm",
+      "Research.BlockJacobi.complexify",
+      "Research.BlockJacobi.rho",
+      "Research.BlockJacobi.ConvergesForEveryInitialGuess"
+    ],
+    "source_mapping": "Authoritative source: /spec/source.txt, theorem:block_jacobi_real (Update-form Block Jacobi in Real Arithmetic); mathematical proof context: /spec/paper.tex lines 613-693. Formalized in /workspace/Research/Submission.lean. IsBlockSplitting encodes A=D+N with diagonal/off-diagonal block support using a finite block-label map. IsUnit D.det states exactly nonsingularity, and A.mulVec x=b states the supplied exact solution. Actual residual, inverse-based correction, update, iterates, correction sequence, forward error, and P=-D^-1*N have complete definitions. The target conjunction states recovery of the input block decomposition; exact algorithm equations and uniqueness for arbitrary sequences satisfying them; e(k+1)=P e(k), e(k)=P^k e(0), the componentwise bound using (entrywise abs P)^k, and the infinity-norm geometric bound; rho(P)=rho(D^-1*N); convergence for every initial guess iff rho(P)<1; and the update Lipschitz bound and norm<1 sufficient convergence/contraction condition. matrixInfNorm is the maximum absolute row sum, and vector norms are finite Pi infinity norms. rho uses the complex spectrum of the complexified real matrix and has codomain ENNReal. No positive-dimension, invertibility-of-A, spectral, or algorithmic bound assumptions are added. Statement revision record: initial formal statement; /spec/feedback.json is absent and no feedback-driven revision was made. /spec/support contains no files to copy. The sole sorry is temporary final-theorem proof scaffolding, as authorized for this formalizer role; construction definitions have actual bodies."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "obligations": [
+    {
+      "id": "prerequisite",
+      "description": "Copy /spec/support/Research/Common/FloatingPoint/Model.lean unchanged to the corresponding project module and import it. Work with Research.FloatingPoint.Model, using its u_nonneg and round_spec; introduce no extra model assumptions or custom axioms."
+    },
+    {
+      "id": "exact_construction",
+      "description": "Define P on List \u211d and x : \u211d by structural recursion: P [] x = 0 and P (a :: tail) x = a + x * P tail x. The head is the constant coefficient, so lists are in increasing degree order."
+    },
+    {
+      "id": "rounded_construction",
+      "description": "Define Q for an arbitrary supplied Model by structural recursion: Q model [] x = 0 and Q model (a :: tail) x = model.round (a + model.round (x * Q model tail x)). Each cons step must have exactly the specified one rounded multiplication and one rounded addition."
+    },
+    {
+      "id": "envelope_construction",
+      "description": "Define E on List \u211d, x : \u211d, and u : \u211d without referring to Q, round, or rounding witnesses. Set E [] x u = 0. With v = P tail x and e = E tail x u, set E (a :: tail) x u = u * |a + x*v| + (1+u) * (u * |x*v| + (1+u) * |x| * e). Preserve this exact recurrence rather than substituting a different forward bound."
+    },
+    {
+      "id": "rounding_bound",
+      "description": "Obtain a reusable perturbation bound for arbitrary real z and t: |model.round z - t| \u2264 model.u * |t| + (1 + model.u) * |z - t|. Derive it solely from round_spec, absolute-value triangle and product identities, and u_nonneg. One convenient intermediate bound is |round z - z| \u2264 u * |z|, followed by |z| \u2264 |t| + |z-t|. Ensure every multiplication of inequalities has a justified nonnegative factor."
+    },
+    {
+      "id": "multiplication_step",
+      "description": "In the list induction, use the induction hypothesis |Q tail x - P tail x| \u2264 E tail x u and abs_mul to control |x * Q tail x - x * P tail x| by |x| * E tail x u. Apply the rounding perturbation bound with z = x * Q tail x and t = x * P tail x to obtain the inner error bound u * |x * P tail x| + (1+u) * |x| * E tail x u."
+    },
+    {
+      "id": "addition_step",
+      "description": "Apply the same perturbation bound to z = a + round (x * Q tail x) and t = a + x * P tail x. Cancel the common a in z-t, then insert the inner multiplication bound under the nonnegative factor 1+u. The resulting expression is exactly the required cons envelope after associativity normalization."
+    },
+    {
+      "id": "universal_theorem",
+      "description": "State and establish |Q model coefficients x - P coefficients x| \u2264 E coefficients x model.u for every Model, every finite real coefficient list, and every real x. Use structural list induction; the empty case reduces to zero. Do not assume small u, positive or nonzero x, sign restrictions on coefficients, exact rounding of any special input, or exact intermediate arithmetic."
+    },
+    {
+      "id": "validation",
+      "description": "Check the completed formalization using local Lean and Mathlib. All recursive definitions and the theorem must elaborate without sorry, placeholders, or new axioms; verify that the supplied prerequisite remains unchanged and that the final theorem uses the constructed evaluators and the prescribed envelope."
+    }
+  ],
+  "strategy": "Construct P, Q, and E explicitly by recursion on the coefficient list, then connect those constructions through a universally quantified forward-error theorem. Prove a generic rounding perturbation estimate once and use it twice per induction step: multiplication transfers the tail error with factor |x| and one factor 1+u; addition transfers that whole inner bound with a second factor 1+u and contributes u*|a+x*v|. This reproduces the source recurrence exactly. Use abs_mul, triangle inequalities, and nonnegative multiplication for estimates, with ring-style normalization only for algebraic identities. The exact evaluator and envelope depend only on the prescribed exact data, while Q alone depends on round. No feedback file was present at planning time. This plan specifies constructions and proof obligations, not a completed target proof."
+}

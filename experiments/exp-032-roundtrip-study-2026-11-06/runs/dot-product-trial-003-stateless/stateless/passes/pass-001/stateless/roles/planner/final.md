@@ -1,0 +1,1 @@
+Saved [plan.json](/output/plan.json) atomically with `schema_version: 1`, a strategy, and nine obligations covering the construction and full backward-error claim. No completed proof was written; `/workspace` was unchanged.

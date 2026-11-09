@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "a3271bbc7fe2bb216898feea51d64d4969acf612d36b8955b40bd212d54e6749",
+  "status": "complete",
+  "statement": "Tree(A) denotes finite nonempty ordered binary trees with constructors leaf(a), a in A, and node(L,R), L,R in Tree(A). There is no balance condition. A model M packages a real u >= 0 and a function r: R -> R satisfying: for every real z there exists a real delta with |delta| <= u and r(z)=z(1+delta). Its operations are M.mul(a,b)=r(ab) and M.add(a,b)=r(a+b), with exact real arithmetic inside r. Write E(T) for exactProductTree(T), P_M(T) for roundedProductTree(M,T), and D_M(T) for roundedDotProduct(M,T). E replaces each pair-valued leaf (a,b) by ab; P_M replaces it by r(ab); both preserve shape and order. D_M recursively reduces P_M using M.add at internal nodes and the unchanged leaf value at a leaf. Define depth(leaf(a))=0 and depth(node(L,R))=1+max(depth(L),depth(R)). Define the exact sum S(leaf(x))=x and S(node(L,R))=S(L)+S(R). For a real B and X,Y in Tree(R), IsPerturbation(B,X,Y) is the inductively generated relation whose leaf rule is |y-x| <= B|x| and whose node rule applies the relation to the two corresponding children. Equivalently X,Y have identical ordered shape and every corresponding pair of leaves satisfies this bound. For k in N and v in R, gamma(k,v)=(k v)/(1-k v), with k cast to a real. The main target asserts that if (depth(T)+1)u<1, the constructed D_M(T) is S(Q) for some Q perturbing E(T) by the relative bound gamma(depth(T)+1,u). This pertains to perturbations of the product values, and does not assert separate perturbations of their two factors. The remaining targets identify the product operations and give the bound u for P_M relative to E.",
+  "targets": [
+    {
+      "name": "Research.BinaryTreeReduction.dotProductBackwardError",
+      "statement": "For every model M and every T in Tree(R x R), if (d+1)u<1, where d=depth(T) is a natural number, u=M.u, and d+1 is cast to a real in the inequality, then there exists Q in Tree(R) such that IsPerturbation(gamma(d+1,u),E(T),Q) and S(Q)=D_M(T). Thus Q has the same ordered shape as T and every leaf q corresponding to an input leaf (a,b) satisfies |q-ab| <= ((d+1)u/(1-(d+1)u))|ab|. The denominator is positive under the explicit hypothesis. Q is not required by the statement to equal P_M(T). No other hypothesis on the tree or its real leaf entries is imposed."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTerm.eq_1",
+      "statement": "For every model M and every x,y in R, roundedProductTerm(M,x,y)=M.mul(x,y). By the supplied multiplication definition this is r(xy). This is the leaf operation used in P_M(T); there is no additional hypothesis."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree.eq_1",
+      "statement": "For every model M and every T in Tree(R x R), roundedProductTree(M,T)=Tree.map((a,b) -> roundedProductTerm(M,a,b),T). Tree.map applies its function at every leaf and preserves each ordered pair of children. Thus the constructed P_M has leaf value r(ab) at the position of each input pair (a,b). There is no additional hypothesis."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree_isPerturbation",
+      "statement": "For every model M and every T in Tree(R x R), IsPerturbation(M.u,exactProductTree(T),roundedProductTree(M,T)). Equivalently E(T) and P_M(T) have identical ordered shape and each input leaf (a,b) satisfies |r(ab)-ab| <= u|ab|. This bounds the constructed product tree before its rounded summation. No depth bound or smallness condition on u is assumed beyond the nonnegativity in the model."
+    },
+    {
+      "name": "Research.FloatingPoint.Model.mul.eq_1",
+      "statement": "For every model M and every a,b in R, M.mul(a,b)=M.round(ab), with ab the exact real product. This identifies the multiplication used in roundedProductTerm, roundedProductTree, and roundedDotProduct. There is no additional hypothesis."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BinaryTreeReduction.exactProductTree",
+      "description": "E: Tree(R x R) -> Tree(R) is defined by E(leaf((a,b)))=leaf(ab) and E(node(L,R))=node(E(L),E(R)). It performs exact real multiplication at each leaf and preserves the full ordered shape, hence depth. It performs no summation. This is the reference tree in both perturbation targets."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedDotProduct",
+      "description": "For each model M and each T in Tree(R x R), D_M(T)=roundedSum(M,P_M(T)) is a real number. For X in Tree(R), roundedSum(M,leaf(x))=x and roundedSum(M,node(L,R))=r(roundedSum(M,L)+roundedSum(M,R)). Equivalently D_M(leaf((a,b)))=r(ab) and D_M(node(L,R))=r(D_M(L)+D_M(R)). The construction rounds each exact leaf product once, then rounds the sum of the two recursive child results once at each internal node, following the given tree. It does not restructure the tree. A leaf at depth h has one product rounding and h ancestor additions; the maximum count is depth(T)+1, the index of gamma in dotProductBackwardError. That target equates this actual output to the exact sum S(Q) of a bounded perturbation of E(T)."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree",
+      "description": "For each model M, P_M: Tree(R x R) -> Tree(R) is defined by P_M(leaf((a,b)))=leaf(roundedProductTerm(M,a,b))=leaf(M.mul(a,b))=leaf(r(ab)) and P_M(node(L,R))=node(P_M(L),P_M(R)). It preserves the full ordered tree shape and performs no internal-node arithmetic. Its leaf map is identified by roundedProductTree.eq_1 and the two multiplication equation targets. roundedProductTree_isPerturbation compares it to E(T) with relative bound u. roundedDotProduct subsequently reduces this tree using roundedSum."
+    }
+  ],
+  "assumptions": [
+    "All numerical inputs, leaf values, intermediate values, outputs, rounding errors, and u are real numbers. T ranges over every finite nonempty ordered binary tree of real pairs; there is no fixed leaf count, balancing assumption, or empty-tree case.",
+    "Every model M includes u in R, a proof that 0<=u, r: R -> R, and the condition: for every z in R there exists delta in R with |delta|<=u and r(z)=z(1+delta). Delta may depend on z. No particular representable-number set or rounding rule is supplied.",
+    "The only extra hypothesis in dotProductBackwardError is (depth(T)+1)u<1. The four other targets quantify over all models and all stated real or tree arguments without extra hypotheses.",
+    "IsPerturbation is defined for any real bound B, with no separate B>=0 premise in its constructors. A pair of leaves x,y must satisfy |y-x|<=B|x|; a pair of nodes must satisfy the relation on corresponding left and right children. The bounds in the targets are u and gamma(depth(T)+1,u). In particular a zero reference product forces its perturbed value to be zero.",
+    "gamma has domain N x R and value (k v)/(1-k v), with natural k cast to a real. Formal real division is total, taking division by zero to zero; the main theorem uses gamma only under its explicit positive-denominator hypothesis.",
+    "The existential Q in the main target has the same shape as E(T) by IsPerturbation and its exact sum equals the actual rounded reduction. The target does not specify Q as P_M(T), nor does it claim perturbations of the individual input factors."
+  ],
+  "missing_context": []
+}

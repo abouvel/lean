@@ -1,0 +1,130 @@
+{
+  "condition": "retrieved",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 632.302,
+  "compiler_command_events": 21,
+  "token_usage": {
+    "input_tokens": 1476419,
+    "cached_input_tokens": 1382784,
+    "output_tokens": 23948,
+    "reasoning_output_tokens": 6936
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794166299.8286676,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 72.593,
+      "token_usage": {
+        "input_tokens": 105970,
+        "cached_input_tokens": 87168,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2636,
+        "reasoning_output_tokens": 133
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794166373.271526,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 213.434,
+      "token_usage": {
+        "input_tokens": 284209,
+        "cached_input_tokens": 245120,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9053,
+        "reasoning_output_tokens": 2318
+      },
+      "compiler_command_events": 5,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794166606.313309,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 346.275,
+      "token_usage": {
+        "input_tokens": 1086240,
+        "cached_input_tokens": 1050496,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 12259,
+        "reasoning_output_tokens": 4485
+      },
+      "compiler_command_events": 16,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "MixedPrecisionBlockJacobi.mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic"
+    ],
+    "construction_names": [
+      "MixedPrecisionBlockJacobi.vectorInf",
+      "MixedPrecisionBlockJacobi.matrixInf",
+      "MixedPrecisionBlockJacobi.matrixAbs",
+      "MixedPrecisionBlockJacobi.gamma",
+      "MixedPrecisionBlockJacobi.c\u2081",
+      "MixedPrecisionBlockJacobi.c\u2082",
+      "MixedPrecisionBlockJacobi.RelativeError",
+      "MixedPrecisionBlockJacobi.Arithmetic",
+      "MixedPrecisionBlockJacobi.Conversion",
+      "MixedPrecisionBlockJacobi.roundedSum",
+      "MixedPrecisionBlockJacobi.roundedDot",
+      "MixedPrecisionBlockJacobi.subtractDot",
+      "MixedPrecisionBlockJacobi.tile",
+      "MixedPrecisionBlockJacobi.tiledMatVec",
+      "MixedPrecisionBlockJacobi.blockDiagonal",
+      "MixedPrecisionBlockJacobi.choleskyRow",
+      "MixedPrecisionBlockJacobi.choleskyPrefix",
+      "MixedPrecisionBlockJacobi.cholesky",
+      "MixedPrecisionBlockJacobi.CholeskySuccessful",
+      "MixedPrecisionBlockJacobi.forwardSolve",
+      "MixedPrecisionBlockJacobi.backwardSolve",
+      "MixedPrecisionBlockJacobi.choleskySolve",
+      "MixedPrecisionBlockJacobi.computedFactor",
+      "MixedPrecisionBlockJacobi.blockCorrection",
+      "MixedPrecisionBlockJacobi.residual",
+      "MixedPrecisionBlockJacobi.correction",
+      "MixedPrecisionBlockJacobi.jacobiStep",
+      "MixedPrecisionBlockJacobi.iterates",
+      "MixedPrecisionBlockJacobi.error",
+      "MixedPrecisionBlockJacobi.G",
+      "MixedPrecisionBlockJacobi.eta",
+      "MixedPrecisionBlockJacobi.q",
+      "MixedPrecisionBlockJacobi.p",
+      "MixedPrecisionBlockJacobi.alpha",
+      "MixedPrecisionBlockJacobi.beta"
+    ],
+    "source_mapping": "Authoritative /spec/source.txt selected theorem, corresponding to paper.tex theorem:mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic, is stated in Research/Submission.lean as MixedPrecisionBlockJacobi.mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic. The complete one-step, all-k geometric, and real limsup conclusions use precisely the source c1,c2,G,eta,q,p,alpha,beta. Fin n is preserved through an equivalence to Fin B \u00d7 Fin T; D is the assembled size-T SPD block diagonal. Fixed computed Cholesky factors, sequential size-S tiled matvecs, rounded residual/conversion, triangular solves, and rounded updates all have actual executable mathematical bodies. The elementary relative-error laws model the no-overflow/no-underflow regime. CholeskySuccessful explicitly interprets the existence of computed factors as successful execution; rounded sqrt is an explicit elementary Cholesky primitive, supplementing the four operations listed in the common model. Optional residual conversion obeys the elementary uc relative-error law (identity is allowed). No algorithmic error bound is assumed. No feedback.json exists and there is no prior Lean statement to revise: this is the initial formalization, not a revision of the selected mathematical conclusions. See Research/FORMALIZATION.md for the assumptions audit. Supporting source files are copied unchanged into Research/Source; /spec/support/Research contains no supplied files. The final theorem has one temporary sorry; every construction has a body."
+  }
+}

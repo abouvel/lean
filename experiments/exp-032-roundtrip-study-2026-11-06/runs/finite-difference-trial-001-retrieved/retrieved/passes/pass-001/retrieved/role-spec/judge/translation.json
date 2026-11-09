@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "7979f91295292617a7b7816bf032d49eddcf4f7d68fa6d047fbea8e96678257d",
+  "status": "complete",
+  "statement": "For arbitrary f,D: \u211d \u2192 \u211d and x,h,L \u2208 \u211d, if h>0, L\u22650, f is continuous on [x,x+h], f has derivative D(t) at each t \u2208 (x,x+h), and |D(t)\u2212D(x)|\u2264L|t\u2212x| at each such t, then |(f(x+h)\u2212f(x))/h\u2212D(x)|\u2264Lh. The construction is exactly this difference quotient. The theorem compares it with the supplied value D(x); no explicit hypothesis identifies D(x) with a derivative at x.",
+  "targets": [
+    {
+      "name": "Research.forwardDifference_error_bound",
+      "statement": "For every f,D: \u211d \u2192 \u211d and every x,h,L \u2208 \u211d, assume 0<h, 0\u2264L, and continuity of f on the closed interval [x,x+h]. Assume also that for every real t satisfying x<t<x+h, f has ordinary derivative D(t) at t (as a function on \u211d), and that for every real t satisfying x<t<x+h, |D(t)\u2212D(x)|\u2264L|t\u2212x|. Then |Research.forwardDifference(f,x,h)\u2212D(x)|\u2264Lh, equivalently |(f(x+h)\u2212f(x))/h\u2212D(x)|\u2264Lh. The comparison value D(x) is the value of the supplied function D at the left endpoint. There is no explicit hypothesis of differentiability at either endpoint, continuity of D, or a Lipschitz bound comparing all pairs of values of D."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.forwardDifference",
+      "description": "The function (\u211d \u2192 \u211d) \u2192 \u211d \u2192 \u211d \u2192 \u211d maps every f: \u211d \u2192 \u211d and x,h \u2208 \u211d to (f(x+h)\u2212f(x))/h. It evaluates f at x+h and x, subtracts the second value from the first, and divides by h. Its definition imposes no continuity, differentiability, or sign restriction. Real division is total in this formal setting, with division by zero equal to zero, so the construction has value zero when h=0. The theorem uses it with h>0 and bounds its difference from D(x) by Lh."
+    }
+  ],
+  "assumptions": [
+    "All scalar variables are real, with the usual real arithmetic, order, absolute value, and topology; f and D have domain and codomain \u211d.",
+    "The theorem universally quantifies f,D,x,h,L; both interior-point hypotheses universally quantify t \u2208 \u211d subject to x<t<x+h.",
+    "The theorem assumes h>0 and L\u22650.",
+    "The theorem assumes f is continuous on [x,x+h].",
+    "The theorem assumes f has ordinary derivative D(t) at each t \u2208 (x,x+h).",
+    "The theorem assumes |D(t)\u2212D(x)|\u2264L|t\u2212x| for each t \u2208 (x,x+h); this bound compares interior values to the single endpoint value D(x).",
+    "The construction has no hypotheses on its inputs. The theorem has no additional explicit regularity assumption on D or differentiability assumption at the endpoints."
+  ],
+  "missing_context": []
+}

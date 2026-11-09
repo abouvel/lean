@@ -1,0 +1,38 @@
+{
+  "name": "exp-021-roundtrip-calibration-2026-11-01",
+  "task_id": "floating-point-dot-product-critic-benchmark",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "known-complete",
+    "renamed-complete",
+    "proposition-only",
+    "additions-only",
+    "zero-u-only",
+    "conclusion-assumed"
+  ],
+  "builder_seconds": 1,
+  "critic_seconds": 180,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "8g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "verification_command": "bash pipeline/verify.sh <case>/evaluation-workspace",
+  "revision": {
+    "schema_version": 1,
+    "mode": "calibration",
+    "seconds": {
+      "planner": 180,
+      "formalizer": 180,
+      "prover": 180,
+      "translator": 180,
+      "judge": 180
+    }
+  }
+}

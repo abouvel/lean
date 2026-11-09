@@ -1,0 +1,24 @@
+{
+  "experiment_id": "exp-020-roundtrip-calibration-2026-11-01",
+  "kind": "semantic-evaluator-calibration",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "seconds_per_evaluator": 180,
+  "expected_verdicts": {
+    "known-complete": "pass",
+    "renamed-complete": "pass",
+    "proposition-only": "fail",
+    "additions-only": "fail",
+    "zero-u-only": "fail",
+    "conclusion-assumed": "fail"
+  },
+  "acceptance_tests": [
+    "All candidate formal gates pass before model calls",
+    "All six blind translations and round-trip reports validate",
+    "Round-trip verdicts match all hidden case labels with no false pass or false rejection",
+    "Direct/round-trip agreements are measured, and disagreements are retained for human adjudication"
+  ],
+  "human_review": "pending; controlled mutation labels do not substitute for expert validation on natural tasks",
+  "preflight_source": "exp-018-roundtrip-calibration-2026-11-01",
+  "reason": "Fresh run after owner-only atomic-report export failure; no mathematical inputs or budgets changed"
+}

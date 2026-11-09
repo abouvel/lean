@@ -1,0 +1,614 @@
+{
+  "schema_version": 1,
+  "experiment_id": "real-block-jacobi-trial-001-stateless",
+  "max_passes": 2,
+  "conditions": {
+    "stateless": {
+      "schema_version": 1,
+      "artifact_id": "2026-11-06-stateless",
+      "date": "2026-11-06",
+      "experiment_id": "real-block-jacobi-trial-001-stateless",
+      "condition": "stateless",
+      "status": "verified",
+      "outcome": "accepted",
+      "success": true,
+      "task_id": "real-block-jacobi",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "starting_commit": "a911f8e142b128c47eb015921ead27ec93f97402",
+      "project": "real-block-jacobi",
+      "memory_mode": "stateless",
+      "time_limit": {
+        "max_passes": 2,
+        "builder_seconds_per_pass": 900,
+        "critic_seconds_per_pass": 300,
+        "revision": {
+          "schema_version": 1,
+          "mode": "calibration",
+          "seconds": {
+            "planner": 180,
+            "formalizer": 420,
+            "prover": 900,
+            "translator": 240,
+            "judge": 240
+          },
+          "construction_policy": "Define the exact update-form block Jacobi iterates for the stated decomposition. Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence."
+        }
+      },
+      "artifact_snapshot": {
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/inputs/source.pdf": "ec4665ad7b7f4cf63d005062b3024ad694092b353451adb14874671ae121c8f0",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/inputs/references.bib": "70c5a06292fdf4172602bfa6428a123c1c38a55992aed3246c57a49920ee5fa6",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/inputs/paper.tex": "6e61d2a17d4ffe5ca618a4db312c205ae83bf4902f02aa6b85c880d01bcc4bb1",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/inputs/PROMPT.txt": "fdd19f7e8ec8facfd5cd03ce17701d27bbfa38a6538d0d80d95c233dcacf5774",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/inputs/source.txt": "2e8279db68a7aefa0acfb4eaa4721a1e4b1dadabb9e5a997fc452211bbefc233",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/evaluator/requirements.json": "1a5f627705656ddddf09877ea9e64686626827662e367505ebc469ac53168c6e",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/evaluator/REVIEWER.txt": "ba95c41e7b95443a57e0068b32a700e56df92b80f95fa0baff346f0c081a29d6",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939",
+        "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/real-block-jacobi-trial-001-stateless/experiment.json": "e57e438511968f2e3055860bf9eeb158c8af2889a3f2cc668690fda4abf78034",
+        "pipeline/resources.py": "1cf72ddc6cedefbe93d7d41199e355e163a95c69d8368570cdd5b5c32eef41c9",
+        "pipeline/run.py": "79721e0e4ec5a130af02d55b93a02d8897947566a28668afa1bba903ccbc2043",
+        "pipeline/worker.py": "a8152114fc2e9ea38d9e2a856220fb480d4cc6f7090aef75918ad7ad51765f6a",
+        "pipeline/smoke_model.py": "3dabe73c64b0b4c13fc04a31d9a82d4f4cad4452d2583c69869be70f72a9ae53",
+        "pipeline/engine.py": "0ebb6552c762f39fd02aca10f02396dc0cf60c9d761c26a9b5b6e5dd3871d9b9",
+        "pipeline/critic_benchmark.py": "4f05b57d833bd276a26f193570b88fe2eba0f6931f4b911f531526514714d3a8",
+        "pipeline/metrics.py": "6ae5538bf7b09722cc5d2ec604b3379a22d540d568cf0fec037620333c7fd2b8",
+        "pipeline/verify.py": "a885c2c7c297d10497410e7389bace1e53255b7bee3cee2f686d5c9c39c22f8d",
+        "pipeline/stages.py": "e82b52a781b2ccf2b0d1e38f9cf971d7de86c69a5a3a039b1635d16c64d4808a",
+        "pipeline/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+        "pipeline/roundtrip.py": "a9defc7bd028b66d90ba1d8da6414cd0805c215a7f45c7b8e7abf44054f0b2fa",
+        "pipeline/artifacts.py": "1810bfca20ddbceecf9995021e099492eb2d7abd092ef1d063f03e903282fd82",
+        "pipeline/roles.py": "92445f90205da7fd1ea136ff571575cb8a5cea826161aa5f23faa30e251f2528",
+        "pipeline/formal_context.py": "556fe4202db760b924ca89045e23d6f5dfd1dfe9b33110648ddc369ec54fb057",
+        "pipeline/batch.py": "420d6b4074dbfebe939146cbd4d6305ef88642482663dd0fb078ee13a7710d10",
+        "pipeline/agent.py": "3645e7d35478b2b8558d45ebe4e906e073bab41b24d778cef8076114bc7a8597",
+        "pipeline/role_agent.py": "3fe71ebd480677b341ac2a605cb1b0239fe7a33b7c2a9971f0ff9dc5703d6811",
+        "pipeline/critic.py": "21d211337c58d3a8d0ec872120454c8360f1b6f0ae25d40b24d4486c6be65acf",
+        "pipeline/ExtractContext.lean": "bb1dd9980d3d02547eee7594a905a2bc8dea8a15d93f1c2eb6c4ab17f465c047",
+        "pipeline/passes.py": "a2eedc54d5d42b3ccb9bb12beffeab5317a6c69de98f0be0877b4a393ffb4263",
+        "pipeline/binary_tree_control.py": "75d0f5256861fdd30725b19520c0a5a1d9211f9862768d79d44c39a8857dd821",
+        "pipeline/docker/Dockerfile": "9f9c499509672ebbfeb1817521c175861dd3eb722d85d0ab1da884e604e991d1",
+        "pipeline/docker/Dockerfile.ready": "8fba11b7730c46a8b41dfdc98c9c56efdff4c1a28227e1a00d3eb96369fdc8ba",
+        "pipeline/docker/proxy.py": "2e79cf96635643f540385207755ad37c3c4265795929cbb63ae2e85e9b63e72b"
+      },
+      "retrieved_artifacts": [],
+      "verification_command": "bash pipeline/verify.sh",
+      "passes": [
+        {
+          "builder": {
+            "condition": "stateless",
+            "kind": "production-pipeline",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "exit_code": 0,
+            "timed_out": false,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "wall_time_seconds": 568.766,
+            "compiler_command_events": 27,
+            "token_usage": {
+              "input_tokens": 2515751,
+              "cached_input_tokens": 2407296,
+              "output_tokens": 17854,
+              "reasoning_output_tokens": 2586
+            },
+            "roles": {
+              "planner": {
+                "condition": "stateless",
+                "kind": "planner",
+                "model": "gpt-6.1-sol",
+                "reasoning_effort": "medium",
+                "started_unix": 1793996460.0521913,
+                "time_limit_seconds": 180,
+                "api_cost": "unknown",
+                "aristotle_calls": 0,
+                "exit_code": 0,
+                "timed_out": false,
+                "wall_time_seconds": 80.592,
+                "token_usage": {
+                  "input_tokens": 224069,
+                  "cached_input_tokens": 198784,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 3030,
+                  "reasoning_output_tokens": 117
+                },
+                "compiler_command_events": 3,
+                "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+              },
+              "formalizer": {
+                "condition": "stateless",
+                "kind": "formalizer",
+                "model": "gpt-6.1-sol",
+                "reasoning_effort": "medium",
+                "started_unix": 1793996541.713405,
+                "time_limit_seconds": 420,
+                "api_cost": "unknown",
+                "aristotle_calls": 0,
+                "exit_code": 0,
+                "timed_out": false,
+                "wall_time_seconds": 145.123,
+                "token_usage": {
+                  "input_tokens": 322448,
+                  "cached_input_tokens": 308736,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 4721,
+                  "reasoning_output_tokens": 859
+                },
+                "compiler_command_events": 4,
+                "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+              },
+              "prover": {
+                "condition": "stateless",
+                "kind": "prover",
+                "model": "gpt-6.1-sol",
+                "reasoning_effort": "medium",
+                "started_unix": 1793996732.6388886,
+                "time_limit_seconds": 900,
+                "api_cost": "unknown",
+                "aristotle_calls": 0,
+                "exit_code": 0,
+                "timed_out": false,
+                "wall_time_seconds": 343.051,
+                "token_usage": {
+                  "input_tokens": 1969234,
+                  "cached_input_tokens": 1899776,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 10103,
+                  "reasoning_output_tokens": 1610
+                },
+                "compiler_command_events": 20,
+                "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+              }
+            },
+            "statement": {
+              "schema_version": 1,
+              "targets": [
+                "Research.BlockJacobi.block_jacobi_real"
+              ],
+              "construction_names": [
+                "Research.BlockJacobi.Vector",
+                "Research.BlockJacobi.RealMatrix",
+                "Research.BlockJacobi.IsBlockSplitting",
+                "Research.BlockJacobi.diagonalBlocks",
+                "Research.BlockJacobi.offDiagonalBlocks",
+                "Research.BlockJacobi.residual",
+                "Research.BlockJacobi.correction",
+                "Research.BlockJacobi.update",
+                "Research.BlockJacobi.iterate",
+                "Research.BlockJacobi.correctionSequence",
+                "Research.BlockJacobi.error",
+                "Research.BlockJacobi.iterationMatrix",
+                "Research.BlockJacobi.matrixAbs",
+                "Research.BlockJacobi.vectorAbs",
+                "Research.BlockJacobi.matrixInfNorm",
+                "Research.BlockJacobi.complexify",
+                "Research.BlockJacobi.rho",
+                "Research.BlockJacobi.ConvergesForEveryInitialGuess"
+              ],
+              "source_mapping": "Authoritative source: /spec/source.txt, theorem:block_jacobi_real (Update-form Block Jacobi in Real Arithmetic); mathematical proof context: /spec/paper.tex lines 613-693. Formalized in /workspace/Research/Submission.lean. IsBlockSplitting encodes A=D+N with diagonal/off-diagonal block support using a finite block-label map. IsUnit D.det states exactly nonsingularity, and A.mulVec x=b states the supplied exact solution. Actual residual, inverse-based correction, update, iterates, correction sequence, forward error, and P=-D^-1*N have complete definitions. The target conjunction states recovery of the input block decomposition; exact algorithm equations and uniqueness for arbitrary sequences satisfying them; e(k+1)=P e(k), e(k)=P^k e(0), the componentwise bound using (entrywise abs P)^k, and the infinity-norm geometric bound; rho(P)=rho(D^-1*N); convergence for every initial guess iff rho(P)<1; and the update Lipschitz bound and norm<1 sufficient convergence/contraction condition. matrixInfNorm is the maximum absolute row sum, and vector norms are finite Pi infinity norms. rho uses the complex spectrum of the complexified real matrix and has codomain ENNReal. No positive-dimension, invertibility-of-A, spectral, or algorithmic bound assumptions are added. Statement revision record: initial formal statement; /spec/feedback.json is absent and no feedback-driven revision was made. /spec/support contains no files to copy. The sole sorry is temporary final-theorem proof scaffolding, as authorized for this formalizer role; construction definitions have actual bodies."
+            }
+          },
+          "verification": {
+            "verification_command": "bash pipeline/verify.sh",
+            "build_and_scans_exit_code": 0,
+            "nontrivial_submission": true,
+            "formal_gate_passed": true,
+            "semantic_review": "pending",
+            "wall_time_seconds": 49.802,
+            "source_files": [
+              "Research/Submission.lean"
+            ],
+            "source_lines": 355,
+            "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+            "formal_audit": {
+              "schema_version": 1,
+              "unapproved_axioms": [],
+              "protected_source_failures": [],
+              "candidate_hash": "af08893cd92cae308e358dbbc230fb46b67d04f3351c0eec61fb7f8cee90f4e6",
+              "passed": true,
+              "changed_declarations": []
+            }
+          },
+          "critic": {
+            "condition": "stateless",
+            "kind": "reviewer",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793997153.543034,
+            "time_limit_seconds": 300,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 109.05,
+            "token_usage": {
+              "input_tokens": 341611,
+              "cached_input_tokens": 314752,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2932,
+              "reasoning_output_tokens": 176
+            },
+            "compiler_command_events": 4,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "status": "accepted",
+          "roles": {
+            "planner": {
+              "condition": "stateless",
+              "kind": "planner",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793996460.0521913,
+              "time_limit_seconds": 180,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 80.592,
+              "token_usage": {
+                "input_tokens": 224069,
+                "cached_input_tokens": 198784,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 3030,
+                "reasoning_output_tokens": 117
+              },
+              "compiler_command_events": 3,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "formalizer": {
+              "condition": "stateless",
+              "kind": "formalizer",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793996541.713405,
+              "time_limit_seconds": 420,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 145.123,
+              "token_usage": {
+                "input_tokens": 322448,
+                "cached_input_tokens": 308736,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 4721,
+                "reasoning_output_tokens": 859
+              },
+              "compiler_command_events": 4,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "prover": {
+              "condition": "stateless",
+              "kind": "prover",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793996732.6388886,
+              "time_limit_seconds": 900,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 343.051,
+              "token_usage": {
+                "input_tokens": 1969234,
+                "cached_input_tokens": 1899776,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 10103,
+                "reasoning_output_tokens": 1610
+              },
+              "compiler_command_events": 20,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "translator": {
+              "condition": "blind",
+              "kind": "translator",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793997263.7332258,
+              "time_limit_seconds": 240,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 126.11,
+              "token_usage": {
+                "input_tokens": 80120,
+                "cached_input_tokens": 69504,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 5761,
+                "reasoning_output_tokens": 158
+              },
+              "compiler_command_events": 0,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "judge": {
+              "condition": "blind",
+              "kind": "judge",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793997390.8726606,
+              "time_limit_seconds": 240,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 62.22,
+              "token_usage": {
+                "input_tokens": 67037,
+                "cached_input_tokens": 49664,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 2644,
+                "reasoning_output_tokens": 109
+              },
+              "compiler_command_events": 0,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            }
+          },
+          "report": {
+            "schema_version": 2,
+            "candidate_hash": "af08893cd92cae308e358dbbc230fb46b67d04f3351c0eec61fb7f8cee90f4e6",
+            "overall_verdict": "pass",
+            "phase": "final",
+            "lean_implies_source": true,
+            "source_implies_lean": true,
+            "relation": "faithful",
+            "delivery_complete": true,
+            "construction_complete": true,
+            "missing_formal_steps": [],
+            "target_evidence": "Research.BlockJacobi.block_jacobi_real explicitly states the full selected result about the actual recursively constructed update-form iteration. Its conclusions include both error identities, the correctly interpreted componentwise and infinity-norm bounds, rho(P)=rho(D^{-1}N), the necessary and sufficient spectral-radius convergence criterion for every initial guess, and the sufficient infinity-norm contraction condition. Its ancillary splitting identification and uniqueness assertions are consequences of the original hypotheses. The translation reports complete status and no missing context.",
+            "requirements": [
+              {
+                "requirement_id": "target-completeness",
+                "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+                "evidence": "The sole target block_jacobi_real explicitly asserts all conclusions simultaneously. Conclusions (2), (4), (5), (6), (7), and (8) cover the update equations, both error identities, both bounds, spectral-radius equality, convergence equivalence, and sufficient contraction condition. No missing final composition is needed.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "construction-correctness",
+                "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+                "evidence": "correction(A,D,b,u)=D^{-1}(b-Au); update=u+correction; iterate recursively has y_0=x0 and y_{k+1}=update(y_k); correctionSequence has c_{k+1}=correction(y_k). Target (2) asserts D c_{k+1}=b-A y_k and y_{k+1}=y_k+c_{k+1}. Nonzero det(D) makes the totalized inverse the ordinary inverse. The unused c_0=0 adds no restriction on the source iteration.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "target-bound",
+                "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+                "evidence": "Target (4) explicitly asserts for every x0 and natural k: e_{k+1}=Pe_k, e_k=P^k e_0, |e_k|<=|P|^k|e_0| componentwise, and ||e_k||_infinity<=L^k||e_0||_infinity. L is the maximum absolute row sum; |P| is entrywise absolute value before matrix exponentiation. Target (5) asserts rho(P)=rho(D^{-1}N); (6) asserts convergence for every initial guess iff rho(P)<1. Targets (7)-(8) assert the Lipschitz estimate and convergence plus a contraction constant q=L<1 when L<1.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "original-input-link",
+                "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+                "evidence": "The target uses the same quantified A,D,N,b,x, assumes A=D+N and Ax=b, and defines P=-D^{-1}N. Error is iterate(A,D,b,x0,k)-x. ConvergesForEveryInitialGuess quantifies all x0 and convergence of precisely these iterates to this supplied x. The block support assumptions and conclusion (1) identify D and N with the diagonal and off-diagonal blocks of A.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "assumption-integrity",
+                "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+                "evidence": "The hypotheses are exactly the block splitting, det(D)!=0, and Ax=b. Arbitrary finite block labels encode any block partition without requiring contiguous fibers or surjectivity. No invertibility of A, convergence, desired estimate, or spectral-radius restriction is assumed. L<1 is required only for the conditional sufficient condition. All initial vectors and natural time indices are included. Complex spectral radius in extended nonnegative reals agrees with the ordinary finite-dimensional radius; the zero-dimensional conventions are consistent. Additional splitting identification and uniqueness follow from the splitting and invertibility and introduce no new premise.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              }
+            ],
+            "assumptions_added": [],
+            "missing_obligations": [],
+            "limitations": []
+          },
+          "direct_report": {
+            "overall_verdict": "pass",
+            "phase": "final",
+            "target_evidence": "Research/Submission.lean:253-353 proves Research.BlockJacobi.block_jacobi_real. Its only mathematical hypotheses (lines 254-258) are an arbitrary finite real block splitting, IsUnit D.det, and A.mulVec x = b. Lines 261-294 include the actual correction/update equations, both error identities, both bounds, spectral-radius equality and convergence equivalence, and infinity-norm sufficiency and contraction. Independent Lean compilation succeeded; printing axioms returned only propext, Classical.choice, and Quot.sound.",
+            "requirements": [
+              {
+                "requirement_id": "target-completeness",
+                "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+                "evidence": "Research/Submission.lean:253 states block_jacobi_real with the full selected conclusion at lines 259-294 and supplies its proof at lines 295-353. This is a proved theorem, not merely a proposition definition. lake env lean Research/Submission.lean exited 0; /evaluation/verification.json and verification.log also report successful compilation and no placeholders or custom axioms.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "construction-correctness",
+                "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+                "evidence": "Research/Submission.lean:23-37 defines the block splitting and diagonal/off-diagonal blocks. Lines 40-61 define residual b-Au, correction D inverse times residual, update u+correction, and iteration from arbitrary x0. The theorem proves D c^(k+1)=b-A x^k and x^(k+1)=x^k+c^(k+1) at lines 263-269, using nonsingularity at lines 297-301. Lines 271-276 and 320-326 prove that every sequence satisfying the source equations equals the constructed sequence.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "target-bound",
+                "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+                "evidence": "Research/Submission.lean:64-91 defines forward error, P=-D inverse N, entrywise absolute values, the maximum absolute row-sum matrix norm, and the usual complex spectral radius. Lines 110-169 prove the error step, power identity, componentwise bound |P|^k|e0|, and infinity-norm bound ||P||_infinity^k||e0||_infinity; these are included at lines 278-284. Lines 171-176 prove sign invariance of spectral radius. Lines 186-240 prove matrix-power decay iff rho<1 using Gelfands formula and coordinate basis vectors, including dimension zero. Lines 332-344 connect that equivalence to convergence for every initial guess. Lines 302-309 and 345-353 prove convergence and Lipschitz contraction when the infinity norm is less than one.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "original-input-link",
+                "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+                "evidence": "Research/Submission.lean:254-258 takes the original real matrices A,D,N, right-hand side b, solution x, and block labels. Lines 261 and 311-317 identify D and N with the actual diagonal and off-diagonal blocks of A. All error and convergence conclusions use iterate A D b x0 (definitions at lines 53-65 and 94-96), and P is exactly iterationMatrix D N (lines 68-69 and 259). The arbitrary exact-sequence uniqueness conclusion at lines 271-276 also links the theorem to the source update equations.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "assumption-integrity",
+                "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+                "evidence": "Research/Submission.lean:254-258 quantifies over arbitrary finite dimension, block labels, real matrices and b,x, assuming only IsBlockSplitting, IsUnit D.det (equivalent to nonsingularity over the reals), and Ax=b. No invertibility of A, desired bound, spectral condition, or convergence assumption is added. Initial guesses and k are universally quantified at lines 263, 271 and 278; ConvergesForEveryInitialGuess at lines 94-96 is actual topological convergence of the constructed iterates. The norm condition at line 291 is the antecedent of the requested sufficient-condition conclusion. Definitions are noncircular. Independent #print axioms reports only standard Lean axioms propext, Classical.choice, and Quot.sound.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              }
+            ],
+            "assumptions_added": [],
+            "missing_obligations": [],
+            "limitations": []
+          },
+          "roundtrip": {
+            "schema_version": 2,
+            "candidate_hash": "af08893cd92cae308e358dbbc230fb46b67d04f3351c0eec61fb7f8cee90f4e6",
+            "overall_verdict": "pass",
+            "phase": "final",
+            "lean_implies_source": true,
+            "source_implies_lean": true,
+            "relation": "faithful",
+            "delivery_complete": true,
+            "construction_complete": true,
+            "missing_formal_steps": [],
+            "target_evidence": "Research.BlockJacobi.block_jacobi_real explicitly states the full selected result about the actual recursively constructed update-form iteration. Its conclusions include both error identities, the correctly interpreted componentwise and infinity-norm bounds, rho(P)=rho(D^{-1}N), the necessary and sufficient spectral-radius convergence criterion for every initial guess, and the sufficient infinity-norm contraction condition. Its ancillary splitting identification and uniqueness assertions are consequences of the original hypotheses. The translation reports complete status and no missing context.",
+            "requirements": [
+              {
+                "requirement_id": "target-completeness",
+                "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+                "evidence": "The sole target block_jacobi_real explicitly asserts all conclusions simultaneously. Conclusions (2), (4), (5), (6), (7), and (8) cover the update equations, both error identities, both bounds, spectral-radius equality, convergence equivalence, and sufficient contraction condition. No missing final composition is needed.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "construction-correctness",
+                "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+                "evidence": "correction(A,D,b,u)=D^{-1}(b-Au); update=u+correction; iterate recursively has y_0=x0 and y_{k+1}=update(y_k); correctionSequence has c_{k+1}=correction(y_k). Target (2) asserts D c_{k+1}=b-A y_k and y_{k+1}=y_k+c_{k+1}. Nonzero det(D) makes the totalized inverse the ordinary inverse. The unused c_0=0 adds no restriction on the source iteration.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "target-bound",
+                "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+                "evidence": "Target (4) explicitly asserts for every x0 and natural k: e_{k+1}=Pe_k, e_k=P^k e_0, |e_k|<=|P|^k|e_0| componentwise, and ||e_k||_infinity<=L^k||e_0||_infinity. L is the maximum absolute row sum; |P| is entrywise absolute value before matrix exponentiation. Target (5) asserts rho(P)=rho(D^{-1}N); (6) asserts convergence for every initial guess iff rho(P)<1. Targets (7)-(8) assert the Lipschitz estimate and convergence plus a contraction constant q=L<1 when L<1.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "original-input-link",
+                "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+                "evidence": "The target uses the same quantified A,D,N,b,x, assumes A=D+N and Ax=b, and defines P=-D^{-1}N. Error is iterate(A,D,b,x0,k)-x. ConvergesForEveryInitialGuess quantifies all x0 and convergence of precisely these iterates to this supplied x. The block support assumptions and conclusion (1) identify D and N with the diagonal and off-diagonal blocks of A.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              },
+              {
+                "requirement_id": "assumption-integrity",
+                "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+                "evidence": "The hypotheses are exactly the block splitting, det(D)!=0, and Ax=b. Arbitrary finite block labels encode any block partition without requiring contiguous fibers or surjectivity. No invertibility of A, convergence, desired estimate, or spectral-radius restriction is assumed. L<1 is required only for the conditional sufficient condition. All initial vectors and natural time indices are included. Complex spectral radius in extended nonnegative reals agrees with the ordinary finite-dimensional radius; the zero-dimensional conventions are consistent. Additional splitting identification and uniqueness follow from the splitting and invertibility and introduce no new premise.",
+                "verdict": "pass",
+                "defect_categories": [],
+                "correction": ""
+              }
+            ],
+            "assumptions_added": [],
+            "missing_obligations": [],
+            "limitations": []
+          },
+          "number": 1,
+          "wall_time_seconds": 994.0954343460035,
+          "evidence": "stateless/passes/pass-001",
+          "retrieval_record": "unknown"
+        }
+      ],
+      "metrics": {
+        "wall_time_seconds": 994.103289849998,
+        "passes_used": 1,
+        "first_success_pass": 1,
+        "builder_seconds": 568.766,
+        "critic_seconds": 109.05,
+        "compiler_command_events": 27,
+        "tokens": "unknown",
+        "cost": "unknown",
+        "aristotle_calls": 0,
+        "verification_calls": 1,
+        "critic_calls": 1,
+        "formal_failures": 0,
+        "critic_rejections": 0,
+        "final_source_lines": 355,
+        "builder_tokens": {
+          "input_tokens": 2515751,
+          "cached_input_tokens": 2407296,
+          "output_tokens": 17854,
+          "reasoning_output_tokens": 2586
+        },
+        "critic_tokens": {
+          "input_tokens": 341611,
+          "cached_input_tokens": 314752,
+          "output_tokens": 2932,
+          "reasoning_output_tokens": 176
+        },
+        "roles": {
+          "planner": {
+            "calls": 1,
+            "wall_time_seconds": 80.592,
+            "tokens": {
+              "input_tokens": 224069,
+              "cached_input_tokens": 198784,
+              "output_tokens": 3030,
+              "reasoning_output_tokens": 117
+            }
+          },
+          "formalizer": {
+            "calls": 1,
+            "wall_time_seconds": 145.123,
+            "tokens": {
+              "input_tokens": 322448,
+              "cached_input_tokens": 308736,
+              "output_tokens": 4721,
+              "reasoning_output_tokens": 859
+            }
+          },
+          "prover": {
+            "calls": 1,
+            "wall_time_seconds": 343.051,
+            "tokens": {
+              "input_tokens": 1969234,
+              "cached_input_tokens": 1899776,
+              "output_tokens": 10103,
+              "reasoning_output_tokens": 1610
+            }
+          },
+          "translator": {
+            "calls": 1,
+            "wall_time_seconds": 126.11,
+            "tokens": {
+              "input_tokens": 80120,
+              "cached_input_tokens": 69504,
+              "output_tokens": 5761,
+              "reasoning_output_tokens": 158
+            }
+          },
+          "judge": {
+            "calls": 1,
+            "wall_time_seconds": 62.22,
+            "tokens": {
+              "input_tokens": 67037,
+              "cached_input_tokens": 49664,
+              "output_tokens": 2644,
+              "reasoning_output_tokens": 109
+            }
+          }
+        },
+        "total_model_seconds": 866.146,
+        "total_model_calls": 6
+      },
+      "reuse": {
+        "approved": false,
+        "reason": "Review and remove target answers before freezing for a future run."
+      },
+      "candidate_lessons": [],
+      "semantic_review_status": "automated-calibration; expert validation pending"
+    }
+  }
+}

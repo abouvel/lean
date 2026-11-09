@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the actual finite-dimensional mixed-precision update-form block-Jacobi computation over real-valued floating-point execution traces, and derive the selected theorem from its elementary rounding model. Construct the size-S sequential tiled matrix-vector kernel, rounded residual, optional residual conversion to correction precision, computed size-T block Cholesky factors and triangular solves, and rounded solution update; tie every intermediate to the original A,D,N,b and initial iterate. Prove the required backward-error helper results rather than assume them. Use componentwise perturbation bounds followed by induced infinity-norm estimates and scalar absorption under eta<1; this avoids needing the paper's auxiliary Neumann inverse H while preserving exactly its alpha and beta. Finish with a general nonnegative affine-recurrence lemma and its limsup consequence. No completed target proof is included in this plan. Treat paper proof slips as issues to verify against the authoritative statement, not permission to alter it. No feedback.json was present.",
+  "obligations": [
+    {
+      "id": "statement_fidelity",
+      "description": "State the full selected result with A=D+N, size-T SPD diagonal blocks, A*x=b, u_s<u_c, S dividing n, relevant gamma domains, no overflow/underflow, eta<1, and both conclusions conditional on alpha<1. Define c1,c2,G,eta,q,p,alpha,beta with exactly the source formulas. Do not add q<1, assume A invertible, replace q by a weaker norm, or make an algorithmic error bound an extra hypothesis."
+    },
+    {
+      "id": "dimensions_and_domains",
+      "description": "Represent vectors and matrices on finite index sets with an explicit partition into size-T blocks (equivalently an indexing equivalence); preserve the original ambient dimension when reindexing. Formalize size-S tiles, S>0, ordinary natural-number n/S, and all meaningful nonempty-dimension conditions implicit in the algorithms. Make gamma(m,u)=m*u/(1-m*u), m*u<1 and unit-roundoff nonnegativity explicit, including gamma(T+1,u_c). Audit degenerate dimensions rather than lose cases silently. Derive D invertibility from block SPD."
+    },
+    {
+      "id": "norm_infrastructure",
+      "description": "Use vector maximum absolute-entry norm and matrix induced infinity norm (maximum absolute row sum). Mathlib's default norm on matrices may instead be an entrywise norm: define the desired norm or bridge through the corresponding continuous linear map. Prove componentwise absolute-value product inequalities, monotonicity for nonnegative matrices, matrix-vector norm control and submultiplicativity. Establish nonnegativity of all constants and positivity of 1-eta before division; the opened generic memory specifically supports this denominator discipline."
+    },
+    {
+      "id": "floating_execution",
+      "description": "Define a rounded arithmetic execution relation or operations satisfying the common relative-error model separately at u_s and u_c, with per-operation and per-component errors. Construct the actual algorithms recursively with their intermediate data and execution equations, not arbitrary perturbation certificates or arbitrary iterates. Explain how no overflow/underflow and source roundoff domains enter. Keep rounding of square roots in the Cholesky diagonal calculation explicit and audit whether it is part of the source's intended floating model, which lists only +,-,*,/."
+    },
+    {
+      "id": "tiled_matvec_construction",
+      "description": "Construct each row dot product by sequentially rounded multiplication and accumulation in size-S blocks and sequential reduction of n/S partial sums, respecting the initialization conventions that yield S+n/S-1. Prove rounding-product/gamma bounds and assemble a per-step matrix DeltaA_k with zhat_k=(A+DeltaA_k)*xhat_k and |DeltaA_k|<=gamma(S+n/S-1,u_s)|A|. Connect this kernel to each computed residual, and do not assume the displayed bound as a kernel specification without proving it."
+    },
+    {
+      "id": "residual_construction",
+      "description": "Construct rhat_k as the u_s-rounded subtraction b-zhat_k, with a diagonal matrix of componentwise rounding errors rather than a single common scalar. Construct db_k,dz_k so rhat_k=-A*e_k+db_k+dz_k, |db_k|<=u_s|b| and |dz_k|<=c1|A||xhat_k|. Derive its componentwise absolute residual bound. Model any conversion of rhat_k to u_c with an error dr_k satisfying |dr_k|<=u_c|rhat_k|; when no conversion occurs take the actual conversion error to be zero."
+    },
+    {
+      "id": "cholesky_construction_and_helpers",
+      "description": "Implement or give an explicit execution trace of each block's rounded Cholesky recurrence, forward substitution and backward substitution. Prove factorization and triangular-solve backward-error results from elementary operation traces, including diagonal square root and first-row cases. Assemble the actual computed block diagonal Rhat, and prove for every correction c_hat(k+1) an actual block diagonal DeltaD_k with (D+DeltaD_k)*c_hat(k+1)=rhat_k+dr_k and |DeltaD_k|<=c2|Rhat^T||Rhat|. The source references are helper targets to establish, not assumed new hypotheses; DeltaD may depend on k even if factors are reused."
+    },
+    {
+      "id": "factorization_existence_audit",
+      "description": "The supporting Cholesky theorem explicitly assumes successful factorization, whereas the selected statement speaks of computed factors and computed iterates without stating success separately. Make the interpretation precise: quantify over actual successful computation traces where the factors and iterates in the statement are defined; do not assert that SPD alone guarantees floating-point Cholesky completion. If the intended target instead demands unconditional total execution, record the missing success justification as a source blocker rather than silently strengthening the hypotheses. Likewise preserve the single Rhat in G by specifying reuse of computed factors or justifying deterministic identical factorization."
+    },
+    {
+      "id": "correction_absorption",
+      "description": "From the actual correction equation and A=D+N, obtain the cancellation c_hat=-e-D^{-1}N*e plus preconditioned perturbations, and dominate |D^{-1}DeltaD_k| by the defined nonnegative G. Derive the norm inequality (1-eta)*||c_hat||inf <= (1+q+u_c*p)*||e||inf +(1+u_c)*(u_s*||D^{-1}||inf*||b||inf+c1*p*||xhat||inf). Divide only using eta<1. This scalar absorption substitutes for constructing H=(I-G)^{-1}; if H is used instead, actually prove its existence, nonnegativity and norm bound from eta<1."
+    },
+    {
+      "id": "update_and_exact_constants",
+      "description": "Construct xhat_(k+1)=fl_s(xhat_k+c_hat(k+1)) and derive the update perturbations bounded by u_s|xhat_k| and u_s|c_hat|. Preserve cancellation of the old error with the leading correction before applying norms, so the coefficient involves q rather than 1+q. Combine correction and residual bounds to derive the coefficient [eta+u_s+(1+u_s)(q+u_c*p)]/(1-eta), the xhat coefficient u_s+(1+u_s)(1+u_c)c1*p/(1-eta), and the stated b coefficient. Then use ||xhat_k||inf<=||e_k||inf+||x||inf to obtain precisely alpha and beta. Do not use the paper's optional exact-solution estimate requiring q<1."
+    },
+    {
+      "id": "finite_iteration_consequence",
+      "description": "For every natural k including zero, prove the affine recurrence bound by induction with alpha>=0 and beta>=0. Under alpha<1 evaluate the finite geometric sum to get alpha^k*||e_0||inf+((1-alpha^k)/(1-alpha))*beta, preserving the exponent and initial iterate. Establish 1-alpha>0 explicitly."
+    },
+    {
+      "id": "limsup_and_validation",
+      "description": "Use 0<=alpha<1 to prove decay of alpha^k and convergence of the scalar upper-bound sequence, and justify the real limsup using eventual boundedness above and nonnegativity of the norm sequence. Deliver the limsup inequality, not merely a heuristic limiting argument or an assumption that actual errors converge. Compile the complete Lean development using local Mathlib, check the target's dependencies for custom axioms/placeholders and verify the theorem is linked to the original computational inputs. Record any unresolved source or construction blocker precisely instead of replacing the target with the affine recurrence lemma."
+    }
+  ]
+}

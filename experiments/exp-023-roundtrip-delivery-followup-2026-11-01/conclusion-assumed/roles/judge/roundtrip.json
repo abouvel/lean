@@ -1,0 +1,88 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "91c1296d092f22e77a459cb33e13944cc49bd3962c7c422d09dff1c32c2e770c",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": false,
+  "source_implies_lean": true,
+  "relation": "mismatch",
+  "delivery_complete": false,
+  "construction_complete": true,
+  "missing_formal_steps": [
+    "Prove existence of q with I_gamma(depth(t)+1,u)(exactProductTree(t),q) and S(q)=roundedDotProduct(m,t) from the model axioms and smallness alone, without assuming this existential statement.",
+    "Prove propagation through rounded additions, combining one multiplication error and at most depth(t) addition errors per leaf path, and establish the final gamma bound and exact-sum equality."
+  ],
+  "target_evidence": "roundedDotProduct_exists_perturbation asserts smallness -> (P -> P), where P is precisely the requested backward-error conclusion. It supplies no existence under smallness alone. The other targets prove the leaf multiplication bound and definitional multiplication equalities only. They do not assert the final rounded-reduction result or its accumulated bound. The source entails the conditional main target, and the remaining targets follow from the supplied model and definitions; the translated targets do not recover the full source without a further substantive proof.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The main target states smallness -> (P -> P), with P the full requested existential conclusion. No target establishes P from smallness alone.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem",
+        "conclusion-assumed"
+      ],
+      "correction": "Prove P for every model and tree under smallness alone."
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "E maps each pair leaf (a,b) to ab while preserving shape. Both perturbation statements use E(t), including the proved leaf bound |r(ab)-ab|<=u|ab|.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "The two multiplication equalities identify the leaf operation as r(ab); roundedProductTree_isPerturbation proves I_u(E(t),P_m(t)) for every model and tree.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "D_m(node(L,R))=r(D_m(L)+D_m(R)) defines the correct algorithm, but no target proves propagation of these addition errors. The only final reduction assertion assumes the required representation.",
+      "verdict": "fail",
+      "defect_categories": [
+        "addition-rounding-omitted"
+      ],
+      "correction": "Prove perturbation propagation through all internal rounded additions and the resulting exact-sum equality."
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The correct gamma(depth(t)+1,u) formula occurs only in the assumed-and-repeated final existential assertion. The product-tree lemma establishes only the pre-summation bound u.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem",
+        "conclusion-assumed"
+      ],
+      "correction": "Prove the final gamma(depth(t)+1,u) bound from the multiplication and addition errors under smallness."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "All models and trees are quantified as requested, but the main target adds the entire desired existential conclusion as a premise.",
+      "verdict": "fail",
+      "defect_categories": [
+        "strengthened-assumption",
+        "conclusion-assumed"
+      ],
+      "correction": "Remove the existential premise and establish its assertion from the model axioms and smallness alone."
+    }
+  ],
+  "assumptions_added": [
+    "Existence of q with the entire required gamma bound relative to E(t) and exact-sum equality S(q)=D_m(t) is assumed by the main target."
+  ],
+  "missing_obligations": [
+    "Existence of the final bounded perturbation tree under the original hypotheses alone.",
+    "A proved analysis of all rounded additions combining with the leaf multiplication errors to yield the depth+1 gamma bound."
+  ],
+  "limitations": [
+    "Review is restricted to the supplied source, contract, and blind translation; no Lean code, research memory, plans, or other evaluator verdict was inspected.",
+    "The rounded-product and reduction algorithm is explicitly defined, so construction completeness is true. Existential backward-error perturbations are permitted by the source; the defect is the missing existence proof, not lack of executable perturbation witnesses."
+  ]
+}

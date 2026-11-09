@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "obligations": [
+    {
+      "id": "model",
+      "description": "Copy /spec/support/Research/Common/FloatingPoint/Model.lean unchanged. Use Research.FloatingPoint.Model with its u_nonneg and existential round_spec; do not add assumptions or custom axioms."
+    },
+    {
+      "id": "exact_evaluation",
+      "description": "Construct P : List \u211d \u2192 \u211d \u2192 \u211d by recursion, P [] x = 0 and P (a :: tail) x = a + x * P tail x. Coefficients are in increasing degree order. Expose both defining equations."
+    },
+    {
+      "id": "rounded_evaluation",
+      "description": "Construct Q model [] x = 0 and Q model (a :: tail) x = model.round (a + model.round (x * Q model tail x)). Use exactly one rounded multiplication and one rounded addition per cons step, consistent with Model.mul and Model.add."
+    },
+    {
+      "id": "envelope",
+      "description": "Construct E using only coefficients, x, u, and P, independently of round and Q. Set E [] x u = 0. At a cons step with v = P tail x and e = E tail x u, require exactly E (a :: tail) x u = u * |a + x*v| + (1+u) * (u * |x*v| + (1+u) * |x| * e). Do not substitute a different error bound."
+    },
+    {
+      "id": "rounding_estimates",
+      "description": "Derive |model.round z - z| \u2264 model.u * |z| from round_spec, and obtain the perturbation bound |model.round z - t| \u2264 model.u * |t| + (1+model.u) * |z-t| by triangle inequalities, or equivalent component estimates."
+    },
+    {
+      "id": "base_and_order",
+      "description": "Discharge the empty-list case from the zero equations. Establish nonnegativity of 1+model.u and all factors multiplying inequalities. Prove envelope nonnegativity by induction if useful; require no signs for coefficients or x."
+    },
+    {
+      "id": "multiplication_stage",
+      "description": "For the cons step let q = Q model tail x, v = P tail x, e = E tail x model.u, and m = model.round (x*q). From the tail induction hypothesis derive |m-x*v| \u2264 model.u * |x*v| + (1+model.u) * |x| * e, using the perturbation estimate and |x*q-x*v| = |x| * |q-v|."
+    },
+    {
+      "id": "addition_stage",
+      "description": "Apply the perturbation estimate to input a+m and reference a+x*v. Substitute the multiplication-stage bound using 1+model.u \u2265 0 and match the result to the prescribed envelope recurrence. This explains how the required construction bounds the two nested roundings in Q."
+    },
+    {
+      "id": "universal_theorem",
+      "description": "Prove for every supplied model, every coefficients : List \u211d, and every x : \u211d that |Q model coefficients x - P coefficients x| \u2264 E coefficients x model.u. Include no smallness, sign, nonzero-input, or exact-arithmetic hypotheses."
+    },
+    {
+      "id": "validation",
+      "description": "Complete all definitions and proofs without placeholders, sorry, or custom axioms, and check with local Lean and Mathlib. Do not use Aristotle. Preserve the prerequisite unchanged."
+    }
+  ],
+  "strategy": "Define P, Q, and E by structural recursion and expose their nil/cons equations. Derive reusable one-rounding error and perturbation estimates from the existential relative-error law. Then use list induction, applying the perturbation estimate first to the rounded tail multiplication relative to x*P tail x and then to the rounded addition relative to P (a :: tail) x. Propagate inequalities only through explicitly nonnegative factors and normalize algebra to the exact envelope expression. The factors 1+u account for propagation through each rounded operation, connecting the envelope construction to the universal forward-error theorem. Use absolute-value identities and abs_add_le before arithmetic automation. This is an outline of construction and obligations, not a completed target proof. No /spec/feedback.json was present."
+}

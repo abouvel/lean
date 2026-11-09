@@ -1,0 +1,1 @@
+import Research.Projects.BinaryTreeReduction.DotProduct

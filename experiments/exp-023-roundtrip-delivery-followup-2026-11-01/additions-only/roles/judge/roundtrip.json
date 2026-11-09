@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "1183e92f004b386c89cb4058b7bf02ff49c554781352bf93c8cc344a852e4aee",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": false,
+  "construction_complete": true,
+  "target_evidence": "roundedDotProduct_additions_only supplies P with exactSum(P)=roundedDotProduct(m,T), but its reference is roundedProductTree(m,T) and its bound is gamma(d(T),u). roundedProductTree_isPerturbation separately bounds the product stage relative to exactProductTree(T) by u. Mathematically these imply the source: writing x for an exact leaf, q for its rounded product, p for its witness leaf, and b=gamma(d,u), the triangle inequality gives |p-x| <= [b(1+u)+u]|x|. This coefficient equals (d+1)u/(1-du) and is at most gamma(d+1,u) under (d+1)u<1. This external derivation is not an assertion already present in targets. Conversely, the common source model and tree definitions imply the translated definitions and product bound; tree induction proves the additions-only representation, with each leaf multiplied by at most d addition-error factors. Under du<1 their deviation from 1 is bounded by gamma(d,u). The mathematical assertions are thus mutually implied under the shared model, while formal delivery is incomplete.",
+  "missing_formal_steps": [
+    "Derive d(T)u<1 from (d(T)+1)u<1 and instantiate roundedDotProduct_additions_only.",
+    "Compose the product-stage and additions-only perturbations on corresponding leaves to obtain a perturbation of exactProductTree(T) with bound u+(1+u)gamma(d(T),u).",
+    "Prove u+(1+u)gamma(d(T),u)<=gamma(d(T)+1,u) under the source smallness premise and enlarge the composed bound.",
+    "Prove the final universal existential representation relative to exactProductTree(T), with gamma(d(T)+1,u) and exactSum(P)=roundedDotProduct(m,T)."
+  ],
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "No target asserts the final exact-product representation with gamma(d(T)+1,u). Definitions and separate stage bounds require a further composition and bound comparison.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Add the universally quantified final theorem under (d(T)+1)u<1, composing both stages and proving the final bound."
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "roundedProductTree_isPerturbation relates exact products to rounded products, but the exact-sum witness P is only related to rounded products. No target relates that witness to exactProductTree(T).",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-exact-product-link"
+      ],
+      "correction": "Prove the composed perturbation statement for the same witness P using exactProductTree(T) as reference."
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "Model.mul.eq_1 and roundedProductTree.eq_1 specify q=round(ab) at each leaf. roundedProductTree_isPerturbation proves |q-ab|<=u|ab| for every model and tree. Multiplication rounding is explicitly analyzed, although its final composition is absent.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "roundedDotProduct uses S_m on rounded products with R at every internal addition. roundedDotProduct_additions_only gives an exact-sum witness bounded by gamma(d(T),u) relative to those inputs, accounting for up to d(T) additions per path.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The only accumulated target bound is gamma(d(T),u) relative to rounded products. The separate u bound is present, but no target establishes the combined gamma(d(T)+1,u) bound relative to exact products. The addition-only count is correct for that partial statement.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Formally combine the stage bounds and prove u+(1+u)gamma(d(T),u)<=gamma(d(T)+1,u) under (d(T)+1)u<1."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "Models satisfy u>=0 and the relative-error property for every real input. Trees are arbitrary finite nonempty ordered binary trees of real pairs. No exact-arithmetic restriction or assumed conclusion occurs. The additions-only premise du<1 follows from the source premise (d+1)u<1.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "A final proved representation of roundedDotProduct(m,T) as exactSum(P) with IsPerturbation(gamma(d(T)+1,u),exactProductTree(T),P), for every model and tree satisfying (d(T)+1)u<1."
+  ],
+  "limitations": [
+    "Only the supplied source, contract, and blind translation were assessed; no Lean code or other evaluator material was inspected.",
+    "Existential perturbations are legitimate for this backward-error theorem. The product and reduction constructions are fully specified; construction completeness does not repair the missing final theorem."
+  ]
+}

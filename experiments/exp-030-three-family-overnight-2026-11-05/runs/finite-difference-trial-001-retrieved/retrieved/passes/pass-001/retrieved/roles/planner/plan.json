@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "strategy": "Define the forward difference as (f (x + h) - f x) / h. Use Mathlib.Analysis.Calculus.Deriv.MeanValue and its exists_hasDerivAt_eq_slope theorem with f' := D, a := x, and b := x+h. The required construction is an interior mean-value witness c whose supplied derivative D(c) equals the secant slope; this directly connects the local derivative variation hypothesis to the forward-difference error. Normalize (x+h)-x to h, apply the variation bound at c, and bound |c-x| by h using c in (x,x+h) and L >= 0. Preserve all original quantifiers and the interpretation of D(x) as only a reference value. No completed proof is supplied here. No feedback file was present, and the approved support directory contained no files.",
+  "obligations": [
+    {
+      "id": "statement",
+      "description": "Introduce the forward-difference definition and state the result for arbitrary f D : \u211d \u2192 \u211d and x h L : \u211d, with exactly h > 0, 0 \u2264 L, ContinuousOn f (Set.Icc x (x+h)), interior HasDerivAt f (D t) t, and the stated interior variation hypothesis; conclude |forwardDifference f x h - D x| \u2264 L*h."
+    },
+    {
+      "id": "interval",
+      "description": "Derive x < x+h from h > 0 so the closed and open interval assumptions match the mean value theorem. Keep continuity on the closed interval and derivatives only on the open interval."
+    },
+    {
+      "id": "construction",
+      "description": "Construct c \u2208 Set.Ioo x (x+h) using exists_hasDerivAt_eq_slope f D and the given continuity and HasDerivAt hypotheses. Obtain D c = (f (x+h) - f x) / ((x+h)-x). The checked local theorem accepts these hypotheses directly; no conversion to deriv f is necessary."
+    },
+    {
+      "id": "secant_identification",
+      "description": "Normalize (x+h)-x = h in the witness equation and identify D c with the defined forward difference, choosing the rewrite orientation that changes the target error to |D c - D x|."
+    },
+    {
+      "id": "distance_and_scaling",
+      "description": "Use x < c and c < x+h to establish 0 \u2264 c-x and c-x \u2264 h; rewrite |c-x| = c-x and deduce L*|c-x| \u2264 L*h by nonnegative multiplication."
+    },
+    {
+      "id": "conclusion_and_scope",
+      "description": "Apply the given variation inequality at c and compose it with the scaled distance inequality. Check that the final statement does not assume HasDerivAt at x or x+h, continuity of D, a second derivative, or any global variation bound. The final Lean candidate must have no sorry, placeholders, or custom axioms."
+    }
+  ]
+}

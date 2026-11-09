@@ -1,0 +1,7 @@
+import Research.Submission
+#print axioms MixedPrecisionBlockJacobi.vectorInf_mulVec_le
+#print axioms MixedPrecisionBlockJacobi.matrixInf_mul_le
+#print axioms MixedPrecisionBlockJacobi.rounded_residual_split
+#print axioms MixedPrecisionBlockJacobi.affine_recurrence_bound
+#print axioms MixedPrecisionBlockJacobi.affine_recurrence_limsup
+#print axioms MixedPrecisionBlockJacobi.mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic

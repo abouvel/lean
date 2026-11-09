@@ -1,0 +1,22 @@
+{
+  "search_queries": [
+    "rg --files /spec /memory /workspace",
+    "rg --files -g AGENTS.md /workspace /output",
+    "rg -n sorry|admit|axiom Research"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

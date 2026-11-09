@@ -1,0 +1,12 @@
+{
+  "search_queries": [
+    "def logb|def clog|ceil.*logb"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

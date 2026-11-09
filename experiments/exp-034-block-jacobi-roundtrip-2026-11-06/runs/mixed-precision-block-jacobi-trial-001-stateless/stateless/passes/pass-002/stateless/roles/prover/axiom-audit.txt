@@ -1,0 +1,7 @@
+'MixedPrecisionBlockJacobi.tiledDot_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MixedPrecisionBlockJacobi.tiledMatvec_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MixedPrecisionBlockJacobi.computedResidual_backward_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MixedPrecisionBlockJacobi.mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

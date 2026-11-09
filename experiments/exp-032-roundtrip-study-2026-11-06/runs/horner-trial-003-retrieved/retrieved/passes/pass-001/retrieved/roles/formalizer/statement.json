@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.Horner.forward_error_bound"
+  ],
+  "construction_names": [
+    "Research.Horner.P",
+    "Research.Horner.Q",
+    "Research.Horner.E"
+  ],
+  "source_mapping": "/spec/source.txt is formalized in /workspace/Research/Submission.lean: P is exact Horner evaluation in increasing degree order; Q performs the specified nested rounded multiplication and addition; E is exactly the prescribed recurrence and depends only on coefficients, x, u, and P. The nil and cons equations are exposed as proved lemmas. Research.Horner.forward_error_bound quantifies over every Research.FloatingPoint.Model, coefficient list, and real x, using only the assumptions carried by Model. The supporting Model.lean was copied unchanged from /spec/support/Research/Common/FloatingPoint/Model.lean. No /spec/feedback.json was present; there are no feedback-driven statement revisions. Only the final theorem proof is temporary sorry scaffolding."
+}

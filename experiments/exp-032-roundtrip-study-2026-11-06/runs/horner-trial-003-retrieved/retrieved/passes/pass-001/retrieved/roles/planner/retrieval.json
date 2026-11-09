@@ -1,0 +1,15 @@
+{
+  "search_queries": [],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Plan to use Mathlib abs_add_le for splitting local rounding error and propagated tail error, verifying availability in the actual environment."
+    }
+  ]
+}

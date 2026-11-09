@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the actual componentwise binary-tree evaluation and derive its backward error from its recursive construction. Use the source stage schedule, including exact carry of an unmatched node, and prove that each original input occurs exactly once at the root with a product of at most L rounding factors. Here L is the natural ceiling base-2 logarithm of the positive input count. Prove the finite-product gamma estimate as a helper rather than assuming the target error bound. Define the perturbation of each original input coordinate from its own path coefficient. Work over real-valued coordinates under the standard local floating-point addition model; the no-overflow/no-underflow assumption justifies this model. Do not replace computed output by an arbitrary expression already assumed to have a backward-error expansion. /spec/source.txt is authoritative; the original argument in /spec/paper.tex supplies the path-product construction. No feedback.json or supporting-source files were present. This is a plan, not a completed target proof.",
+  "obligations": [
+    {
+      "id": "source_parameters",
+      "description": "State the theorem for every positive natural input count n, every vector dimension (or arbitrary coordinate index type), all original inputs x_i, and nonnegative real unit roundoff u. Positivity of n is the domain condition implicit in log_2 n and the nonempty reduction. Define L as Nat.clog 2 n or an equivalent natural ceiling logarithm and gamma(k)=((k:Real)*u)/(1-(k:Real)*u). Preserve the sole smallness condition (L:Real)*u<1, and do not add restrictions such as power-of-two n, nonzero input entries, or independent rounding errors."
+    },
+    {
+      "id": "rounded_evaluation",
+      "description": "Construct stage sizes m_l=ceil(n/2^l) with m_0=n and m_(l+1)=ceil(m_l/2). In zero-based indexing, stage l+1 at k<m_(l+1) combines previous nodes k and k+m_(l+1) when the latter is below m_l; otherwise it copies node k exactly. Initialize nodes by the actual original x_i. For each genuine addition and each coordinate c, supply the local rounding factor delta(l,k,c) with absolute value at most u and rounded value (a+b)*(1+delta). Equivalently parameterize by a rounding operation satisfying the local model and extract these errors. Define yhat to be the constructed root, not a separately unconstrained result. Exact copies have factor 1."
+    },
+    {
+      "id": "schedule_and_depth",
+      "description": "Prove the integer ceiling-halving identities, the validity of every referenced child index, and m_L=1 from L=ceil(log_2 n). Prove the stages form a binary reduction of the original n leaves, each present exactly once, and each root-to-leaf ancestry traverses at most L genuine additions. Cover n=1, where L=0 and the output is exactly the lone input. A generic tree helper is acceptable only with a proved construction linking it to these inputs and the stated stage schedule."
+    },
+    {
+      "id": "input_coefficient_construction",
+      "description": "Define leaf ancestry paths or, equivalently, recursively propagated coefficients for every stage node, original leaf, and coordinate. At leaves use coefficient 1 for that input and 0 for others. At a genuine addition multiply child contributions by that node-coordinate rounding factor; at a copy propagate coefficients unchanged. Establish disjoint child leaf supports and coverage. The resulting coefficient for each original input at the root is a product of at most L factors; optionally pad missing additions by delta=0 to obtain exactly L factors."
+    },
+    {
+      "id": "computed_expansion",
+      "description": "Prove by induction on stages that each computed node coordinate equals the finite sum of its original input coordinates multiplied by the constructed coefficients. Specialize at the root to yhat(c)=sum_i x_i(c)*p_i(c). This expansion must follow from rounded evaluation and the combinatorial construction; it must not be an additional hypothesis or a definition that bypasses the reduction."
+    },
+    {
+      "id": "gamma_product_helper",
+      "description": "Prove the deterministic finite-product bound: for k<=L and real errors with abs(delta_j)<=u, abs(product_j(1+delta_j)-1)<=gamma(k)<=gamma(L). Establish positivity of denominators using u>=0 and L*u<1. A direct induction on k using the product-error recurrence and the exact rational gamma formula is suitable. Include the empty product case gamma(0)=0 and u=0; do not require strict positivity of u or cite an unproved paper lemma as an assumption."
+    },
+    {
+      "id": "backward_perturbations",
+      "description": "Construct Delta x_i(c)=x_i(c)*(p_i(c)-1), allowing distinct path coefficients for different leaves and coordinates. Derive yhat=sum_i(x_i+Delta x_i) from the proved computed expansion, and obtain abs(Delta x_i(c))<=gamma(L)*abs(x_i(c)) using the product helper. Preserve the connection to every original input, including zero coordinates and cancellations, without dividing by inputs or introducing a single common error scalar for all coordinates or leaves."
+    },
+    {
+      "id": "final_statement_and_validation",
+      "description": "Assemble the full selected theorem with a concrete computed-root definition, existential perturbation vectors, equality of vectors, and componentwise inequalities for all original indices. Explain that local rounding witnesses encode the stated arithmetic assumptions. Check the Lean artifact with local Lean and Mathlib, with no custom axioms, sorry, placeholders, or hypotheses asserting the desired algorithmic bound. If a source-domain or implementation issue prevents fidelity, report the precise blocker rather than weakening the selected result."
+    }
+  ]
+}

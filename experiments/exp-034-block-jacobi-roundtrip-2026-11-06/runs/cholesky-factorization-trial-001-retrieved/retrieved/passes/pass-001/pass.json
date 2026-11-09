@@ -1,0 +1,226 @@
+{
+  "status": "infrastructure_error",
+  "error": "Construction is absent or is not a definition: Cholesky.DotTail",
+  "builder": {
+    "condition": "retrieved",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 784.466,
+    "compiler_command_events": 24,
+    "token_usage": {
+      "input_tokens": 1607607,
+      "cached_input_tokens": 1527552,
+      "output_tokens": 26673,
+      "reasoning_output_tokens": 6963
+    },
+    "roles": {
+      "planner": {
+        "condition": "retrieved",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794163482.433926,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 106.88,
+        "token_usage": {
+          "input_tokens": 124232,
+          "cached_input_tokens": 113792,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3950,
+          "reasoning_output_tokens": 237
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "retrieved",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794163591.0047255,
+        "time_limit_seconds": 420,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 165.13,
+        "token_usage": {
+          "input_tokens": 227956,
+          "cached_input_tokens": 213888,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 4837,
+          "reasoning_output_tokens": 1485
+        },
+        "compiler_command_events": 2,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "retrieved",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794163779.244793,
+        "time_limit_seconds": 900,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 512.456,
+        "token_usage": {
+          "input_tokens": 1255419,
+          "cached_input_tokens": 1199872,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 17886,
+          "reasoning_output_tokens": 5241
+        },
+        "compiler_command_events": 22,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "Cholesky.cholesky_factorization"
+      ],
+      "construction_names": [
+        "Cholesky.Rounded",
+        "Cholesky.DotTail",
+        "Cholesky.SequentialDot",
+        "Cholesky.Residual",
+        "Cholesky.dotInputs",
+        "Cholesky.writeEntry",
+        "Cholesky.EntryComputation",
+        "Cholesky.entryOrder",
+        "Cholesky.Execute",
+        "Cholesky.SuccessfulCholesky",
+        "Cholesky.gamma",
+        "Cholesky.entrywiseAbs",
+        "Cholesky.backwardPerturbation"
+      ],
+      "source_mapping": "Research/Submission.lean: Cholesky.cholesky_factorization formalizes the full active theorem:cholesky_factorization in /spec/source.txt (main.tex lines 500-545). The perturbation is explicitly Rhat.transpose * Rhat - A. The conclusion preserves symmetry, the exact Gram identity, and the componentwise gamma_(n+1) product-of-entrywise-absolute-values bound. Assumptions retain symmetric positive definite A, u >= 0, (n+1)*u < 1, and successful operation-level Cholesky execution on A. SuccessfulCholesky records column-order execution from a zero work matrix, sequential dot products, rounded subtraction and division, nonzero divisors, and nonnegative square-root radicands. Rounded models no overflow/underflow locally. Rounded square root is explicitly part of floating-point Cholesky semantics, as used by the source proof; the four-operation model alone does not specify sqrt. Empty dot products bypass subtraction by zero. Dimension zero and u=0 are allowed. No supporting source files were supplied under /spec/support/Research. No /spec/feedback.json was present; no statement revision was made in response to feedback. Only the final theorem proof is left as sorry scaffolding; all construction definitions have bodies."
+    }
+  },
+  "critic": {
+    "condition": "retrieved",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1794164334.0429697,
+    "time_limit_seconds": 300,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 74.505,
+    "token_usage": {
+      "input_tokens": 243213,
+      "cached_input_tokens": 214272,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2414,
+      "reasoning_output_tokens": 240
+    },
+    "compiler_command_events": 3,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 27.397,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 563,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "4b7b69d0999087608c59bf55234737a68bd6ccf6fe9d885cb18a9b7111f9dec5",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794163482.433926,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 106.88,
+      "token_usage": {
+        "input_tokens": 124232,
+        "cached_input_tokens": 113792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3950,
+        "reasoning_output_tokens": 237
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794163591.0047255,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 165.13,
+      "token_usage": {
+        "input_tokens": 227956,
+        "cached_input_tokens": 213888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4837,
+        "reasoning_output_tokens": 1485
+      },
+      "compiler_command_events": 2,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794163779.244793,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 512.456,
+      "token_usage": {
+        "input_tokens": 1255419,
+        "cached_input_tokens": 1199872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 17886,
+        "reasoning_output_tokens": 5241
+      },
+      "compiler_command_events": 22,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "number": 1,
+  "wall_time_seconds": 927.1010529389896,
+  "evidence": "retrieved/passes/pass-001"
+}

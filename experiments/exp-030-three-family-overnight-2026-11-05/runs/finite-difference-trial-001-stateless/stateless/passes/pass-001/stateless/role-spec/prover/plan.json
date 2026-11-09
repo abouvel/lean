@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "strategy": "Define the forward-difference approximation as a real-valued function of f, x, and h with value (f (x + h) - f x) / h. Connect this construction to Lagrange's mean value theorem: for the interval [x, x+h], obtain an interior witness c whose prescribed derivative D c equals that quotient. Use the local variation hypothesis at c and the interval-distance bound to establish the requested error estimate. Use local Mathlib calculus prerequisites, specifically Mathlib.Analysis.Calculus.Deriv.MeanValue and exists_hasDerivAt_eq_slope, whose verified signature takes f, the prescribed derivative function, strict endpoint order, closed-interval continuity, and interior HasDerivAt hypotheses. No custom calculus prerequisites or endpoint derivatives are needed. This is a proof plan, not the completed target proof. No feedback.json or supporting source files were present.",
+  "obligations": [
+    {
+      "id": "forward_difference_definition",
+      "description": "Introduce an explicit definition forwardDifference (f : \u211d \u2192 \u211d) (x h : \u211d) : \u211d := (f (x + h) - f x) / h. The theorem must refer to this construction; positivity of h supplies the nonzero step for its intended interpretation."
+    },
+    {
+      "id": "faithful_theorem_statement",
+      "description": "Quantify over f D : \u211d \u2192 \u211d and x h L : \u211d. Assume 0 < h, 0 \u2264 L, ContinuousOn f (Set.Icc x (x+h)), \u2200 t \u2208 Set.Ioo x (x+h), HasDerivAt f (D t) t, and \u2200 t \u2208 Set.Ioo x (x+h), |D t - D x| \u2264 L * |t-x|. Conclude |forwardDifference f x h - D x| \u2264 L*h. Keep D x as an arbitrary reference value constrained by the variation hypothesis; impose no endpoint derivative, continuity of D, global regularity, or stronger variation hypothesis."
+    },
+    {
+      "id": "mean_value_witness",
+      "description": "Derive x < x+h from h > 0 and apply exists_hasDerivAt_eq_slope to f and D with endpoints x and x+h. Retain both c \u2208 Set.Ioo x (x+h) and the resulting slope identity. This uses only the supplied continuity and interior derivative assumptions."
+    },
+    {
+      "id": "identify_constructed_quotient",
+      "description": "Normalize (x+h)-x to h in the mean value slope identity, and unfold the forwardDifference definition where needed, to identify forwardDifference f x h with D c. Ensure the equality is oriented appropriately for rewriting the target error."
+    },
+    {
+      "id": "control_interior_distance",
+      "description": "Use x < c < x+h to show 0 \u2264 c-x and |c-x| \u2264 h. The relevant elementary steps can use abs_of_nonneg and linear arithmetic. Multiply the distance bound by L using its nonnegativity."
+    },
+    {
+      "id": "transfer_variation_bound",
+      "description": "Specialize the original variation assumption to the interior witness c, then combine it with the scaled distance bound and the slope identity to obtain the stated bound for the defined forward difference."
+    },
+    {
+      "id": "formal_validation",
+      "description": "The completed formalization must compile with local Lean and Mathlib and contain the explicit definition and full theorem proof, with no sorry, placeholders, or custom axioms. Validate that the theorem retains exactly the original endpoint requirements and that the proof obtains its calculus step from the approved local library."
+    }
+  ]
+}

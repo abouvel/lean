@@ -1,0 +1,111 @@
+{
+  "condition": "stateless",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 714.346,
+  "compiler_command_events": 22,
+  "token_usage": {
+    "input_tokens": 1738932,
+    "cached_input_tokens": 1644800,
+    "output_tokens": 25546,
+    "reasoning_output_tokens": 5469
+  },
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793995539.3341777,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 53.851,
+      "token_usage": {
+        "input_tokens": 84211,
+        "cached_input_tokens": 63488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2150,
+        "reasoning_output_tokens": 46
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793995593.8636909,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 144.427,
+      "token_usage": {
+        "input_tokens": 298196,
+        "cached_input_tokens": 270720,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4618,
+        "reasoning_output_tokens": 694
+      },
+      "compiler_command_events": 5,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793995755.2327058,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 516.068,
+      "token_usage": {
+        "input_tokens": 1356525,
+        "cached_input_tokens": 1310592,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 18778,
+        "reasoning_output_tokens": 4729
+      },
+      "compiler_command_events": 17,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "Research.CholeskySolve.cholesky_solve"
+    ],
+    "construction_names": [
+      "Research.CholeskySolve.gamma",
+      "Research.CholeskySolve.entrywiseAbs",
+      "Research.CholeskySolve.Rounded",
+      "Research.CholeskySolve.DotTrace",
+      "Research.CholeskySolve.ResidualTrace",
+      "Research.CholeskySolve.UpdateTrace",
+      "Research.CholeskySolve.DiagonalTrace",
+      "Research.CholeskySolve.factorTerms",
+      "Research.CholeskySolve.forwardTerms",
+      "Research.CholeskySolve.backwardTerms",
+      "Research.CholeskySolve.FactorTrace",
+      "Research.CholeskySolve.ForwardTrace",
+      "Research.CholeskySolve.BackwardTrace",
+      "Research.CholeskySolve.SolveTrace",
+      "Research.CholeskySolve.factorPerturbation",
+      "Research.CholeskySolve.solvePerturbation"
+    ],
+    "source_mapping": "Research/Submission.lean formalizes the full active theorem:cholesky_solve in /spec/source.txt (paper.tex lines 550-610). A is real symmetric positive definite; u>=0 and (n+1)*u<1; successful operation-level Cholesky and forward/backward substitution traces link A,b to R,y,x, with relative rounding at every performed operation. Both exact requested componentwise coefficients are retained. Gamma and absolute value have their source meanings. Traces encode the source recurrences and sequential rounded dot products, with no artificial arithmetic for empty sums. Square-root modeling completion: DiagonalTrace explicitly uses the standard relative-error model for rounded sqrt, which the displayed four-operation model omits but the Cholesky analysis requires; the theorem is interpreted with this explicit floating-point semantics. No global backward-error bounds are assumptions. Definitions have actual bodies and only the final theorem proof has temporary sorry scaffolding. Supplied source.txt, plan.json, paper.tex, references.bib, source.pdf were copied unchanged to Research. Statement revision record: feedback.json was absent and the initial Submission.lean contained only import Mathlib; this is the first statement, preserving all requested conclusions. The final perturbation need not be symmetric."
+  }
+}

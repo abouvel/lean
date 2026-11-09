@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "af08893cd92cae308e358dbbc230fb46b67d04f3351c0eec61fb7f8cee90f4e6",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "Research.BlockJacobi.block_jacobi_real explicitly states the full selected result about the actual recursively constructed update-form iteration. Its conclusions include both error identities, the correctly interpreted componentwise and infinity-norm bounds, rho(P)=rho(D^{-1}N), the necessary and sufficient spectral-radius convergence criterion for every initial guess, and the sufficient infinity-norm contraction condition. Its ancillary splitting identification and uniqueness assertions are consequences of the original hypotheses. The translation reports complete status and no missing context.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "The sole target block_jacobi_real explicitly asserts all conclusions simultaneously. Conclusions (2), (4), (5), (6), (7), and (8) cover the update equations, both error identities, both bounds, spectral-radius equality, convergence equivalence, and sufficient contraction condition. No missing final composition is needed.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+      "evidence": "correction(A,D,b,u)=D^{-1}(b-Au); update=u+correction; iterate recursively has y_0=x0 and y_{k+1}=update(y_k); correctionSequence has c_{k+1}=correction(y_k). Target (2) asserts D c_{k+1}=b-A y_k and y_{k+1}=y_k+c_{k+1}. Nonzero det(D) makes the totalized inverse the ordinary inverse. The unused c_0=0 adds no restriction on the source iteration.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+      "evidence": "Target (4) explicitly asserts for every x0 and natural k: e_{k+1}=Pe_k, e_k=P^k e_0, |e_k|<=|P|^k|e_0| componentwise, and ||e_k||_infinity<=L^k||e_0||_infinity. L is the maximum absolute row sum; |P| is entrywise absolute value before matrix exponentiation. Target (5) asserts rho(P)=rho(D^{-1}N); (6) asserts convergence for every initial guess iff rho(P)<1. Targets (7)-(8) assert the Lipschitz estimate and convergence plus a contraction constant q=L<1 when L<1.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "The target uses the same quantified A,D,N,b,x, assumes A=D+N and Ax=b, and defines P=-D^{-1}N. Error is iterate(A,D,b,x0,k)-x. ConvergesForEveryInitialGuess quantifies all x0 and convergence of precisely these iterates to this supplied x. The block support assumptions and conclusion (1) identify D and N with the diagonal and off-diagonal blocks of A.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "The hypotheses are exactly the block splitting, det(D)!=0, and Ax=b. Arbitrary finite block labels encode any block partition without requiring contiguous fibers or surjectivity. No invertibility of A, convergence, desired estimate, or spectral-radius restriction is assumed. L<1 is required only for the conditional sufficient condition. All initial vectors and natural time indices are included. Complex spectral radius in extended nonnegative reals agrees with the ordinary finite-dimensional radius; the zero-dimensional conventions are consistent. Additional splitting identification and uniqueness follow from the splitting and invertibility and introduce no new premise.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "e2760682edeef69becb5089f7225dc112f041969b90666d1ea8ed89195914455",
+  "targets": [
+    "Research.Horner.forward_error_bound"
+  ],
+  "construction_names": [
+    "Research.Horner.P",
+    "Research.Horner.Q",
+    "Research.Horner.E"
+  ],
+  "declarations": [
+    {
+      "body": "",
+      "dependencies": [
+        "Research.FloatingPoint.Model.mk"
+      ],
+      "kind": "inductive",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model",
+      "type": "Type"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "LE.le",
+        "Real.instLE",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "Exists",
+        "And",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "Eq",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "One.toOfNat1",
+        "Real.instOne",
+        "Research.FloatingPoint.Model"
+      ],
+      "kind": "constructor",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model.mk",
+      "type": "(u : Real) \u2192\n  LE.le.{0} 0 u \u2192\n    (round : Real \u2192 Real) \u2192\n      (\u2200 (z : Real),\n          \u2203 \u03b4, And (LE.le.{0} (abs.{0} \u03b4) u) (Eq.{1} (round z) (HMul.hMul.{0, 0, 0} z (HAdd.hAdd.{0, 0, 0} 1 \u03b4)))) \u2192\n        Research.FloatingPoint.Model"
+    },
+    {
+      "body": "fun self => self.3",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Real",
+        "Research.FloatingPoint.Model"
+      ],
+      "kind": "definition",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model.round",
+      "type": "Research.FloatingPoint.Model \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun self => self.1",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Real",
+        "Research.FloatingPoint.Model"
+      ],
+      "kind": "definition",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model.u",
+      "type": "Research.FloatingPoint.Model \u2192 Real"
+    },
+    {
+      "body": "fun x x_1 x_2 =>\n  List.brecOn.{1, 0} (motive := fun x => Real \u2192 Real \u2192 Real) x\n    (fun x f x_3 x_4 =>\n      (match (motive :=\n          (x : List.{0} Real) \u2192 Real \u2192 Real \u2192 List.below.{1, 0} (motive := fun x => Real \u2192 Real \u2192 Real) x \u2192 Real) x,\n          x_3, x_4 with\n        | List.nil.{0}, x, x_5 => fun x => 0\n        | List.cons.{0} a tail, x, u => fun x_5 =>\n          let v := Research.Horner.P tail x;\n          let e := x_5.1 x u;\n          HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} u (abs.{0} (HAdd.hAdd.{0, 0, 0} a (HMul.hMul.{0, 0, 0} x v))))\n            (HMul.hMul.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} 1 u)\n              (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} u (abs.{0} (HMul.hMul.{0, 0, 0} x v)))\n                (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} 1 u) (abs.{0} x)) e))))\n        f)\n    x_1 x_2",
+      "dependencies": [
+        "List",
+        "Real",
+        "List",
+        "Real",
+        "List.brecOn",
+        "List.below",
+        "Research.Horner.E.match_1",
+        "List.nil",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "List.cons",
+        "Research.Horner.P",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "One.toOfNat1",
+        "Real.instOne"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.Horner.E",
+      "type": "List.{0} Real \u2192 Real \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun motive x x_1 x_2 h_1 h_2 => List.casesOn.{u_1, 0} x (h_1 x_1 x_2) fun head tail => h_2 head tail x_1 x_2",
+      "dependencies": [
+        "List",
+        "Real",
+        "List.nil",
+        "List.cons",
+        "List",
+        "Real",
+        "List.nil",
+        "List.cons",
+        "List.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.Horner.E.match_1",
+      "type": "(motive : List.{0} Real \u2192 Real \u2192 Real \u2192 Sort u_1) \u2192\n  (x : List.{0} Real) \u2192\n    (x_1 x_2 : Real) \u2192\n      ((x x_3 : Real) \u2192 motive List.nil.{0} x x_3) \u2192\n        ((a : Real) \u2192 (tail : List.{0} Real) \u2192 (x u : Real) \u2192 motive (List.cons.{0} a tail) x u) \u2192 motive x x_1 x_2"
+    },
+    {
+      "body": "fun x x_1 =>\n  List.brecOn.{1, 0} (motive := fun x => Real \u2192 Real) x\n    (fun x f x_2 =>\n      (match (motive := (x : List.{0} Real) \u2192 Real \u2192 List.below.{1, 0} (motive := fun x => Real \u2192 Real) x \u2192 Real) x,\n          x_2 with\n        | List.nil.{0}, x => fun x => 0\n        | List.cons.{0} a tail, x => fun x_3 => HAdd.hAdd.{0, 0, 0} a (HMul.hMul.{0, 0, 0} x (x_3.1 x)))\n        f)\n    x_1",
+      "dependencies": [
+        "List",
+        "Real",
+        "List",
+        "Real",
+        "List.brecOn",
+        "List.below",
+        "Research.Horner.P.match_1",
+        "List.nil",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "List.cons",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.Horner.P",
+      "type": "List.{0} Real \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun motive x x_1 h_1 h_2 => List.casesOn.{u_1, 0} x (h_1 x_1) fun head tail => h_2 head tail x_1",
+      "dependencies": [
+        "List",
+        "Real",
+        "List.nil",
+        "List.cons",
+        "List",
+        "Real",
+        "List.nil",
+        "List.cons",
+        "List.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.Horner.P.match_1",
+      "type": "(motive : List.{0} Real \u2192 Real \u2192 Sort u_1) \u2192\n  (x : List.{0} Real) \u2192\n    (x_1 : Real) \u2192\n      ((x : Real) \u2192 motive List.nil.{0} x) \u2192\n        ((a : Real) \u2192 (tail : List.{0} Real) \u2192 (x : Real) \u2192 motive (List.cons.{0} a tail) x) \u2192 motive x x_1"
+    },
+    {
+      "body": "fun model x x_1 =>\n  List.brecOn.{1, 0} (motive := fun x => Real \u2192 Real) x\n    (fun x f x_2 =>\n      (match (motive := (x : List.{0} Real) \u2192 Real \u2192 List.below.{1, 0} (motive := fun x => Real \u2192 Real) x \u2192 Real) x,\n          x_2 with\n        | List.nil.{0}, x => fun x => 0\n        | List.cons.{0} a tail, x => fun x_3 =>\n          Research.FloatingPoint.Model.round model\n            (HAdd.hAdd.{0, 0, 0} a (Research.FloatingPoint.Model.round model (HMul.hMul.{0, 0, 0} x (x_3.1 x)))))\n        f)\n    x_1",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "List",
+        "Real",
+        "Research.FloatingPoint.Model",
+        "List",
+        "Real",
+        "List.brecOn",
+        "List.below",
+        "Research.Horner.P.match_1",
+        "List.nil",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "List.cons",
+        "Research.FloatingPoint.Model.round",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.Horner.Q",
+      "type": "Research.FloatingPoint.Model \u2192 List.{0} Real \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "List",
+        "Real",
+        "LE.le",
+        "Real.instLE",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "HSub.hSub",
+        "instHSub",
+        "Real.instSub",
+        "Research.Horner.Q",
+        "Research.Horner.P",
+        "Research.Horner.E",
+        "Research.FloatingPoint.Model.u"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Research.Horner.forward_error_bound",
+      "type": "\u2200 (model : Research.FloatingPoint.Model) (coefficients : List.{0} Real) (x : Real),\n  LE.le.{0} (abs.{0} (HSub.hSub.{0, 0, 0} (Research.Horner.Q model coefficients x) (Research.Horner.P coefficients x)))\n    (Research.Horner.E coefficients x (Research.FloatingPoint.Model.u model))"
+    }
+  ],
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.28.0",
+    "manifest_sha256": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+  }
+}

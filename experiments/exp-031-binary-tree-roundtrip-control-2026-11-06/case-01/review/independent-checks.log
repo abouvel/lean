@@ -1,0 +1,3 @@
+'Bhola.theorem_3_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.algorithm1_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Bhola.depth_spec' depends on axioms: [propext, Classical.choice, Quot.sound]

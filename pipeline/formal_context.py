@@ -115,8 +115,8 @@ def translation_bundle(context, statement):
         if target not in declarations or declarations[target]["kind"] != "theorem":
             raise ValueError("Target is absent or is not a theorem: " + target)
     for name in statement["construction_names"]:
-        if name not in declarations or declarations[name]["kind"] != "definition":
-            raise ValueError("Construction is absent or is not a definition: " + name)
+        if name not in declarations or declarations[name]["kind"] not in {"definition", "inductive"}:
+            raise ValueError("Construction is absent or is not a definition or inductive type: " + name)
     # No source paths, comments, task text, condition, handoff prose, or proof terms.
     pending = list(statement["targets"] + statement["construction_names"])
     relevant = set()

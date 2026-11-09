@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation"
+  ],
+  "construction_names": [
+    "Research.BinaryTreeReduction.exactProductTree",
+    "Research.BinaryTreeReduction.roundedProductTree",
+    "Research.BinaryTreeReduction.roundedDotProduct"
+  ],
+  "source_mapping": "Authoritative /spec/source.txt is formalized in Research/Submission.lean. exactProductTree maps each real pair to its exact product; roundedProductTree maps each pair to Model.mul; roundedDotProduct applies roundedSum to roundedProductTree. The target quantifies over every Model and every Tree (ℝ × ℝ), assumes only (((tree.depth + 1 : ℕ) : ℝ) * model.u < 1), and asserts a same-shaped leafwise IsPerturbation of exactProductTree with bound gamma (tree.depth + 1) model.u whose exactSum equals roundedDotProduct. All five supplied prerequisite modules were copied byte-for-byte to matching Research paths. Feedback/revisions: /spec/feedback.json was absent; no statement revision was required. The target proof is temporary sorry scaffolding for the next proof role; construction definitions have actual bodies."
+}

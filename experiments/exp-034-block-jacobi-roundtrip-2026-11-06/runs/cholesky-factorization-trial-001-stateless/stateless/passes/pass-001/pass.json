@@ -1,0 +1,225 @@
+{
+  "status": "infrastructure_error",
+  "error": "Construction is absent or is not a definition: Cholesky.FloatingPoint",
+  "builder": {
+    "condition": "stateless",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 1105.806,
+    "compiler_command_events": 17,
+    "token_usage": {
+      "input_tokens": 1355425,
+      "cached_input_tokens": 1300736,
+      "output_tokens": 19808,
+      "reasoning_output_tokens": 3303
+    },
+    "roles": {
+      "planner": {
+        "condition": "stateless",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793994269.049045,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 63.673,
+        "token_usage": {
+          "input_tokens": 126754,
+          "cached_input_tokens": 110976,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2395,
+          "reasoning_output_tokens": 161
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "stateless",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793994333.3697405,
+        "time_limit_seconds": 420,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 148.988,
+        "token_usage": {
+          "input_tokens": 233381,
+          "cached_input_tokens": 221184,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 5223,
+          "reasoning_output_tokens": 940
+        },
+        "compiler_command_events": 3,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "stateless",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793994493.135848,
+        "time_limit_seconds": 900,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 893.145,
+        "token_usage": {
+          "input_tokens": 995290,
+          "cached_input_tokens": 968576,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 12190,
+          "reasoning_output_tokens": 2202
+        },
+        "compiler_command_events": 14,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "Cholesky.cholesky_factorization"
+      ],
+      "construction_names": [
+        "Cholesky.FloatingPoint",
+        "Cholesky.gamma",
+        "Cholesky.entryAbs",
+        "Cholesky.perturbation",
+        "Cholesky.dotTail",
+        "Cholesky.roundedDot",
+        "Cholesky.dotTailInRange",
+        "Cholesky.dotInRange",
+        "Cholesky.prefixPairs",
+        "Cholesky.updateNumerator",
+        "Cholesky.SuccessfulRun",
+        "Cholesky.NoOverflowUnderflow"
+      ],
+      "source_mapping": "Research/Submission.lean: Cholesky.cholesky_factorization formalizes the full selected theorem theorem:cholesky_factorization in /spec/source.txt (paper.tex lines 500-545), for arbitrary n and a primitive sequential rounded upper Cholesky run. gamma, entryAbs, and perturbation encode the source constant, componentwise absolute values, and canonical residual. SuccessfulRun records only primitive recurrences and successful operations; NoOverflowUnderflow records in-range exact intermediates. Standard rounded sqrt is explicitly implemented by the same FloatingPoint.round map as arithmetic. Research/STATEMENT_NOTES.md records the source sqrt-model omission, exact empty-prefix handling, and statement revision audit. No feedback.json was present; no pre-existing formal statement was revised. The supplied support directory has no source files."
+    }
+  },
+  "critic": {
+    "condition": "stateless",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1793995425.8427782,
+    "time_limit_seconds": 300,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 78.914,
+    "token_usage": {
+      "input_tokens": 324822,
+      "cached_input_tokens": 293120,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2402,
+      "reasoning_output_tokens": 278
+    },
+    "compiler_command_events": 4,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 26.418,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 505,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "f727cc9db97b3e8d68856aaca573b6f668d972af5ab14f0467cd7511d42b97ef",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793994269.049045,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 63.673,
+      "token_usage": {
+        "input_tokens": 126754,
+        "cached_input_tokens": 110976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2395,
+        "reasoning_output_tokens": 161
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793994333.3697405,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 148.988,
+      "token_usage": {
+        "input_tokens": 233381,
+        "cached_input_tokens": 221184,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5223,
+        "reasoning_output_tokens": 940
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793994493.135848,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 893.145,
+      "token_usage": {
+        "input_tokens": 995290,
+        "cached_input_tokens": 968576,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 12190,
+        "reasoning_output_tokens": 2202
+      },
+      "compiler_command_events": 14,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "number": 1,
+  "wall_time_seconds": 959.2764023590134,
+  "evidence": "stateless/passes/pass-001"
+}

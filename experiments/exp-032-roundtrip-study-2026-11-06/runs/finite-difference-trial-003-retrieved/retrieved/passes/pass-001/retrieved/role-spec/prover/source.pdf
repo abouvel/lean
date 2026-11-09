@@ -1,0 +1,49 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+5 0 obj
+<< /Length 910 >>
+stream
+BT /F1 10 Tf 14 TL 46 748 Td
+(# Forward difference under a local derivative variation bound) Tj T*
+() Tj T*
+(Define the forward-difference approximation for a real function f at x) Tj T*
+(with step h as \(f\(x+h\) - f\(x\)\) / h.) Tj T*
+() Tj T*
+(Prove that for every f and D from real numbers to real numbers and every) Tj T*
+(real x, h, L, the following assumptions imply the stated error bound:) Tj T*
+(- h > 0 and L >= 0;) Tj T*
+(- f is continuous on the closed interval [x, x+h];) Tj T*
+(- f has derivative D\(t\) at every t in the open interval \(x, x+h\);) Tj T*
+(- for every t in the open interval \(x, x+h\),) Tj T*
+(  |D\(t\) - D\(x\)| <= L * |t-x|.) Tj T*
+() Tj T*
+(The absolute difference between the defined forward difference and D\(x\)) Tj T*
+(is at most L*h. Here D\(x\) is the reference value in the variation bound.) Tj T*
+(No derivative at either endpoint is required by this task.) Tj T*
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000309 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1270
+%%EOF

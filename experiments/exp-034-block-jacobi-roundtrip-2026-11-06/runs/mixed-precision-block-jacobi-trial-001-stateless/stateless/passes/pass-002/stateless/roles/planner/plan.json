@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the full active selected theorem from /spec/source.txt, using /spec/paper.tex for the algorithm and helper analyses. Keep the actual computed factors and iterates connected to A, the SPD blocks, b, the initial vector, and admissible local rounding errors. The existing Submission.lean is evidence and reusable infrastructure, not authority to narrow the statement. Prioritize the missing kernel-to-one-step-bound bridge: tiled matvec analysis, successful Cholesky factorization invariants, triangular substitution backward errors, and block assembly. Preserve signed cancellation before taking norms. For the selected scalar conclusion, absorb eta times the correction norm directly; this avoids constructing the paper's auxiliary Neumann inverse H, which is not part of the selected statement. Finally instantiate the existing recurrence lemmas after checking them against the source. This is a proof plan, not the completed target proof; no workspace edits or target proof are supplied.",
+  "obligations": [
+    {
+      "id": "source_contract",
+      "description": "Retain the source quantifiers and hypotheses: arbitrary compatible real A = D + N, SPD T-by-T diagonal blocks, A x = b, arbitrary initial vector and execution, precision 0 <= us < uc, positive tile/block sizes, S divides n, positive relevant gamma denominators, no overflow/underflow, and eta < 1. Require alpha < 1 only for the finite geometric and limsup conclusions. Do not add q < 1 or assume an algorithmic error bound. A layout equivalence Fin n ≃ Fin B × Fin T may encode the exact block partition; D inverse must be the genuine inverse of these blocks."
+    },
+    {
+      "id": "execution_construction",
+      "description": "Audit and retain concrete operation-level kernels: independently bounded relative errors at each scalar operation; sequential products and sums within S-entry tiles and sequential reduction of n/S partial sums; rounded residual subtraction in us; Cholesky of each input block in uc; forward and backward substitution in uc; residual conversion into uc; rounded solution addition in us; recursive iterates and e k = xhat k - x. Rhat must be precisely the block assembly of returned factors, not a freely chosen matrix. Successful factorization is implicit in the selected computed-factor premise and explicit in the earlier Cholesky helper; explain this correspondence. Document the rounded-sqrt model used by the paper and the conversion model rather than hiding them as new backward-error assumptions."
+    },
+    {
+      "id": "norms_and_constants",
+      "description": "Use max absolute entry for vector infinity norm and maximum absolute row sum for the induced matrix infinity norm, including empty index conventions; do not accidentally use Mathlib's default matrix norm. Preserve exactly gamma(m,u)=m*u/(1-m*u), c1=gamma(S+n/S-1,us)+us+us*gamma(S+n/S-1,us), c2=gamma(T,uc)^2+3*gamma(T+1,uc), G=c2*|D^-1|*|Rhat^T|*|Rhat|, eta=||G||inf, q=||D^-1*N||inf, p=|||D^-1|*|A|||inf, and the displayed source alpha and beta. Establish required nonnegativity and strictly positive denominators."
+    },
+    {
+      "id": "finite_sum_majorants",
+      "description": "Supply componentwise absolute-value, monotonicity, and finite-sum inequalities for matrix products and matrix-vector products; prove infinity-norm bounds for nonnegative majorants and compatibility with block reindexing. Reuse checked candidate norm and invertibility lemmas. SPD of the original blocks must imply D^-1*D=I; invertibility cannot be an independent replacement hypothesis."
+    },
+    {
+      "id": "tiled_matvec",
+      "description": "Prove the actual tiledMatvec output obeys |zhat-A*v| <= gamma(S+n/S-1,us)*|A|*|v| componentwise. Flatten the full tiles using S divides n and positive S, and account for S inner rounding factors and n/S-1 outer factors without inflating the constant. Existing roundedDot_error alone does not establish this two-level result. A direct forward majorant suffices for the target; alternatively construct the paper's Delta A linked to the same output. Treat n=0 separately if necessary, without silently restricting the theorem."
+    },
+    {
+      "id": "residual_construction",
+      "description": "From that matvec result and each row's subtraction error, construct db and dz for the actual residual with rhat=-A*e+db+dz, |db|<=us*|b|, |dz|<=c1*|A|*|xhat|. Instantiate computedResidual_perturbations with M=|A|*|xhat| instead of retaining its matvec bound as an unproved target hypothesis. Use A*x=b for the signed residual identity."
+    },
+    {
+      "id": "cholesky_invariants",
+      "description": "Prove loop invariants for the actual successful Cholesky fold: completed entries remain unchanged, the output is upper triangular with positive diagonal, and each local recurrence yields an entrywise backward identity. Analyze division factors and the two factors from squaring a rounded square root, including first-row and empty-dot cases. Construct symmetric Delta Df with Rhat_block^T*Rhat_block=D_block+Delta Df and |Delta Df|<=gamma(T+1,uc)*|Rhat_block^T|*|Rhat_block|. Check the paper's displayed intermediate typos against the recurrences; do not assume this unproved helper or change the selected constants."
+    },
+    {
+      "id": "triangular_solve_errors",
+      "description": "Prove forward/backward fold invariants for the concrete substitutions using the returned nonzero diagonals. Construct triangular perturbations F and B such that (Rhat_block^T+F)*y=rhs and (Rhat_block+B)*c=y, with |F|<=gamma(T,uc)*|Rhat_block^T| and |B|<=gamma(T,uc)*|Rhat_block|. Bound inverse rounding factors from the standard product lemma. Handle empty-row division separately so the T=1 bound remains valid."
+    },
+    {
+      "id": "block_solve_bridge",
+      "description": "Compose the factorization and two triangular perturbations to construct Delta D_block = Delta Df + Rhat_block^T*B + F*Rhat_block + F*B. Prove (D_block+Delta D_block)*c=converted_rhs and its bound (gamma(T+1,uc)+2*gamma(T,uc)+gamma(T,uc)^2)*|Rhat_block^T|*|Rhat_block| <= c2*|Rhat_block^T|*|Rhat_block|. Assemble these actual per-step perturbations blockwise under layout to get (D+Delta D)*chat=rhat+dr, |Delta D|<=c2*|Rhat^T|*|Rhat|, and |dr|<=uc*|rhat|. Hence |D^-1*Delta D|<=G. Delta D may depend on the step even when the computed factor is reused."
+    },
+    {
+      "id": "correction_feedback",
+      "description": "Use the solve bridge and D^-1*D=I to obtain the signed correction identity chat=-e-D^-1*N*e+D^-1*(db+dz+dr)-D^-1*Delta D*chat. Derive the norm inequality C <= (1+q+uc*p)*E + (1+uc)*(us*||D^-1||inf*||b||inf+c1*p*Xhat) + eta*C, where C=||chat||inf, E=||e||inf, Xhat=||xhat||inf. Absorb the final term using eta<1. This scalar absorption proves the bound required by the selected theorem without the auxiliary H=(I-G)^-1 construction."
+    },
+    {
+      "id": "one_step_linkage",
+      "description": "Derive the actual rounded update identity and cancel e with the -e in chat before taking norms. Obtain E_next <= (q+uc*p)*E + (1+uc)*(us*||D^-1||inf*||b||inf+c1*p*Xhat) + us*Xhat + (eta+us)*C. Substitute the proved correction bound, use Xhat<=||x||inf+E, and verify by positive-denominator algebra that the coefficients are precisely source alpha and beta. Instantiate at every recursive iterate. This is the central missing hstep in the prior candidate; no recurrence or backward-error premise may replace its proof."
+    },
+    {
+      "id": "consequences",
+      "description": "With alpha>=0 and beta>=0 proved from the original definitions, derive the all-k finite bound by induction/geometric summation, including k=0 and alpha=0. Under alpha<1 prove alpha^k tends to zero and the stated limsup bound beta/(1-alpha). Check boundedness/nonemptiness conditions for Lean's real Filter.limsup so the assertion is not a vacuous use of conditional completeness. Existing recurrence_finite_bound and recurrence_limsup_bound are reusable only after this audit and application to the constructed error sequence."
+    },
+    {
+      "id": "feedback_and_validation",
+      "description": "The mounted feedback records that pass 1 compiled but failed verification because Submission.lean contained the unresolved final hstep sorry at line 721 (declaration at line 686). Current inspection confirms that tiled matvec, factorization backward error, and substitution backward error bridges are not yet supplied; successful compilation with sorry is not completion. The next builder has a 900-second hard limit and must prioritize these dependencies while preserving the entire theorem. Run the local Lean/Mathlib build and check the final theorem dependencies for placeholders or custom axioms. If a source-model ambiguity, kernel counterexample, or unfinished helper prevents completion, record that exact blocker and obligation; do not weaken the statement or claim the full theorem is proved."
+    }
+  ]
+}

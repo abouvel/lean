@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "limits": {
+    "jobs": 1,
+    "model_calls": 1,
+    "lean_builds": 1,
+    "ram_gib": 12,
+    "job_seconds": 3600
+  },
+  "tasks": [
+    {
+      "id": "dot-product",
+      "config": "experiments/exp-019-multi-agent-dot-product-task-2026-11-01/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Frozen pilot-general-lean-001 only: generic absolute-value, denominator, and stale-import guidance. No dot-product solution, prior candidate, evaluator output, or other-condition evidence is provided."
+      }
+    },
+    {
+      "id": "horner",
+      "config": "experiments/exp-027-overnight-task-packets-2026-11-05/horner/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Reviewed pilot-general-lean-001. It contains generic absolute-value, denominator, and build guidance. It contains no Horner or finite-difference target, construction, or proof."
+      }
+    },
+    {
+      "id": "finite-difference",
+      "config": "experiments/exp-027-overnight-task-packets-2026-11-05/finite-difference/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Reviewed pilot-general-lean-001. It contains generic absolute-value, denominator, and build guidance. It contains no Horner or finite-difference target, construction, or proof."
+      }
+    }
+  ]
+}

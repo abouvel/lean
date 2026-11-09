@@ -1,0 +1,3 @@
+import Research.Submission
+#print axioms Research.BlockDotProduct.block_dot_product_sequential
+#check Research.BlockDotProduct.block_dot_product_sequential

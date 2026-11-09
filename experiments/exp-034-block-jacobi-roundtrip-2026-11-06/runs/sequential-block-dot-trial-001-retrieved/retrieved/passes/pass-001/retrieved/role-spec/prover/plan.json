@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the selected sequential-reduction corollary directly from an operational relative-rounding model, proving the two-stage expansion and a finite-product error lemma as helpers. The construction is a zero-padded partition of the original x,y into B=ceil(n/T) blocks, rounded sequential block dot products, and a rounded sequential reduction of those actual block outputs. Derive a coefficient for each original input product from its actual multiplication and addition paths, bound its deviation from 1 by gamma_(T+B-1), and use it to construct both backward perturbations. The earlier binary-tree theorem supplies context and shared hypotheses; its conclusion about a different reduction algorithm cannot establish this corollary by itself. Do not assume the desired coefficient expansion or backward bound. No completed target proof is supplied in this plan.",
+  "obligations": [
+    {
+      "id": "source_contract",
+      "description": "State the full selected result for arbitrary original real vectors x,y and valid positive integer dimensions n,T, with B=ceil(n/T), standard nonnegative unit roundoff u, no overflow/underflow encoded by the elementary relative-rounding model, and (T+B-1)*u<1. Track the inherited (T+ceil(log2 B))*u<1 assumption explicitly, or prove its redundancy using ceil(log2 B)<=B-1 for B>=1. Replacing the binary-tree algorithm by sequential reduction is explicit in the selected statement. Preserve both existential perturbation representations and componentwise bounds with exactly gamma_(T+B-1)=((T+B-1)*u)/(1-(T+B-1)*u). Make natural-number subtraction unambiguous by B>=1. If an empty-input extension is desired, handle it separately without silently changing the positive-dimensional source convention."
+    },
+    {
+      "id": "rounding_semantics",
+      "description": "Define rounded multiplication and addition, or an operation-indexed admissible execution trace, such that every operation equals its exact result times (1+delta), with |delta|<=u. Quantify over every admissible execution rather than selecting a favorable error trace. The absence of overflow/underflow justifies this local model. Error factors are local operation errors, not an assumed global error representation. Independent operation-indexed errors are acceptable as a stronger universal model covering executions of an actual rounding function."
+    },
+    {
+      "id": "block_partition",
+      "description": "Construct B from natural ceiling division, for example (n+T-1)/T with T>0, and prove its equivalence to ceil(n/T). Extend both original vectors by zero outside their n entries and form exactly T entries in each block. Establish n<=B*T, the unique block/offset decomposition i=(i/T)*T+i%T, and the finite-sum reindexing back to the original n terms. Prove padded terms contribute zero under the rounding model. Do not replace the input with an unrelated rectangular family without a proved connection."
+    },
+    {
+      "id": "operational_algorithm",
+      "description": "Define each block computation by T rounded products, initializing the accumulator with the first product and rounding the next T-1 additions. Define the final sequential reduction by initializing with the first computed block output and rounding its next B-1 additions. The computed result in the theorem must be this function or a trace satisfying these recurrences on the original inputs. Avoid charging a spurious rounded addition to zero at either initialization; that would lose the requested constant. Account explicitly for T=1, B=1, and an incomplete last block."
+    },
+    {
+      "id": "sequential_expansion",
+      "description": "Prove by recurrence induction a weighted finite-sum expansion for an initialized sequential summation. Each input has the product of the errors on the additions traversed from its insertion to the final accumulator; no input has more than L-1 such factors for a list of positive length L. Apply it inside each block and to the actual computed partials, then distribute to get coefficients for the original x_i*y_i. Each coefficient contains one multiplication factor, at most T-1 block-addition factors, and at most B-1 reduction-addition factors. This establishes the bound on factor count T+B-1 from the algorithm instead of postulating it."
+    },
+    {
+      "id": "product_error_bound",
+      "description": "Prove or locate and verify a finite-product lemma: if |delta_k|<=u, 0<=u, m<=M and M*u<1, then |product_k(1+delta_k)-1|<=gamma_M for M=T+B-1. A list induction maintaining the gamma bound, together with denominator positivity and (1+gamma_a)*(1+gamma_b)<=1+gamma_(a+b) when applicable, is sufficient; alternatively use an elementary product-growth estimate. Prove every needed arithmetic lemma rather than assuming the paper product bound as an axiom. Include the empty product, u=0, monotonicity where used, and casts of natural factor counts to real numbers."
+    },
+    {
+      "id": "perturbation_construction",
+      "description": "From the derived coefficient c_i for each original term, define theta_i=c_i-1 and construct Delta x_i=theta_i*x_i and Delta y_i=theta_i*y_i. Establish both exact identities for the same computed scalar and the same original vectors, and both componentwise absolute bounds using |theta_i|<=gamma_(T+B-1). No division by an input component is needed, so zero entries and cancellation are covered. Both alternative backward representations must be concluded; they are not a single expression perturbing both vectors at once."
+    },
+    {
+      "id": "validation_and_blockers",
+      "description": "Ensure the final Lean declaration includes or transparently unfolds the operational computation, block count and gamma definition, and quantifies over the actual original inputs. Compile using local Lean/Mathlib, inspect final theorem and helper assumptions for axioms/placeholders or a circular global error hypothesis, and confirm constants and edge cases. Record any source inconsistency or unmet construction precisely rather than weakening the statement. The present plan reads no candidate and finds no /spec/feedback.json."
+    }
+  ]
+}

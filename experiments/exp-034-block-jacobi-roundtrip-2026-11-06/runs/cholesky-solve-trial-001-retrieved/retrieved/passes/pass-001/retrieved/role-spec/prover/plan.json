@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the actual rounded upper-triangular Cholesky recurrence and its forward/backward substitution runs over finite real matrices, prove the necessary local rounding and global backward-error helpers, and then compose them. Keep the selected source statement authoritative. An algebraic composition lemma may be proved first for development, but it is not the selected theorem until its premises have been established from the algorithm on the original A and b. Use componentwise absolute values and ordinary matrix multiplication throughout. The required construction is DeltaA = Ef + Rhat.transpose * U + L * Rhat + L * U, where Ef is the factorization residual, L comes from the forward solve with Rhat.transpose, and U comes from the backward solve with Rhat. This construction connects the actual computed solution to (A + DeltaA) xhat = b; its four terms give exactly gamma_(n+1) + 2 gamma_n + gamma_n^2. This is a construction and dependency plan, not a completed target proof.",
+  "obligations": [
+    {
+      "id": "source_scope",
+      "description": "State the full result for arbitrary finite dimension n, SPD real A and real b, standard unit roundoff u, a successful computed Cholesky factor Rhat and the actual subsequent computed yhat and xhat, with no overflow/underflow and (n+1)u < 1. Preserve both componentwise bounds and the original-input linkage. Do not require symmetry of the final solve perturbation; only the factorization residual is symmetric."
+    },
+    {
+      "id": "operational_construction",
+      "description": "Define a transparent rounded-operation model and an execution relation or executable recurrences for Cholesky, forward substitution, and backward substitution. Include operation order for sequential inner products, subtraction, division, and square root. A run certificate must record primitive computations and local roundoff, rather than package the desired matrix backward-error bounds as assumptions. Identify its outputs with Rhat, yhat and xhat in the final theorem."
+    },
+    {
+      "id": "roundoff_prerequisites",
+      "description": "Define gamma_m = (m*u)/(1-m*u), with the usual nonnegative unit roundoff. Derive positive denominators, u < 1, n*u < 1, nonnegativity of gamma, and gamma_n <= gamma_(n+1) from the source hypotheses. Prove the bounded-product lemma for direct and reciprocal rounding factors with the exact operation counts required by the kernels. Handle n=0 if the formal statement permits it, and u=0 without asserting strict gamma monotonicity."
+    },
+    {
+      "id": "sqrt_model_gap",
+      "description": "Audit and explicitly discharge the diagonal square-root rounding model. The displayed common model in source.txt covers only +,-,*,/; the paper uses a rounded square root without proving its bound. Specify a justified standard floating-point square-root semantics and derive its relative-error property, or record precisely that this property is missing from the supplied model. Do not treat the desired diagonal Cholesky residual bound as a new hypothesis or silently replace square root by exact arithmetic."
+    },
+    {
+      "id": "local_triangular_update",
+      "description": "Prove local backward error for the sequential dot product followed by subtraction and division, constructing coefficient perturbations and counting direct/reciprocal factors. Prove the empty-inner-product row separately: one-entry triangular substitution is a single division and must attain gamma_1. The paper helper assumes k>=2 and cannot simply be applied to that row. Fix operational treatment of subtraction from zero so unnecessary rounding does not spoil constants."
+    },
+    {
+      "id": "triangular_solve_helpers",
+      "description": "Assemble the local coefficient perturbations row by row into triangular matrices for forward and backward substitution, with zero entries outside the triangular support. Prove (T+E) zhat = rhs and abs(E) <= gamma_n abs(T) from the actual run, including the reversal of row order or an independent proof for the upper-triangular case. Derive nonzero computed Cholesky diagonals and nonsingularity from successful factorization semantics before invoking helpers that require nonsingularity."
+    },
+    {
+      "id": "cholesky_helper",
+      "description": "Prove the factorization backward-error result from the actual rounded recurrence, treating off-diagonal division updates and diagonal rounded square roots separately. Account for the extra diagonal rounding factor to obtain gamma_(n+1). Define Ef = Rhat.transpose * Rhat - A, use the upper-triangular support and symmetry of A to cover both halves, and prove abs(Ef) <= gamma_(n+1) (abs(Rhat.transpose) * abs(Rhat)). The paper diagonal estimate contains an unexplained primed Rhat; derive the needed estimate from the computed entries rather than assume this typo supplies it."
+    },
+    {
+      "id": "instantiate_actual_stages",
+      "description": "Extract from the helpers Ef, L and U with A+Ef = Rhat.transpose*Rhat, (Rhat.transpose+L)yhat=b, and (Rhat+U)xhat=yhat. Establish their respective gamma_(n+1), gamma_n and gamma_n componentwise bounds for precisely these same algorithm outputs. Earlier paper lemmas may be used only after formal proof, with no custom axioms or placeholders."
+    },
+    {
+      "id": "total_perturbation",
+      "description": "Construct DeltaA explicitly as Ef + Rhat.transpose*U + L*Rhat + L*U. Show by matrix distributivity, associativity and matrix-vector composition that it satisfies the required perturbed system for the computed xhat. Keep multiplication order: L and U are independent solve perturbations and are not necessarily transposes."
+    },
+    {
+      "id": "componentwise_estimate",
+      "description": "Establish or reuse entrywise absolute-value triangle and product inequalities, abs(M*N) <= abs(M)*abs(N), and multiplication monotonicity for nonnegative matrices. Apply the three solve-term bounds to obtain two gamma_n contributions and one gamma_n squared contribution against the common nonnegative matrix abs(Rhat.transpose)*abs(Rhat); add Ef to obtain exactly the first selected bound."
+    },
+    {
+      "id": "second_bound",
+      "description": "Use gamma_n <= gamma_(n+1) and entrywise nonnegativity of abs(Rhat.transpose)*abs(Rhat) to prove the second inequality with coefficient 3*gamma_(n+1)+gamma_n^2. Retain the sharper first inequality as a separate conclusion."
+    },
+    {
+      "id": "validation_and_blockers",
+      "description": "Check the final Lean declaration against the authoritative statement: quantifiers, SPD and successful-run hypotheses, actual computed outputs, exact constants, and both componentwise inequalities. Compile with local Lean/Mathlib and reject axioms, sorry, opaque certificates assuming the target bounds, or a composition-only replacement theorem. If a missing primitive rounding specification prevents the algorithmic helpers, report the precise unmet obligation rather than weaken the theorem."
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "pairs": {
+    "dot-product-trial-001": {
+      "stateless": {
+        "job_id": "dot-product-trial-001-stateless",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 382.06543209699976,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 181.837,
+          "critic_seconds": 45.18,
+          "compiler_command_events": 9,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 776,
+          "builder_tokens": {
+            "input_tokens": 613935,
+            "cached_input_tokens": 525184,
+            "output_tokens": 5750,
+            "reasoning_output_tokens": 367
+          },
+          "critic_tokens": {
+            "input_tokens": 124146,
+            "cached_input_tokens": 97408,
+            "output_tokens": 1838,
+            "reasoning_output_tokens": 68
+          },
+          "roles": {
+            "planner": {
+              "calls": 1,
+              "wall_time_seconds": 47.186,
+              "tokens": {
+                "input_tokens": 83143,
+                "cached_input_tokens": 58112,
+                "output_tokens": 2015,
+                "reasoning_output_tokens": 140
+              }
+            },
+            "formalizer": {
+              "calls": 1,
+              "wall_time_seconds": 69.852,
+              "tokens": {
+                "input_tokens": 231812,
+                "cached_input_tokens": 202368,
+                "output_tokens": 1888,
+                "reasoning_output_tokens": 99
+              }
+            },
+            "prover": {
+              "calls": 1,
+              "wall_time_seconds": 64.799,
+              "tokens": {
+                "input_tokens": 298980,
+                "cached_input_tokens": 264704,
+                "output_tokens": 1847,
+                "reasoning_output_tokens": 128
+              }
+            },
+            "translator": {
+              "calls": 1,
+              "wall_time_seconds": 42.054,
+              "tokens": {
+                "input_tokens": 53809,
+                "cached_input_tokens": 41472,
+                "output_tokens": 1951,
+                "reasoning_output_tokens": 66
+              }
+            },
+            "judge": {
+              "calls": 1,
+              "wall_time_seconds": 41.533,
+              "tokens": {
+                "input_tokens": 60628,
+                "cached_input_tokens": 54912,
+                "output_tokens": 2232,
+                "reasoning_output_tokens": 74
+              }
+            }
+          },
+          "total_model_seconds": 310.60400000000004,
+          "total_model_calls": 6
+        }
+      },
+      "retrieved": {
+        "job_id": "dot-product-trial-001-retrieved",
+        "success": true,
+        "outcome": "accepted",
+        "metrics": {
+          "wall_time_seconds": 404.8283781099999,
+          "passes_used": 1,
+          "first_success_pass": 1,
+          "builder_seconds": 174.104,
+          "critic_seconds": 56.581,
+          "compiler_command_events": 9,
+          "tokens": "unknown",
+          "cost": "unknown",
+          "aristotle_calls": 0,
+          "verification_calls": 1,
+          "critic_calls": 1,
+          "formal_failures": 0,
+          "critic_rejections": 0,
+          "final_source_lines": 771,
+          "builder_tokens": {
+            "input_tokens": 557700,
+            "cached_input_tokens": 500608,
+            "output_tokens": 5597,
+            "reasoning_output_tokens": 356
+          },
+          "critic_tokens": {
+            "input_tokens": 240792,
+            "cached_input_tokens": 221056,
+            "output_tokens": 1938,
+            "reasoning_output_tokens": 58
+          },
+          "roles": {
+            "planner": {
+              "calls": 1,
+              "wall_time_seconds": 41.952,
+              "tokens": {
+                "input_tokens": 96654,
+                "cached_input_tokens": 70400,
+                "output_tokens": 1798,
+                "reasoning_output_tokens": 141
+              }
+            },
+            "formalizer": {
+              "calls": 1,
+              "wall_time_seconds": 76.292,
+              "tokens": {
+                "input_tokens": 236252,
+                "cached_input_tokens": 221184,
+                "output_tokens": 1995,
+                "reasoning_output_tokens": 116
+              }
+            },
+            "prover": {
+              "calls": 1,
+              "wall_time_seconds": 55.86,
+              "tokens": {
+                "input_tokens": 224794,
+                "cached_input_tokens": 209024,
+                "output_tokens": 1804,
+                "reasoning_output_tokens": 99
+              }
+            },
+            "translator": {
+              "calls": 1,
+              "wall_time_seconds": 64.12,
+              "tokens": {
+                "input_tokens": 77264,
+                "cached_input_tokens": 53120,
+                "output_tokens": 3470,
+                "reasoning_output_tokens": 73
+              }
+            },
+            "judge": {
+              "calls": 1,
+              "wall_time_seconds": 33.962,
+              "tokens": {
+                "input_tokens": 59997,
+                "cached_input_tokens": 54400,
+                "output_tokens": 2143,
+                "reasoning_output_tokens": 61
+              }
+            }
+          },
+          "total_model_seconds": 328.767,
+          "total_model_calls": 6
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "TriangularSolve.solution_of_a_triangular_system"
+  ],
+  "construction_names": [
+    "TriangularSolve.gamma",
+    "TriangularSolve.perform",
+    "TriangularSolve.dotTail",
+    "TriangularSolve.sequentialDot",
+    "TriangularSolve.forwardRow",
+    "TriangularSolve.forwardStep",
+    "TriangularSolve.forwardSubstitution",
+    "TriangularSolve.reverseMatrix",
+    "TriangularSolve.reverseVector",
+    "TriangularSolve.backwardSubstitution",
+    "TriangularSolve.IsTriangular",
+    "TriangularSolve.substitution",
+    "TriangularSolve.Call.SatisfiesModel",
+    "TriangularSolve.Execution.SatisfiesModel"
+  ],
+  "source_mapping": "The selected theorem theorem:solution_of_a_traingular_system in /spec/source.txt (paper.tex lines 457-490) is TriangularSolve.solution_of_a_triangular_system in Research/Submission.lean. Direction.lower and Direction.upper give forward and backward substitution on the original matrix and right-hand side; the existential perturbation has the same triangular support and the exact componentwise gamma_n bound. Rounding hypotheses are the source elementary-operation model on the constructed execution trace, with nonnegative unit roundoff and n*u<1; nonsingularity is det T != 0. Construction definitions have actual bodies; the final theorem proof alone has temporary sorry scaffolding. No feedback.json was present and there was no prior statement to revise; no mathematical statement revision was made. See Research/StatementNotes.md. Supplied support directory was empty; paper.tex, references.bib, source.txt and source.pdf were copied byte-for-byte into Research/Sources. lake build succeeded."
+}

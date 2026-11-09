@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "433d6e961453bec14dc195deb1736b443c42b87a53565797877263772d9a2554",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "Research.TriangularSolve.solution_of_a_triangular_system explicitly asserts the full backward-error conclusion for the defined forward or backward substitution on the original inputs. Its existential DeltaT jointly satisfies the exact perturbed system, the directional triangular zero pattern, and the componentwise gamma(n,u) bound. The explicit recurrences and execution-local standard rounding hypotheses provide the required algorithm and input linkage.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "The listed target solution_of_a_triangular_system itself asserts one DeltaT satisfying the perturbed system identity, triangular structure, and every componentwise gamma(n,u) bound for computedSolution, for both directions and every dimension. No helper-to-final-theorem composition is missing.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the rounded forward or backward substitution corresponding to lower or upper triangular inputs.",
+      "evidence": "computedSolution explicitly runs solveRows from zero in increasing row order for lower and decreasing order for upper. previousColumns selects the already solved coordinates in that order. roundedDot starts with the first computed product and sequentially adds remaining computed products. rowNumerator subtracts this dot product from b_i, and solveRow divides by T_ii and updates only coordinate i. An empty dot product uses b_i directly. This defines the requested substitution algorithm without abstract choice.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the perturbed system identity, gamma(n) componentwise bound, and preservation of the triangular structure.",
+      "evidence": "The target asserts a single real matrix DeltaT with, for every row i, sum_j (T_ij+DeltaT_ij)*computedSolution_j=b_i; Triangular(d,DeltaT); and for every i,j, |DeltaT_ij| <= [n*u/(1-n*u)]|T_ij|. The theorem uses the dimension-n constant and includes every required conjunct.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "The final vector is computedSolution(d,ops,T,b) on the same quantified original T and b. ExecutionValid is RowsValid for the identical rowOrder and zero starting state. Its recursion follows actual solveRow updates; DotValid and DotAccValid follow the actual computed products and accumulator states. No unrelated solution or perturbation certificate is supplied as an input.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "The target retains triangularity, det(T) != 0, and n*u < 1, for all real matrices and right-hand sides in both directions. Nonnegative u is implicit in unit roundoff. ExecutionValid requires only computed=exact*(1+delta), |delta| <= u on each executed elementary operation, precisely the source rounding model available under no overflow or underflow. Its predicates assume no perturbation or backward-error conclusion. Arbitrary operation fields abstract the rounding operations, and local validity suffices since only executed calls matter. Inclusion of the empty dimension and zero roundoff introduces no restriction.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

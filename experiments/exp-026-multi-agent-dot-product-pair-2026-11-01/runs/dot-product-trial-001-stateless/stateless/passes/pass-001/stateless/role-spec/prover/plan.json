@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "strategy": "Extend the supplied binary-tree reduction framework with exact and rounded product trees, then construct a same-shape perturbed exact-product tree by induction on a depth bound. Prove a generalized dot-product lemma with tree.depth <= k and gamma (k+1) model.u, and specialize k to tree.depth. A leaf contributes its multiplication rounding error; a node scales both recursively constructed witness subtrees by the common addition rounding factor. Reuse IsPerturbation.scale_one_add, gamma_step, and Tree.exactSum_scale. This directly connects the witness to exactProductTree and counts one multiplication plus at most k additions. Read all five approved prerequisite modules and the task prompt; /spec/feedback.json was absent. This plan does not supply the completed proof.",
+  "obligations": [
+    {
+      "id": "preserve_prerequisites",
+      "description": "The implementation must copy the five supplied Research prerequisite modules unchanged, preserve configuration, and use only local Lean, Mathlib, and any approved memory. The planner must not edit /workspace. The completed formalization must have no sorry, placeholders, or custom axioms."
+    },
+    {
+      "id": "product_constructions",
+      "description": "For tree : Tree (Real \u00d7 Real), define exactProductTree tree := tree.map (fun p => p.1 * p.2), roundedProductTree model tree := tree.map (fun p => model.mul p.1 p.2), and roundedDotProduct model tree := roundedSum model (roundedProductTree model tree). Thus each multiplication is rounded once and every internal tree addition is rounded once. Establish leaf/node unfolding equations as needed; Tree.depth_map preserves the reduction depth."
+    },
+    {
+      "id": "generalized_witness_statement",
+      "description": "Plan a lemma for arbitrary model : Model, k : Nat, and tree : Tree (Real \u00d7 Real): if tree.depth <= k and ((k+1 : Nat) : Real) * model.u < 1, there exists perturbed : Tree Real with IsPerturbation (gamma (k+1) model.u) (exactProductTree tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. The original and witness must have matching leaf positions, including repeated product values."
+    },
+    {
+      "id": "multiplication_base",
+      "description": "At every leaf (a,b), use model.round_spec (a*b) to obtain a multiplication error delta with abs delta <= model.u and rounded product = (a*b)*(1+delta). Construct the witness leaf with that rounded product and bound its absolute change by model.u * abs (a*b), without division by a*b. Use gamma_step at 0 and gamma_zero to bound model.u by gamma 1 model.u. For a leaf encountered with a larger depth budget k+1, gamma_step at k and gamma_nonneg imply model.u <= gamma (k+1) model.u; obtain the smaller-budget smallness hypotheses from model.u_nonneg. This also covers zero products and u=0."
+    },
+    {
+      "id": "induction_depth_arithmetic",
+      "description": "Induct on k, generalizing tree. At k=0 the depth constraint excludes nodes. For a node in the successor case, Tree.depth = 1 + max left.depth right.depth implies each child has depth <= k. Derive ((k+1 : Nat) : Real) * model.u < 1 from the parent condition ((k+2 : Nat) : Real) * model.u < 1 using model.u_nonneg, then obtain both child witnesses with bound gamma (k+1) model.u. Handle Nat-to-Real casts explicitly."
+    },
+    {
+      "id": "addition_witness_construction",
+      "description": "For an internal node, apply model.round_spec to the sum of the two rounded child dot products to choose an addition error delta. Scale each child witness by (1+delta), and join them with Tree.node. Apply each child perturbation relation through IsPerturbation.scale_one_add, taking bound = gamma (k+1) model.u and nextBound = gamma (k+2) model.u. The required scalar bound is exactly gamma_step (k+1) model.u under the parent smallness condition. This incorporates the same node rounding into every leaf below that node."
+    },
+    {
+      "id": "exact_sum_connection",
+      "description": "Show that the constructed node witness has exact sum equal to the rounded dot product by Tree.exactSum_node, Tree.exactSum_scale, the child exact-sum equalities, and the addition round_spec equality. Use real distributivity and commutativity to reconcile factor orientation. Keep the perturbation relation anchored to exactProductTree, not to roundedProductTree alone."
+    },
+    {
+      "id": "final_original_claim",
+      "description": "Specialize the generalized witness lemma at k = tree.depth. The final theorem must quantify over every supplied abstract Model and every Tree (Real \u00d7 Real), assume only ((tree.depth+1 : Nat) : Real) * model.u < 1 in addition to Model fields, and conclude existence of perturbed with IsPerturbation (gamma (tree.depth+1) model.u) (exactProductTree tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. Do not replace this with an addition-only theorem, an exact-arithmetic special case, or an assumption asserting the desired witness."
+    },
+    {
+      "id": "verification",
+      "description": "Compile the added module and its project import using local Lean. Check the final declaration has the full intended quantifiers, hypothesis, gamma depth-plus-one bound, exactProductTree anchor, and algorithm equality. Verify protected prerequisites and configuration remain unchanged and inspect dependencies for custom axioms or unfinished proofs."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "search_queries": [
+    "mixed_precision_update|sqrt|Cholesky|urd_c|Delta",
+    "def PosDef|def PosSemidef"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "mixed_precision_update_form|mat\\{g\\}|Delta.*mat\\{d\\}|c_1|c_2"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require positivity of 1-eta and other denominators explicitly before rational coefficient manipulations; use the memory only as generic Lean engineering guidance, not target evidence."
+    }
+  ]
+}

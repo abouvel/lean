@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "strategy": "Copy the supplied Research/Common/FloatingPoint/Model.lean unchanged and import it. Define the exact evaluator P, rounded evaluator Q, and the prescribed error envelope E by structural recursion on the coefficient list in increasing degree order. Prove a reusable rounding perturbation estimate from Model.round_spec, then apply it to the multiplication and addition at each cons step. Structural induction on the list connects these constructions to the requested forward-error theorem. Use algebra normalization, absolute-value inequalities, and monotonicity with explicitly established nonnegative factors; do not introduce extra assumptions or replace the prescribed envelope by another bound. This is a proof plan, not a completed target proof.",
+  "obligations": [
+    {
+      "id": "model_prerequisite",
+      "description": "Copy /spec/support/Research/Common/FloatingPoint/Model.lean unchanged to the corresponding project module. Use Research.FloatingPoint.Model with its fields u, u_nonneg, round, and round_spec; introduce no custom axioms or stronger model properties."
+    },
+    {
+      "id": "exact_construction",
+      "description": "Define P : List \u211d \u2192 \u211d \u2192 \u211d by P [] x = 0 and P (a :: tail) x = a + x * P tail x. Preserve increasing degree order, including the empty-list convention."
+    },
+    {
+      "id": "rounded_construction",
+      "description": "Define Q parameterized by Model using Q model [] x = 0 and Q model (a :: tail) x = model.round (a + model.round (x * Q model tail x)). This construction must contain one rounded multiplication and one rounded addition per cons step, including singleton lists; do not optimize away an operation."
+    },
+    {
+      "id": "envelope_construction",
+      "description": "Define E : List \u211d \u2192 \u211d \u2192 \u211d \u2192 \u211d independently of Q and round. Set E [] x u = 0. For v = P tail x and e = E tail x u, define E (a :: tail) x u = u * |a + x*v| + (1+u) * (u * |x*v| + (1+u) * |x| * e). Only coefficients, exact evaluation, x, and u may occur in this definition."
+    },
+    {
+      "id": "rounding_perturbation",
+      "description": "Derive from round_spec the estimate |model.round z - t| \u2264 model.u * |t| + (1 + model.u) * |z - t| for arbitrary real z and t. One route bounds |round z - z| by u * |z|, uses |z| \u2264 |t| + |z-t|, then the triangle inequality. Establish 0 \u2264 1+u from u_nonneg to justify monotonicity; this estimate requires no sign, smallness, or nonzero assumptions."
+    },
+    {
+      "id": "nonnegative_factors",
+      "description": "Establish the nonnegativity facts needed for inequality scaling: u \u2265 0, 1+u \u2265 0, and |x| \u2265 0. If useful for the chosen arithmetic tactics, prove E coefficients x u \u2265 0 for u \u2265 0 by induction directly from its definition, without imposing extra assumptions on x or the coefficients."
+    },
+    {
+      "id": "multiplication_error_step",
+      "description": "Under the tail induction hypothesis |Q model tail x - P tail x| \u2264 E tail x model.u, let v = P tail x and e = E tail x model.u. Apply the perturbation estimate with z = x * Q model tail x and t = x*v to obtain |model.round (x * Q model tail x) - x*v| \u2264 u * |x*v| + (1+u) * |x| * e. Relate the input difference to |x| * |Q model tail x - v| using distributivity and abs_mul, and multiply inequalities only by nonnegative factors."
+    },
+    {
+      "id": "addition_error_step",
+      "description": "Apply the same perturbation estimate with z = a + model.round (x * Q model tail x) and t = a + x*v. Cancellation identifies |z-t| with the multiplication error. Substitute its bound and collect the expression into exactly u * |a+x*v| + (1+u) * (u * |x*v| + (1+u) * |x| * e), allowing only associative/commutative rearrangement."
+    },
+    {
+      "id": "forward_error_theorem",
+      "description": "State and prove for every model : Research.FloatingPoint.Model, coefficients : List \u211d, and x : \u211d that |Q model coefficients x - P coefficients x| \u2264 E coefficients x model.u. Induct structurally on coefficients: the empty case reduces to 0 \u2264 0; the cons case uses the two operation estimates and the defining equations. The theorem must quantify over every supplied model and require no additional hypotheses."
+    },
+    {
+      "id": "formal_validation",
+      "description": "Check the final Lean module with local Lean and Mathlib, with the prerequisite unchanged and every definition and proof present. Ensure the completed candidate contains no sorry, placeholders, custom axioms, or external proving services. No feedback file was present at planning time."
+    }
+  ]
+}

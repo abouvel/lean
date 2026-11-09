@@ -1,0 +1,3 @@
+Pass. Research/Submission.lean:325-335 proves the complete selected triangular-update lemma, using the constructive theorem at lines 273-320. The computation performs the sequential rounded inner product, rounded subtraction, and rounded division in order. The perturbation equation includes the pivot, and every coordinate satisfies the source gamma(k) bound. Evaluation assumptions contain only bounded local rounding errors and the actual computation; no conclusion is assumed.
+
+Offline verification and independent Lean compilation passed. Independent axiom inspection found only the standard propext, Classical.choice, and Quot.sound axioms.

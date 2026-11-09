@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the actual sequential floating-point computation via bounded local relative errors. Expand its dot product into original input terms multiplied by realized rounding-factor products; construct perturbations from these products and from the reciprocal of the two final rounding factors. Prove the product gamma bound as a helper, then derive the exact backward equation and componentwise bounds. This construction is the selected triangular-update kernel and provides the rowwise backward-error relation used in triangular solves. Supporting paper text is evidence, not an additional hypothesis. This plan does not supply the completed target proof.",
+  "obligations": [
+    {
+      "id": "source_fidelity",
+      "description": "Preserve all original quantifiers: k >= 2, real c, length-k real vectors a,b, b_k != 0, nonnegative unit roundoff u, and k*u < 1. Nonnegativity is part of the meaning of unit roundoff in the standard model. Retain gamma_k=k*u/(1-k*u), the original inputs, and a single existential perturbation vector. Do not restrict signs, cancellation, or intermediate zeros."
+    },
+    {
+      "id": "computation_model",
+      "description": "Define the actual sequential evaluation, n=k-1: p_i=a_i*b_i*(1+xi_i), s_1=p_1, s_j=(s_{j-1}+p_j)*(1+delta_j) for 2 <= j <= n, t=(c-s_n)*(1+eta), and yhat=(t/b_k)*(1+zeta). Each local error has absolute value <= u. Obtain these identities from a floating-point operation model or evaluation relation, with no overflow/underflow ensuring applicability. Do not assume the desired backward bound or leave yhat unrelated to this computation. If summation starts at zero, justify the exact first addition or explicitly account for its factor within the k budget."
+    },
+    {
+      "id": "indexing",
+      "description": "Choose consistent finite indexing, such as Fin k with final coordinate k-1, and translate all source indices. Handle k=2, where only one product is computed and the accumulation factor product is empty. No a_k term enters the inner product."
+    },
+    {
+      "id": "dot_expansion",
+      "description": "Prove inductively from the recurrence that s_n=sum_i a_i*b_i*F_i, where F_i=(1+xi_i) times the product of (1+delta_j) for max(2,i) <= j <= n. Count the factors as 1+max(0,n-max(2,i)+1), at most n. Handle empty products explicitly."
+    },
+    {
+      "id": "gamma_helper",
+      "description": "Prove a helper for m errors bounded by u: if u >= 0 and m*u < 1, a product of m factors (1+e) or their inverses differs from 1 in absolute value by at most gamma_m. Prove all factor and denominator positivity before clearing denominators. One route bounds the product between (1-u)^m and (1-u)^(-m) and uses Bernoulli inequalities. Handle m=0 and u=0 separately as needed. A proved library lemma is acceptable; an unproved paper lemma or custom axiom is not."
+    },
+    {
+      "id": "required_construction",
+      "description": "Construct Delta b_i=b_i*(F_i-1) for i<k and Delta b_k=b_k*(G-1), where G=((1+eta)*(1+zeta))^(-1). The last coordinate requires inverse factors because subtraction and division errors multiply the numerator. Use the actual local errors and the original b. Zero b_i coordinates must receive zero perturbation."
+    },
+    {
+      "id": "backward_equation",
+      "description": "Show the constructed perturbed inner-product sum equals s_n and yhat*(b_k+Delta b_k)=c-s_n, using the final-operation identities and nonzero rounding factors. Combine these to obtain exactly the selected equation with right-hand side c. Do not divide by c-s_n or yhat."
+    },
+    {
+      "id": "componentwise_bounds",
+      "description": "Use the product helper for each F_i and for the two inverse factors in G. Prove gamma_m <= gamma_k whenever m <= k under k*u < 1. Multiply by |b_i| to obtain the required bound for every coordinate. The final-coordinate bound uses 2 <= k. All perturbations must simultaneously satisfy the exact equation and these bounds."
+    },
+    {
+      "id": "verification",
+      "description": "The builder must compile the complete construction and theorem using local Lean and Mathlib, without sorry, placeholders, or custom axioms. Audit the final theorem for linkage to the evaluation relation and source inputs. Record any genuine source or modeling blocker rather than changing the theorem. No feedback.json was present."
+    }
+  ]
+}

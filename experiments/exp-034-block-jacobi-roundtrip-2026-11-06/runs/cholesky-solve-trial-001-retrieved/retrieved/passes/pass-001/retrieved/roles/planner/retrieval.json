@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "cholesky_solve|Cholesky Solve|theorem:cholesky_factorization|solution_of_a_traingular_system"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Plan gamma arithmetic around explicit positivity of denominators before clearing rational inequalities; use abs_add_le for scalar absolute-value estimates underlying componentwise bounds."
+    }
+  ]
+}

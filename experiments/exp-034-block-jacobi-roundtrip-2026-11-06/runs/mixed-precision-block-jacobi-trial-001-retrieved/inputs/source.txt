@@ -1,0 +1,246 @@
+Source: Sahil Bhola, Self-contained Proof for a Mixed-precision Block Jacobi Algorithm.
+
+Selected deliverable: the full active result labeled theorem:mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic in main.tex (lines 703-1270).
+
+The original mathematical proof is available in paper.tex. The selected statement below is authoritative. Earlier statements and notation supply context. A referenced result may be proved as a helper. Do not assume a desired algorithmic bound or an unproved paper lemma as an added hypothesis.
+
+SELECTED STATEMENT (verbatim LaTeX, proof omitted)
+\begin{theorem}[Mixed-precision Update-form Block Jacobi in Floating-point Arithmetic]\label{theorem:mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic}
+Let $\mat{a}\ireal{n\times n}$ be decomposed as
+$\mat{a}=\mat{d}+\mat{n}$, where $\mat{d}$ is block diagonal with
+symmetric positive-definite blocks of size $T\times T$, and let
+$\vect{x}$ satisfy $\mat{a}\vect{x}=\vect{b}$. Consider the update-form
+block-Jacobi iteration in which the matrix--vector product, residual, and
+solution update are computed in precision $\urd_s$, while each correction
+system is solved by Cholesky factorization in precision $\urd_c$, with
+$\urd_s<\urd_c$. Assume that $S$ divides $n$, that all relevant
+$\gamma$-constants are defined, and that no overflow or underflow occurs.
+
+Define
+\begin{align}
+    \gamma_{m;s}
+    &\define \frac{m\urd_s}{1-m\urd_s},
+    &
+    \gamma_{m;c}
+    &\define \frac{m\urd_c}{1-m\urd_c},
+    \\
+    c_1
+    &\define
+    \gamma_{S+n/S-1;s}
+    +\urd_s
+    +\urd_s\gamma_{S+n/S-1;s},
+    &
+    c_2
+    &\define \gamma_{T;c}^2+3\gamma_{T+1;c}.
+\end{align}
+Let $\widehat{\mat{r}}$ be block diagonal, with each diagonal block equal
+to the computed Cholesky factor of the corresponding block of $\mat{d}$,
+and define
+\begin{align}
+    \mat{g}
+    &\define
+    c_2\abs{\mat{d}^{-1}}
+    \abs{\widehat{\mat{r}}^T}
+    \abs{\widehat{\mat{r}}},
+    &
+    \eta
+    &\define \norm[\infty]{\mat{g}},
+    \\
+    q
+    &\define \norm[\infty]{\mat{d}^{-1}\mat{n}},
+    &
+    p
+    &\define
+    \norm[\infty]{\abs{\mat{d}^{-1}}\abs{\mat{a}}}.
+\end{align}
+If $\eta<1$, then the computed iterates
+$\hat{\vect{x}}^k$ and errors
+$\vect{e}^k\define\hat{\vect{x}}^k-\vect{x}$ satisfy
+\begin{align}
+    \norm[\infty]{\vect{e}^{k+1}}
+    \leq
+    \alpha\norm[\infty]{\vect{e}^k}+\beta,
+\end{align}
+where
+\begin{align}
+    \alpha
+    &\define
+    \frac{
+        \eta+\urd_s+(1+\urd_s)(q+\urd_c p)
+    }{1-\eta}
+    +\urd_s
+    +\frac{(1+\urd_s)(1+\urd_c)c_1p}{1-\eta},
+    \\
+    \beta
+    &\define
+    \left[
+        \urd_s
+        +\frac{(1+\urd_s)(1+\urd_c)c_1p}{1-\eta}
+    \right]
+    \norm[\infty]{\vect{x}}
+    \\
+    &\qquad
+    +\frac{(1+\urd_s)(1+\urd_c)\urd_s}{1-\eta}
+     \norm[\infty]{\mat{d}^{-1}}
+     \norm[\infty]{\vect{b}}.
+\end{align}
+Consequently, if $\alpha<1$, then for every $k\geq0$,
+\begin{align}
+    \norm[\infty]{\vect{e}^{k}}
+    \leq
+    \alpha^k\norm[\infty]{\vect{e}^{0}}
+    +\frac{1-\alpha^k}{1-\alpha}\beta,
+\end{align}
+and
+\begin{align}
+    \limsup_{k\to\infty}
+    \norm[\infty]{\vect{e}^{k}}
+    \leq \frac{\beta}{1-\alpha}.
+\end{align}
+\end{theorem}
+
+SECTION CONTEXT
+\section{Block Jacobi Error Analysis in Floating-point Arithmetic (Mixed-precision)}
+A key observation is that the correction term $\vect{c}^{k+1}\to 0$ (In Floating) as the solution improves.
+Thus, for large $k$, we do not even need to be very accurate in computing the correction term, and therefore, we can use low-precision arithmetic ($\urd_c$) compared to the precision in which the solution is computed $\urd_s < \urd_c$.
+
+EARLIER STATEMENTS FOR CONTEXT
+\begin{theorem}[Block Matrix-vector Product]
+\label{theorem:block_matrix_vector_product}
+Let $\mat{a}\ireal{m\times n}$ and $\vect{x}\ireal{n}$, and suppose that
+each component of $\vect{y}=\mat{a}\vect{x}$ is evaluated using block dot
+products of size $T$. Within each block, the products are accumulated
+sequentially, and the resulting
+$n^\dagger=\ceil{n/T}$ partial sums are also reduced sequentially. Entries
+beyond $n$ in the final block are taken to be zero. Assume that no
+overflow or underflow occurs and that
+$(T+n^\dagger-1)\urd<1$. Then the computed result $\hat{\vect{y}}$
+satisfies
+\begin{align}
+    \hat{\vect{y}}
+    &=(\mat{a}+\Delta\mat{a})\vect{x},
+    &
+    \abs{\Delta\mat{a}}
+    &\leq \gamma_{T+n^\dagger-1}\abs{\mat{a}},
+\end{align}
+where the inequality is interpreted componentwise and
+\begin{align}
+    \gamma_{T+n^\dagger-1}
+    \define
+    \frac{(T+n^\dagger-1)\urd}
+         {1-(T+n^\dagger-1)\urd}.
+\end{align}
+\end{theorem}
+
+\begin{theorem}[Cholesky Solve]\label{theorem:cholesky_solve}
+Let $\mat{a}\ireal{n\times n}$ be symmetric positive definite and let
+$\vect{b}\ireal{n}$. Suppose that $\mat{a}\vect{x}=\vect{b}$ is solved in
+floating-point arithmetic by computing an upper-triangular Cholesky factor
+$\widehat{\mat{r}}$, followed by forward and backward substitution. Assume
+that the factorization completes successfully, no overflow or underflow
+occurs, and $(n+1)\urd<1$. Then the computed solution
+$\hat{\vect{x}}$ satisfies
+\begin{align}
+    (\mat{a}+\Delta\mat{a})\hat{\vect{x}}=\vect{b},
+\end{align}
+where
+\begin{align}
+    \abs{\Delta\mat{a}}
+    &\leq
+    \left(\gamma_{n+1}+2\gamma_n+\gamma_n^2\right)
+    \abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}}
+    \\
+    &\leq
+    \left(3\gamma_{n+1}+\gamma_n^2\right)
+    \abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}}.
+\end{align}
+The inequalities are interpreted componentwise.
+\end{theorem}
+
+\begin{theorem}[Update-form Block Jacobi in Real Arithmetic]
+\label{theorem:block_jacobi_real}
+Let $\mat{a}\ireal{n\times n}$ be decomposed as
+$\mat{a}=\mat{d}+\mat{n}$, where $\mat{d}$ is a nonsingular block-diagonal
+matrix and $\mat{n}$ contains the off-diagonal blocks. Let
+$\vect{x}$ satisfy $\mat{a}\vect{x}=\vect{b}$, and consider the exact
+block-Jacobi iteration
+\begin{align}
+    \mat{d}\vect{c}^{k+1}
+    &=\vect{b}-\mat{a}\vect{x}^k,
+    &
+    \vect{x}^{k+1}
+    &=\vect{x}^k+\vect{c}^{k+1}.
+\end{align}
+Define the forward error $\vect{e}^k\define\vect{x}^k-\vect{x}$ and the
+iteration matrix $\mat{p}\define-\mat{d}^{-1}\mat{n}$. Then
+\begin{align}
+    \vect{e}^{k+1}=\mat{p}\vect{e}^k,
+    \qquad
+    \vect{e}^k=\mat{p}^k\vect{e}^0,
+\end{align}
+and hence
+\begin{align}
+    \abs{\vect{e}^k}
+    &\leq \abs{\mat{p}}^k\abs{\vect{e}^0},
+    &
+    \norm[\infty]{\vect{e}^k}
+    &\leq
+    \norm[\infty]{\mat{p}}^k
+    \norm[\infty]{\vect{e}^0}.
+\end{align}
+The iteration converges to $\vect{x}$ for every initial guess if and only
+if
+\begin{align}
+    \rho(\mat{p})
+    =\rho(\mat{d}^{-1}\mat{n})<1.
+\end{align}
+In particular, $\norm[\infty]{\mat{p}}<1$ is a sufficient condition for
+convergence and makes the iteration a contraction in the infinity norm.
+\end{theorem}
+
+COMMON ROUNDING MODEL AND ERROR CONSTANTS
+\section{Floating-Point Model}
+We assume the standard floating-point model~\cite{higham2002accuracy}: for every elementary
+operation $\circ \in \{+,-,\times,/\}$,
+\begin{equation}
+    \fl(a \circ b) = (a \circ b)(1+\delta),
+    \qquad
+    \abs{\delta} \le \urd,
+    \label{eq:fp-model}
+\end{equation}
+where $\urd$ is the unit roundoff and $\delta$ is the relative roundoff error.
+Using~\cref{eq:fp-model} for numerical analysis we typicall obtain the product
+\begin{align}
+    \prod_{i=1}^n (1 + \delta_i)^{\rho_i} \define 1 + \theta_n, \qquad \rho = \pm 1,
+    \label{eq:theta_n}
+\end{align}
+where $n$ denotes the number of accumulated roundoff error terms.
+For numerical analysis, we seek reliable and sharp bounds for $\theta_n$.
+
+
+\section{Deterministic Rounding Error Analysis}
+The deterministic rounding error analysis proposes the following problem-size dependent constant
+\begin{align}
+\gamma_{n} \define \frac{n\urd}{1 - n\urd}, 
+\label{eq:drea}
+\end{align}
+for $n\urd < 1$.
+Here, $n$ is the number of accumulated error terms~\cite{higham2002accuracy}.
+The problem-size dependent constant is monotonic, that is, $\gamma_{n+1} > \gamma_{n}$ for $\urd > 0$.
+Performing backward/forward error analysis using~\cref{eq:drea} we obtain
+\begin{align}
+    \abs{\theta_n} \leq \gamma_n.
+\end{align}
+
+SOURCE NOTATION MACROS
+\newcommand{\urd}{\ensuremath{\mathrm{u}}}
+\newcommand{\define}{\ensuremath{\triangleq}}
+\newcommand{\vect}[1]{\mathbf{\MakeLowercase{#1}}}
+\newcommand{\mat}[1]{\mathbf{\MakeUppercase{#1}}}
+\newcommand{\ireal}[1]{\in\mathbb{R}^{#1}}
+\newcommand{\norm}[2][]{\left\|#2\right\|_{#1}}
+\DeclareMathOperator{\fl}{fl}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\widehatgamma}[1]{\widehat{\gamma}_{#1}}

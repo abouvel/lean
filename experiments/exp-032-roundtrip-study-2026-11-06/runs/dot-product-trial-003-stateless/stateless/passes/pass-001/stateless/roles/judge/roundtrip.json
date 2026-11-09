@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "b128a2707df7086de9813230fc872cd721d8c55b3a929434b4a4a5ce3c13c16b",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation explicitly asserts the entire requested conjunction for every model and tree. The supplied recursive constructions define the actual rounded computation and its exact-product reference. The final bound and equality already appear together in the target; no missing composition, inequality, or connection is needed. Existential perturbation witnesses satisfy the construction policy.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The target explicitly quantifies over every Model m and every T in Tree(R x R). Under (depth(T)+1)u<1 it asserts a P satisfying both IsPerturbation(gamma(depth(T)+1,u),exactProductTree(T),P) and exactSum(P)=roundedDotProduct(m,T).",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "The target references exactProductTree(T), whose recursive construction maps each leaf (a,b) to exact real ab and preserves ordered shape. The target explicitly gives |p_i-a_i b_i|<=gamma(d+1,u)|a_i b_i|.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "roundedProductTree maps each original leaf (a,b) to r(ab). roundedDotProduct uses this tree; its leaf result is r(ab), with one multiplication rounding included in the asserted gamma(d+1,u) bound.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "roundedSum at every internal node is r(roundedSum(L)+roundedSum(R)). The target equality refers to roundedDotProduct defined using this reduction, accounting for every internal-node rounded addition.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The target directly asserts the common componentwise bound gamma(d+1,u)=((d+1)u)/(1-(d+1)u). Depth is zero at leaves and 1+max of child depths at nodes. IsPerturbation preserves shape and bounds every leaf, including zero products.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "The model assumptions are u>=0 and relative rounding error at every real input, with multiplication r(ab) and addition r(a+b). The theorem adds only (d+1)u<1. Arbitrary finite nonempty binary trees and real factors are allowed, without balance, sign, exact-arithmetic, or conclusion assumptions.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

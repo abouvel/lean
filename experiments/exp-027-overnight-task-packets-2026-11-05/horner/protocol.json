@@ -1,0 +1,36 @@
+{
+  "task_id": "horner-roundtrip-pilot",
+  "purpose": "Exploratory pilot for an independently authored target",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "trials_per_condition": 1,
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "role_budgets_seconds": {
+    "planner": 90,
+    "formalizer": 150,
+    "prover": 180,
+    "translator": 180,
+    "judge": 180
+  },
+  "critic_seconds": 240,
+  "max_passes": 2,
+  "whole_job_seconds": 3600,
+  "verification_command": "bash pipeline/verify.sh",
+  "allowed_tools": [
+    "local Lean and Mathlib",
+    "Copy the supplied relative-error Model.lean prerequisite unchanged.",
+    "frozen generic artifact for retrieved production roles"
+  ],
+  "acceptance_tests": {
+    "target-completeness": "Prove the full forward-error theorem for every model, coefficient list, and real evaluation point.",
+    "exact-horner": "Use the exact Horner recursion with zero for the empty list and coefficients in increasing degree order.",
+    "rounded-horner": "Evaluate each cons step using a rounded multiplication of x and the rounded tail, then a rounded addition of the coefficient.",
+    "error-envelope": "Define the stated error envelope using exact values and u, with the requested recurrence and base case.",
+    "conclusion-linkage": "Bound the absolute difference of the supplied rounded and exact evaluators by the supplied envelope.",
+    "assumption-integrity": "Use the supplied relative-error model without additional smallness, sign, nonzero, or exact-arithmetic premises."
+  },
+  "review_policy": "Require formal verification and agreeing automated semantic passes. Expert review remains pending."
+}

@@ -1,0 +1,96 @@
+{
+  "condition": "retrieved",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 170.621,
+  "compiler_command_events": 6,
+  "token_usage": {
+    "input_tokens": 340130,
+    "cached_input_tokens": 296192,
+    "output_tokens": 4099,
+    "reasoning_output_tokens": 217
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793865008.613016,
+      "time_limit_seconds": 90,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 61.723,
+      "token_usage": {
+        "input_tokens": 112170,
+        "cached_input_tokens": 105600,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1558,
+        "reasoning_output_tokens": 86
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793865070.8024395,
+      "time_limit_seconds": 150,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 50.521,
+      "token_usage": {
+        "input_tokens": 101100,
+        "cached_input_tokens": 95360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1367,
+        "reasoning_output_tokens": 90
+      },
+      "compiler_command_events": 2,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793865125.5661292,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 58.377,
+      "token_usage": {
+        "input_tokens": 126860,
+        "cached_input_tokens": 95232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1174,
+        "reasoning_output_tokens": 41
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "Research.forwardDifference_error_bound"
+    ],
+    "construction_names": [
+      "Research.forwardDifference"
+    ],
+    "source_mapping": "/spec/source.txt: forwardDifference is exactly (f (x+h) - f x) / h. forwardDifference_error_bound universally quantifies f D : \u211d \u2192 \u211d and x h L : \u211d, and assumes exactly 0 < h, 0 \u2264 L, continuity of f on [x,x+h], HasDerivAt f (D t) t for every interior t, and |D t - D x| \u2264 L * |t-x| for every interior t. It concludes |forwardDifference f x h - D x| \u2264 L*h. No endpoint derivative is assumed. No supplied supporting sources exist. No /spec/feedback.json was present. Statement revision: none; the handoff statement matches the original source. The mean-value witness is a proof step, not an additional requested construction. The theorem proof is temporary sorry scaffolding for the next role."
+  }
+}

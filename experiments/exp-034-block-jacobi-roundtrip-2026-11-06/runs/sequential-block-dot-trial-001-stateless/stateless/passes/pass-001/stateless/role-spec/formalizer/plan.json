@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the full sequential-reduction corollary using actual rounded multiplication and addition recurrences over the original input vectors. Reuse the block construction underlying the block-dot-product theorem, replacing only the binary-tree reduction with a sequential fold initialized by its first partial. Derive the coefficient expansion and finite-product error bound as helper results, not as hypotheses about the desired output. For each original input index, construct its coefficient from its multiplication rounding factor, subsequent additions inside its block, and subsequent additions in the outer sequential reduction; use that coefficient minus one to construct each of the two alternative backward perturbations. The connection to the earlier theorem is the same block computation and componentwise perturbation construction, with outer path length n_dagger - 1 in place of ceil(log2 n_dagger). Preserve the exact constant gamma_(T+n_dagger-1), the original inputs, all componentwise quantifiers, and source numerical assumptions. This is a proof plan only; no completed target proof is supplied.",
+  "obligations": [
+    {
+      "id": "source_contract",
+      "description": "State the selected corollary for arbitrary original real vectors x,y of length n and positive integral block size T, with n_dagger = ceil(n/T), zero padding, the common rounding model, and absence of overflow/underflow. Make implicit domain conventions explicit and do not weaken the source by restricting n to multiples of T, requiring nonzero entries, imposing sign restrictions, or bounding input magnitudes. Retain or explicitly account for the inherited (T+ceil(log2 n_dagger))*u < 1 assumption as well as the selected (T+n_dagger-1)*u < 1 assumption; sequential summation replaces the inherited binary-tree algorithm, not its input vectors."
+    },
+    {
+      "id": "rounding_operations",
+      "description": "Define rounded multiplication and addition, or operation-indexed error witnesses for every operation actually executed, with fl(a op b) = (a op b)*(1+delta) and abs(delta) <= u, where u >= 0. Link all intermediate values to these operations. A global rounding operator satisfying the common model or an explicit admissible execution trace is acceptable; an arbitrary output satisfying the intended coefficient expansion is not an adequate algorithm definition."
+    },
+    {
+      "id": "block_indexing",
+      "description": "Construct padded entries for the rectangular index set of n_dagger blocks of T slots using 0-based index j*T+t. Prove every original i<n occurs exactly once with j=i/T and t=i%T, and that padded terms vanish. Establish the ceiling-division arithmetic needed to convert a double block sum into the original sum over Fin n."
+    },
+    {
+      "id": "block_recurrence",
+      "description": "Define each computed block partial by rounded products and sequential rounded additions, initializing the accumulator with its first computed product. Establish its exact coefficient expansion by induction on the slots. Each real input term has one multiplication factor and at most T-1 subsequent addition factors, hence at most T rounding factors. Treat T=1 without a fictitious extra addition; zero padding must remain compatible with the recurrence."
+    },
+    {
+      "id": "outer_recurrence",
+      "description": "Define the computed final result by sequential rounded addition of the computed block partials, initializing with the first partial and applying exactly n_dagger-1 additions when n_dagger>=1. Derive the exact linear expansion in the computed partials with their actual subsequent addition factors, and prove each block has at most n_dagger-1 such factors. Do not assume this expansion as an additional theorem hypothesis."
+    },
+    {
+      "id": "boundary_cases",
+      "description": "Handle singleton blocks and a single partial explicitly through empty products. Determine the source convention for n=0: if the theorem is stated for nonempty dot products make that convention explicit; if allowing n=0 define the empty execution as zero, prove the result separately, and interpret the natural index T+n_dagger-1 consistently. Never discard the last incomplete block or silently assume n_dagger>=2."
+    },
+    {
+      "id": "factor_bound_helper",
+      "description": "Prove or locate in Mathlib an applicable finite-product bound: for m factors with abs(delta_k)<=u, u>=0 and m*u<1, the absolute difference of their product from 1 is at most gamma_m = (m*u)/(1-m*u). A direct uniform bound for at most K factors, K=T+n_dagger-1 and K*u<1, is also suitable. Prove required denominator positivity and monotonicity rather than importing an unproved paper lemma or introducing an axiom."
+    },
+    {
+      "id": "combined_coefficients",
+      "description": "Compose the two recurrence expansions to assign each original term an explicitly constructed coefficient c_i. Prove its factor count is at most K=T+n_dagger-1 and deduce abs(c_i-1)<=gamma_K from the rounding witnesses and the product helper. Establish the exact computed identity y_hat = sum_i x_i*y_i*c_i from the actual recurrences and padding/indexing lemmas."
+    },
+    {
+      "id": "perturbation_construction",
+      "description": "Construct Delta_x(i)=(c_i-1)*x_i and Delta_y(i)=(c_i-1)*y_i as functions on the original input index type. Establish both alternative exact representations of the same computed y_hat, and the respective componentwise bounds abs(Delta_x(i))<=gamma_K*abs(x_i) and abs(Delta_y(i))<=gamma_K*abs(y_i) for every original index. Do not interpret the claim as simultaneously perturbing both factors in one product; no division by x_i or y_i is needed."
+    },
+    {
+      "id": "formal_validation",
+      "description": "Compile the complete formalization with local Lean and Mathlib, with no sorry, custom axioms, or assumed algorithmic bounds. Audit the final theorem to ensure it refers to the constructed sequential block computation and arbitrary original x,y, exports both representations, uses the exact source constant and ceiling block count, and preserves numerical hypotheses. If a genuine source ambiguity or obstruction prevents this, record it precisely instead of altering the target."
+    }
+  ],
+  "sources": [
+    "/spec/source.txt",
+    "/spec/PROMPT.txt",
+    "/spec/ROLE.txt",
+    "/spec/paper.tex"
+  ],
+  "feedback": "No /spec/feedback.json was present. No supporting files were listed under /spec/support."
+}

@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "traingular_update|theta|prod|inner product"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require explicit positive denominators before proving gamma and reciprocal-factor inequalities in Lean."
+    }
+  ]
+}

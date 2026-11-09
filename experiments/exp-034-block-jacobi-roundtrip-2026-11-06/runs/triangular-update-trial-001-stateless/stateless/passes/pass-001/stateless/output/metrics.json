@@ -1,0 +1,108 @@
+{
+  "condition": "stateless",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 409.466,
+  "compiler_command_events": 12,
+  "token_usage": {
+    "input_tokens": 531493,
+    "cached_input_tokens": 484480,
+    "output_tokens": 14359,
+    "reasoning_output_tokens": 3119
+  },
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793992528.5919409,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 55.441,
+      "token_usage": {
+        "input_tokens": 75983,
+        "cached_input_tokens": 65408,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2075,
+        "reasoning_output_tokens": 76
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793992584.5429745,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 105.965,
+      "token_usage": {
+        "input_tokens": 149728,
+        "cached_input_tokens": 124928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3947,
+        "reasoning_output_tokens": 668
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793992699.7731018,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 248.06,
+      "token_usage": {
+        "input_tokens": 305782,
+        "cached_input_tokens": 294144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8337,
+        "reasoning_output_tokens": 2375
+      },
+      "compiler_command_events": 9,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "Research.TriangularUpdate.triangular_update"
+    ],
+    "construction_names": [
+      "Research.TriangularUpdate.gamma",
+      "Research.TriangularUpdate.ErrorTrace",
+      "Research.TriangularUpdate.ErrorTrace.Valid",
+      "Research.TriangularUpdate.prefixIndex",
+      "Research.TriangularUpdate.lastIndex",
+      "Research.TriangularUpdate.roundedProduct",
+      "Research.TriangularUpdate.sequentialAccumulator",
+      "Research.TriangularUpdate.sequentialInnerProduct",
+      "Research.TriangularUpdate.roundedNumerator",
+      "Research.TriangularUpdate.computedUpdate",
+      "Research.TriangularUpdate.innerCoefficient",
+      "Research.TriangularUpdate.lastCoefficient",
+      "Research.TriangularUpdate.perturbation"
+    ],
+    "source_mapping": "Research/Submission.lean formalizes the complete selected lemma lemma:traingular_update from /spec/source.txt (original paper.tex lines 403-452). Fin k uses zero-based indices; prefixIndex enumerates the first k-1 coordinates and lastIndex is the paper coordinate k. ErrorTrace.Valid gives the elementary relative-error bounds for every executed operation, encoding the standard no-overflow/no-underflow model. sequentialAccumulator initializes with the first rounded product and then rounds each sequential addition; computedUpdate then rounds subtraction and division. perturbation explicitly constructs the single backward perturbation vector, with the inverse of the final two rounding factors in its last coordinate. triangular_update asserts the exact perturbed equation and all gamma_k componentwise bounds under k>=2, u>=0, k*u<1 and b_k nonzero. Initial statement: no revision to an earlier formal statement; /spec/feedback.json is absent. Supporting source copies are unchanged in Research/Sources; /spec/support contains no files. Only the final theorem proof is left as sorry scaffolding for the proving role."
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "1b5d25cac19bd58543aa4d7585749cfa59be3484c9fda5443433102081c3287f",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": false,
+  "construction_complete": true,
+  "target_evidence": "algorithm_leaf_backward_error gives perturbations over F(t) for the actual returned tree; algorithm_offset gives only a round-length/offset identity. Neither target concludes the bound on original xs occurrences. The explicit construction mathematically preserves all leaves and terminates in one tree, so its semantics recover the source claim, but the required formal connection and final conclusion are missing. F(t)=xs is unnecessary and generally false: four leaves yield [a,c,b,d]. An occurrence-preserving permutation suffices.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+      "evidence": "The universal backward-error target ends at map(first,ps)=F(t). The other target states an offset identity. Neither target concludes a perturbation representation aligned with original xs.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Deliver the final backward-error theorem indexed by the original input occurrences."
+    },
+    {
+      "requirement_id": "algorithm-linkage",
+      "requirement": "The proved theorem applies to the requested algorithm and its output.",
+      "evidence": "The target states algorithm(xs,err)=some(t) and bounds E(t). The algorithm executes h=clog_2(length(xs)) rounds. Each level pairs j with j+ceil(current_length/2), uses (E(a)+E(b))*(1+err), and carries unmatched trees unchanged. algorithm_offset identifies this offset with ceil(n/2^(k+1)). This matches Algorithm 1 with zero-based indexing.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "input-occurrences",
+      "requirement": "The result is connected to every occurrence in the original input.",
+      "evidence": "The construction starts with map(leaf,xs), but neither target asserts a permutation between F(t) and xs. In particular, no target states preservation of all leaf occurrences through rounds or that the returned first tree contains every original occurrence. The length/offset identity alone does not state these links.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-original-input-link"
+      ],
+      "correction": "Prove that the returned tree leaves are a permutation of xs, preserving duplicate occurrences, and transport perturbations along it."
+    },
+    {
+      "requirement_id": "componentwise-backward-error",
+      "requirement": "The requested componentwise backward-error conclusion is proved.",
+      "evidence": "For ps over F(t), the target states E(t)=sum(a+e) and |e|<=gamma(h,u)*|a| for every pair, with the correct gamma and positive denominator. These are the correct inequalities on tree leaves, including zero leaves and repetitions. The final targets omit their transport to original input occurrences.",
+      "verdict": "fail",
+      "defect_categories": [
+        "weakened-conclusion",
+        "missing-original-input-link"
+      ],
+      "correction": "Deliver a perturbation list aligned with xs, its perturbed-sum equality for E(t), and every required componentwise bound."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "The candidate does not assume, circularly encode, or vacuously imply the conclusion.",
+      "evidence": "The hypotheses are nonempty xs, u>=0, bounded local errors, and h*u<1. These represent the source standard floating-point model without overflow or underflow. Arbitrary bounded err arrays model its local errors; unused entries may be zero. There are no input sign, magnitude, multiplicity, or special-length restrictions and no assumed perturbation conclusion.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "A delivered final backward-error theorem for every original input occurrence and the actual algorithm output."
+  ],
+  "missing_formal_steps": [
+    "Prove preservation of the concatenated leaf multiset across a level and its iteration.",
+    "Prove that for nonempty xs the list after clog_2(length(xs)) rounds consists of the returned tree alone, and obtain an occurrence-preserving permutation between F(t) and xs.",
+    "Transport the perturbations along that permutation and explicitly conclude the perturbed-sum equality and componentwise gamma bound for xs."
+  ],
+  "limitations": [
+    "Review limited to the supplied mathematical translation, source, and contracts. Logical implication includes mathematical consequences of the explicit construction; delivery completeness credits only the stated targets."
+  ]
+}

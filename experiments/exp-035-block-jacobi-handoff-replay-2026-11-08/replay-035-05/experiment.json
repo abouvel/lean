@@ -1,0 +1,34 @@
+{
+  "name": "block-matrix-vector-trial-001-stateless",
+  "task_id": "block-matrix-vector",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless"
+  ],
+  "max_passes": 2,
+  "builder_seconds": 900,
+  "critic_seconds": 300,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "12g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "revision": {
+    "schema_version": 1,
+    "mode": "calibration",
+    "seconds": {
+      "planner": 180,
+      "formalizer": 420,
+      "prover": 900,
+      "translator": 240,
+      "judge": 240
+    },
+    "construction_policy": "Define the rowwise size-T block matrix-vector product with sequential reduction and zero padding. Prove the perturbation matrix identity and the entrywise gamma(T + ceil(n/T) - 1) bound."
+  }
+}

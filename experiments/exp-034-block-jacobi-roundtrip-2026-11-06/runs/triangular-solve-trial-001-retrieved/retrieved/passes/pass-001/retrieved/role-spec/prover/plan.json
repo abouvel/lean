@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "strategy": "Construct the actual rounded triangular substitution algorithm and derive its rowwise coefficient perturbations from elementary rounding errors. Assemble these perturbations into one matrix DeltaT; the row identities yield the required perturbed system and local factor counts yield the global gamma_n componentwise bound. Prove both triangular orientations and isolate the one-division boundary case omitted by the paper helper. Prove the product-error and update helpers rather than assuming their conclusions. This plan specifies the construction and verification obligations, without giving the completed target proof.",
+  "obligations": [
+    {
+      "id": "source_contract",
+      "description": "Preserve the full selected theorem: arbitrary real nonsingular triangular T and real b, the computed forward or backward substitution solution, no overflow or underflow, standard relative rounding with nonnegative unit roundoff u, and n*u < 1. Conclude existence of DeltaT with (T+DeltaT).mulVec xhat=b, matching triangular structure, and entrywise |DeltaT i j| <= gamma_n*|T i j| with gamma_n=n*u/(1-n*u). Do not add an assumed backward-error bound or change original inputs or constants."
+    },
+    {
+      "id": "algorithm_construction",
+      "description": "Define legal rounded operations with relative-error witnesses bounded by u, and construct substitution using previously computed components in the appropriate row traversal order. Specify the sequential dot product, rounded subtraction, and rounded division. Use a rounded first multiplication followed by rounded additions of later products, and direct division for the first solved row. Tie xhat to this actual algorithm on T and b; an arbitrary vector or a pre-assumed row certificate is insufficient."
+    },
+    {
+      "id": "diagonal_nonzero",
+      "description": "Derive nonzero diagonal entries from triangularity and nonsingularity, rather than imposing stronger hypotheses; use them to justify every division in the constructed computation."
+    },
+    {
+      "id": "product_bound",
+      "description": "Prove or invoke verified Mathlib results for the finite product error bound |product (1+delta_l)^(sign_l)-1| <= gamma_m for m factors, signs +1 or -1, |delta_l| <= u, and m*u < 1. Prove required factor nonvanishing and positive denominators before division. Establish gamma_m <= gamma_n for m <= n and n*u < 1, including zero-factor and u=0 cases. The paper bound cannot be an unproved added assumption."
+    },
+    {
+      "id": "dot_expansion",
+      "description": "Derive the exact coefficient expansion of the sequential rounded dot product on original row coefficients and previously computed xhat entries. Each coefficient contains its multiplication error and the subsequent accumulation errors. Count at most k-1 factors for k-1 terms, handling a singleton dot product without an extra rounded addition and treating the empty dot product separately."
+    },
+    {
+      "id": "row_perturbations",
+      "description": "Prove the triangular-update helper for k >= 2 from the operation model. Construct off-diagonal perturbations from dot-product coefficient factors, and the diagonal perturbation from the reciprocal product of subtraction and division factors. Obtain the exact perturbed row equation with unchanged right-hand side and coefficient bounds gamma_k times original magnitudes. Check factor counts at k=2. Do not assume this helper conclusion as a theorem hypothesis."
+    },
+    {
+      "id": "first_row_and_dimensions",
+      "description": "Handle the first solved row by a one-factor reciprocal perturbation for direct rounded division, with gamma_1. The paper update lemma requires k >= 2 and does not justify this boundary case. Handle n=1 explicitly and n=0 if allowed by the formal dimension convention; the empty case must not infer u<1 from 0*u<1 or introduce nonexistent operations."
+    },
+    {
+      "id": "matrix_construction",
+      "description": "Choose the row perturbations simultaneously and define DeltaT entrywise from them on the active triangle, with zero entries elsewhere. Maintain linkage to the same T, b, and computed xhat. Prove triangular structure and preservation of zero coefficients using the relative bounds."
+    },
+    {
+      "id": "matrix_equation_and_bound",
+      "description": "Convert row identities into (T+DeltaT).mulVec xhat=b by finite-sum identities, triangular zeros, and vector extensionality. Use each row size k <= n and gamma monotonicity to establish the global componentwise gamma_n bound, including inactive entries."
+    },
+    {
+      "id": "upper_triangular_case",
+      "description": "Prove the backward substitution case with the last row as its direct-division base case. Either repeat the rowwise construction using the number of remaining unknowns, or provide a verified reversal reduction transporting T, b, xhat, nonsingularity, triangularity, computation order, matrix multiplication, and entrywise bounds. Check that reversal respects the specified sequential summation order; a bare without-loss-of-generality claim is insufficient."
+    },
+    {
+      "id": "validation_and_blockers",
+      "description": "Compile the final implementation with local Lean and Mathlib, with no custom axioms, placeholders, sorry, or unproved paper helpers. Audit all source hypotheses, quantifiers, constants, and the original-input algorithm linkage. Record any genuine source or evaluation-order obstruction precisely rather than silently altering the theorem. No /spec/feedback.json was present when this plan was written."
+    }
+  ]
+}

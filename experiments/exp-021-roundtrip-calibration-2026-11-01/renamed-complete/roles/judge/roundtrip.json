@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "a3271bbc7fe2bb216898feea51d64d4969acf612d36b8955b40bd212d54e6749",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "target_evidence": "The translated main target is the requested universally quantified backward-error theorem for the explicitly defined rounded dot product: S(Q)=D_M(T), with Q a componentwise gamma(depth(T)+1,u) perturbation of exactProductTree(T). Its recursive algorithm rounds each product once and each internal addition once. Conversely, the original target gives this same main claim; the auxiliary operation equations are definitions of the supplied constructions, and the auxiliary product bound follows directly from r(ab)=ab(1+delta) and |delta|<=u. These auxiliary statements impose no additional mathematical assumptions.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "dotProductBackwardError quantifies over every model M and every finite nonempty ordered binary tree T of real pairs. Under (depth(T)+1)u<1 it asserts an existential Q with both IsPerturbation(gamma(depth(T)+1,u),E(T),Q) and S(Q)=D_M(T), recovering the full requested backward-error conclusion.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "E=exactProductTree maps each input leaf (a,b) to the exact real product ab and preserves ordered shape. The main target compares Q directly with E(T), explicitly giving |q-ab| <= gamma(depth(T)+1,u)|ab| for every corresponding leaf.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "The construction defines D_M(leaf((a,b)))=r(ab); roundedProductTerm and roundedProductTree identify precisely one rounded multiplication at every leaf. roundedProductTree_isPerturbation also establishes |r(ab)-ab| <= u|ab|. The main bound includes this multiplication error through the additional 1 in depth(T)+1.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "The actual algorithm is D_M(node(L,R))=r(D_M(L)+D_M(R)), with the supplied tree preserved. Every internal-node addition is rounded, and the main target equates this very output with S(Q). Thus the asserted bound covers all ancestor additions, including in unbalanced trees.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "depth(leaf)=0 and depth(node(L,R))=1+max(depth(L),depth(R)). The main target uses gamma(depth(T)+1,u)=((depth(T)+1)u)/(1-(depth(T)+1)u) at every leaf. Each leaf has one product rounding and at most depth(T) ancestor additions; the stated smallness condition makes this denominator positive.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "The model requires only real u>=0 and a rounding function satisfying for every real z the relative-error representation r(z)=z(1+delta) with |delta|<=u. The main theorem adds only (depth(T)+1)u<1. There is no exact-arithmetic restriction, balancing restriction, restriction on input values, or assumption of the perturbation conclusion.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

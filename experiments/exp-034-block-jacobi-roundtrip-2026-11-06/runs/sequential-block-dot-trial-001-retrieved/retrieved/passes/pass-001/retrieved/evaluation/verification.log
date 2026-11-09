@@ -1,0 +1,7 @@
+⚠ [8026/8028] Built Research.Submission (12s)
+warning: Research/Submission.lean:276:5: unused variable `h_tree`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [8027/8028] Built Research (4.1s)
+Build completed successfully (8028 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

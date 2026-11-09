@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "3a5e0d4a0ab512b0d09742e3f915b1dadf35814eae7475e4b39e16b67f4e6203",
+  "targets": [
+    "Research.answer._proof_1",
+    "Research.answer_correct"
+  ],
+  "construction_names": [
+    "Research.answer"
+  ],
+  "declarations": [
+    {
+      "body": "Classical.choose.{1} Research.answer._proof_1",
+      "dependencies": [
+        "Real",
+        "Classical.choose",
+        "Real",
+        "Eq",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "Research.answer._proof_1"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.answer",
+      "type": "Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Exists",
+        "Real",
+        "Eq",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Research.answer._proof_1",
+      "type": "\u2203 x, Eq.{1} (HMul.hMul.{0, 0, 0} x x) 0"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Eq",
+        "Real",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Research.answer",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Research.answer_correct",
+      "type": "Eq.{1} (HMul.hMul.{0, 0, 0} Research.answer Research.answer) 0"
+    }
+  ],
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.28.0",
+    "manifest_sha256": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+  }
+}

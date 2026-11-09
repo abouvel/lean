@@ -1,0 +1,439 @@
+{
+  "builder": {
+    "condition": "retrieved",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 3846.702,
+    "compiler_command_events": 17,
+    "token_usage": {
+      "input_tokens": 763733,
+      "cached_input_tokens": 711424,
+      "output_tokens": 14922,
+      "reasoning_output_tokens": 2496
+    },
+    "roles": {
+      "planner": {
+        "condition": "retrieved",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794005070.1060903,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 74.058,
+        "token_usage": {
+          "input_tokens": 113152,
+          "cached_input_tokens": 104448,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3164,
+          "reasoning_output_tokens": 204
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "retrieved",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794005144.7645576,
+        "time_limit_seconds": 420,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 126.772,
+        "token_usage": {
+          "input_tokens": 234326,
+          "cached_input_tokens": 223104,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 4630,
+          "reasoning_output_tokens": 1110
+        },
+        "compiler_command_events": 4,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "retrieved",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794005281.0335402,
+        "time_limit_seconds": 900,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 3645.872,
+        "token_usage": {
+          "input_tokens": 416255,
+          "cached_input_tokens": 383872,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 7128,
+          "reasoning_output_tokens": 1182
+        },
+        "compiler_command_events": 13,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "TriangularUpdate.triangular_update_constructed",
+        "TriangularUpdate.triangular_update"
+      ],
+      "construction_names": [
+        "TriangularUpdate.gamma",
+        "TriangularUpdate.entry",
+        "TriangularUpdate.lastIndex",
+        "TriangularUpdate.roundedProduct",
+        "TriangularUpdate.sequentialDot",
+        "TriangularUpdate.computedValue",
+        "TriangularUpdate.LocalErrors",
+        "TriangularUpdate.IsEvaluation",
+        "TriangularUpdate.dotWeight",
+        "TriangularUpdate.finalWeight",
+        "TriangularUpdate.perturbation",
+        "TriangularUpdate.BackwardEquation"
+      ],
+      "source_mapping": "Research/Submission.lean formalizes the full active lemma:traingular_update in /spec/source.txt and /spec/paper.tex lines 403-452. Source coordinates 1,...,k correspond to Fin k values 0,...,k-1. The inner product uses exactly the first k-1 entries; its first rounded product initializes the accumulator and subsequent additions are rounded. IsEvaluation existentially quantifies bounded local relative errors for these operations, subtraction, and division; this is the standard floating-point model under no overflow/underflow, with no assumed algorithmic bound. Unit roundoff is nonnegative and k*u<1. computedValue is the actual evaluation, and perturbation gives an explicit witness with dot-product factors and inverse final-operation factors. triangular_update_constructed states the exact backward equation and every gamma_k component bound for this witness; triangular_update states the source existential result for every such evaluation. Supporting source.txt, paper.tex, references.bib, and source.pdf were copied unchanged to Research; /spec/support contained no files. No feedback.json was present; no feedback-driven statement revision was made. The plan is used only as a fallible handoff. Only the proof of triangular_update_constructed is temporarily sorry; all construction definitions have actual bodies, and triangular_update is derived from it."
+    }
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 15.509,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 339,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "d185eee57e6feae45a7d7cefa47eb9a85e661c098c57ff5fbd13cba8568356d7",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "critic": {
+    "condition": "retrieved",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1794008954.4819725,
+    "time_limit_seconds": 300,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 67.644,
+    "token_usage": {
+      "input_tokens": 228543,
+      "cached_input_tokens": 207488,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2278,
+      "reasoning_output_tokens": 291
+    },
+    "compiler_command_events": 4,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "status": "accepted",
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794005070.1060903,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 74.058,
+      "token_usage": {
+        "input_tokens": 113152,
+        "cached_input_tokens": 104448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3164,
+        "reasoning_output_tokens": 204
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794005144.7645576,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 126.772,
+      "token_usage": {
+        "input_tokens": 234326,
+        "cached_input_tokens": 223104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4630,
+        "reasoning_output_tokens": 1110
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794005281.0335402,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 3645.872,
+      "token_usage": {
+        "input_tokens": 416255,
+        "cached_input_tokens": 383872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7128,
+        "reasoning_output_tokens": 1182
+      },
+      "compiler_command_events": 13,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "translator": {
+      "condition": "blind",
+      "kind": "translator",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794009023.0366263,
+      "time_limit_seconds": 240,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 113.842,
+      "token_usage": {
+        "input_tokens": 76831,
+        "cached_input_tokens": 67200,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5337,
+        "reasoning_output_tokens": 115
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "judge": {
+      "condition": "blind",
+      "kind": "judge",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794009137.3900874,
+      "time_limit_seconds": 240,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 60.82,
+      "token_usage": {
+        "input_tokens": 69646,
+        "cached_input_tokens": 63360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2680,
+        "reasoning_output_tokens": 242
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "report": {
+    "schema_version": 2,
+    "candidate_hash": "d185eee57e6feae45a7d7cefa47eb9a85e661c098c57ff5fbd13cba8568356d7",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "The two translated final targets explicitly assert the full requested scalar backward-error result. The zero-based recurrence and bounded error factors faithfully encode the sequential operations under the source standard floating-point model. The constructed target specifies an actual perturbation formula; the existential target covers every evaluation represented by the model. Both include the pivot and the exact gamma(k) bound.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+        "evidence": "Both triangular_update_constructed and triangular_update already conclude the exact backward equation and all componentwise gamma(k) bounds for arbitrary admissible inputs. The latter covers every yhat satisfying IsEvaluation; no missing composition of supporting lemmas is needed.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "construction-correctness",
+        "requirement": "Define the sequential inner product followed by the rounded subtraction and division in the scalar update.",
+        "evidence": "roundedProduct is P_i=a_i b_i(1+xi_i). sequentialDot starts S_1=P_0 and continues S_(m+1)=(S_m+P_m)(1+delta_m). computedValue uses S_(k-1), rounded subtraction with factor 1+eta, then division by b_(k-1) with factor 1+zeta. LocalErrors bounds exactly the errors used by these operations. These explicit recurrences encode the source standard relative-error model; a concrete floating-point format is not required by that model.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "target-bound",
+        "requirement": "Prove the stated perturbed equation, including the pivot, and all componentwise gamma(k) bounds.",
+        "evidence": "Both targets assert sum_(i=0)^(k-2) a_i(b_i+Delta b_i)+yhat(b_(k-1)+Delta b_(k-1))=c and |Delta b_i| <= [ku/(1-ku)]|b_i| for every i in Fin k. The explicit perturbation uses the accumulated product/addition weight on each nonpivot component and the reciprocal of (1+eta)(1+zeta) on the pivot. Thus the equality, pivot, component range, and constant all match the source.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "original-input-link",
+        "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+        "evidence": "The constructed target sets yhat to computedValue for the same a,b,c and error tuple used in perturbation. IsEvaluation requires this very yhat to equal computedValue for those original inputs and bounded error witnesses. BackwardEquation retains a and c, perturbs b, and multiplies its final entry by yhat. There is no unrelated output or replacement input.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+        "evidence": "The targets retain k >= 2, ku < 1, arbitrary real a,b,c, and nonzero pivot. Nonnegative u is inherent in unit roundoff. The source no-overflow/no-underflow condition licenses precisely the local relative-error model used by the translation. IsEvaluation assumes only operation recurrences and local error bounds, not any backward equation or accumulated bound. Unused error coordinates cannot affect the result. Total division outside the target hypotheses is harmless: the pivot and both final error factors are nonzero within them.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": [
+      "Semantic review is based on the supplied translation statements and constructions; no Lean code or other evaluator verdict was inspected."
+    ]
+  },
+  "direct_report": {
+    "overall_verdict": "pass",
+    "phase": "final",
+    "target_evidence": "Research/Submission.lean:325-335 proves triangular_update for arbitrary k >= 2, real vectors a,b and c, nonzero final pivot, nonnegative unit roundoff with k*u < 1, and any IsEvaluation of the sequential rounded update. Its conclusion is existence of one perturbation vector satisfying the exact BackwardEquation and gamma(k) bounds for every coordinate, including the pivot. The constructive proof is at lines 273-320.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+        "evidence": "Research/Submission.lean:325-335 proves triangular_update, with both the perturbed equation and all componentwise bounds in a single existential conclusion. Research/Submission.lean:273-320 supplies its constructive proof. Independent lake env lean Research/Submission.lean completed with exit code 0; /evaluation/verification.json and verification.log also report a successful build and formal audit.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "construction-correctness",
+        "requirement": "Define the sequential inner product followed by the rounded subtraction and division in the scalar update.",
+        "evidence": "Research/Submission.lean:30-40 defines each rounded product and a left-to-right sequential sum, initialized by the first rounded product. Lines 44-47 then round c minus that sum and round division by b at zero-based coordinate k-1. This is the requested order, with no extra addition to zero. Lines 51-61 bound every active local error and connect yhat to this computation.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "target-bound",
+        "requirement": "Prove the stated perturbed equation, including the pivot, and all componentwise gamma(k) bounds.",
+        "evidence": "Research/Submission.lean:18 defines gamma as k*u/(1-k*u). Lines 81-85 define the exact sum over zero-based indices below k-1 plus yhat times the perturbed final pivot, equal to c. Lines 291-309 prove this equation for the explicit perturbation; lines 310-320 prove its bound for every Fin k coordinate. Dot weights are bounded at lines 194-232 and the two inverse final rounding factors at lines 234-249, using 2 <= k. These conclusions are exported at lines 330-335.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "original-input-link",
+        "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+        "evidence": "Research/Submission.lean:58-61 defines IsEvaluation solely by local errors and equality to computedValue on the same original a,b,c. Lines 164-192 expand the sequential recurrence, and lines 251-269 identify it with the weighted sum on the original vectors. Lines 75-77 construct perturbations by multiplying each original b coordinate by its weight minus one; lines 333-335 extract actual evaluation errors and apply the constructive theorem without replacing the original inputs.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+        "evidence": "Research/Submission.lean:326-329 retains arbitrary k >= 2, a,b,c,yhat, nonzero pivot, and k*u < 1. The explicit 0 <= u expresses nonnegativity of unit roundoff. IsEvaluation at lines 58-61 assumes only the source standard relative-error model through LocalErrors at lines 51-54 and the actual computation, with no backward-error premise. Perturbations and weights at lines 65-77 have explicit noncircular bodies. Independent axiom inspection of both final theorems reports only propext, Classical.choice, and Quot.sound; the offline formal audit reports no unapproved axioms or protected-source failures.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "roundtrip": {
+    "schema_version": 2,
+    "candidate_hash": "d185eee57e6feae45a7d7cefa47eb9a85e661c098c57ff5fbd13cba8568356d7",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "The two translated final targets explicitly assert the full requested scalar backward-error result. The zero-based recurrence and bounded error factors faithfully encode the sequential operations under the source standard floating-point model. The constructed target specifies an actual perturbation formula; the existential target covers every evaluation represented by the model. Both include the pivot and the exact gamma(k) bound.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+        "evidence": "Both triangular_update_constructed and triangular_update already conclude the exact backward equation and all componentwise gamma(k) bounds for arbitrary admissible inputs. The latter covers every yhat satisfying IsEvaluation; no missing composition of supporting lemmas is needed.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "construction-correctness",
+        "requirement": "Define the sequential inner product followed by the rounded subtraction and division in the scalar update.",
+        "evidence": "roundedProduct is P_i=a_i b_i(1+xi_i). sequentialDot starts S_1=P_0 and continues S_(m+1)=(S_m+P_m)(1+delta_m). computedValue uses S_(k-1), rounded subtraction with factor 1+eta, then division by b_(k-1) with factor 1+zeta. LocalErrors bounds exactly the errors used by these operations. These explicit recurrences encode the source standard relative-error model; a concrete floating-point format is not required by that model.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "target-bound",
+        "requirement": "Prove the stated perturbed equation, including the pivot, and all componentwise gamma(k) bounds.",
+        "evidence": "Both targets assert sum_(i=0)^(k-2) a_i(b_i+Delta b_i)+yhat(b_(k-1)+Delta b_(k-1))=c and |Delta b_i| <= [ku/(1-ku)]|b_i| for every i in Fin k. The explicit perturbation uses the accumulated product/addition weight on each nonpivot component and the reciprocal of (1+eta)(1+zeta) on the pivot. Thus the equality, pivot, component range, and constant all match the source.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "original-input-link",
+        "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+        "evidence": "The constructed target sets yhat to computedValue for the same a,b,c and error tuple used in perturbation. IsEvaluation requires this very yhat to equal computedValue for those original inputs and bounded error witnesses. BackwardEquation retains a and c, perturbs b, and multiplies its final entry by yhat. There is no unrelated output or replacement input.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+        "evidence": "The targets retain k >= 2, ku < 1, arbitrary real a,b,c, and nonzero pivot. Nonnegative u is inherent in unit roundoff. The source no-overflow/no-underflow condition licenses precisely the local relative-error model used by the translation. IsEvaluation assumes only operation recurrences and local error bounds, not any backward equation or accumulated bound. Unused error coordinates cannot affect the result. Total division outside the target hypotheses is harmless: the pivot and both final error factors are nonzero within them.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": [
+      "Semantic review is based on the supplied translation statements and constructions; no Lean code or other evaluator verdict was inspected."
+    ]
+  },
+  "number": 1,
+  "wall_time_seconds": 980.3208822059969,
+  "evidence": "retrieved/passes/pass-001"
+}

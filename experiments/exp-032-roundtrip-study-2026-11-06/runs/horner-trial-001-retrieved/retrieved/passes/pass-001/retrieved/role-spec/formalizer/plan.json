@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "strategy": "Define exact Horner P, rounded Horner Q, and the prescribed envelope E by structural recursion on increasing-degree coefficient lists. Derive a reusable rounding perturbation bound, apply it first to the multiplication and then to the addition, and connect these local bounds to precisely the required envelope through list induction. The construction directly supplies the evaluators and error certificate required by the universal forward-error theorem. Read the task prompt and the supplied Model.lean; no feedback.json was present. This plan specifies proof obligations without supplying the completed target proof.",
+  "obligations": [
+    {
+      "id": "model_prerequisite",
+      "description": "Copy /spec/support/Research/Common/FloatingPoint/Model.lean unchanged at the corresponding module path and import it. Use Research.FloatingPoint.Model with its u, u_nonneg, round, and round_spec. Introduce no custom axioms or stronger model assumptions."
+    },
+    {
+      "id": "exact_horner",
+      "description": "Construct P on List \u211d and real x with P([], x) = 0 and P(a :: tail, x) = a + x * P(tail, x). Preserve increasing-degree coefficient order and handle all finite lists."
+    },
+    {
+      "id": "rounded_horner",
+      "description": "Construct Q for every supplied model with Q([], x) = 0 and Q(a :: tail, x) = model.round (a + model.round (x * Q(tail, x))). Each cons step must perform exactly one rounded multiplication and one rounded addition."
+    },
+    {
+      "id": "exact_envelope",
+      "description": "Construct E(coefficients, x, u) independently of Q and round. Its empty value is 0. For v = P(tail, x) and e = E(tail, x, u), its cons value is exactly u * |a + x*v| + (1+u) * (u * |x*v| + (1+u) * |x| * e). Do not replace this envelope with a different bound."
+    },
+    {
+      "id": "rounding_perturbation",
+      "description": "Establish the auxiliary estimate |model.round y - z| \u2264 model.u * |z| + (1 + model.u) * |y - z| for arbitrary reals y,z, using round_spec and u_nonneg. Ingredients include the one-input rounding error bound, absolute values of products, triangle inequalities (Mathlib abs_add_le), and nonnegative-factor monotonicity. Avoid division by 1-u or any smallness assumption."
+    },
+    {
+      "id": "multiplication_error",
+      "description": "For the cons induction step, bound |model.round (x * Q(tail, x)) - x * P(tail, x)| by u * |x * P(tail, x)| + (1+u) * |x| * E(tail, x, u). Connect the perturbation estimate to the induction hypothesis using |x * (Q-P)| = |x| * |Q-P| and justify every multiplied inequality by nonnegativity."
+    },
+    {
+      "id": "addition_error",
+      "description": "Use the perturbation estimate at approximate input a + model.round (x * Q(tail, x)) and exact reference a + x * P(tail, x). Cancel the common a in the difference and substitute the multiplication-error bound under the nonnegative factor 1+u. Match the resulting expression with the specified cons envelope."
+    },
+    {
+      "id": "universal_forward_bound",
+      "description": "State and prove by list induction that for every model : Research.FloatingPoint.Model, coefficients : List \u211d, and x : \u211d, |Q(model, coefficients, x) - P(coefficients, x)| \u2264 E(coefficients, x, model.u). Handle the empty case directly. Include no smallness, sign, nonzero-input, exact-arithmetic, or additional hypotheses."
+    },
+    {
+      "id": "formal_validation",
+      "description": "Compile the completed formalization with local Lean and Mathlib. Verify that all definitions and proofs are complete, Model.lean is unchanged, and no sorry, placeholders, custom axioms, or external proof service remain. Keep the construction and target theorem explicit for review."
+    }
+  ]
+}

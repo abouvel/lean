@@ -1,0 +1,66 @@
+{
+  "requirements": {
+    "schema_version": 1,
+    "requirements": [
+      {
+        "id": "target-completeness",
+        "description": "Prove the full error theorem for arbitrary real functions f, D and real x, h, L satisfying the stated hypotheses."
+      },
+      {
+        "id": "difference-construction",
+        "description": "Define the actual forward quotient (f(x+h)-f(x))/h."
+      },
+      {
+        "id": "derivative-hypotheses",
+        "description": "Use continuity on the closed interval and actual derivative D(t) on the open interval."
+      },
+      {
+        "id": "variation-hypothesis",
+        "description": "Use the pointwise absolute variation bound relative to D(x) on the open interval."
+      },
+      {
+        "id": "conclusion-linkage",
+        "description": "Prove an absolute error at most L*h between the defined forward difference and D(x)."
+      },
+      {
+        "id": "assumption-integrity",
+        "description": "Use only the specified hypotheses, including h > 0 and L >= 0, without requiring derivatives at endpoints or global smoothness."
+      }
+    ],
+    "defect_categories": [
+      {
+        "id": "missing-final-theorem",
+        "description": "The requested final proposition is not proved."
+      },
+      {
+        "id": "missing-construction",
+        "description": "A requested construction has no actual definition."
+      },
+      {
+        "id": "wrong-construction",
+        "description": "A construction differs from the specified algorithm or recurrence."
+      },
+      {
+        "id": "missing-linkage",
+        "description": "The proof is about the wrong quantity or does not connect to the construction."
+      },
+      {
+        "id": "wrong-bound",
+        "description": "The asserted error bound is weaker than or different from the requested bound."
+      },
+      {
+        "id": "strengthened-assumption",
+        "description": "The theorem adds a premise absent from the task."
+      },
+      {
+        "id": "conclusion-assumed",
+        "description": "The desired conclusion or an equivalent statement is assumed."
+      },
+      {
+        "id": "weakened-quantification",
+        "description": "The theorem covers fewer inputs than the task requires."
+      }
+    ]
+  },
+  "construction_policy": "Supply an actual forward-difference definition and a theorem about that definition. D(x) is the reference value. The open interval is sufficient for the derivative and variation hypotheses."
+}

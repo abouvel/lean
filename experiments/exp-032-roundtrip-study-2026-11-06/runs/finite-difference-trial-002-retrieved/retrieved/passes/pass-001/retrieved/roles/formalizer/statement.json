@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.forwardDifference_error_bound"
+  ],
+  "construction_names": [
+    "Research.forwardDifference"
+  ],
+  "source_mapping": "/spec/source.txt: forwardDifference defines (f(x+h)-f(x))/h; forwardDifference_error_bound states the full requested bound with positive h, nonnegative L, closed-interval continuity, open-interval HasDerivAt, and the open-interval variation bound relative to D x. No endpoint derivatives or additional regularity are assumed. /spec/support contains no supporting files. Statement revisions: none; /spec/feedback.json is absent. The theorem proof is temporary sorry scaffolding for the next proof role."
+}

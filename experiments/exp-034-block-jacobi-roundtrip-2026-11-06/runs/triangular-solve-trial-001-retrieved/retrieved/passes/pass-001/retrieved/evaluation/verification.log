@@ -1,0 +1,14 @@
+⚠ [8026/8028] Built Research.Submission (16s)
+warning: Research/Submission.lean:369:17: This simp argument is unused:
+  hj
+
+Hint: Omit it from the simp argument list.
+  simp only [h̵j̵,̵ ̵List.map_nil, List.sum_nil, add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Research/Submission.lean:401:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [8027/8028] Built Research (7.5s)
+Build completed successfully (8028 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

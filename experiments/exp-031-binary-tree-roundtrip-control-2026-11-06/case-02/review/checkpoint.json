@@ -1,0 +1,35 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:285-307 proves algorithm_leaf_backward_error for the returned tree leaves, under xs \u2260 [], 0 \u2264 u, bounded relative errors, and clog(2, length xs) * u < 1. Its conclusion at lines 289-292 does not relate those leaves to the original input occurrences. No declaration in the complete source (lines 1-318) proves that conservation property or the requested backward-error theorem for xs.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+      "evidence": "Theorem 3.1 in /spec/source.txt requires one perturbation for each original xi. Research/Submission.lean:285-292 proves only a bound for pairs whose first projections equal t.leaves. The generic backward_error at lines 135-140 likewise concerns an arbitrary tree and its leaves. The remaining declarations provide coefficient, depth, width, validity, and termination results, followed by fixed examples at lines 310-316; none closes the original-input conservation obligation.",
+      "verdict": "fail",
+      "defect_categories": [
+        "weakened-conclusion"
+      ],
+      "correction": "Prove that the returned tree leaves preserve the original input as a permutation with multiplicities, then prove the componentwise backward-error theorem with perturbations indexed by every occurrence of xs and the ceiling-log gamma bound."
+    },
+    {
+      "requirement_id": "input-occurrences",
+      "requirement": "The result is connected to every occurrence in the original input.",
+      "evidence": "Research/Submission.lean:38-41 identifies terms only with t.leaves. The final theorem at lines 289-292 identifies perturbation inputs only with t.leaves; neither it nor another declaration proves t.leaves.Perm xs or an equivalent occurrence-preserving relation. algorithm_singleton at lines 254-268 establishes a single returned tree and a depth bound, without leaf conservation.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-original-input-link"
+      ],
+      "correction": "Establish occurrence-preserving leaf conservation for level and rounds, including carried subtrees, and use it to transport the returned-tree perturbations to the original input list, preserving duplicates."
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "An occurrence-preserving relation between the returned tree leaves and the original input list.",
+    "The full componentwise backward-error theorem for every occurrence of the original nonempty input."
+  ],
+  "limitations": [
+    "Stopped immediately after identifying a definite weakened final theorem, as required by the review protocol. Offline verification evidence and independent examples were not examined."
+  ]
+}

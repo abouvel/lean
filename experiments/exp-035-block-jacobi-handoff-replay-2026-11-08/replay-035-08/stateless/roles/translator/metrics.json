@@ -1,0 +1,22 @@
+{
+  "condition": "blind",
+  "kind": "translator",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "started_unix": 1794179805.844662,
+  "time_limit_seconds": 240,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_time_seconds": 125.746,
+  "token_usage": {
+    "input_tokens": 114747,
+    "cached_input_tokens": 99072,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 5733,
+    "reasoning_output_tokens": 88
+  },
+  "compiler_command_events": 0,
+  "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+}

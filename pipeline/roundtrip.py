@@ -12,6 +12,9 @@ Translate the target theorem statements and constructed objects into ordinary
 mathematics. Include every hypothesis, implicit parameter, domain, quantifier,
 bound, and the connection between each theorem and the actual construction.
 Describe what the construction actually does, not what its name suggests.
+For an inductive type or structure, describe its constructors and fields and
+the data or relation they represent. Treat these as distinct from algorithm
+definitions.
 Do not invent an original problem or infer missing assumptions. No original
 task, actor conversation, condition label, or research memory is available.
 If interpretation needs definitions not supplied, report insufficient_context.

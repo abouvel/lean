@@ -1,0 +1,25 @@
+⚠ [8026/8028] Built Research.Submission (16s)
+warning: Research/Submission.lean:207:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Research/Submission.lean:216:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Research/Submission.lean:229:56: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Research/Submission.lean:344:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Research/Submission.lean:388:10: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: Research/Submission.lean:388:10: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: Research/Submission.lean:465:26: unused variable `hA_pos`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [8027/8028] Built Research (4.4s)
+Build completed successfully (8028 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

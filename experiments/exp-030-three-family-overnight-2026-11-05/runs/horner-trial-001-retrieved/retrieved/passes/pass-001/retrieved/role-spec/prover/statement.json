@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.Horner.forward_error"
+  ],
+  "construction_names": [
+    "Research.Horner.P",
+    "Research.Horner.Q",
+    "Research.Horner.E"
+  ],
+  "source_mapping": "/spec/source.txt: exact evaluator P, rounded evaluator Q, and exact-data envelope E are defined by the stated empty-list and cons recurrences in Research/Submission.lean. Research.Horner.forward_error states the requested absolute forward-error inequality for every supplied Research.FloatingPoint.Model, every List \u211d, and every x : \u211d. Model supplies u_nonneg and round_spec; no additional assumptions are imposed. Supporting source Research/Common/FloatingPoint/Model.lean was copied unchanged from /spec/support. Statement revision record: no /spec/feedback.json was present, and no revision to the intended mathematical statement was needed. Only the final theorem proof is temporary sorry scaffolding for the next role."
+}

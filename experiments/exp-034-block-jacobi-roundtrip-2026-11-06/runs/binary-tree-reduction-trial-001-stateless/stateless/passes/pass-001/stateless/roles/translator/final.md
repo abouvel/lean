@@ -1,0 +1,1 @@
+Saved [translation.json](/output/translation.json) atomically with status `complete`, the exact input hash, all 1 target and 8 constructions, and an empty `missing_context` array.

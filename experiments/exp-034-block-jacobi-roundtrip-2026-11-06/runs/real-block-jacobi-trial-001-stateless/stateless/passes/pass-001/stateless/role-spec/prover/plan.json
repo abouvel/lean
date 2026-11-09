@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the full authoritative real-arithmetic block-Jacobi theorem by first constructing the correction and iterate from the original matrices and initial guess. Use a finite real coordinate space, genuine matrix inversion under nonsingularity, and the induced infinity matrix norm. Keep the algebraic cancellation before all estimates. Prove the spectral-radius criterion as a separate finite-dimensional matrix helper using complexification and the Banach-algebra spectral-radius formula; then connect it to the constructed iterates through their exact error powers. Do not replace the spectral criterion by a norm condition or assume a convergence helper as a hypothesis. /spec/PROMPT.txt and the selected statement in /spec/source.txt govern the deliverable; /spec/paper.tex supplies the original argument. No /spec/feedback.json or supporting files were present. This is a construction and obligation plan, not a completed target proof.",
+  "obligations": [
+    {
+      "id": "input_model",
+      "description": "Represent A,D,N as square real matrices on Fin n (or an equivalent arbitrary finite index type), b,x,x0 as real vectors, with A=D+N, D nonsingular and A.mulVec x=b. Preserve the block structure: encode block membership by a finite block-label map; D has zero entries across distinct blocks and N has zero entries within each block, or construct D by masking A by equality of block labels and N=A-D. Show this representation recovers precisely diagonal and off-diagonal blocks. The error analysis can be proved for general invertible splittings and specialized to these blocks. Do not assume A invertible, diagonalizability, symmetry, or any convergence bound."
+    },
+    {
+      "id": "actual_iteration",
+      "description": "Define P=-(D inverse * N), correction(u)=D inverse applied to (b-A applied to u), F(u)=u+correction(u), and the sequence X starting at x0 with X(k+1)=F(X k). Define c(k+1)=correction(X k) and e(k)=X k-x; c(0) is immaterial. Prove D*c(k+1)=b-A*X(k). Conversely show that any sequences satisfying the source correction and update equations have these corrections and iterates, using nonsingularity of D. This ties every later claim to the exact specified algorithm rather than to an unrelated recurrence."
+    },
+    {
+      "id": "inverse_interface",
+      "description": "Use Matrix.inv and a verified invertibility interface, such as IsUnit D.det or an equivalent Invertible D assumption with the equivalence to nonsingularity proved or cited from Mathlib. Establish both inverse identities and compatibility of matrix multiplication with mulVec. Do not rely on a totalized inverse without discharging its nonsingularity premise."
+    },
+    {
+      "id": "exact_error_identities",
+      "description": "Derive residual(X k)=-A*e(k), correction(X k)=-e(k)-(D inverse*N)*e(k), e(k+1)=P*e(k), and by natural-number induction e(k)=P^k*e(0), including k=0. Establish F(u)-F(v)=P*(u-v) as the connection needed for contraction. These are identities for the constructed iteration, not added assumptions."
+    },
+    {
+      "id": "componentwise_estimate",
+      "description": "Define entrywise absolute values for matrices and vectors. Prove abs(M.mulVec v) <= abs(M).mulVec(abs(v)) by the finite-sum triangle inequality and abs_mul. Establish positivity and monotonicity of mulVec by entrywise nonnegative matrices. Use induction on k with the exact recurrence to obtain abs(e(k)) <= (abs(P)^k).mulVec(abs(e(0))). Distinguish entrywise abs(P) raised to k from abs(P^k)."
+    },
+    {
+      "id": "infinity_norm",
+      "description": "Use the usual finite Pi vector norm (maximum absolute coordinate) and explicitly install Matrix.linftyOp norms, whose matrix norm is the maximum absolute row sum. Do not use the default entrywise maximum matrix norm as the induced infinity norm. Mathlib.Analysis.Matrix.Normed provides Matrix.linfty_opNorm_def, linfty_opNorm_mul, linfty_opNorm_mulVec, and linfty_opNorm_eq_opNorm. Combine the exact error formula, mulVec bound and submultiplicativity (or an induction) to prove norm(e(k)) <= norm(P)^k * norm(e(0)) for all k."
+    },
+    {
+      "id": "genuine_spectral_radius",
+      "description": "Define the spectral radius of each real matrix M using its entrywise complexification MC and spectralRadius Complex MC (an ENNReal in Mathlib), or an explicitly equivalent finite maximum of complex eigenvalue moduli. Prove compatibility with the intended usual matrix spectral radius, and mapping of products, powers and negation under complexification. Do not use spectralRadius Real on the real matrix: it can miss nonreal eigenvalues. Prove rho(-M)=rho(M), using spectrum.neg_eq and norm_neg or a justified equivalent result, to obtain rho(P)=rho(D inverse*N)."
+    },
+    {
+      "id": "spectral_sufficiency_helper",
+      "description": "Prove for every finite real matrix M that rho(M)<1 implies M^k tends to zero and consequently (M^k).mulVec v tends to zero for every real v. A concrete available route uses Mathlib.Analysis.Normed.Algebra.GelfandFormula: pow_nnnorm_pow_one_div_tendsto_nhds_spectralRadius or pow_norm_pow_one_div_tendsto_nhds_spectralRadius for MC in the complex Banach matrix algebra. Choose q strictly between rho(M) and 1, deduce eventual norm(MC^k) <= q^k from the root limit for positive k, and conclude decay; verify ENNReal/NNReal/Real conversions and finiteness. Transfer the result back entrywise to real matrices and vectors. A direct verified matrix-power theorem may replace this derivation, but not an unproved paper assertion."
+    },
+    {
+      "id": "spectral_necessity_helper",
+      "description": "Prove that convergence (M^k).mulVec v -> 0 for every real v implies rho(M)<1. Evaluate on the finitely many standard basis vectors to obtain entrywise M^k -> 0; finite-dimensional topology gives matrix norm convergence, including for the complexification. Choose a positive integer m with norm(MC^m)<1. Use spectrum.spectralRadius_pow_le together with spectrum.spectralRadius_le_nnnorm to get rho(M)^m<1 and hence rho(M)<1. Handle positive exponent and ENNReal powers rigorously. This route avoids needing an eigenvector or Jordan-form construction."
+    },
+    {
+      "id": "all_initial_guesses_iff",
+      "description": "State convergence as: for every initial vector x0, the actual recursively constructed X(k) tends to the specified solution x. Use e(k)=P^k*(x0-x), continuity of subtraction/addition, and the spectral helpers to prove the iff. In the necessity direction realize every error v by choosing x0=x+v. Include the equality rho(P)=rho(D inverse*N) explicitly. Do not replace universal initial-guess convergence by convergence of a single orbit or a chosen zero initial error."
+    },
+    {
+      "id": "contraction_and_sufficient_condition",
+      "description": "From norm(P)<1, establish Lipschitz control norm(F(u)-F(v)) <= norm(P)*norm(u-v) for all u,v, with a nonnegative contraction factor strictly below one. Prove convergence to x for every initial guess using the already obtained geometric error bound (or the full spectral iff plus a justified radius/norm bound). Include both the sufficient condition and contraction conclusion in the final theorem."
+    },
+    {
+      "id": "edge_cases_and_validation",
+      "description": "Do not silently add n>0 if absent from the selected statement. Split the empty coordinate type if the spectral or norm library needs Nonempty/Nontrivial; there the space is trivial, errors and norms vanish, and the complex spectrum is empty with radius zero. Assemble a single full result or a clearly linked conjunction retaining all original quantifiers and conclusions. Compile with the mounted local Lean/Mathlib and audit all helpers for placeholders, custom axioms, or hidden strengthened hypotheses. The spectral equivalence is the principal implementation risk and must be reported precisely as a blocker if unproved, never omitted."
+    }
+  ]
+}

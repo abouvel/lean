@@ -1,0 +1,15 @@
+{
+  "inputs/source.pdf": "6e8ab561b04c2d8f13050894f6b00a23a1a39cd46cb3a1d14f047da9d4a26030",
+  "inputs/PROMPT.txt": "dd6bacf11ae9524ad094b5a4bf827360f6c8fba0c7eb4ffd025b3a27fa3cc193",
+  "inputs/source.txt": "136c73e542b0f2754284c8543af6675d038df9e1ba1b3da71a59628c58ce16ef",
+  "inputs/support/Research/Common/FloatingPoint/Model.lean": "b3730c493db6864297bc3ce04f2be01c9811a26d211dc268f10a50bf3894eece",
+  "memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+  "memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+  "evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+  "evaluator/requirements.json": "e53b48a6be914b93f0a06c4e64394ffa26e329b4a7eb12c9235e00c32793bf97",
+  "evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+  "evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+  "evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+  "evaluator/REVIEWER.txt": "138912737815ae87af04d35a9148e50d00d9360b58980d48f55fc989e56c34e3",
+  "evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+}

@@ -1,0 +1,12 @@
+{
+  "search_queries": [
+    "AGENTS.md, source.txt, plan.json, feedback.json, index.md, lakefile.*, lean-toolchain, *.lean"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

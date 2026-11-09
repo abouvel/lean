@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "traingular|Triangular|Triangular Update|theta_n|lemma:product"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require explicit positivity of gamma denominators before clearing them in product bounds and monotonicity arguments."
+    }
+  ]
+}

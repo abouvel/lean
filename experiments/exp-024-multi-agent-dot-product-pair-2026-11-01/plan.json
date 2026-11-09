@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "experiment_id": "exp-024-multi-agent-dot-product-pair-2026-11-01",
+  "repository_root": "/home/abouvel/fall26/research",
+  "order": "stateless-phase-first",
+  "limits": {
+    "jobs": 1,
+    "model_calls": 1,
+    "lean_builds": 1,
+    "ram_gib": 12,
+    "job_seconds": 3600
+  },
+  "tasks": [
+    {
+      "id": "dot-product",
+      "config": "experiments/exp-019-multi-agent-dot-product-task-2026-11-01/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Frozen pilot-general-lean-001 only: generic absolute-value, denominator, and stale-import guidance. No dot-product solution, prior candidate, evaluator output, or other-condition evidence is provided."
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "dot-product-trial-001-stateless",
+      "pair_id": "dot-product-trial-001",
+      "task_id": "multi-agent-dot-product-roundtrip-pilot",
+      "trial": 1,
+      "condition": "stateless",
+      "directory": "runs/dot-product-trial-001-stateless"
+    },
+    {
+      "job_id": "dot-product-trial-001-retrieved",
+      "pair_id": "dot-product-trial-001",
+      "task_id": "multi-agent-dot-product-roundtrip-pilot",
+      "trial": 1,
+      "condition": "retrieved",
+      "directory": "runs/dot-product-trial-001-retrieved"
+    }
+  ],
+  "created_unix": 1793573993.3143606
+}

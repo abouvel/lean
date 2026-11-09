@@ -1,0 +1,13 @@
+{
+  "search_queries": [
+    "theorem exists_hasDerivAt_eq_slope|lemma exists_hasDerivAt_eq_slope",
+    "\\bsorry\\b|\\badmit\\b|^axiom "
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

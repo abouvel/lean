@@ -1,0 +1,3 @@
+Created [Submission.lean](/workspace/Research/Submission.lean) with concrete constructions and the complete theorem statements. `lake build` passed; one theorem proof remains as the permitted `sorry` scaffolding.
+
+Supporting sources were copied unchanged. Saved [statement.json](/output/statement.json) and [retrieval.json](/output/retrieval.json) atomically. No feedback file was present; no statement revision was required.

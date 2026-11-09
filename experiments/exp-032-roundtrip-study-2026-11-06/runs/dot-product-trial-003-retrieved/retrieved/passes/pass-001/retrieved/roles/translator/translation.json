@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "f2c12dd4640eddc801cf005dd1c29f0c4de96261a0263ece83cfd5ba13ce2891",
+  "status": "complete",
+  "statement": "For every supplied real rounding model with parameter u and every finite nonempty ordered full binary tree of real pairs, let d be the maximum root-to-leaf edge count. The construction rounds each leaf product once, then rounds the sum of the child results at every internal node according to the given tree. If (d+1)u<1, its output equals the exact sum of a real tree of the same ordered shape whose leaf at each original pair (a,b) differs from ab by at most γ(d+1,u)|ab|, where γ(k,u)=ku/(1-ku). The perturbations are of product values; the statement does not assert separately perturbed factors.",
+  "targets": [
+    {
+      "name": "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation",
+      "statement": "For every model M∈Research.FloatingPoint.Model and every t∈Tree(ℝ×ℝ), put u=M.u, R=M.round, d=depth(t), and k=d+1∈ℕ. A model includes 0≤u and ∀z∈ℝ, ∃δ∈ℝ such that |δ|≤u and R(z)=z(1+δ). Trees are finite ordered trees formed by a leaf carrying one value or a node with exactly two child trees. Depth is defined by depth(leaf(v))=0 and depth(node(l,r))=1+max(depth(l),depth(r)). If ku<1, with k coerced to a real in this inequality, then there exists s∈Tree(ℝ) such that IsPerturbation(γ(k,u),exactProductTree(t),s) and exactSum(s)=roundedDotProduct(M,t). Here γ(k,u)=ku/(1-ku); exactSum(leaf(x))=x and exactSum(node(l,r))=exactSum(l)+exactSum(r). The inductive relation IsPerturbation(B,leaf(p),leaf(q)) holds exactly when |q-p|≤B|p|; for nodes it holds exactly when the respective left and right children satisfy the same relation with the same bound B. No different shapes are related. Consequently s has the same ordered shape as t, with |q-ab|≤γ(d+1,u)|ab| for each original leaf (a,b) and corresponding leaf q of s. The reference exactProductTree has leaf values ab, whereas roundedDotProduct is the actual scalar obtained by rounding leaf products and internal sums as described in the constructions. The strict hypothesis makes the denominator positive. The same maximum-depth bound applies to every leaf, including shallower ones. For a single leaf the depth is zero, the output is R(ab), and the bound is γ(1,u). The conclusion is existential and concerns perturbed product values, with no assertion of separate perturbations of the factors."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BinaryTreeReduction.exactProductTree",
+      "description": "A function Tree(ℝ×ℝ)→Tree(ℝ) mapping each leaf pair (a,b) to its exact real product ab, preserving every internal node and the order of its children. Recursively E(leaf((a,b)))=leaf(ab) and E(node(l,r))=node(E(l),E(r)). It performs no addition and returns a tree. This is the reference tree in the target theorem’s perturbation relation."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree",
+      "description": "For every model M and every t∈Tree(ℝ×ℝ), maps each leaf (a,b) to M.mul(a,b)=M.round(ab), preserving the ordered shape. Writing P_M for this construction, P_M(leaf((a,b)))=leaf(M.round(ab)) and P_M(node(l,r))=node(P_M(l),P_M(r)). Each multiplication is exact real multiplication followed by one application of the model rounding function. The definition does not round the factors first and performs no additions. Its output is the real tree passed to roundedSum in roundedDotProduct."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedDotProduct",
+      "description": "A function (M,t)↦roundedSum(M,roundedProductTree(M,t)), with M any model and t∈Tree(ℝ×ℝ), returning a real number. For any real tree, roundedSum(M,leaf(x))=x and roundedSum(M,node(l,r))=M.add(roundedSum(M,l),roundedSum(M,r))=M.round(roundedSum(M,l)+roundedSum(M,r)). Equivalently D_M(leaf((a,b)))=M.round(ab) and D_M(node(l,r))=M.round(D_M(l)+D_M(r)). Thus it rounds each leaf product once and each internal addition once, follows the existing tree grouping without rebalancing, and does not apply another round at a leaf during summation. Under the target theorem’s hypothesis, this scalar equals the exact sum of an existential same-shape tree of perturbed exact products."
+    }
+  ],
+  "assumptions": [
+    "The universally quantified input t is any finite nonempty ordered full binary tree with pairs of reals at its leaves. There is no prescribed leaf count, balancing assumption, or restriction on signs, magnitudes, or cancellation. All arithmetic values, perturbations, and model outputs are real.",
+    "Every universally quantified model consists of a real u≥0 and a function R:ℝ→ℝ satisfying ∀z∈ℝ, ∃δ∈ℝ, |δ|≤u and R(z)=z(1+δ). The δ may depend on z. This condition holds on every real input. No further rounding rule, representable set, radix, or precision is supplied or assumed. Model addition is R(a+b) and model multiplication is R(ab).",
+    "The target has the additional hypothesis (depth(t)+1)u<1; the natural depth plus one is interpreted as a real in multiplication. Together with u≥0 it gives a positive denominator and nonnegative bound γ(depth(t)+1,u). The supplied γ definition has domain ℕ×ℝ and formula ku/(1-ku); the target only uses it under the strict hypothesis.",
+    "IsPerturbation uses one real bound B uniformly for corresponding leaves and combines the relation componentwise at ordered nodes. Its definition has no separate nonnegativity hypothesis on B. For this theorem the bound is nonnegative. A leaf with exact product zero must have perturbed value zero.",
+    "The theorem asserts existence of a perturbed tree of product values and equality of its exact sum to the constructed output. It imposes and concludes no separately specified perturbations of the two factors."
+  ],
+  "missing_context": []
+}

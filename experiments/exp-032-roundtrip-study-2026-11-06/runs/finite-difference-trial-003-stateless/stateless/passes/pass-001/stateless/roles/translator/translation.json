@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "0b435746b2fb621505e634da97a229e797ffecbdc176fac0e2aa0df9e7402cc3",
+  "status": "complete",
+  "statement": "For every f,D: R -> R and x,h,L in R, if h>0, L>=0, f is continuous on [x,x+h], f has derivative D(t) at every t in (x,x+h), and |D(t)-D(x)| <= L|t-x| at every such t, then |(f(x+h)-f(x))/h-D(x)| <= Lh. The quotient is exactly the supplied construction. D(x) is a reference value; no derivative of f at x is assumed.",
+  "targets": [
+    {
+      "name": "Research.forwardDifference_error_bound",
+      "statement": "For all functions f,D: R -> R and all real x,h,L, assume 0<h, 0<=L, continuity of f on the closed interval [x,x+h], and the following two conditions: for every real t with x<t<x+h, f has ordinary derivative D(t) at t as a function on R; and for every real t with x<t<x+h, |D(t)-D(x)| <= L|t-x|. Then |Research.forwardDifference(f,x,h)-D(x)| <= Lh, equivalently |(f(x+h)-f(x))/h-D(x)| <= Lh. The derivative and variation conditions apply only to the open interval. No differentiability at either endpoint or continuity of D is assumed. The variation bound compares interior values only with D(x), and does not state a pairwise Lipschitz bound."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.forwardDifference",
+      "description": "A function (R -> R) -> R -> R -> R, defined for every function f: R -> R and all real x,h by Research.forwardDifference(f,x,h) = (f(x+h)-f(x))/h. It evaluates f at x+h and x, subtracts the second value from the first, and divides by h. It takes no limit and does not construct a derivative. The definition imposes no regularity on f and no sign or nonzero restriction on h. Lean real division is total with division by zero equal to zero, so the construction returns zero at h=0. The target theorem uses it only for h>0."
+    }
+  ],
+  "assumptions": [
+    "The parameters f,D are arbitrary total functions R -> R, and x,h,L are arbitrary real numbers, all universally quantified.",
+    "The theorem assumes h>0 and L>=0.",
+    "The theorem assumes f is continuous on [x,x+h], including its endpoints.",
+    "For every real t with x<t<x+h, the theorem assumes f has derivative D(t) at t.",
+    "For every real t with x<t<x+h, the theorem assumes |D(t)-D(x)| <= L|t-x|.",
+    "No derivative condition at x or x+h is supplied. In particular D(x) is not assumed to equal a derivative of f at x. No continuity of D or pairwise Lipschitz condition on D is assumed."
+  ],
+  "missing_context": []
+}

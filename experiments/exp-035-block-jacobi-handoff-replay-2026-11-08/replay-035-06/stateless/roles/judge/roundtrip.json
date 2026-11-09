@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "4164d580e5d83a4d6ccc2201c1deca9293cc123fa74a1fd0347b08295371f312",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "BlockMatrixVector.block_matrix_vector_product already asserts the complete selected backward-error conclusion for the defined rowwise two-level sequential block computation, with arbitrary original A and x and admissible operation-error data. Its B equals ceil(n/T), its K equals T+B-1, and its gamma is the required constant. Existential perturbations are legitimate for this backward-error theorem. The real recurrences with supplied bounded error factors encode the source standard rounding model.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "The target block_matrix_vector_product explicitly asserts both computedVector(A,x,T,e)=(A+DeltaA)x and the bound for every matrix entry, under the required roundoff condition. These are final conclusions; no helper-theorem composition is needed.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the rowwise size-T block matrix-vector product with sequential reduction and zero padding.",
+      "evidence": "zeroPad extends the row and vector by zeros. roundedProduct uses their entries at rT+t with a multiplication-error factor. blockPartial sequentially sums exactly T slots, including padded slots. computedVector sequentially sums exactly B(n,T) partial sums independently for each row. sequentialSum assigns the first term directly and applies an addition-error factor to each subsequent updated sum.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the perturbation matrix identity and the entrywise gamma(T + ceil(n/T) - 1) bound.",
+      "evidence": "The target asserts existence of an m-by-n real DeltaA with the required vector identity and |DeltaA(i,j)|<=gamma(K(n,T),u)|A(i,j)| for all i,j. For T>0, B=ceil(n/T) and K=T+B-1: truncation does not change this value. gamma(K,u)=Ku/(1-Ku), with positive denominator by Ku<1.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "The target uses the same arbitrary A,x,T,e in the explicitly defined computedVector and in the perturbed matrix-vector equality. Each product reads the original entries through zeroPad at rT+t. The independently defined entryFactor and perturbation describe coefficient perturbations, but identifying the existential witness with that named matrix is not required by the source.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "Positive T and nonnegative u express block size and unit roundoff. Admissible bounds only individual operation errors, exactly as the source standard rounding model under no overflow or underflow. Supplying arbitrary bounded error arrays is a valid encoding of that model; a particular floating-point format is unnecessary. Ku<1 is the source condition. A and x are unrestricted, dimensions include empty cases, and no backward-error conclusion or unproved paper bound is assumed.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

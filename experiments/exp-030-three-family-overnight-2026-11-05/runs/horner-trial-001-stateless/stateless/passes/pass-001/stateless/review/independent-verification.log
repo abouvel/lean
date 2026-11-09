@@ -1,0 +1,4 @@
+Research.FloatingPoint.Horner.forward_error (model : Research.FloatingPoint.Model) (coefficients : List ℝ) (x : ℝ) :
+  |Research.FloatingPoint.Horner.Q model coefficients x - Research.FloatingPoint.Horner.P coefficients x| ≤
+    Research.FloatingPoint.Horner.E coefficients x model.u
+'Research.FloatingPoint.Horner.forward_error' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,15 @@
+{
+  "search_queries": [
+    "AGENTS.md",
+    "*.lean",
+    "*.toml",
+    "label\\{theorem:block_matrix_vector_product\\}"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

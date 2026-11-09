@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "previous_pass": 1,
+  "formal_gate_passed": false,
+  "corrections": [],
+  "verification_log": "\u26a0 [8026/8028] Built Research.Submission (8.2s)\nwarning: Research/Submission.lean:388:8: declaration uses `sorry`\n\u2714 [8027/8028] Built Research (4.1s)\nBuild completed successfully (8028 jobs).\nResearch/Submission.lean:424:    sorry\nVerification failed: unresolved proof placeholder found.\n"
+}

@@ -1,0 +1,1 @@
+Saved atomically to [translation.json](/output/translation.json) with status `complete`. The theorem states: there exists a real number \(x\) such that \(x \cdot x = 0\). No constructions are listed.

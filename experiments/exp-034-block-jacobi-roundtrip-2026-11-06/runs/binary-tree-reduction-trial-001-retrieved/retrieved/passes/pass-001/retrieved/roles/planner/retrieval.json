@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "parallel_binary_tree_reduction|theta|gamma"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Explicitly require denominator positivity before manipulating rational gamma inequalities in the product-bound helper; the artifact is generic guidance, not evidence for the target theorem."
+    }
+  ]
+}

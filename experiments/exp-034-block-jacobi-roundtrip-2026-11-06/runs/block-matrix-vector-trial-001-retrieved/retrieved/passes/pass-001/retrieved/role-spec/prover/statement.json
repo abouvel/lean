@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "BlockMatrixVector.block_matrix_vector_product"
+  ],
+  "construction_names": [
+    "BlockMatrixVector.blockCount",
+    "BlockMatrixVector.errorCount",
+    "BlockMatrixVector.gamma",
+    "BlockMatrixVector.slotIndex",
+    "BlockMatrixVector.zeroPad",
+    "BlockMatrixVector.Roundoff",
+    "BlockMatrixVector.Admissible",
+    "BlockMatrixVector.sequentialSum",
+    "BlockMatrixVector.roundedProduct",
+    "BlockMatrixVector.blockPartial",
+    "BlockMatrixVector.computedVector",
+    "BlockMatrixVector.additionFactor",
+    "BlockMatrixVector.entryFactor",
+    "BlockMatrixVector.perturbation"
+  ],
+  "source_mapping": "/spec/source.txt, selected theorem:block_matrix_vector_product (also /spec/paper.tex lines 353-393), is formalized in Research/Submission.lean. blockCount n T=(n+T-1)/T is ceil(n/T) for positive natural T; errorCount n T=T+blockCount n T-1; gamma is exactly K*u/(1-K*u). Matrices and vectors have real entries indexed by Fin m and Fin n. computedVector performs rounded products of zero-padded inputs, sequential within-block accumulation initialized with the first product, then sequential outer accumulation initialized with the first block sum. An empty reduction is zero. Roundoff permits independent row/block/slot errors; Admissible bounds only elementary executed multiplication and addition errors by u and encodes the no-overflow/no-underflow relative model. Explicit domain assumptions are 0<T and 0<=u, together with K*u<1. No algorithm-level bound is assumed. perturbation is an explicit matrix of original entries times accumulated rounding coefficients minus one. constructed_backward_error states its exact product equality and componentwise bound; the final theorem concludes existence of one matrix with both properties, retaining the original x. Statement revision record: no feedback.json exists; this is the initial statement, with no revision or weakening of the source. There are no supplied supporting files. One temporary sorry remains in constructed_backward_error for the next prover role; all construction definitions have bodies."
+}

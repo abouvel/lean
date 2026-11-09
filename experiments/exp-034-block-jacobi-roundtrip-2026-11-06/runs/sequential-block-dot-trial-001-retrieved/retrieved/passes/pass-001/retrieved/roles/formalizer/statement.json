@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "BlockDotProduct.block_dot_product_sequential"
+  ],
+  "construction_names": [
+    "BlockDotProduct.blockCount",
+    "BlockDotProduct.treeDepth",
+    "BlockDotProduct.gamma",
+    "BlockDotProduct.zeroExtend",
+    "BlockDotProduct.RoundingTrace",
+    "BlockDotProduct.sequentialSum",
+    "BlockDotProduct.roundedProduct",
+    "BlockDotProduct.blockPartial",
+    "BlockDotProduct.sequentialBlockDotProduct"
+  ],
+  "source_mapping": "Research/Submission.lean formalizes the full selected corollary:block_dot_product_sequential from /spec/source.txt (paper.tex lines 312-343). Positive n and T, nonnegative unit roundoff, local operation-wise relative errors (encoding absence of overflow and underflow), the inherited binary-tree smallness assumption, and the sequential smallness assumption are explicit. blockCount is natural ceiling division; original Fin n vectors are zero-extended; T multiplications and T-1 initialized sequential additions form each partial, followed by B-1 initialized sequential reduction additions. The conclusion simultaneously supplies both exact backward representations and all componentwise bounds with gamma_(T+B-1). Statement revision record: initial statement replacing the import-only starter; no prior mathematical statement and no /spec/feedback.json were present, so no feedback-driven revision was made. Supporting paper.tex, references.bib, source.txt and source.pdf were copied unchanged into Research; /spec/support contains no files. The final theorem proof is temporary sorry scaffolding for the next proof role; all construction definitions have concrete bodies."
+}

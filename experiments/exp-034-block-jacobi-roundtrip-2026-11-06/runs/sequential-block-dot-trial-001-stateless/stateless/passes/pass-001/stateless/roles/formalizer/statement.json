@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.BlockDotProduct.block_dot_product_sequential"
+  ],
+  "construction_names": [
+    "Research.BlockDotProduct.blockCount",
+    "Research.BlockDotProduct.treeDepth",
+    "Research.BlockDotProduct.errorIndex",
+    "Research.BlockDotProduct.gamma",
+    "Research.BlockDotProduct.padded",
+    "Research.BlockDotProduct.RoundingTrace",
+    "Research.BlockDotProduct.RoundingTrace.Admissible",
+    "Research.BlockDotProduct.sequentialSum",
+    "Research.BlockDotProduct.roundedProduct",
+    "Research.BlockDotProduct.blockPartial",
+    "Research.BlockDotProduct.computedDot",
+    "Research.BlockDotProduct.sequentialWeight",
+    "Research.BlockDotProduct.termCoefficient",
+    "Research.BlockDotProduct.backwardPerturbation"
+  ],
+  "source_mapping": "Research/Submission.lean formalizes /spec/source.txt, selected corollary:block_dot_product_sequential (paper.tex lines 312–343). The target gives both existential backward representations of the actual sequential block computation on arbitrary original Fin n real vectors, with componentwise bounds gamma_(T+ceil(n/T)-1). blockCount is ceiling division for positive T; padded uses index j*T+t; sequentialSum starts from its first term. RoundingTrace.Admissible supplies only the common relative-error model for executed operations, expressing the no-overflow/no-underflow numerical model, with u >= 0. Both the inherited (T+ceil(log2 ceil(n/T)))*u < 1 and sequential smallness assumptions are explicit. The concrete perturbations are proved sufficient in constructed_backward_errors, whose sole sorry is temporary proof scaffolding for the next role; all construction definitions have bodies. No /spec/feedback.json exists. Statement revision record: no prior Lean statement was supplied, so no prior statement was revised; zero-based indexing, positive T, nonnegative u, and the empty-input result zero are explicit conventions. Supplied /spec/support/Research contains no files. Original source.txt, paper.tex, and references.bib are copied unchanged to Research/Sources."
+}

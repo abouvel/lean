@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "obligations": [
+    {
+      "id": "model_prerequisite",
+      "description": "Copy /spec/support/Research/Common/FloatingPoint/Model.lean unchanged to the corresponding module path. Use its Model.u, u_nonneg, round, and round_spec; introduce no custom axioms or stronger rounding assumptions."
+    },
+    {
+      "id": "exact_evaluator",
+      "description": "Define P by structural recursion on a finite List \u211d in increasing degree order: P [] x = 0 and P (a :: tail) x = a + x * P tail x. Provide usable defining equations."
+    },
+    {
+      "id": "rounded_evaluator",
+      "description": "Define Q for a supplied Model by structural recursion: Q model [] x = 0 and Q model (a :: tail) x = model.round (a + model.round (x * Q model tail x)). Each cons step must contain exactly one rounded multiplication and one rounded addition, including the final coefficient step."
+    },
+    {
+      "id": "exact_envelope",
+      "description": "Define E on List \u211d, x : \u211d, u : \u211d recursively with E [] x u = 0. For v = P tail x and e = E tail x u, require E (a :: tail) x u = u * |a + x*v| + (1+u) * (u * |x*v| + (1+u) * |x| * e). E must depend only on exact evaluation, coefficients, x, and u, never Q, round, or error witnesses."
+    },
+    {
+      "id": "rounding_estimates",
+      "description": "Extract from round_spec the local bound |model.round z - z| \u2264 model.u * |z|. Establish a reusable perturbation bound for arbitrary real z and w: |model.round z - w| \u2264 model.u * |w| + (1 + model.u) * |z - w|. Use triangle inequalities and u_nonneg; no restriction u < 1 is available or necessary."
+    },
+    {
+      "id": "induction_propagation",
+      "description": "Induct on the coefficient list with x arbitrary. The empty case follows from the three defining equations. In a cons case let q = Q model tail x, v = P tail x, e = E tail x model.u. Convert the induction hypothesis to |x*q - x*v| \u2264 |x|*e using mul_sub, abs_mul, and nonnegativity of |x|. Apply the perturbation estimate to the rounded product and then to the outer rounded sum. Monotone multiplication by 1+model.u gives exactly the cons envelope."
+    },
+    {
+      "id": "theorem_scope_and_validation",
+      "description": "State and prove the forward-error theorem universally over every Model, every finite real coefficient list, and every real x: |Q model coefficients x - P coefficients x| \u2264 E coefficients x model.u. Add no smallness, sign, nonzero-input, or exact-arithmetic hypotheses. Compile against local Lean/Mathlib with all definitions and proofs present, no sorry placeholders or custom axioms, and verify that the prerequisite is unchanged."
+    }
+  ],
+  "strategy": "Construct the exact evaluator, the twice-rounded evaluator, and the specified exact-data envelope as separate structural list recursions. Their defining equations align the target theorem with list induction. Isolate rounding algebra in a generic one-round perturbation estimate, derived from the supplied relative-error witnesses and triangle inequalities. At each cons step this estimate applied to multiplication produces the inner envelope u*|x*v| + (1+u)*|x|*e; applying it to addition produces the outer term u*|a+x*v| plus (1+u) times that inner envelope. Use explicit nonnegativity facts for u, 1+u, and absolute values when transporting inequalities; if envelope nonnegativity is useful, derive it by a separate list induction for u \u2265 0. Use abs_add_le for triangle inequalities (the approved memory suggests this name, to be checked locally), abs_mul and elementary ring normalization for algebra, and arithmetic tactics only after the relevant inequalities are available. No feedback.json is present. This plan describes construction and proof obligations without supplying the completed target proof."
+}

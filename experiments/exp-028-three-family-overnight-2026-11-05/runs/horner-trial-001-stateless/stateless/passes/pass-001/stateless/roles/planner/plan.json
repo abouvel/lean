@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "strategy": "Copy the approved Model.lean prerequisite unchanged and import it. Define exact Horner evaluation P, rounded Horner evaluation Q, and the specified exact-data envelope E by structural recursion on the coefficient list. Prove a reusable perturbation bound for one rounding operation, then induct on the coefficient list and apply that bound to the multiplication and the addition in order. This directly explains both factors (1+u) in the required envelope. Keep the final theorem universal over every supplied Model, every finite real coefficient list, and every real x. No completed target proof is included in this plan.",
+  "obligations": [
+    {
+      "id": "model_prerequisite",
+      "description": "Copy /spec/support/Research/Common/FloatingPoint/Model.lean unchanged into the formalization prerequisite location. Use Research.FloatingPoint.Model, its u_nonneg field, and round_spec; do not replace or strengthen this model or introduce custom axioms."
+    },
+    {
+      "id": "exact_construction",
+      "description": "Construct P : List \u211d \u2192 \u211d \u2192 \u211d with P [] x = 0 and P (a :: tail) x = a + x * P tail x. Preserve increasing-degree coefficient order and support every finite list, including the empty list."
+    },
+    {
+      "id": "rounded_construction",
+      "description": "Construct Q parameterized by Model with Q model [] x = 0 and Q model (a :: tail) x = model.round (a + model.round (x * Q model tail x)). The defining cons equation must perform one rounded multiplication and one rounded addition, with the recursive tail result used in that order."
+    },
+    {
+      "id": "envelope_construction",
+      "description": "Construct E from only the coefficient list, x, u, and exact evaluator P. Require E [] x u = 0 and E (a :: tail) x u = u * |a + x * P tail x| + (1 + u) * (u * |x * P tail x| + (1 + u) * |x| * E tail x u). E must not depend on Model.round, Q, rounding witnesses, or the actual computed error."
+    },
+    {
+      "id": "rounding_perturbation",
+      "description": "Derive from round_spec a reusable estimate |model.round z - t| \u2264 model.u * |t| + (1 + model.u) * |z - t| for arbitrary real z and t. A useful route expands the relative-error witness around t and bounds the two contributions using the triangle inequality, abs_mul, |\u03b4| \u2264 u, and |1 + \u03b4| \u2264 1 + u. This auxiliary estimate needs only u_nonneg and round_spec."
+    },
+    {
+      "id": "nonnegative_weights",
+      "description": "Establish the nonnegative weights needed to multiply inequalities: 0 \u2264 u, 0 \u2264 1 + u, and 0 \u2264 |x|. Envelope nonnegativity for nonnegative u can optionally be proved by list induction if it simplifies automation, but it must follow from the construction rather than become an extra assumption."
+    },
+    {
+      "id": "inductive_multiplication_step",
+      "description": "Under the tail induction hypothesis, set v = P tail x and e = E tail x model.u. Apply the rounding perturbation estimate with z = x * Q model tail x and t = x * v. Factor the input discrepancy and use abs_mul and monotonicity to obtain |model.round (x * Q model tail x) - x * v| \u2264 model.u * |x * v| + (1 + model.u) * |x| * e."
+    },
+    {
+      "id": "inductive_addition_step",
+      "description": "Apply the same rounding perturbation estimate with z = a + model.round (x * Q model tail x) and t = a + x * v. Cancel the common a in the discrepancy and insert the multiplication estimate under the nonnegative factor 1 + model.u. Recognize the resulting expression as exactly the prescribed E cons equation; normalize multiplication associativity as needed."
+    },
+    {
+      "id": "universal_forward_error_theorem",
+      "description": "State and prove by structural induction that for every model : Research.FloatingPoint.Model, coefficients : List \u211d, and x : \u211d, |Q model coefficients x - P coefficients x| \u2264 E coefficients x model.u. Discharge the empty case by the defining equations and the cons case by the preceding estimates. Add no smallness condition on u, sign restriction on x or coefficients, nonzero-input condition, or exact-arithmetic assumption."
+    },
+    {
+      "id": "formal_validation",
+      "description": "Use local Lean and Mathlib to compile the completed construction and theorem, with all required definitions and proofs present. The completed candidate must contain no sorry, placeholders, or custom axioms. No feedback file was present when preparing this plan."
+    }
+  ]
+}

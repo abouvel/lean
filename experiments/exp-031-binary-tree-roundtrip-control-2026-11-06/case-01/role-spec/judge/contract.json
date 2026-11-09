@@ -1,0 +1,54 @@
+{
+  "requirements": {
+    "schema_version": 1,
+    "requirements": [
+      {
+        "id": "target-completeness",
+        "description": "The candidate proves the full requested theorem, not only a definition or example."
+      },
+      {
+        "id": "algorithm-linkage",
+        "description": "The proved theorem applies to the requested algorithm and its output."
+      },
+      {
+        "id": "input-occurrences",
+        "description": "The result is connected to every occurrence in the original input."
+      },
+      {
+        "id": "componentwise-backward-error",
+        "description": "The requested componentwise backward-error conclusion is proved."
+      },
+      {
+        "id": "assumption-integrity",
+        "description": "The candidate does not assume, circularly encode, or vacuously imply the conclusion."
+      }
+    ],
+    "defect_categories": [
+      {
+        "id": "missing-final-theorem",
+        "description": "The requested proposition is defined or discussed but never proved."
+      },
+      {
+        "id": "concrete-example-only",
+        "description": "A fixed example replaces the requested universal theorem."
+      },
+      {
+        "id": "conclusion-assumed",
+        "description": "The desired result, or an equivalent fact, is introduced as a hypothesis."
+      },
+      {
+        "id": "missing-algorithm-link",
+        "description": "The mathematical bound is not connected to the implemented algorithm."
+      },
+      {
+        "id": "missing-original-input-link",
+        "description": "Returned leaves or perturbations are not connected to original input occurrences."
+      },
+      {
+        "id": "weakened-conclusion",
+        "description": "The candidate proves a weaker conclusion than the request."
+      }
+    ]
+  },
+  "construction_policy": "Construct Algorithm 1 with offset pairing and unchanged carries, and deliver the full theorem on arbitrary nonempty original inputs and their occurrences."
+}

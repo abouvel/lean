@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "c673f2ecaa9a7192e0d56fe0d3293998e06855c85b32ae36a347f5cfe00bc0d6",
+  "status": "complete",
+  "statement": "For arbitrary functions f,D: ℝ → ℝ and real numbers x,h,L with h > 0 and L ≥ 0, suppose f is continuous on [x,x+h], f has derivative D(t) at every t in (x,x+h), and |D(t)−D(x)| ≤ L|t−x| for every t in (x,x+h). Then the constructed quotient (f(x+h)−f(x))/h differs from D(x) by at most Lh in absolute value. No hypothesis identifies D(x) with a derivative of f at x.",
+  "targets": [
+    {
+      "name": "Research.forwardDifference_error_bound",
+      "statement": "For every f: ℝ → ℝ, D: ℝ → ℝ, and x,h,L ∈ ℝ: if 0 < h, 0 ≤ L, f is continuous on the closed interval [x,x+h], for every real t with x < t < x+h the ordinary two-sided derivative of f at t exists and equals D(t), and for every real t with x < t < x+h one has |D(t)−D(x)| ≤ L|t−x|, then |Research.forwardDifference(f,x,h)−D(x)| ≤ Lh. Substituting the actual construction, the conclusion is |(f(x+h)−f(x))/h−D(x)| ≤ Lh. The assumptions do not require a derivative of f at either endpoint, continuity of D, or a bound comparing D at arbitrary pairs of points; the stated bound compares interior values only to D(x)."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.forwardDifference",
+      "description": "A function (ℝ → ℝ) → ℝ → ℝ → ℝ sending every real-valued function f on ℝ and every pair x,h ∈ ℝ to (f(x+h)−f(x))/h. It evaluates f at x+h and x, subtracts the latter value from the former, and divides by h. Its definition requires no continuity, differentiability, or sign restriction on h. Real division in the formal system is total, with division by zero equal to zero, so its value for h=0 is zero. For h≠0 it is the secant slope over the increment h, not a limit or a derivative. The target theorem uses this construction only when h>0 and bounds its difference from the separately supplied number D(x)."
+    }
+  ],
+  "assumptions": [
+    "All function inputs and outputs, and all scalar parameters, are real, with the usual real topology, order, arithmetic, and absolute value; formal real division is total.",
+    "The theorem universally quantifies over arbitrary functions f,D: ℝ → ℝ and arbitrary x,h,L ∈ ℝ.",
+    "0 < h.",
+    "0 ≤ L.",
+    "f is continuous on [x,x+h].",
+    "For every t ∈ ℝ satisfying x < t < x+h, f has ordinary derivative D(t) at t.",
+    "For every t ∈ ℝ satisfying x < t < x+h, |D(t)−D(x)| ≤ L|t−x|."
+  ],
+  "missing_context": []
+}

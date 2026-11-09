@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "5f09f554b13196136023c37522200efa150094ef2471de6d916098a094bd8663",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "Research.CholeskySolve.cholesky_solve explicitly delivers the perturbed-system equation and both exact bounds for every supplied SolveTrace. SolveTrace fully specifies the rounded Cholesky recurrence followed by forward substitution using R^T and backward substitution using R. This relational operational encoding matches the source standard relative-error model; a deterministic solver is not required. No additional final theorem or witness identification is needed.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "The target cholesky_solve already asserts the existence of DeltaA, the perturbed-system equation, and both componentwise bounds together. No missing composition or inequality is needed.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the computed Cholesky factorization followed by the two triangular solves.",
+      "evidence": "FactorTrace specifies upper triangularity, positive rounded diagonal square roots, and rounded off-diagonal residual/division recurrences with precisely k<i. DotTrace specifies each rounded product and ordered sum. ForwardTrace uses k<i and BackwardTrace uses k>i. SolveTrace combines FactorTrace(u,A,R), ForwardTrace(u,R^T,b,y), and BackwardTrace(u,R,y,x). These acyclic recurrences constitute a relational definition of the computed algorithm. The source relative-error model and construction policy do not demand a deterministic rounding function or executable implementation; no abstract choice substitutes for the recurrences.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the original perturbed system and both stated componentwise bounds with their exact coefficients.",
+      "evidence": "The target explicitly asserts (A+DeltaA)x=b and |DeltaA_ij| <= C B_ij <= D B_ij for all i,j, where C=gamma(u,n+1)+2 gamma(u,n)+gamma(u,n)^2, D=3 gamma(u,n+1)+gamma(u,n)^2, gamma(u,k)=ku/(1-ku), and B_ij=sum_k |R_ki||R_kj|. These are exactly the original equation and two componentwise bounds.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "The same A,b,R,y,x occur in SolveTrace and the target. FactorTrace uses the entries of A and R, the forward trace uses R^T and the original b, and the backward trace uses R and that forward output y. The target bounds use that R and the equation uses that x and b. The backward-error perturbation may legitimately be existential; identifying it with the named solvePerturbation expression is not required.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "Arbitrary real SPD A, arbitrary b, and arbitrary n are covered under 0<=u and (n+1)u<1. Explicit symmetry repeats the source SPD requirement. Positive residuals and diagonal entries and nonzero divisors represent successful Cholesky computation. Rounded imposes only elementary relative errors bounded by u, rather than any desired backward-error estimate. Finite real operations with that model represent the no-overflow/no-underflow setting. Nonnegative unit roundoff is implicit in the source. The target denominator restrictions validate gamma at both required indices. No n>0 or b!=0 restriction is imposed.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": [
+    "Review is based on the supplied mathematical translation, source, and contracts only; Lean code and proof checking were not inspected."
+  ]
+}

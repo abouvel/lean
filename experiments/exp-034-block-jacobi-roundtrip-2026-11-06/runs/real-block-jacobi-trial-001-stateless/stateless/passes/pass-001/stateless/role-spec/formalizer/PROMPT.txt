@@ -1,0 +1,3 @@
+Formalize the selected result in /spec/source.txt. The original paper and mathematical proof are in /spec/paper.tex. Use local Lean and Mathlib. No completed Lean target is supplied. Complete the actual constructions and the full selected theorem. Preserve source hypotheses, quantifiers, constants, and linkage to the original inputs. Earlier paper results can be proved as helper lemmas. Do not introduce custom axioms, use placeholders in a final candidate, or silently repair a possible source error by changing the theorem. Record blockers precisely. Use approved memory only when mounted. No Aristotle.
+
+Controller budget: pass 1/2; hard builder limit 900 seconds. Original time estimates do not override this limit.

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the source Cholesky run from its primitive rounded operations, prove scalar backward-error estimates for that run, and construct the symmetric matrix residual DeltaA = Rhat.transpose * Rhat - A. The scalar estimates must imply the exact gamma_(n+1) componentwise bound on this residual. Use Matrix (Fin n) (Fin n) Real and sequential finite-prefix dot products; translate source one-based pivot p to Lean index p-1 explicitly. Treat the paper proof as guidance, not an assumed backward-error specification. Prove the required rounding-product and diagonal-square-root helpers, then assemble the matrix conclusion. Preserve the original SPD, successful-completion, no-overflow/underflow, and roundoff hypotheses. Do not replace the algorithm with an arbitrary factor satisfying its desired bound. This is a proof plan only, not the completed target proof. No feedback.json is mounted and the approved support directory is empty; the available mathematical sources are source.txt and paper.tex. The builder has a 900-second limit, so prioritize the scalar construction and its faithful connection to the target, and record any unresolved modeling or proof blocker precisely.",
+  "obligations": [
+    {
+      "id": "source_contract",
+      "description": "State the full selected theorem for every dimension n, original input A, unit roundoff u, and actual computed Rhat. Preserve SPD (including symmetry), successful Cholesky completion with upper-triangular output, absence of overflow/underflow, and (n+1)*u < 1. Explain the nonnegativity of u inherent in unit roundoff. Define gamma_m = (m*u)/(1-m*u) and entrywise absolute-value matrices; the right-hand side is a matrix product, not the entrywise absolute value of Rhat.transpose * Rhat."
+    },
+    {
+      "id": "primitive_run_construction",
+      "description": "Define a floating-point operation interface or execution trace with multiplication, sequential addition, subtraction, division, and square root. Encode each computed off-diagonal entry from the already-computed Rhat entries and A[i,j], and each diagonal entry from the computed sum of squares. Success must ensure real nonnegative square-root arguments and nonzero pivots where division is performed. The run predicate must contain primitive recurrence equations and rounding facts only, rather than the theorem residual bound or perturbed equations as assumptions. Maintain linkage to the same input A and output Rhat throughout."
+    },
+    {
+      "id": "sqrt_model_audit",
+      "description": "Resolve the source modeling gap explicitly: its displayed floating-point model covers only +, -, multiplication, division, while the diagonal proof uses a relative-error bound for rounded sqrt. A faithful implementation must justify that sqrt accuracy from a specified standard floating-point rounding semantics (or identify its role as part of the intended standard sqrt operation). Do not silently add a free new sqrt accuracy hypothesis to the theorem or assume the diagonal backward bound. If approved semantics cannot supply this fact, record a precise blocker: the four-operation relative-error model alone does not constrain sqrt."
+    },
+    {
+      "id": "gamma_product_helpers",
+      "description": "Prove finite products of factors (1+delta) and their inverses differ from 1 by at most gamma_m when each abs(delta) <= u and m*u < 1. Establish factor positivity, denominator nonvanishing, gamma nonnegativity, and monotonicity in m under the global hypothesis. Count repeated inverse factors separately, especially the two occurrences of the square-root rounding factor. Use these proved helpers instead of custom axioms or unproved paper lemmas."
+    },
+    {
+      "id": "sequential_dot_expansion",
+      "description": "Derive a weighted exact-sum representation for the sequentially computed prefix dot product of the actual Rhat entries. Count one product rounding plus the applicable later additions for each summand. Specify the first-product initialization and handle empty and singleton prefixes, so no spurious addition to zero consumes the error budget. This helper must also handle square products used on the diagonal."
+    },
+    {
+      "id": "off_diagonal_local_bound",
+      "description": "Derive, for each source pivot p and j>p, an exact perturbed sum for A[p,j] involving Rhat[k,p]*Rhat[k,j] for k<=p. The prefix terms inherit dot-product factors; the final pivot product inherits inverse subtraction/division factors. Prove the resulting local coefficient or residual estimate from the primitive run. The paper claim gamma_p has an edge-case problem at p=1 because the cited triangular-update lemma requires k>=2; treat that pivot directly and use a valid gamma_2 bound, which is still <= gamma_(n+1) whenever such an off-diagonal entry exists."
+    },
+    {
+      "id": "diagonal_local_bound",
+      "description": "Prove the square-root analogue instead of citing the paper assertion. Square the actual rounded-square-root equation and solve back for the exact radicand, accounting for one inverse subtraction factor and two inverse sqrt factors, together with the dot-product coefficients. Obtain a diagonal residual bound <= gamma_(p+1) * sum_{k<=p} abs(Rhat[k,p])^2 for each source diagonal p, or another rigorously counted estimate no larger than gamma_(n+1). At p=1 use the direct rounded sqrt of A[1,1], giving two inverse factors; justify omission/exactness of subtracting an empty zero dot product. An abstract relative-error model that arbitrarily perturbs A-0 needs special attention and cannot automatically use this sharper base case."
+    },
+    {
+      "id": "residual_witness",
+      "description": "Construct DeltaA concretely as Rhat.transpose * Rhat - A, using exact real matrix multiplication. Establish its symmetry from symmetry of A and the Gram matrix, and its exact factorization equation Rhat.transpose * Rhat = A + DeltaA. Relate its upper-triangular entries to the scalar local residuals, with the correct negative sign when using the paper perturbed-sum notation. Local perturbations may depend on both output indices; do not claim existence of one global perturbed Rhat factor."
+    },
+    {
+      "id": "componentwise_assembly",
+      "description": "Use upper triangularity to express each Gram entry as the prefix sum through min(i,j). Bound local residuals by triangle inequalities and absolute products, and majorize all local constants by gamma_(n+1). Identify the full sum of absolute products with (abs(Rhat.transpose) * abs(Rhat))[i,j]. Transfer upper-triangle estimates to the lower triangle using symmetry of both DeltaA and the absolute Gram product. In the paper diagonal bound the primed Rhat on the right is an undefined typo: the needed quantity is abs(Rhat[k,j]) squared, justified by the derived local bound rather than by changing the selected theorem."
+    },
+    {
+      "id": "formal_validation_and_blockers",
+      "description": "Handle n=0 and n=1, empty sums, zero summands, zero square-root arguments permitted by success, and all natural-to-real index conversions without hidden positive-dimension assumptions. Ensure helpers involving division have their nonzero conditions supplied by successful execution. Build with local Lean/Mathlib and audit for sorry, placeholders, custom axioms, circular theorem assumptions, altered constants, or missing linkage to the original input. If full formalization is blocked, report exactly the unresolved construction or semantic gap rather than weakening the source theorem."
+    }
+  ]
+}

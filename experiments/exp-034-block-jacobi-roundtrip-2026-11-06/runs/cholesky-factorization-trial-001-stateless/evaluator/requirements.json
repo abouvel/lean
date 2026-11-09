@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "target-completeness",
+      "description": "Deliver the entire selected labeled result as one or more proved Lean theorems."
+    },
+    {
+      "id": "construction-correctness",
+      "description": "Define the upper-triangular computed Cholesky factor and its successful-completion semantics, including the rounded square root."
+    },
+    {
+      "id": "target-bound",
+      "description": "Prove the symmetric perturbation identity and gamma(n+1) bound using the product of the entrywise absolute factors."
+    },
+    {
+      "id": "original-input-link",
+      "description": "Connect the result to the actual construction and the original mathematical inputs."
+    },
+    {
+      "id": "assumption-integrity",
+      "description": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition."
+    }
+  ],
+  "defect_categories": [
+    {
+      "id": "missing-final-theorem",
+      "description": "The selected statement is not proved in full."
+    },
+    {
+      "id": "missing-construction",
+      "description": "A required algorithm or quantity has no actual definition."
+    },
+    {
+      "id": "wrong-construction",
+      "description": "The formal construction differs from the supplied mathematical algorithm."
+    },
+    {
+      "id": "missing-linkage",
+      "description": "The theorem is not about the submitted algorithm and its original inputs."
+    },
+    {
+      "id": "wrong-bound",
+      "description": "A constant, inequality, or conclusion differs from the source target."
+    },
+    {
+      "id": "strengthened-assumption",
+      "description": "The proof requires a premise absent from the source."
+    },
+    {
+      "id": "conclusion-assumed",
+      "description": "The requested result or a necessary part of it is assumed."
+    },
+    {
+      "id": "weakened-quantification",
+      "description": "The theorem restricts the specified inputs or parameters."
+    }
+  ]
+}

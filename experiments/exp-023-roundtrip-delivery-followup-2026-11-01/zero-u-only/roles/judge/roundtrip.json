@@ -1,0 +1,85 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "29d49865fb0dd0158273f066ddbc8fd6d55cf02efa6daab13265a525524a8dcc",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": false,
+  "source_implies_lean": true,
+  "relation": "mismatch",
+  "delivery_complete": false,
+  "construction_complete": true,
+  "missing_formal_steps": [
+    "Prove the existence of a perturbation tree relative to exactProductTree(T) for every model and tree under (depth(T)+1)*u_M<1 alone, without u_M=0.",
+    "Establish and combine multiplication and all leaf-to-root addition errors to obtain the componentwise gamma(depth(T)+1,u_M) bound for general admissible u_M."
+  ],
+  "target_evidence": "The translated roundedDotProduct_exists_perturbation explicitly assumes both (depth(T)+1)*u_M<1 and u_M=0. Its exact-product linkage and gamma expression are correct within that restricted case. roundedProductTree_isPerturbation proves the general multiplication bound; the remaining targets are defining equations. None asserts the unrestricted dot-product conclusion. The original implies the restricted existence target, and the auxiliary statements follow from the supplied definitions and model. The translated restricted theorem does not establish the original universal claim. The constructions explicitly implement rounded multiplication at each leaf and rounded addition at every internal node, as required; existential perturbations are legitimate for this backward-error task.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The only final existence target assumes u_M=0 in addition to smallness. No target covers positive-error models satisfying smallness.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem",
+        "weakened-quantification"
+      ],
+      "correction": "Prove the final perturbation theorem under smallness alone for every model and tree."
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "The existence target uses IsPerturbation(gamma(depth(T)+1,u_M),exactProductTree(T),P). This tree maps each original leaf (a,b) to a*b and preserves ordered shape. The general product perturbation lemma also uses this exact tree.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "roundedProductTree_isPerturbation proves the bound u_M relative to exactProductTree(T) for every model and tree. The defining equations identify its leaf operation as round_M(a*b), supplying the single-multiplication error.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "The construction rounds each internal addition, but the only final perturbation theorem assumes u_M=0. No target accounts for the effect of these additions for general admissible u_M.",
+      "verdict": "fail",
+      "defect_categories": [
+        "addition-rounding-omitted"
+      ],
+      "correction": "Prove that every internal addition error is incorporated into the final leafwise perturbations for all admissible models."
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The final target has the correct gamma(depth(T)+1,u_M) expression but establishes it only when u_M=0, where the bound is zero. The unrestricted product lemma supplies only a single-error bound u_M. No general accumulated bound is asserted.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Prove the stated gamma bound under smallness alone, combining one multiplication error and at most depth(T) addition errors."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "The existence target explicitly adds u_M=0. This restricts the model to exact arithmetic, which the source explicitly forbids. The conclusion itself is not assumed.",
+      "verdict": "fail",
+      "defect_categories": [
+        "strengthened-assumption",
+        "weakened-quantification"
+      ],
+      "correction": "Remove u_M=0 and prove the conclusion using only the stated model and smallness assumptions."
+    }
+  ],
+  "assumptions_added": [
+    "u_M=0 in the final existence theorem."
+  ],
+  "missing_obligations": [
+    "The full dot-product backward-error theorem for positive u_M satisfying smallness, including the accumulated rounded-addition errors."
+  ],
+  "limitations": [
+    "Assessment is based only on the supplied source, contract, and blind mathematical translation; no Lean code or other evaluator material was inspected."
+  ]
+}

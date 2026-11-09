@@ -1,0 +1,35 @@
+{
+  "name": "exp-031-binary-tree-roundtrip-control-2026-11-06",
+  "task_id": "binary-tree-theorem-3.1-roundtrip-control",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "case-01",
+    "case-02"
+  ],
+  "max_passes": 2,
+  "builder_seconds": 180,
+  "critic_seconds": 240,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "12g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "revision": {
+    "schema_version": 1,
+    "mode": "calibration",
+    "seconds": {
+      "planner": 90,
+      "formalizer": 150,
+      "prover": 180,
+      "translator": 180,
+      "judge": 180
+    },
+    "construction_policy": "Construct Algorithm 1 with offset pairing and unchanged carries, and deliver the full theorem on arbitrary nonempty original inputs and their occurrences."
+  }
+}

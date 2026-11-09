@@ -1,0 +1,430 @@
+{
+  "builder": {
+    "condition": "stateless",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 339.32,
+    "compiler_command_events": 16,
+    "token_usage": {
+      "input_tokens": 632085,
+      "cached_input_tokens": 563712,
+      "output_tokens": 10448,
+      "reasoning_output_tokens": 1602
+    },
+    "roles": {
+      "planner": {
+        "condition": "stateless",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793990088.6078262,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 58.006,
+        "token_usage": {
+          "input_tokens": 95528,
+          "cached_input_tokens": 81152,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1889,
+          "reasoning_output_tokens": 100
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "stateless",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793990147.21174,
+        "time_limit_seconds": 420,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 100.279,
+        "token_usage": {
+          "input_tokens": 215622,
+          "cached_input_tokens": 180992,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3437,
+          "reasoning_output_tokens": 581
+        },
+        "compiler_command_events": 5,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "stateless",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793990256.9336445,
+        "time_limit_seconds": 900,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 181.035,
+        "token_usage": {
+          "input_tokens": 320935,
+          "cached_input_tokens": 301568,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 5122,
+          "reasoning_output_tokens": 921
+        },
+        "compiler_command_events": 11,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "Research.BinaryTreeReduction.parallel_binary_tree_reduction"
+      ],
+      "construction_names": [
+        "Research.BinaryTreeReduction.depth",
+        "Research.BinaryTreeReduction.stageSize",
+        "Research.BinaryTreeReduction.gamma",
+        "Research.BinaryTreeReduction.stage",
+        "Research.BinaryTreeReduction.computed",
+        "Research.BinaryTreeReduction.LocalRoundingModel",
+        "Research.BinaryTreeReduction.coefficient",
+        "Research.BinaryTreeReduction.backwardPerturbation"
+      ],
+      "source_mapping": "Research/Submission.lean formalizes /spec/source.txt, selected theorem:parallel_binary_tree_reduction (paper.tex lines 180-216). depth is Nat.clog 2 n; stageSize is ceil(n/2^level). stage and computed implement the source zero-based stage schedule with exact unmatched-node copies. LocalRoundingModel encodes the supplied no-overflow/no-underflow relative addition model through coordinatewise errors only at performed additions. coefficient and backwardPerturbation construct individual input perturbations. parallel_binary_tree_reduction states the complete existential backward-error conclusion, derived from canonical_backward_error, whose proof is temporary sorry scaffolding for the next role. Explicit domain assumptions are 0<n, 0<=u, and depth(n)*u<1, with arbitrary coordinate type. Statement revision record: initial statement; no feedback.json was present, and no revision was required. /spec/support contained no files to copy."
+    }
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 16.647,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 270,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "3d2fd3dca468199113d70ebae26263376e96e64d9727e8f42b780504da58c29e",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "critic": {
+    "condition": "stateless",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1793990464.5686762,
+    "time_limit_seconds": 300,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 72.003,
+    "token_usage": {
+      "input_tokens": 197497,
+      "cached_input_tokens": 162816,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2536,
+      "reasoning_output_tokens": 252
+    },
+    "compiler_command_events": 4,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "status": "accepted",
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990088.6078262,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 58.006,
+      "token_usage": {
+        "input_tokens": 95528,
+        "cached_input_tokens": 81152,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1889,
+        "reasoning_output_tokens": 100
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990147.21174,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 100.279,
+      "token_usage": {
+        "input_tokens": 215622,
+        "cached_input_tokens": 180992,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3437,
+        "reasoning_output_tokens": 581
+      },
+      "compiler_command_events": 5,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990256.9336445,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 181.035,
+      "token_usage": {
+        "input_tokens": 320935,
+        "cached_input_tokens": 301568,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5122,
+        "reasoning_output_tokens": 921
+      },
+      "compiler_command_events": 11,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "translator": {
+      "condition": "blind",
+      "kind": "translator",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990537.0834153,
+      "time_limit_seconds": 240,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 116.922,
+      "token_usage": {
+        "input_tokens": 72582,
+        "cached_input_tokens": 54528,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5449,
+        "reasoning_output_tokens": 98
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "judge": {
+      "condition": "blind",
+      "kind": "judge",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990654.547902,
+      "time_limit_seconds": 240,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 61.793,
+      "token_usage": {
+        "input_tokens": 72129,
+        "cached_input_tokens": 62976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2548,
+        "reasoning_output_tokens": 125
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "report": {
+    "schema_version": 2,
+    "candidate_hash": "3d2fd3dca468199113d70ebae26263376e96e64d9727e8f42b780504da58c29e",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "The translated final theorem explicitly supplies the entire componentwise backward-error result for the defined offset-paired reduction. Its bounded local-error recurrence represents the source standard floating-point model. Both the output equality and the exact gamma(ceil(log2 n)) bound are already conclusions of the target, for the original inputs. The recurrence preserves unchanged carries and includes non-power-of-two input counts. The existential conclusion need not identify the separately defined perturbation witness.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+        "evidence": "The reported final target Research.BinaryTreeReduction.parallel_binary_tree_reduction explicitly asserts both computed(x,\u03b4)=\u2211i(x(i)+\u0394x(i)) and the componentwise bound for every original input and coordinate. It covers all positive n at depth(n)=ceil(log2 n). No composition of supporting lemmas is needed to obtain a missing final conclusion.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "construction-correctness",
+        "requirement": "Define the paper's offset-paired binary reduction with unchanged carries.",
+        "evidence": "stageSize(n,\u2113)=ceil(n/2^\u2113). Writing m=stageSize(n,\u2113+1), s=stageSize(n,\u2113), stage pairs k and k+m when k<m and k+m<s, multiplies their sum by 1+\u03b4(\u2113,k,c), and copies unpaired entries unchanged. This is the paper algorithm under zero-based indexing. Inactive positions are zeroed but never used as available partners. computed returns position 0 after depth(n) stages. The recurrence is an actual definition, not an abstract choice.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "target-bound",
+        "requirement": "Prove the componentwise gamma(ceil(log2 n)) bound for perturbations of the original input occurrences.",
+        "evidence": "The final target explicitly states |\u0394x(i,c)|\u2264gamma(depth(n),u)|x(i,c)| for every i\u2208Fin n and every coordinate c, with gamma(d,u)=d*u/(1-d*u). depth(n) is the least d with n\u22642^d for positive n, so the bound has exactly the requested ceiling-logarithm constant. The hypothesis d*u<1 makes its denominator positive. n=1 is covered with d=0 and zero perturbation bound.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "original-input-link",
+        "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+        "evidence": "stage initializes position k<n with the original x(k,c). The final target uses computed(x,\u03b4), defined as that very recurrence at depth(n), position 0, and sums perturbations of the same original Fin n input occurrences. Thus the output equality and bound are directly linked to the submitted algorithm and inputs.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+        "evidence": "The target allows arbitrary real inputs and arbitrary coordinate types, every positive n, nonnegative unit roundoff u, and d*u<1. Positive n is the domain of the source logarithm. LocalRoundingModel supplies only |\u03b4|\u2264u at active paired additions before the output stage, exactly the standard relative-error model supplied by the source under no overflow or underflow. Unchanged carries impose no rounding assumption. No desired backward-error equality or gamma estimate is assumed. Existential perturbations are legitimate for this backward-error theorem; the source does not require the theorem to name backwardPerturbation as its witness.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "direct_report": {
+    "overall_verdict": "pass",
+    "phase": "final",
+    "target_evidence": "Research/Submission.lean:259-266 proves parallel_binary_tree_reduction: for every positive n, arbitrary real coordinate inputs x and locally bounded rounding errors, if 0 \u2264 u and (Nat.clog 2 n)*u < 1, the actual computed reduction equals the sum of original inputs plus per-occurrence perturbations bounded componentwise by gamma (Nat.clog 2 n) u times |x_i|. canonical_backward_error at lines 228-254 proves both obligations for the explicit perturbations. No backward-error conclusion is assumed.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+        "evidence": "Research/Submission.lean:259-266 proves the existential perturbation representation and all componentwise inequalities, using the proved canonical_backward_error at lines 228-254. Independent lake env lean Research/Submission.lean exited 0; /evaluation/verification.json and verification.log also report successful build and formal audit. The theorem axiom check reports only propext, Classical.choice, and Quot.sound.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "construction-correctness",
+        "requirement": "Define the paper's offset-paired binary reduction with unchanged carries.",
+        "evidence": "Research/Submission.lean:25 defines stageSize n l = (n + 2^l - 1)/2^l, the natural ceiling. Lines 33-42 initialize each original input and pair node k with k + stageSize n (l+1), round only available pairs, and copy an unmatched node exactly. Lines 46-48 return node zero after depth n stages. Lines 22 and 99-106 identify the logarithmic depth and prove there is exactly one final node for n > 0. Nat.clog_le_iff_le_pow characterizes this depth as the least exponent with n \u2264 2^depth, hence ceil(log2 n).",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "target-bound",
+        "requirement": "Prove the componentwise gamma(ceil(log2 n)) bound for perturbations of the original input occurrences.",
+        "evidence": "Research/Submission.lean:28 defines gamma k u = k*u/(1-k*u). Lines 112-141 prove the one-rounding gamma estimate. Lines 143-196 propagate each indexed original leaf along its unique path with at most the stage count of rounding factors. Lines 244-254 obtain the root coefficient bound and multiply it by |x i c|. The final bound at lines 263-265 quantifies over every original index i and coordinate c.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "original-input-link",
+        "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+        "evidence": "Research/Submission.lean:35 initializes stage zero from x indexed by Fin n. The coefficient recursion at lines 60-69 uses the same pairings and rounding factors as stage. stage_expansion at lines 198-223 proves equality of each computed stage with its expansion over the original occurrences. The explicit perturbation at lines 73-75 multiplies the original x i c by its root coefficient minus one; lines 235-243 prove the required reconstruction of computed x \u03b4. Inputs can be zero, repeated, or of either sign.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+        "evidence": "Research/Submission.lean:259-265 assumes only positive input count, nonnegative unit roundoff, the local rounding-error bound defined at lines 52-55, and the requested smallness condition (depth n : \u211d)*u < 1. Positivity of n is implicit in the source logarithm and returned first node; nonnegativity is inherent in unit roundoff. The local model is exactly the supplied standard relative-error model under no overflow/underflow and constrains only actual additions. Arbitrary coordinate type \u03b9 includes every finite-dimensional real vector space in the source. Neither the root coefficient estimate nor the perturbation conclusion occurs in a premise; both are proved from the recursions.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "roundtrip": {
+    "schema_version": 2,
+    "candidate_hash": "3d2fd3dca468199113d70ebae26263376e96e64d9727e8f42b780504da58c29e",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "The translated final theorem explicitly supplies the entire componentwise backward-error result for the defined offset-paired reduction. Its bounded local-error recurrence represents the source standard floating-point model. Both the output equality and the exact gamma(ceil(log2 n)) bound are already conclusions of the target, for the original inputs. The recurrence preserves unchanged carries and includes non-power-of-two input counts. The existential conclusion need not identify the separately defined perturbation witness.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+        "evidence": "The reported final target Research.BinaryTreeReduction.parallel_binary_tree_reduction explicitly asserts both computed(x,\u03b4)=\u2211i(x(i)+\u0394x(i)) and the componentwise bound for every original input and coordinate. It covers all positive n at depth(n)=ceil(log2 n). No composition of supporting lemmas is needed to obtain a missing final conclusion.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "construction-correctness",
+        "requirement": "Define the paper's offset-paired binary reduction with unchanged carries.",
+        "evidence": "stageSize(n,\u2113)=ceil(n/2^\u2113). Writing m=stageSize(n,\u2113+1), s=stageSize(n,\u2113), stage pairs k and k+m when k<m and k+m<s, multiplies their sum by 1+\u03b4(\u2113,k,c), and copies unpaired entries unchanged. This is the paper algorithm under zero-based indexing. Inactive positions are zeroed but never used as available partners. computed returns position 0 after depth(n) stages. The recurrence is an actual definition, not an abstract choice.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "target-bound",
+        "requirement": "Prove the componentwise gamma(ceil(log2 n)) bound for perturbations of the original input occurrences.",
+        "evidence": "The final target explicitly states |\u0394x(i,c)|\u2264gamma(depth(n),u)|x(i,c)| for every i\u2208Fin n and every coordinate c, with gamma(d,u)=d*u/(1-d*u). depth(n) is the least d with n\u22642^d for positive n, so the bound has exactly the requested ceiling-logarithm constant. The hypothesis d*u<1 makes its denominator positive. n=1 is covered with d=0 and zero perturbation bound.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "original-input-link",
+        "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+        "evidence": "stage initializes position k<n with the original x(k,c). The final target uses computed(x,\u03b4), defined as that very recurrence at depth(n), position 0, and sums perturbations of the same original Fin n input occurrences. Thus the output equality and bound are directly linked to the submitted algorithm and inputs.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+        "evidence": "The target allows arbitrary real inputs and arbitrary coordinate types, every positive n, nonnegative unit roundoff u, and d*u<1. Positive n is the domain of the source logarithm. LocalRoundingModel supplies only |\u03b4|\u2264u at active paired additions before the output stage, exactly the standard relative-error model supplied by the source under no overflow or underflow. Unchanged carries impose no rounding assumption. No desired backward-error equality or gamma estimate is assumed. Existential perturbations are legitimate for this backward-error theorem; the source does not require the theorem to name backwardPerturbation as its witness.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "number": 1,
+  "wall_time_seconds": 628.2716875149927,
+  "evidence": "stateless/passes/pass-001"
+}

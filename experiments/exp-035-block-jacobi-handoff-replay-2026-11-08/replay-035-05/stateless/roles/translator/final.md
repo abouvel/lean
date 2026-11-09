@@ -1,0 +1,1 @@
+Saved [translation.json](/output/translation.json) atomically with status `complete`, covering both targets and all 12 constructions. No missing context.

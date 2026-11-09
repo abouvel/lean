@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "3a5e0d4a0ab512b0d09742e3f915b1dadf35814eae7475e4b39e16b67f4e6203",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": false,
+  "missing_formal_steps": [],
+  "target_evidence": "Research.answer_correct directly asserts that the submitted real Research.answer has square zero, without hypotheses or parameters. Research.answer._proof_1 asserts existence over the reals. The mathematical square-zero content agrees in both directions. The requested final correctness theorem is present; no missing theorem is inferred from supporting lemmas. Logical faithfulness does not certify the separately required construction policy: the submitted definition uses classical witness selection.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full requested mathematical property.",
+      "evidence": "Research.answer_correct explicitly states Research.answer * Research.answer = 0 over the reals, with no additional hypotheses, parameters, or bounds.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "explicit-construction",
+      "requirement": "Provide a standalone explicit numeric/algebraic answer; existence or abstract selection alone is insufficient.",
+      "evidence": "The constructions entry defines Research.answer as Classical.choose applied to Research.answer._proof_1. The translation expressly says the defining construction selects a witness rather than returning numeral 0. Uniqueness of the real square-zero value does not make this definition an explicit numeric/algebraic expression.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-explicit-construction"
+      ],
+      "correction": "Define the standalone real answer by the concrete expression 0 and prove the square-zero theorem for that definition."
+    },
+    {
+      "requirement_id": "construction-linkage",
+      "requirement": "The correctness theorem must refer to the actual submitted answer.",
+      "evidence": "Research.answer_correct names the same Research.answer defined in the constructions entry and states its square is zero. This linkage holds despite the construction-policy violation.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "A standalone answer defined by an explicit numeric/algebraic expression, as required by the source construction policy."
+  ],
+  "limitations": [
+    "Only the supplied source, contract, and translation were inspected. Logical implication and delivery completeness concern the asserted mathematical conclusions; the separately evaluated explicit-construction requirement fails."
+  ]
+}

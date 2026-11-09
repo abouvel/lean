@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "target-completeness",
+      "description": "Prove the full forward-error theorem for every model, coefficient list, and real evaluation point."
+    },
+    {
+      "id": "exact-horner",
+      "description": "Use the exact Horner recursion with zero for the empty list and coefficients in increasing degree order."
+    },
+    {
+      "id": "rounded-horner",
+      "description": "Evaluate each cons step using a rounded multiplication of x and the rounded tail, then a rounded addition of the coefficient."
+    },
+    {
+      "id": "error-envelope",
+      "description": "Define the stated error envelope using exact values and u, with the requested recurrence and base case."
+    },
+    {
+      "id": "conclusion-linkage",
+      "description": "Bound the absolute difference of the supplied rounded and exact evaluators by the supplied envelope."
+    },
+    {
+      "id": "assumption-integrity",
+      "description": "Use the supplied relative-error model without additional smallness, sign, nonzero, or exact-arithmetic premises."
+    }
+  ],
+  "defect_categories": [
+    {
+      "id": "missing-final-theorem",
+      "description": "The requested final proposition is not proved."
+    },
+    {
+      "id": "missing-construction",
+      "description": "A requested construction has no actual definition."
+    },
+    {
+      "id": "wrong-construction",
+      "description": "A construction differs from the specified algorithm or recurrence."
+    },
+    {
+      "id": "missing-linkage",
+      "description": "The proof is about the wrong quantity or does not connect to the construction."
+    },
+    {
+      "id": "wrong-bound",
+      "description": "The asserted error bound is weaker than or different from the requested bound."
+    },
+    {
+      "id": "strengthened-assumption",
+      "description": "The theorem adds a premise absent from the task."
+    },
+    {
+      "id": "conclusion-assumed",
+      "description": "The desired conclusion or an equivalent statement is assumed."
+    },
+    {
+      "id": "weakened-quantification",
+      "description": "The theorem covers fewer inputs than the task requires."
+    }
+  ]
+}

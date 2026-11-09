@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "strategy": "Define the exact and rounded product trees by shape-preserving maps on Tree (\u211d \u00d7 \u211d), and define roundedDotProduct as roundedSum of the rounded product tree. Construct an intermediate leafwise multiplication perturbation and obtain the final witness tree from the supplied roundedSum theorem. Compose these perturbations using IsPerturbation.trans. With d = tree.depth and g = gamma d model.u, the composite bound u + g * (1 + u) equals g + u * (1 + g), so gamma_step gives gamma (d + 1) model.u. Thus each product leaf incurs one multiplication error plus at most d addition errors. This is a plan only; no completed target proof is supplied.",
+  "obligations": [
+    {
+      "id": "preserve_prerequisites",
+      "description": "The formalizer must copy all five approved prerequisite modules from /spec/support/Research into /workspace/Research unchanged, preserve protected configuration, and place new dot-product declarations in a separate module importing Reduction. The planner does not edit /workspace. No /spec/feedback.json was present when planning."
+    },
+    {
+      "id": "define_product_constructions",
+      "description": "For arbitrary tree : Tree (\u211d \u00d7 \u211d), define exactProductTree tree := tree.map (fun p => p.1 * p.2), roundedProductTree model tree := tree.map (fun p => model.mul p.1 p.2), and roundedDotProduct model tree := roundedSum model (roundedProductTree model tree). These constructions must preserve every leaf occurrence and the original reduction shape, and must use actual model rounding for both multiplication and addition."
+    },
+    {
+      "id": "multiplication_perturbation",
+      "description": "Establish IsPerturbation model.u (exactProductTree tree) (roundedProductTree model tree) by structural induction on tree. At each leaf apply model.round_spec to a*b and use |(a*b)*(1+\u03b4) - a*b| = |\u03b4|*|a*b| and |\u03b4| \u2264 model.u. Combine child witnesses with IsPerturbation.node. This also handles zero products without division or nonzero assumptions."
+    },
+    {
+      "id": "depth_and_smallness",
+      "description": "Use Tree.depth_map to identify the depth of roundedProductTree model tree with d := tree.depth. From the sole smallness assumption ((d + 1 : \u2115) : \u211d) * model.u < 1 and model.u_nonneg derive (d : \u211d) * model.u < 1. Keep natural-number successor casts explicit where Lean requires them. Obtain 0 \u2264 gamma d model.u via gamma_nonneg."
+    },
+    {
+      "id": "construct_final_witness",
+      "description": "Apply roundedSum_exists_perturbation to roundedProductTree model tree under the derived depth-d smallness condition. Obtain an existential perturbed : Tree \u211d with IsPerturbation (gamma d model.u) (roundedProductTree model tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. This perturbed tree is the required construction, not an assumed backward-error conclusion."
+    },
+    {
+      "id": "compose_and_bound",
+      "description": "Compose the multiplication perturbation with the addition perturbation using IsPerturbation.trans, supplying nonnegativity of the second bound gamma d model.u. The resulting relative bound is model.u + gamma d model.u * (1 + model.u). Rewrite it by commutative ring algebra as gamma d model.u + model.u * (1 + gamma d model.u), apply gamma_step d model.u model.u_nonneg with the original successor smallness assumption, and enlarge the bound using IsPerturbation.mono."
+    },
+    {
+      "id": "full_target_statement",
+      "description": "Prove for every model : Model and every tree : Tree (\u211d \u00d7 \u211d), assuming only ((tree.depth + 1 : \u2115) : \u211d) * model.u < 1, that there exists perturbed : Tree \u211d such that IsPerturbation (gamma (tree.depth + 1) model.u) (exactProductTree tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. IsPerturbation enforces matching shape and bounds each perturbed exact-product leaf y relative to its original product x by |y-x| \u2264 gamma (tree.depth+1) model.u * |x|. Include singleton and unbalanced trees; do not restrict models to exact arithmetic or replace the componentwise existential claim with an aggregate forward bound."
+    },
+    {
+      "id": "validate_completed_formalization",
+      "description": "The formalizer must check the new module with local Lean/Mathlib and the project build as available, verify all protected prerequisite copies remain unchanged, and ensure the completed candidate contains no sorry, placeholders, or custom axioms. Use only approved local sources and any approved memory snapshot; do not use Aristotle. Honor the stated 180-second hard builder limit."
+    }
+  ]
+}

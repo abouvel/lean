@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "requirements": [
+    {
+      "id": "target-completeness",
+      "description": "Prove the full universally quantified dot-product backward-error theorem."
+    },
+    {
+      "id": "exact-product-linkage",
+      "description": "Relate perturbations to exact componentwise products x_i*y_i."
+    },
+    {
+      "id": "multiplication-rounding",
+      "description": "Account for one rounded multiplication per leaf."
+    },
+    {
+      "id": "addition-reduction",
+      "description": "Account for every rounded tree addition in the reduction."
+    },
+    {
+      "id": "accumulated-bound",
+      "description": "Establish the gamma(depth+1,u) componentwise perturbation bound."
+    },
+    {
+      "id": "assumption-integrity",
+      "description": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion."
+    }
+  ],
+  "defect_categories": [
+    {
+      "id": "missing-final-theorem",
+      "description": "The target proposition is not proved."
+    },
+    {
+      "id": "missing-exact-product-link",
+      "description": "The proof is relative to rounded products rather than exact x_i*y_i products."
+    },
+    {
+      "id": "multiplication-rounding-omitted",
+      "description": "The multiplication error is omitted from the analysis."
+    },
+    {
+      "id": "addition-rounding-omitted",
+      "description": "The reduction-addition errors are omitted from the analysis."
+    },
+    {
+      "id": "wrong-error-count",
+      "description": "The accumulated bound uses the wrong number of rounding errors."
+    },
+    {
+      "id": "strengthened-assumption",
+      "description": "The theorem adds an assumption not present in the requested result."
+    },
+    {
+      "id": "conclusion-assumed",
+      "description": "The desired conclusion or an equivalent statement is assumed."
+    },
+    {
+      "id": "weakened-quantification",
+      "description": "The theorem covers fewer models or trees than requested."
+    }
+  ]
+}

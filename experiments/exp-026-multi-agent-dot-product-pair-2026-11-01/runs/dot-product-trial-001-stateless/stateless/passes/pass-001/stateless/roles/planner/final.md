@@ -1,0 +1,1 @@
+Saved and validated [plan.json](/output/plan.json) atomically. It identifies the product-tree definitions, perturbation witness construction, and depth-plus-one error bound. No completed proof was written, and `/workspace` was unchanged.

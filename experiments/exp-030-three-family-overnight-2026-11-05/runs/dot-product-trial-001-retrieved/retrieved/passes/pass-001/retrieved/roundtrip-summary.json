@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "72a54063b26f211b96bd4a00cef66d00aa235510c6e0fc2e5ba28e5ada310f24",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "The listed roundedDotProduct_exists_perturbation target directly asserts the full requested backward-error theorem. Its reference is the exact componentwise product tree; its result is the explicitly defined rounded multiplication and rounded tree reduction; its componentwise bound is gamma(depth+1,u). The supplied constructions fulfill the construction policy. Existential perturbation witnesses are permitted. No additional composition or inequality is needed to obtain the requested final conclusion from the stated target.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The explicit target universally quantifies over every M and T and directly concludes existence of P with both IsPerturbation(gamma(depth(T)+1,M.u),exactProductTree(T),P) and exactSum(P)=roundedDotProduct(M,T). It already asserts the final theorem.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "The target references exactProductTree(T), whose construction maps leaf(a,b) to leaf(a*b) and preserves nodes without rounding. The leaf bound is explicitly |y_i-a_i*b_i| <= gamma(d+1,u)*|a_i*b_i|.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "roundedProductTree maps each paired leaf to M.round(a*b), preserving nodes. roundedDotProduct reduces precisely this rounded-product tree. The final target bounds perturbations relative to exact products with depth+1 errors.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "roundedSum(M,node(L,R)) is M.round(roundedSum(M,L)+roundedSum(M,R)). roundedDotProduct therefore rounds every internal addition following the supplied tree, and this actual recursively rounded result appears in the target equality.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The target explicitly uses gamma(d+1,u) with gamma(k,v)=k*v/(1-k*v). IsPerturbation imposes the stated relative bound separately on every corresponding leaf and preserves tree shape. Depth is zero on leaves and one plus maximum child depth at nodes, so the bound counts one multiplication plus at most depth additions, including depth-zero trees.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "Models have u>=0 and, for each real z, a delta with |delta|<=u and round(z)=z*(1+delta). The sole additional theorem hypothesis is (depth(T)+1)*u<1. All paired-real trees of the supplied finite leaf/node type are quantified, without balancing, exact-arithmetic restrictions, or assumed perturbation conclusions.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

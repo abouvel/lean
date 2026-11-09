@@ -1,0 +1,18 @@
+{
+  "overall_verdict": "pass|fail|uncertain",
+  "phase": "final",
+  "target_evidence": "string",
+  "requirements": [
+    {
+      "requirement_id": "catalog ID",
+      "requirement": "string",
+      "evidence": "string",
+      "verdict": "pass|fail|uncertain",
+      "defect_categories": [],
+      "correction": "empty for pass; actionable for fail"
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

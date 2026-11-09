@@ -1,0 +1,523 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "f2c12dd4640eddc801cf005dd1c29f0c4de96261a0263ece83cfd5ba13ce2891",
+  "targets": [
+    "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation"
+  ],
+  "construction_names": [
+    "Research.BinaryTreeReduction.exactProductTree",
+    "Research.BinaryTreeReduction.roundedProductTree",
+    "Research.BinaryTreeReduction.roundedDotProduct"
+  ],
+  "declarations": [
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.IsPerturbation.leaf",
+        "Research.BinaryTreeReduction.IsPerturbation.node"
+      ],
+      "kind": "inductive",
+      "module": "Research.Projects.BinaryTreeReduction.Reduction",
+      "name": "Research.BinaryTreeReduction.IsPerturbation",
+      "type": "Real \u2192 Research.BinaryTreeReduction.Tree.{0} Real \u2192 Research.BinaryTreeReduction.Tree.{0} Real \u2192 Prop"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "LE.le",
+        "Real.instLE",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "HSub.hSub",
+        "instHSub",
+        "Real.instSub",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Research.BinaryTreeReduction.IsPerturbation",
+        "Research.BinaryTreeReduction.Tree.leaf"
+      ],
+      "kind": "constructor",
+      "module": "Research.Projects.BinaryTreeReduction.Reduction",
+      "name": "Research.BinaryTreeReduction.IsPerturbation.leaf",
+      "type": "\u2200 {bound : Real} (x y : Real),\n  LE.le.{0} (abs.{0} (HSub.hSub.{0, 0, 0} y x)) (HMul.hMul.{0, 0, 0} bound (abs.{0} x)) \u2192\n    Research.BinaryTreeReduction.IsPerturbation bound (Research.BinaryTreeReduction.Tree.leaf.{0} x)\n      (Research.BinaryTreeReduction.Tree.leaf.{0} y)"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.IsPerturbation",
+        "Research.BinaryTreeReduction.Tree.node"
+      ],
+      "kind": "constructor",
+      "module": "Research.Projects.BinaryTreeReduction.Reduction",
+      "name": "Research.BinaryTreeReduction.IsPerturbation.node",
+      "type": "\u2200 {bound : Real} {left left' right right' : Research.BinaryTreeReduction.Tree.{0} Real},\n  Research.BinaryTreeReduction.IsPerturbation bound left left' \u2192\n    Research.BinaryTreeReduction.IsPerturbation bound right right' \u2192\n      Research.BinaryTreeReduction.IsPerturbation bound (Research.BinaryTreeReduction.Tree.node.{0} left right)\n        (Research.BinaryTreeReduction.Tree.node.{0} left' right')"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node"
+      ],
+      "kind": "inductive",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree",
+      "type": "Type u_1 \u2192 Type u_1"
+    },
+    {
+      "body": "fun {\u03b1} {motive} t =>\n  Research.BinaryTreeReduction.Tree.rec.{(max (u_1 + 1) u) + 1, u_1} (fun a => PUnit.{max (u_1 + 1) u})\n    (fun a a_1 a_ih a_ih_1 =>\n      PProd.{max (max 1 u) (u_1 + 1) u, max (max 1 u) (u_1 + 1) u} (PProd.{u, max (u_1 + 1) u} (motive a) a_ih)\n        (PProd.{u, max (u_1 + 1) u} (motive a_1) a_ih_1))\n    t",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.rec",
+        "PUnit",
+        "PProd"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.below",
+      "type": "{\u03b1 : Type u_1} \u2192\n  {motive : Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192 Sort u} \u2192\n    Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192 Sort (max (u_1 + 1) u)"
+    },
+    {
+      "body": "fun {\u03b1} {motive} t F_1 => (Research.BinaryTreeReduction.Tree.brecOn.go.{u, u_1} t F_1).1",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.below",
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.below",
+        "Research.BinaryTreeReduction.Tree.brecOn.go"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.brecOn",
+      "type": "{\u03b1 : Type u_1} \u2192\n  {motive : Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192 Sort u} \u2192\n    (t : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192\n      ((t : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192\n          Research.BinaryTreeReduction.Tree.below.{u, u_1} t \u2192 motive t) \u2192\n        motive t"
+    },
+    {
+      "body": "fun {\u03b1} {motive} t F_1 =>\n  Research.BinaryTreeReduction.Tree.rec.{max (u_1 + 1) u, u_1}\n    (fun a =>\n      \u27e8F_1 (Research.BinaryTreeReduction.Tree.leaf.{u_1} a) PUnit.unit.{max (u_1 + 1) u}, PUnit.unit.{max (u_1 + 1) u}\u27e9)\n    (fun a a_1 a_ih a_ih_1 => \u27e8F_1 (Research.BinaryTreeReduction.Tree.node.{u_1} a a_1) \u27e8a_ih, a_ih_1\u27e9, a_ih, a_ih_1\u27e9) t",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.below",
+        "PProd",
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.below",
+        "Research.BinaryTreeReduction.Tree.rec",
+        "PProd",
+        "PProd.mk",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "PUnit",
+        "PUnit.unit",
+        "Research.BinaryTreeReduction.Tree.node"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.brecOn.go",
+      "type": "{\u03b1 : Type u_1} \u2192\n  {motive : Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192 Sort u} \u2192\n    (t : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192\n      ((t : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192\n          Research.BinaryTreeReduction.Tree.below.{u, u_1} t \u2192 motive t) \u2192\n        PProd.{u, max (u_1 + 1) u} (motive t) (Research.BinaryTreeReduction.Tree.below.{u, u_1} t)"
+    },
+    {
+      "body": "fun {\u03b1} {motive} t leaf node =>\n  Research.BinaryTreeReduction.Tree.rec.{u, u_1} (fun a => leaf a) (fun a a_1 a_ih a_ih_1 => node a a_1) t",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "Research.BinaryTreeReduction.Tree.rec"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.casesOn",
+      "type": "{\u03b1 : Type u_1} \u2192\n  {motive : Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192 Sort u} \u2192\n    (t : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192\n      ((a : \u03b1) \u2192 motive (Research.BinaryTreeReduction.Tree.leaf.{u_1} a)) \u2192\n        ((a a_1 : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192\n            motive (Research.BinaryTreeReduction.Tree.node.{u_1} a a_1)) \u2192\n          motive t"
+    },
+    {
+      "body": "fun {\u03b1} x =>\n  Research.BinaryTreeReduction.Tree.brecOn.{1, u_1} x fun x f =>\n    (match (motive :=\n        (x : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192 Research.BinaryTreeReduction.Tree.below.{1, u_1} x \u2192 Nat)\n        x with\n      | Research.BinaryTreeReduction.Tree.leaf.{u_1} a => fun x => 0\n      | Research.BinaryTreeReduction.Tree.node.{u_1} left right => fun x =>\n        HAdd.hAdd.{0, 0, 0} 1 (Max.max.{0} x.1.1 x.2.1))\n      f",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Nat",
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.brecOn",
+        "Nat",
+        "Research.BinaryTreeReduction.Tree.below",
+        "Research.BinaryTreeReduction.instReprTree.repr.match_1",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Research.BinaryTreeReduction.Tree.node",
+        "HAdd.hAdd",
+        "instHAdd",
+        "instAddNat",
+        "Max.max",
+        "Nat.instMax"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.depth",
+      "type": "{\u03b1 : Type u_1} \u2192 Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192 Nat"
+    },
+    {
+      "body": "fun x =>\n  Research.BinaryTreeReduction.Tree.brecOn.{1, 0} x fun x f =>\n    (match (motive :=\n        (x : Research.BinaryTreeReduction.Tree.{0} Real) \u2192 Research.BinaryTreeReduction.Tree.below.{1, 0} x \u2192 Real)\n        x with\n      | Research.BinaryTreeReduction.Tree.leaf.{0} value => fun x => value\n      | Research.BinaryTreeReduction.Tree.node.{0} left right => fun x => HAdd.hAdd.{0, 0, 0} x.1.1 x.2.1)\n      f",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Real",
+        "Research.BinaryTreeReduction.Tree",
+        "Real",
+        "Research.BinaryTreeReduction.Tree.brecOn",
+        "Research.BinaryTreeReduction.Tree.below",
+        "Research.BinaryTreeReduction.Tree.exactSum.match_1",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.exactSum",
+      "type": "Research.BinaryTreeReduction.Tree.{0} Real \u2192 Real"
+    },
+    {
+      "body": "fun motive x h_1 h_2 => Research.BinaryTreeReduction.Tree.casesOn.{u_1, 0} x (fun a => h_1 a) fun a a_1 => h_2 a a_1",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Real",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "Research.BinaryTreeReduction.Tree",
+        "Real",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "Research.BinaryTreeReduction.Tree.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.exactSum.match_1",
+      "type": "(motive : Research.BinaryTreeReduction.Tree.{0} Real \u2192 Sort u_1) \u2192\n  (x : Research.BinaryTreeReduction.Tree.{0} Real) \u2192\n    ((value : Real) \u2192 motive (Research.BinaryTreeReduction.Tree.leaf.{0} value)) \u2192\n      ((left right : Research.BinaryTreeReduction.Tree.{0} Real) \u2192\n          motive (Research.BinaryTreeReduction.Tree.node.{0} left right)) \u2192\n        motive x"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree"
+      ],
+      "kind": "constructor",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.leaf",
+      "type": "{\u03b1 : Type u_1} \u2192 \u03b1 \u2192 Research.BinaryTreeReduction.Tree.{u_1} \u03b1"
+    },
+    {
+      "body": "fun {\u03b1} {\u03b2} f x =>\n  Research.BinaryTreeReduction.Tree.brecOn.{u_2 + 1, u_1} x fun x f_1 =>\n    (match (motive :=\n        (x : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192\n          Research.BinaryTreeReduction.Tree.below.{u_2 + 1, u_1} x \u2192 Research.BinaryTreeReduction.Tree.{u_2} \u03b2)\n        x with\n      | Research.BinaryTreeReduction.Tree.leaf.{u_1} value => fun x =>\n        Research.BinaryTreeReduction.Tree.leaf.{u_2} (f value)\n      | Research.BinaryTreeReduction.Tree.node.{u_1} left right => fun x =>\n        Research.BinaryTreeReduction.Tree.node.{u_2} x.1.1 x.2.1)\n      f_1",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.brecOn",
+        "Research.BinaryTreeReduction.Tree.below",
+        "Research.BinaryTreeReduction.instReprTree.repr.match_1",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.map",
+      "type": "{\u03b1 : Type u_1} \u2192\n  {\u03b2 : Type u_2} \u2192 (\u03b1 \u2192 \u03b2) \u2192 Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192 Research.BinaryTreeReduction.Tree.{u_2} \u03b2"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree"
+      ],
+      "kind": "constructor",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.Tree.node",
+      "type": "{\u03b1 : Type u_1} \u2192\n  Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192\n    Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192 Research.BinaryTreeReduction.Tree.{u_1} \u03b1"
+    },
+    {
+      "body": "fun tree => Research.BinaryTreeReduction.Tree.map.{0, 0} (fun pair => HMul.hMul.{0, 0, 0} pair.1 pair.2) tree",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Prod",
+        "Real",
+        "Research.BinaryTreeReduction.Tree",
+        "Prod",
+        "Real",
+        "Research.BinaryTreeReduction.Tree.map",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Prod.fst",
+        "Prod.snd"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.BinaryTreeReduction.exactProductTree",
+      "type": "Research.BinaryTreeReduction.Tree.{0} (Prod.{0, 0} Real Real) \u2192 Research.BinaryTreeReduction.Tree.{0} Real"
+    },
+    {
+      "body": "fun {\u03b1} motive x h_1 h_2 =>\n  Research.BinaryTreeReduction.Tree.casesOn.{u_2, u_1} x (fun a => h_1 a) fun a a_1 => h_2 a a_1",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "Research.BinaryTreeReduction.Tree",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "Research.BinaryTreeReduction.Tree.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Tree",
+      "name": "Research.BinaryTreeReduction.instReprTree.repr.match_1",
+      "type": "{\u03b1 : Type u_1} \u2192\n  (motive : Research.BinaryTreeReduction.Tree.{u_1} \u03b1 \u2192 Sort u_2) \u2192\n    (x : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192\n      ((a : \u03b1) \u2192 motive (Research.BinaryTreeReduction.Tree.leaf.{u_1} a)) \u2192\n        ((a a_1 : Research.BinaryTreeReduction.Tree.{u_1} \u03b1) \u2192\n            motive (Research.BinaryTreeReduction.Tree.node.{u_1} a a_1)) \u2192\n          motive x"
+    },
+    {
+      "body": "fun model tree =>\n  Research.BinaryTreeReduction.roundedSum model (Research.BinaryTreeReduction.roundedProductTree model tree)",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Research.BinaryTreeReduction.Tree",
+        "Prod",
+        "Real",
+        "Research.FloatingPoint.Model",
+        "Research.BinaryTreeReduction.Tree",
+        "Prod",
+        "Real",
+        "Research.BinaryTreeReduction.roundedSum",
+        "Research.BinaryTreeReduction.roundedProductTree"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.BinaryTreeReduction.roundedDotProduct",
+      "type": "Research.FloatingPoint.Model \u2192 Research.BinaryTreeReduction.Tree.{0} (Prod.{0, 0} Real Real) \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Research.BinaryTreeReduction.Tree",
+        "Prod",
+        "Real",
+        "LT.lt",
+        "Real.instLT",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Nat.cast",
+        "Real.instNatCast",
+        "HAdd.hAdd",
+        "Nat",
+        "instHAdd",
+        "instAddNat",
+        "Research.BinaryTreeReduction.Tree.depth",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Research.FloatingPoint.Model.u",
+        "One.toOfNat1",
+        "Real.instOne",
+        "Exists",
+        "And",
+        "Research.BinaryTreeReduction.IsPerturbation",
+        "Research.FloatingPoint.gamma",
+        "Research.BinaryTreeReduction.exactProductTree",
+        "Eq",
+        "Research.BinaryTreeReduction.Tree.exactSum",
+        "Research.BinaryTreeReduction.roundedDotProduct"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation",
+      "type": "\u2200 (model : Research.FloatingPoint.Model) (tree : Research.BinaryTreeReduction.Tree.{0} (Prod.{0, 0} Real Real)),\n  LT.lt.{0}\n      (HMul.hMul.{0, 0, 0} (\u2191(HAdd.hAdd.{0, 0, 0} (Research.BinaryTreeReduction.Tree.depth.{0} tree) 1))\n        (Research.FloatingPoint.Model.u model))\n      1 \u2192\n    \u2203 perturbed,\n      And\n        (Research.BinaryTreeReduction.IsPerturbation\n          (Research.FloatingPoint.gamma (HAdd.hAdd.{0, 0, 0} (Research.BinaryTreeReduction.Tree.depth.{0} tree) 1)\n            (Research.FloatingPoint.Model.u model))\n          (Research.BinaryTreeReduction.exactProductTree tree) perturbed)\n        (Eq.{1} (Research.BinaryTreeReduction.Tree.exactSum perturbed)\n          (Research.BinaryTreeReduction.roundedDotProduct model tree))"
+    },
+    {
+      "body": "fun model tree =>\n  Research.BinaryTreeReduction.Tree.map.{0, 0} (fun pair => Research.FloatingPoint.Model.mul model pair.1 pair.2) tree",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Research.BinaryTreeReduction.Tree",
+        "Prod",
+        "Real",
+        "Research.FloatingPoint.Model",
+        "Research.BinaryTreeReduction.Tree",
+        "Prod",
+        "Real",
+        "Research.BinaryTreeReduction.Tree.map",
+        "Research.FloatingPoint.Model.mul",
+        "Prod.fst",
+        "Prod.snd"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "Research.BinaryTreeReduction.roundedProductTree",
+      "type": "Research.FloatingPoint.Model \u2192\n  Research.BinaryTreeReduction.Tree.{0} (Prod.{0, 0} Real Real) \u2192 Research.BinaryTreeReduction.Tree.{0} Real"
+    },
+    {
+      "body": "fun model x =>\n  Research.BinaryTreeReduction.Tree.brecOn.{1, 0} x fun x f =>\n    (match (motive :=\n        (x : Research.BinaryTreeReduction.Tree.{0} Real) \u2192 Research.BinaryTreeReduction.Tree.below.{1, 0} x \u2192 Real)\n        x with\n      | Research.BinaryTreeReduction.Tree.leaf.{0} value => fun x => value\n      | Research.BinaryTreeReduction.Tree.node.{0} left right => fun x =>\n        Research.FloatingPoint.Model.add model x.1.1 x.2.1)\n      f",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Research.BinaryTreeReduction.Tree",
+        "Real",
+        "Research.FloatingPoint.Model",
+        "Research.BinaryTreeReduction.Tree",
+        "Real",
+        "Research.BinaryTreeReduction.Tree.brecOn",
+        "Research.BinaryTreeReduction.Tree.below",
+        "Research.BinaryTreeReduction.roundedSum.match_1",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "Research.FloatingPoint.Model.add"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Reduction",
+      "name": "Research.BinaryTreeReduction.roundedSum",
+      "type": "Research.FloatingPoint.Model \u2192 Research.BinaryTreeReduction.Tree.{0} Real \u2192 Real"
+    },
+    {
+      "body": "fun motive x h_1 h_2 => Research.BinaryTreeReduction.Tree.casesOn.{u_1, 0} x (fun a => h_1 a) fun a a_1 => h_2 a a_1",
+      "dependencies": [
+        "Research.BinaryTreeReduction.Tree",
+        "Real",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "Research.BinaryTreeReduction.Tree",
+        "Real",
+        "Research.BinaryTreeReduction.Tree.leaf",
+        "Research.BinaryTreeReduction.Tree.node",
+        "Research.BinaryTreeReduction.Tree.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Projects.BinaryTreeReduction.Reduction",
+      "name": "Research.BinaryTreeReduction.roundedSum.match_1",
+      "type": "(motive : Research.BinaryTreeReduction.Tree.{0} Real \u2192 Sort u_1) \u2192\n  (x : Research.BinaryTreeReduction.Tree.{0} Real) \u2192\n    ((value : Real) \u2192 motive (Research.BinaryTreeReduction.Tree.leaf.{0} value)) \u2192\n      ((left right : Research.BinaryTreeReduction.Tree.{0} Real) \u2192\n          motive (Research.BinaryTreeReduction.Tree.node.{0} left right)) \u2192\n        motive x"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Research.FloatingPoint.Model.mk"
+      ],
+      "kind": "inductive",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model",
+      "type": "Type"
+    },
+    {
+      "body": "fun model a b => Research.FloatingPoint.Model.round model (HAdd.hAdd.{0, 0, 0} a b)",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Real",
+        "Research.FloatingPoint.Model",
+        "Real",
+        "Research.FloatingPoint.Model.round",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd"
+      ],
+      "kind": "definition",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model.add",
+      "type": "Research.FloatingPoint.Model \u2192 Real \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "LE.le",
+        "Real.instLE",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "Exists",
+        "And",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "Eq",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "One.toOfNat1",
+        "Real.instOne",
+        "Research.FloatingPoint.Model"
+      ],
+      "kind": "constructor",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model.mk",
+      "type": "(u : Real) \u2192\n  LE.le.{0} 0 u \u2192\n    (round : Real \u2192 Real) \u2192\n      (\u2200 (z : Real),\n          \u2203 \u03b4, And (LE.le.{0} (abs.{0} \u03b4) u) (Eq.{1} (round z) (HMul.hMul.{0, 0, 0} z (HAdd.hAdd.{0, 0, 0} 1 \u03b4)))) \u2192\n        Research.FloatingPoint.Model"
+    },
+    {
+      "body": "fun model a b => Research.FloatingPoint.Model.round model (HMul.hMul.{0, 0, 0} a b)",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Real",
+        "Research.FloatingPoint.Model",
+        "Real",
+        "Research.FloatingPoint.Model.round",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul"
+      ],
+      "kind": "definition",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model.mul",
+      "type": "Research.FloatingPoint.Model \u2192 Real \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun self => self.3",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Real",
+        "Research.FloatingPoint.Model"
+      ],
+      "kind": "definition",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model.round",
+      "type": "Research.FloatingPoint.Model \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun self => self.1",
+      "dependencies": [
+        "Research.FloatingPoint.Model",
+        "Real",
+        "Research.FloatingPoint.Model"
+      ],
+      "kind": "definition",
+      "module": "Research.Common.FloatingPoint.Model",
+      "name": "Research.FloatingPoint.Model.u",
+      "type": "Research.FloatingPoint.Model \u2192 Real"
+    },
+    {
+      "body": "fun k u => HDiv.hDiv.{0, 0, 0} (HMul.hMul.{0, 0, 0} (\u2191k) u) (HSub.hSub.{0, 0, 0} 1 (HMul.hMul.{0, 0, 0} (\u2191k) u))",
+      "dependencies": [
+        "Nat",
+        "Real",
+        "Nat",
+        "Real",
+        "HDiv.hDiv",
+        "instHDiv",
+        "DivInvMonoid.toDiv",
+        "Real.instDivInvMonoid",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Nat.cast",
+        "Real.instNatCast",
+        "HSub.hSub",
+        "instHSub",
+        "Real.instSub",
+        "OfNat.ofNat",
+        "One.toOfNat1",
+        "Real.instOne"
+      ],
+      "kind": "definition",
+      "module": "Research.Common.FloatingPoint.Gamma",
+      "name": "Research.FloatingPoint.gamma",
+      "type": "Nat \u2192 Real \u2192 Real"
+    }
+  ],
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.28.0",
+    "manifest_sha256": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+  }
+}

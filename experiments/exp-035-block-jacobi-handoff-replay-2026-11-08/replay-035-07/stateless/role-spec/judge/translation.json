@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "3d5fca98a7b9ef779991e8aed0ab32f36f2b060243177cb2912f43f90a207249",
+  "status": "complete",
+  "statement": "The target states an exact perturbed scalar equation and a componentwise bound for an explicitly defined real-arithmetic computation with supplied multiplicative error factors. Use zero-based indices: Fin n = {0,...,n-1}, empty when n=0. For any natural k put m=max(k-1,0); all occurrences of natural subtraction k-1 have this truncated meaning. Write a_i=a(i), b_i=b(i), and write an error trace as e=(mu,eta,sigma,delta), where mu,eta:Fin m -> R and sigma,delta are real. The construction forms perturbed products for the first m entries, accumulates them sequentially with prescribed factors 1+eta_j after additions except the first entry, subtracts the result from c with factor 1+sigma, and divides by the last b entry with factor 1+delta. Its explicit perturbation rescales the first m coefficients by their accumulated product/addition factors and rescales the last coefficient by the inverse of (1+sigma)(1+delta). Under the hypotheses detailed below, these specific perturbations give an exact equation with right side c and satisfy |Delta b_i| <= (ku/(1-ku))|b_i| for every i. All arithmetic is real arithmetic; the definitions prescribe an error model and do not implement a floating-point rounding operator. Real inversion and division use the total convention 0^(-1)=0, including outside the theorem hypotheses. Empty sums and products are 0 and 1, respectively.",
+  "targets": [
+    {
+      "name": "Research.TriangularUpdate.triangular_update",
+      "statement": "For every k in N, every proof hk of 2<=k, and every u in R with 0<=u and (k cast to R)*u<1, for all functions a,b:Fin k -> R and c in R with b_{k-1} != 0, and for every e=(mu,eta,sigma,delta) in ErrorTrace k satisfying Valid(e,u), the following two conclusions hold simultaneously. Set xhat=computedUpdate(hk,a,b,c,e) and Delta b_i=perturbation(b,e,i), exactly as constructed below. Then sum_{i=0}^{k-2} a_i*(b_i+Delta b_i) + xhat*(b_{k-1}+Delta b_{k-1}) = c. Moreover, for every i in Fin k, |Delta b_i| <= gamma(k,u)*|b_i|, where gamma(k,u)=ku/(1-ku). In particular, the theorem uses the explicitly defined perturbation for this same b and e; it is not merely an existence claim for unspecified perturbations. The value a_{k-1} is unrestricted and unused."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.TriangularUpdate.gamma",
+      "description": "For any k in N and u in R, gamma(k,u)=((k cast to R)*u)/(1-(k cast to R)*u). This definition has no positivity or nonzero-denominator hypothesis. At a zero denominator its value is 0 under total real division. In the theorem the assumptions ensure 1-ku>0."
+    },
+    {
+      "name": "Research.TriangularUpdate.ErrorTrace",
+      "description": "A family of data types indexed by any k in N. With m=max(k-1,0), its constructor ErrorTrace.mk takes four fields, in order: mulError:Fin m -> R, addError:Fin m -> R, subError:R, divError:R, producing an ErrorTrace k. Write these fields mu,eta,sigma,delta. These are arbitrary stored real data, with no bounds or validity proofs in the constructor. This structure is not an algorithm or a relation; Valid is a separately defined predicate. For k=0 or 1 the two indexed fields have empty domains."
+    },
+    {
+      "name": "Research.TriangularUpdate.ErrorTrace.Valid",
+      "description": "For any implicit k in N, e=(mu,eta,sigma,delta):ErrorTrace k and u in R, Valid(e,u) is the conjunction: for every i in Fin m, |mu_i|<=u; for every j in Fin m with 0<j, |eta_j|<=u; |sigma|<=u; and |delta|<=u, where m=max(k-1,0). It places no bound on eta_0 when that entry exists. Nonnegativity of u is not a separate clause of this definition; the target theorem separately assumes it."
+    },
+    {
+      "name": "Research.TriangularUpdate.prefixIndex",
+      "description": "For any implicit k in N, maps i in Fin(max(k-1,0)) to the element of Fin k with the same natural value i. It embeds the prefix indices without shifting them; for k=0 or 1 its domain is empty."
+    },
+    {
+      "name": "Research.TriangularUpdate.lastIndex",
+      "description": "For k in N and a proof hk that 2<=k, returns the element k-1 of Fin k, with its required bound k-1<k. It is the final zero-based index."
+    },
+    {
+      "name": "Research.TriangularUpdate.roundedProduct",
+      "description": "For any implicit k in N, a,b:Fin k -> R, e:ErrorTrace k, and i in Fin m with m=max(k-1,0), returns p_i=(a_i*b_i)*(1+mu_i), reading a_i and b_i through prefixIndex. It multiplies exact real values by a supplied error factor; it invokes no rounding operation and has no validity hypothesis."
+    },
+    {
+      "name": "Research.TriangularUpdate.sequentialAccumulator",
+      "description": "For any implicit k in N, a,b:Fin k -> R, e:ErrorTrace k and t in N, returns A_t defined recursively as follows, with m=max(k-1,0) and p_n=roundedProduct(a,b,e,n) for n<m. A_0=0. For each n in N, if n>=m then A_{n+1}=A_n; if n<m and n=0 then A_{n+1}=p_0; if 0<n<m then A_{n+1}=(A_n+p_n)*(1+eta_n). Thus it processes prefix entries in increasing index order, takes the first product directly without an addition error factor, and remains constant after t=m. It is defined for every natural t and requires no error bounds. When m=0 it is identically zero. The stored eta_0 is never used."
+    },
+    {
+      "name": "Research.TriangularUpdate.sequentialInnerProduct",
+      "description": "For any implicit k in N, a,b:Fin k -> R and e:ErrorTrace k, returns sequentialAccumulator(a,b,e,m)=A_m, where m=max(k-1,0). It computes only the first m products with the sequential recurrence above, omitting the final vector entry when k>=1. It equals 0 when k=0 or 1."
+    },
+    {
+      "name": "Research.TriangularUpdate.roundedNumerator",
+      "description": "For any implicit k in N, a,b:Fin k -> R, c in R and e:ErrorTrace k, returns N=(c-sequentialInnerProduct(a,b,e))*(1+sigma). There is no error-bound hypothesis in the definition."
+    },
+    {
+      "name": "Research.TriangularUpdate.computedUpdate",
+      "description": "For any implicit k in N, a proof hk of 2<=k, a,b:Fin k -> R, c in R and e:ErrorTrace k, returns xhat=(roundedNumerator(a,b,c,e)/b_{k-1})*(1+delta). Equivalently xhat=((c-A_m)*(1+sigma)/b_{k-1})*(1+delta), where m=k-1. The definition itself does not require b_{k-1}!=0 or validity of e; the target theorem supplies those hypotheses. It is one scalar computation, not an iteration over rows of a matrix."
+    },
+    {
+      "name": "Research.TriangularUpdate.innerCoefficient",
+      "description": "For any implicit k in N, e:ErrorTrace k and i in Fin m, with m=max(k-1,0), returns C_i=(1+mu_i)*product_{j in Fin m, 0<j and i<=j}(1+eta_j). Thus C_0 includes addition factors j=1,...,m-1, and for i>0 it includes j=i,...,m-1. No validity hypothesis is required. These are the factors for the products in A_m: A_m=sum_{i in Fin m} a_i*b_i*C_i."
+    },
+    {
+      "name": "Research.TriangularUpdate.lastCoefficient",
+      "description": "For any implicit k in N and e:ErrorTrace k, returns L=((1+sigma)*(1+delta))^(-1). This is defined with total real inversion even if a factor is zero. Under the target hypotheses the factors are positive and L cancels the subtraction and division error factors in computedUpdate."
+    },
+    {
+      "name": "Research.TriangularUpdate.perturbation",
+      "description": "For any implicit k in N, b:Fin k -> R, e:ErrorTrace k and i in Fin k, with m=max(k-1,0), returns Delta b_i=b_i*(C_i-1) if i<m, using i as an element of Fin m in innerCoefficient, and Delta b_i=b_i*(L-1) otherwise, where L=lastCoefficient(e). For k>=1 the latter branch is exactly i=k-1. For k=0 this is a function on an empty domain; for k=1 its sole entry uses L. Consequently b_i+Delta b_i=b_i*C_i in the prefix and b_{k-1}+Delta b_{k-1}=b_{k-1}*L at the last entry. These identities connect the actual construction to the target equation: its prefix sum is A_m, and under the theorem hypotheses xhat*b_{k-1}*L=c-A_m. No validity or size conditions are imposed by this definition itself."
+    }
+  ],
+  "assumptions": [
+    "The theorem quantifies over every natural k with a supplied proof hk of 2<=k.",
+    "The real parameter u satisfies 0<=u and (k cast to R)*u<1.",
+    "The inputs a and b are arbitrary real-valued functions on Fin k, and c is any real number; b(lastIndex(k,hk))=b_{k-1} is nonzero.",
+    "The trace e is any ErrorTrace k for which every prefix multiplication error has absolute value at most u, every addition error with positive index has absolute value at most u, and both the subtraction and division errors have absolute value at most u. There is no restriction on the unused addition error at index zero.",
+    "No sign, nonzero, or size assumptions on the other entries of a or b or on c are present. No matrix, triangular-system data, or representability conditions are supplied or assumed. The construction definitions have exactly the domains stated in their descriptions, independently of the extra theorem hypotheses."
+  ],
+  "missing_context": []
+}

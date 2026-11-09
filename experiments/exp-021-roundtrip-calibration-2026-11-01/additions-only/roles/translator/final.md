@@ -1,0 +1,1 @@
+Atomically saved [translation.json](/output/translation.json) with status `complete`, all 6 targets and 3 constructions, the exact supplied candidate hash, and no missing context.

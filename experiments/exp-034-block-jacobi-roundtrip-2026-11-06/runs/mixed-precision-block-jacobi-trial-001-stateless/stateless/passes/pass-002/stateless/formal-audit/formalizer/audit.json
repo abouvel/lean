@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "unapproved_axioms": [
+    "sorryAx"
+  ],
+  "protected_source_failures": [],
+  "candidate_hash": "d447652f13af8543d9547c55c100b7ff85cc01007ae72a0357c2e54ca511acea",
+  "passed": false
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "91c1296d092f22e77a459cb33e13944cc49bd3962c7c422d09dff1c32c2e770c",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": false,
+  "source_implies_lean": true,
+  "relation": "mismatch",
+  "target_evidence": "The translated main assertion has the form k*u<1 implies (A implies A), with A equal to existence of q satisfying I_gamma(k,u)(E(t),q) and S(q)=D_m(t). The source requires A from k*u<1 alone. The auxiliary targets establish multiplication definitions and the local product bound, not existence for the rounded addition reduction. Conversely, the source implies the conditional main assertion; the auxiliary multiplication assertions follow directly from the common model axioms and definitions.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The main target is universally quantified but asserts only A implies A under k*u<1, where A is the full requested existential conclusion. No other target proves A for the reduction.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem",
+        "conclusion-assumed"
+      ],
+      "correction": "Prove the existential conclusion from the model axioms and depth bound alone."
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "E preserves shape and maps each pair (a,b) to the exact product ab. Both perturbation targets refer to E, and the final leaf condition is |y-ab|<=gamma(d(t)+1,u)|ab|. This reference is correct, although existence of the final tree is not established.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "P_m maps each leaf to r(ab), D_m reduces P_m, and the auxiliary target proves I_u(E(t),P_m(t)), hence |r(ab)-ab|<=u|ab| at every leaf for every model.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "D_m(node(L,R))=r(D_m(L)+D_m(R)) correctly defines all internal rounding operations. However, no target proves their absorption into leaf perturbations: the final sum representation is assumed in the sole target involving D_m.",
+      "verdict": "fail",
+      "defect_categories": [
+        "addition-rounding-omitted"
+      ],
+      "correction": "Derive leafwise perturbations representing every rounded internal addition and prove their exact sum equals D_m(t)."
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The formula correctly uses k=d(t)+1 and gamma(k,u)=k*u/(1-k*u), but the final bound is part of the assumed existential A. The independently established u bound concerns only products before summation. No accumulated bound for the rounded reduction is established.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Prove the combined multiplication and path addition error bound gamma(d(t)+1,u) under the smallness assumption without presupposing a bounded perturbation tree."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "The translation explicitly states that the entire existential conclusion is an additional hypothesis of the main target. Its other model and tree assumptions are appropriate and do not restrict to exact arithmetic.",
+      "verdict": "fail",
+      "defect_categories": [
+        "strengthened-assumption",
+        "conclusion-assumed"
+      ],
+      "correction": "Remove the existential premise and derive the conclusion using only the relative-error model and (d(t)+1)*u<1."
+    }
+  ],
+  "assumptions_added": [
+    "Existence of q with I_gamma(d(t)+1,u)(E(t),q) and S(q)=D_m(t), precisely the desired conclusion, is an additional premise of the main theorem."
+  ],
+  "missing_obligations": [
+    "Existence of a perturbation tree from the model axioms and depth smallness bound alone.",
+    "Proof absorbing all internal addition errors and leaf multiplication errors into the required gamma bound while preserving the exact sum equality."
+  ],
+  "limitations": [
+    "Review uses only the supplied source, requirement catalog, blind translation, and report contract; no Lean code or other evaluator material was inspected."
+  ]
+}

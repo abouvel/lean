@@ -1,0 +1,19 @@
+{
+  "search_queries": [
+    "logb.*(le|lt)|le.*logb|ceil.*logb",
+    "add.*sub.*div|div.*add.*sub|ceilDiv",
+    "sorry|admit|axiom|Aristotle"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for the product-error induction and established positive gamma denominators before applying division inequalities."
+    }
+  ]
+}

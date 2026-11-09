@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the full triangular-update lemma from the authoritative selected statement, using the standard real relative-error model for each executed operation. Construct the sequential rounded inner product and the rounded subtraction and division from the original a, b, c and k; then construct a single perturbation vector on the original b. Use finite-product bounds proved locally (or existing Mathlib results with matching hypotheses) to bound the actual coefficients, rather than assuming any backward-error statement. The paper supplies the intended coefficient construction; the plan below describes obligations, not a completed target proof. Keep all work within the local Lean/Mathlib environment, without custom axioms, admitted lemmas, or Aristotle. No /spec/feedback.json is present.",
+  "obligations": [
+    {
+      "id": "source_fidelity",
+      "description": "State the theorem for every natural k >= 2, real c, and real vectors a,b of length k with b at the last index nonzero, and every valid sequential floating-point evaluation satisfying k*u < 1. Define gamma(k,u) = (k:Real)*u/(1-(k:Real)*u). Represent unit roundoff as nonnegative, as inherent in the standard model; explain this contextual convention. Preserve all input linkage, componentwise quantifiers, and the exact constant gamma_k. Do not add the desired error bound, an unproved paper result, or nonvanishing assumptions on other input components."
+    },
+    {
+      "id": "operation_model",
+      "description": "Define a real rounding-operation model or a trace of elementary relative errors, each bounded in absolute value by u. The no-overflow/no-underflow assumption is represented by availability of this standard model on every executed multiplication, addition, subtraction and division. Make clear that the theorem covers every legal error trace, or extract such a trace from a rounding function; yhat must be the output of the specified computation, not an arbitrary existentially chosen real."
+    },
+    {
+      "id": "sequential_construction",
+      "description": "Construct products p_i = a_i*b_i*(1+xi_i), initialize the accumulator with p_1, and for indices j=2,...,k-1 construct s_j=(s_(j-1)+p_j)*(1+delta_j). Then construct t=(c-s_(k-1))*(1+eta) and yhat=(t/b_k)*(1+zeta), with the same operation-error bounds. Give exact Fin/range indexing correspondence to the paper. For k=2 there is one multiplication and no addition; avoid charging a fictitious initial rounded addition. If an accumulator-from-zero implementation is used, justify its initial exact step under the chosen model."
+    },
+    {
+      "id": "denominator_and_gamma_facts",
+      "description": "Derive u<1, positivity and nonvanishing of every 1+error, and positivity of 1-n*u for all natural n<=k. Establish gamma nonnegativity and the monotonicity needed to compare gamma_(k-1), gamma_2, and gamma_k, including u=0. Derive these facts from k>=2, u>=0, k*u<1 and the elementary error bounds."
+    },
+    {
+      "id": "sequential_expansion",
+      "description": "Prove by induction on the actual sequential accumulator that its final value is the sum over i=1,...,k-1 of a_i*b_i*q_i, where q_i=(1+xi_i)*product_(j=max(2,i))^(k-1)(1+delta_j). Empty products equal one. Verify the factor count n_i=1+max(0,k-max(2,i)) and n_i<=k-1; use natural-number indexing carefully to avoid subtraction artifacts."
+    },
+    {
+      "id": "product_bound_helpers",
+      "description": "Prove the finite-product coefficient bound |q_i-1|<=gamma_(n_i) from the elementary relative-error bounds. Also prove |((1+eta)*(1+zeta))^(-1)-1|<=gamma_2. A general signed-product lemma is acceptable only if proved, not assumed. A smaller helper set suffices: bound products of positive factors with |error|<=u using (1-u)^n and (1+u)^n and suitable Bernoulli/geometric inequalities; separately bound the reciprocal two-factor product using 2*u<1. Supply any needed power or product inequalities and denominator positivity. Do not mistakenly use the forward product as the last coefficient."
+    },
+    {
+      "id": "perturbation_construction",
+      "description": "Define one length-k perturbation vector explicitly: Delta b_i=b_i*(q_i-1) for i<k, and Delta b_k=b_k*(r-1), where r=((1+eta)*(1+zeta))^(-1). Connect each entry to the original b_i and the actual trace. This is the required backward-error construction, not merely an existential relation for unrelated coefficients; zero b_i must yield zero perturbation without division by b_i."
+    },
+    {
+      "id": "perturbed_equation",
+      "description": "Establish that the constructed vector satisfies sum_(i=1)^(k-1) a_i*(b_i+Delta b_i) + yhat*(b_k+Delta b_k)=c. The finite-sum expansion must use the same q_i as the sequential computation, and cancellation of the last factors must use b_k nonzero and positivity/nonvanishing already established. No nonzero condition on c-s_(k-1) or yhat is permissible."
+    },
+    {
+      "id": "componentwise_bounds",
+      "description": "For all k components prove |Delta b_i|<=gamma_k*|b_i| by absolute-value multiplicativity, the coefficient helper bounds, and the count comparisons n_i<=k-1<=k and 2<=k. Package the simultaneous equation and all componentwise bounds for the single constructed vector as the full selected theorem."
+    },
+    {
+      "id": "validation_and_blockers",
+      "description": "Compile the complete construction and theorem with the mounted local Lean and Mathlib and inspect the final theorem dependencies for custom axioms or placeholders. Check the k=2 and u=0 cases and empty products in the definitions and proof. No source error was identified in the selected result; if a genuine obstruction appears, record its exact source/model mismatch rather than changing hypotheses, constants, quantifiers or computation. Respect the builder limit of 900 seconds by preferring these targeted helpers over unrelated paper theorems."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.BlockDotProduct.block_dot_product"
+  ],
+  "construction_names": [
+    "Research.BlockDotProduct.blockCount",
+    "Research.BlockDotProduct.treeDepth",
+    "Research.BlockDotProduct.gamma",
+    "Research.BlockDotProduct.padded",
+    "Research.BlockDotProduct.RoundingErrors",
+    "Research.BlockDotProduct.Admissible",
+    "Research.BlockDotProduct.roundedProduct",
+    "Research.BlockDotProduct.sequentialBlock",
+    "Research.BlockDotProduct.blockLeaf",
+    "Research.BlockDotProduct.binaryReduction",
+    "Research.BlockDotProduct.computed"
+  ],
+  "source_mapping": "The target is the full active theorem:block_dot_product in /spec/source.txt and /spec/paper.tex lines 235–291. Research/Submission.lean uses zero-based Fin n inputs and explicitly constructs T-term sequential blocks and a complete, zero-padded binary reduction of depth Nat.clog 2 ((n+T-1)/T). Both existential backward representations and their componentwise bounds use gamma u (T+depth). Assumptions: positive block size, nonnegative unit roundoff, local relative-error bounds at every executed multiplication/addition (the standard no-overflow/no-underflow model), and (T+depth)*u<1. No algorithmic error bound is assumed. n=0 is additionally supported with blockCount=depth=0 and computed result zero. Supporting source directory contains no files. Statement revision record: initial statement; /spec/feedback.json is absent, so no feedback-driven revisions. Only the final theorem proof is temporarily sorry; all construction definitions have bodies."
+}

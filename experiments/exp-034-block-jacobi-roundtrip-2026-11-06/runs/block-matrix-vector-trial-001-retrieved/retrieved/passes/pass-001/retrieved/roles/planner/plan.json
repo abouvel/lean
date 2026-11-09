@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the actual two-stage sequential floating-point computation on the original matrix A and vector x, with zero padding to T*ceil(n/T). Derive a scalar sequential block-dot-product helper directly from the elementary rounding model, including its product-of-rounding-factors estimate, then use that proved helper on every row and assemble the resulting entrywise perturbations into a matrix. The construction connecting the algorithm to theorem:block_matrix_vector_product is the computed vector together with a perturbation matrix DeltaA whose entries are the original A entries times their accumulated relative-error coefficients. Preserve the exact constant gamma_(T+ceil(n/T)-1), original inputs, and universal quantification over admissible rounding behavior. Do not take the scalar backward-error bound, a weighted-sum output, or the desired matrix conclusion as an extra hypothesis. The paper proof guides the obligations but its unproved helpers must be established locally. No feedback.json is present and the support directory contains no files. This is a construction and proof plan, not the completed target proof.",
+  "obligations": [
+    {
+      "id": "source_contract",
+      "description": "State the full selected theorem for arbitrary real matrices A of dimensions m by n and vectors x of dimension n, with natural block size T, unit roundoff u, no overflow/underflow encoded through the elementary model, and K*u<1 for K=T+ceil(n/T)-1. Treat positivity of block size and nonnegativity of unit roundoff as the meanings of block size and unit roundoff, and document these semantic domain conditions explicitly. Do not silently impose divisibility, nonzero entries, a common perturbation of x, or an extra tree-depth smallness condition. If any genuine ambiguity cannot be resolved, record it rather than change the claim."
+    },
+    {
+      "id": "rounding_model",
+      "description": "Provide concrete rounded multiplication and addition operations, or a faithful execution relation, satisfying fl(a op b)=(a op b)*(1+delta) with abs(delta)<=u at each executed operation. Quantify over every such execution; errors may depend on row and operation. This models the source no-overflow/no-underflow assumption without assuming any algorithm-level error bound."
+    },
+    {
+      "id": "blocking_padding",
+      "description": "Define b=ceil(n/T) using exact natural arithmetic, a block-slot map (r,t) to r*T+t, and padded input values equal to the original values when the index is below n and zero otherwise. Establish coverage, uniqueness, and the identity between the padded double sum and the original dot product, including a short final block and T>n. Keep finite indexing casts and ceiling arithmetic explicit."
+    },
+    {
+      "id": "actual_kernel",
+      "description": "Define rounded products of padded A entries and x entries, sequential block accumulation initialized with the first rounded product, and sequential accumulation of block partial sums initialized with the first partial sum. Define the computed vector by applying this kernel to every row of A and the same original x. Use empty-sum conventions when needed. Show that these definitions implement the selected algorithm; an arbitrary output satisfying a weighted expansion is not a substitute for this construction."
+    },
+    {
+      "id": "sequential_expansion",
+      "description": "Prove the sequential-accumulation expansion by induction from the elementary operation model. Track each product through at most T-1 within-block additions, its one multiplication rounding, and at most b-1 outer additions. Establish at most K rounding factors per genuine input term. Handle T=1 and b=1 without a fictitious initial addition; if accumulation starts from zero, justify its exactness rather than charging an additional error."
+    },
+    {
+      "id": "gamma_product_bound",
+      "description": "Prove or instantiate a verified Mathlib finite-product estimate: products of r factors 1+delta with abs(delta)<=u differ from 1 by at most gamma_K when r<=K and K*u<1. Establish denominator positivity and any monotonicity or padding-with-zero-errors step needed. The bound must use K*u/(1-K*u) exactly and must not be postulated as an axiom or replaced by an assumed per-term bound."
+    },
+    {
+      "id": "scalar_backward_helper",
+      "description": "Combine the actual-kernel expansion, path-length count, product bound, and padding identities into a proved sequential block-dot-product backward-error helper. Its perturbations must apply to the first operand, the matrix row, with entrywise bound gamma_K times the magnitude of that row entry. Derive this helper directly for sequential outer accumulation so the binary-tree corollary wording does not introduce a stronger, unintended hypothesis."
+    },
+    {
+      "id": "matrix_perturbation_construction",
+      "description": "Construct DeltaA from the row-specific scalar perturbations, or equivalently from A_ij times the derived rounding coefficient for the unique block slot containing j. Maintain linkage to each original A_ij and unchanged x_j. Prove entrywise bounds for every i,j and assemble the row identities into the exact equality computedY=(A+DeltaA)*x using matrix-vector multiplication and function extensionality. Do not replace the entrywise theorem with a norm bound."
+    },
+    {
+      "id": "degenerate_cases",
+      "description": "Cover empty row sets, and handle n=0 under an explicitly stated empty-dot-product convention if dimensions allow it; for n=0 the natural expression K=T+b-1 must agree with its mathematical value for positive T. For positive n establish b>=1. Cover zero inputs and cancellation without dividing by A_ij, x_j, or the exact dot product. Verify padding introduces no surviving terms."
+    },
+    {
+      "id": "formal_validation",
+      "description": "Build the Lean development with the available local Lean and Mathlib, with no custom axioms, sorry, placeholders, or imported unproved paper results. Check that the final declaration refers to the constructed algorithm and all source hypotheses, retains the exact gamma constant, and concludes existence of one perturbation matrix with both the exact product equality and all componentwise bounds. Use source and any future feedback as evidence without weakening the selected statement."
+    }
+  ]
+}

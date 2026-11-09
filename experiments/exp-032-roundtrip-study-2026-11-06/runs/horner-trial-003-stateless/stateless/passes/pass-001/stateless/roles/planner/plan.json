@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "strategy": "Copy the supplied Research/Common/FloatingPoint/Model.lean prerequisite unchanged and import it. Define exact Horner evaluation P, rounded Horner evaluation Q, and the prescribed envelope E by structural recursion on the coefficient list in increasing degree order. Establish a reusable perturbation estimate for rounding relative to an exact reference value, then prove the requested forward-error theorem by list induction. At each cons step apply the estimate to the multiplication with exact reference x * P(tail,x), propagate the induction bound through multiplication by |x|, and apply the estimate again to the addition with exact reference a + x * P(tail,x). The two applications produce precisely the required envelope, so no change to its formula or extra hypothesis is needed. No feedback file was present in /spec. This plan specifies constructions and proof obligations, not a completed target proof.",
+  "obligations": [
+    {
+      "id": "model_prerequisite",
+      "description": "Preserve /spec/support/Research/Common/FloatingPoint/Model.lean unchanged at the corresponding project import path. Use Research.FloatingPoint.Model, its real parameter u, u_nonneg, round, and round_spec. Do not replace the existential relative-error law, add custom axioms, or assume exact arithmetic."
+    },
+    {
+      "id": "exact_evaluator",
+      "description": "Construct P : List ℝ → ℝ → ℝ with P([],x)=0 and P(a::tail,x)=a+x*P(tail,x). The head coefficient is the constant term, so the recursion implements increasing degree order. Make its empty and cons equations available by reduction or simple lemmas."
+    },
+    {
+      "id": "rounded_evaluator",
+      "description": "Construct Q for every supplied Model, coefficient list, and real x, with Q(model,[],x)=0 and Q(model,a::tail,x)=model.round(a+model.round(x*Q(model,tail,x))). Each list step must contain exactly the prescribed rounded multiplication and rounded addition, including a singleton step; no shortcut or different arithmetic association is allowed."
+    },
+    {
+      "id": "prescribed_envelope",
+      "description": "Construct E : List ℝ → ℝ → ℝ → ℝ independently of Q and of the model rounding operation. Set E([],x,u)=0. For v=P(tail,x) and e=E(tail,x,u), require E(a::tail,x,u)=u*|a+x*v|+(1+u)*(u*|x*v|+(1+u)*|x|*e). Its only inputs are the coefficients, x, u, and the exact evaluator. Do not substitute a different bound or define E using the actual error."
+    },
+    {
+      "id": "rounding_perturbation_bound",
+      "description": "Derive from round_spec a reusable inequality |model.round(z)-t| ≤ model.u*|t|+(1+model.u)*|z-t| for arbitrary real z and t. One route first bounds |round(z)-z| by model.u*|z| and then uses triangle inequalities to relate |z| to |t|+|z-t|. All multiplication of inequalities must use u_nonneg and 0≤1+u. A direct equivalent lemma expressed using the round_spec witness is also acceptable."
+    },
+    {
+      "id": "multiplication_stage",
+      "description": "In a cons induction step write q=Q(model,tail,x), v=P(tail,x), and e=E(tail,x,model.u). Use the induction hypothesis |q-v|≤e and |x*q-x*v|=|x|*|q-v| to bound |model.round(x*q)-x*v| by model.u*|x*v|+(1+model.u)*|x|*e. Check nonnegativity of every factor used to propagate bounds; an auxiliary envelope-nonnegativity lemma is optional."
+    },
+    {
+      "id": "addition_stage",
+      "description": "Apply the rounding perturbation bound with z=a+model.round(x*q) and t=a+x*v. Cancel the common a in z-t and substitute the multiplication-stage estimate, using 0≤1+model.u. Normalize associativity and distributivity to match the prescribed cons envelope exactly. The reference t is P(a::tail,x), connecting this local bound to the theorem."
+    },
+    {
+      "id": "unconditional_forward_error_theorem",
+      "description": "State and establish ∀ (model : Research.FloatingPoint.Model) (coefficients : List ℝ) (x : ℝ), |Q(model,coefficients,x)-P(coefficients,x)| ≤ E(coefficients,x,model.u). Use list induction, with the empty case reducing to 0≤0 and the cons case supplied by the two rounding stages. Quantification must cover the empty list, every real x, and every supplied model without smallness, sign, nonzero-input, or extra exactness assumptions."
+    },
+    {
+      "id": "formal_validation",
+      "description": "Build the resulting Lean development with local Lean and Mathlib. Use standard absolute-value and monotonicity lemmas for inequalities, and ring normalization or nlinarith only after the relevant inequalities are available. The final candidate must include all definitions and proofs, compile without placeholders or custom axioms, and retain the original prerequisite unchanged. Do not use Aristotle or unmounted memory sources."
+    }
+  ]
+}

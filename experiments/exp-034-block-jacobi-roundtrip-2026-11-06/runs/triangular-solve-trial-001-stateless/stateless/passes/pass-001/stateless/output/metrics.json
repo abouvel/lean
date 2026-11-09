@@ -1,0 +1,109 @@
+{
+  "condition": "stateless",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 858.041,
+  "compiler_command_events": 35,
+  "token_usage": {
+    "input_tokens": 1792011,
+    "cached_input_tokens": 1723008,
+    "output_tokens": 28360,
+    "reasoning_output_tokens": 6755
+  },
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793993065.2426481,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 82.872,
+      "token_usage": {
+        "input_tokens": 191561,
+        "cached_input_tokens": 170880,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2959,
+        "reasoning_output_tokens": 148
+      },
+      "compiler_command_events": 2,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793993148.6368716,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 150.602,
+      "token_usage": {
+        "input_tokens": 185861,
+        "cached_input_tokens": 173824,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5825,
+        "reasoning_output_tokens": 1826
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793993309.0155284,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 624.567,
+      "token_usage": {
+        "input_tokens": 1414589,
+        "cached_input_tokens": 1378304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 19576,
+        "reasoning_output_tokens": 4781
+      },
+      "compiler_command_events": 29,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "TriangularSolve.solution_of_a_triangular_system"
+    ],
+    "construction_names": [
+      "TriangularSolve.gamma",
+      "TriangularSolve.perform",
+      "TriangularSolve.dotTail",
+      "TriangularSolve.sequentialDot",
+      "TriangularSolve.forwardRow",
+      "TriangularSolve.forwardStep",
+      "TriangularSolve.forwardSubstitution",
+      "TriangularSolve.reverseMatrix",
+      "TriangularSolve.reverseVector",
+      "TriangularSolve.backwardSubstitution",
+      "TriangularSolve.IsTriangular",
+      "TriangularSolve.substitution",
+      "TriangularSolve.Call.SatisfiesModel",
+      "TriangularSolve.Execution.SatisfiesModel"
+    ],
+    "source_mapping": "The selected theorem theorem:solution_of_a_traingular_system in /spec/source.txt (paper.tex lines 457-490) is TriangularSolve.solution_of_a_triangular_system in Research/Submission.lean. Direction.lower and Direction.upper give forward and backward substitution on the original matrix and right-hand side; the existential perturbation has the same triangular support and the exact componentwise gamma_n bound. Rounding hypotheses are the source elementary-operation model on the constructed execution trace, with nonnegative unit roundoff and n*u<1; nonsingularity is det T != 0. Construction definitions have actual bodies; the final theorem proof alone has temporary sorry scaffolding. No feedback.json was present and there was no prior statement to revise; no mathematical statement revision was made. See Research/StatementNotes.md. Supplied support directory was empty; paper.tex, references.bib, source.txt and source.pdf were copied byte-for-byte into Research/Sources. lake build succeeded."
+  }
+}

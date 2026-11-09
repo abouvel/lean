@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "4cd60a945747fee615a6653ee410a0a6050f992b8e7375fc18219e6eefb762c7",
+  "status": "complete",
+  "statement": "For every natural n, including zero, every u in R, every function rnd:R->R, every real n by n matrices A,R, and every b,y,x in R^{I_n}, where I_n={0,...,n-1}, assume 0<=u, (n+1)u<1 (n cast to R), A^T=A, A is positive definite, and SolveRun(u,rnd,A,b,R,y,x). For a real matrix the positive-definite condition means symmetry and v^T A v>0 for every nonzero v in R^{I_n}. Put gamma_m=m u/(1-m u), C=gamma_{n+1}+2 gamma_n+(gamma_n)^2, D=3 gamma_{n+1}+(gamma_n)^2, and B=|R^T| |R|, where absolute values are entrywise and the product is ordinary matrix multiplication: B_{ij}=sum_{k=0}^{n-1}|R_{ki}| |R_{kj}|. There exists a real n by n matrix DeltaA such that (A+DeltaA)x=b, and such that for every i,j in I_n, |DeltaA_{ij}|<=C B_{ij}, and for every i,j in I_n, C B_{ij}<=D B_{ij}. The equation means sum_{j=0}^{n-1}(A_{ij}+DeltaA_{ij})x_j=b_i for every i. No symmetry of DeltaA is asserted. The connection to the construction is the hypothesis SolveRun, which certifies the supplied R,y,x through the rounded recurrences and local validity predicates expanded below. This is conditional on an existing certificate and does not assert that any such run can be constructed. The statement does not specify a particular witness for DeltaA.",
+  "targets": [
+    {
+      "name": "CholeskySolve.cholesky_solve",
+      "statement": "For every natural n, including zero, every u in R, every function rnd:R->R, every real n by n matrices A,R, and every b,y,x in R^{I_n}, where I_n={0,...,n-1}, assume 0<=u, (n+1)u<1 (n cast to R), A^T=A, A is positive definite, and SolveRun(u,rnd,A,b,R,y,x). For a real matrix the positive-definite condition means symmetry and v^T A v>0 for every nonzero v in R^{I_n}. Put gamma_m=m u/(1-m u), C=gamma_{n+1}+2 gamma_n+(gamma_n)^2, D=3 gamma_{n+1}+(gamma_n)^2, and B=|R^T| |R|, where absolute values are entrywise and the product is ordinary matrix multiplication: B_{ij}=sum_{k=0}^{n-1}|R_{ki}| |R_{kj}|. There exists a real n by n matrix DeltaA such that (A+DeltaA)x=b, and such that for every i,j in I_n, |DeltaA_{ij}|<=C B_{ij}, and for every i,j in I_n, C B_{ij}<=D B_{ij}. The equation means sum_{j=0}^{n-1}(A_{ij}+DeltaA_{ij})x_j=b_i for every i. No symmetry of DeltaA is asserted. The connection to the construction is the hypothesis SolveRun, which certifies the supplied R,y,x through the rounded recurrences and local validity predicates expanded below. This is conditional on an existing certificate and does not assert that any such run can be constructed. The statement does not specify a particular witness for DeltaA."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "CholeskySolve.gamma",
+      "description": "For u in R and m in N, gamma(u,m)=m u/(1-m u), with m cast to R. No hypotheses restrict this definition; formal real division is total, with division by zero equal to zero."
+    },
+    {
+      "name": "CholeskySolve.absMatrix",
+      "description": "For every implicit n in N and real n by n matrix M, absMatrix(M)_{ij}=|M_{ij}| for all i,j in I_n={0,...,n-1}. This is entrywise absolute value."
+    },
+    {
+      "name": "CholeskySolve.RoundOK",
+      "description": "For u,t in R and rnd:R->R, RoundOK(u,rnd,t) means there exists delta in R such that |delta|<=u and rnd(t)=t(1+delta). This is a condition at t, not a global requirement on rnd."
+    },
+    {
+      "name": "CholeskySolve.dotAux",
+      "description": "For rnd:R->R, a finite ordered list xs of real pairs, and s in R: dotAux(rnd,[],s)=s; dotAux(rnd,(a,b)::xs,s)=dotAux(rnd,xs,rnd(s+rnd(a b))). It accumulates from left to right, rounding every product and addition."
+    },
+    {
+      "name": "CholeskySolve.dot",
+      "description": "For rnd:R->R and a finite ordered list of real pairs: dot(rnd,[])=0; dot(rnd,(a,b)::xs)=dotAux(rnd,xs,rnd(a b)). The first rounded product initializes the accumulator without a rounded addition to zero."
+    },
+    {
+      "name": "CholeskySolve.dotAuxValid",
+      "description": "For u,s in R, rnd:R->R and a finite ordered list xs of real pairs, this recursively defined proposition is true for xs=[]. For xs=(a,b)::tail it requires RoundOK(u,rnd,a b), RoundOK(u,rnd,s+rnd(a b)), and dotAuxValid(u,rnd,tail,rnd(s+rnd(a b))). It certifies exactly the local roundings of dotAux, not an arithmetic output."
+    },
+    {
+      "name": "CholeskySolve.dotValid",
+      "description": "For u in R, rnd:R->R and a finite ordered list of real pairs: dotValid(u,rnd,[]) is true; dotValid(u,rnd,(a,b)::xs) means RoundOK(u,rnd,a b) and dotAuxValid(u,rnd,xs,rnd(a b)). It certifies the operations of dot, including its initialization."
+    },
+    {
+      "name": "CholeskySolve.subDot",
+      "description": "For rnd:R->R, c in R and a finite list xs of real pairs: subDot(rnd,c,[])=c; for nonempty xs, subDot(rnd,c,xs)=rnd(c-dot(rnd,xs)). The empty case does not round c."
+    },
+    {
+      "name": "CholeskySolve.subDotValid",
+      "description": "For u,c in R, rnd:R->R and a finite list xs of real pairs, this is dotValid(u,rnd,xs) together with RoundOK(u,rnd,c-dot(rnd,xs)) when xs is nonempty; the additional condition is true when xs is empty."
+    },
+    {
+      "name": "CholeskySolve.update",
+      "description": "For rnd:R->R, c,d in R and a finite list xs of real pairs, update(rnd,c,d,xs)=rnd(subDot(rnd,c,xs)/d). This definition has no nonzero-divisor hypothesis and uses total real division."
+    },
+    {
+      "name": "CholeskySolve.updateValid",
+      "description": "For u,c,d in R, rnd:R->R and a finite list xs of real pairs, this proposition requires d!=0, subDotValid(u,rnd,c,xs), and RoundOK(u,rnd,subDot(rnd,c,xs)/d)."
+    },
+    {
+      "name": "CholeskySolve.choleskyTerms",
+      "description": "For every implicit n in N, real n by n matrix R and i,j in I_n, this is the list of pairs (R_{ki},R_{kj}) for k in I_n with k<i, in increasing k order. For i=j it contains squared-product input pairs. The definition does not require i<=j and does not itself multiply or sum."
+    },
+    {
+      "name": "CholeskySolve.forwardTerms",
+      "description": "For every implicit n in N, real n by n matrix T, vector z in R^{I_n} and i in I_n, this is the list (T_{ik},z_k) for k<i in increasing k order. It requires no triangularity and performs no arithmetic on the pairs."
+    },
+    {
+      "name": "CholeskySolve.backwardTerms",
+      "description": "For every implicit n in N, real n by n matrix T, vector z in R^{I_n} and i in I_n, this is the list (T_{ik},z_k) for k>i in increasing k order. Even the backward solve uses increasing order within each dot product. No triangularity is required by this list definition."
+    },
+    {
+      "name": "CholeskySolve.CholeskyRun",
+      "description": "For every implicit n in N, u in R, rnd:R->R and real n by n matrices A,R, this is an inductive proposition with one constructor CholeskySolve.CholeskyRun.mk. Its seven proof fields assert: (1) for all i,j in I_n with j<i, R_{ij}=0; (2) for all i<j, updateValid(u,rnd,A_{ij},R_{ii},choleskyTerms(R,i,j)); (3) for all i<j, R_{ij}=update(rnd,A_{ij},R_{ii},choleskyTerms(R,i,j)); (4) for every j in I_n, subDotValid(u,rnd,A_{jj},choleskyTerms(R,j,j)); (5) for every j, q_j=subDot(rnd,A_{jj},choleskyTerms(R,j,j))>0; (6) for every j, RoundOK(u,rnd,sqrt(q_j)); (7) for every j, R_{jj}=rnd(sqrt(q_j)). This relation certifies supplied matrices, rather than computing R or asserting its existence. Only diagonal and upper-triangular entries of A occur; symmetry and positive definiteness are separate target hypotheses."
+    },
+    {
+      "name": "CholeskySolve.ForwardRun",
+      "description": "For every implicit n in N, u in R, rnd:R->R, real n by n matrix T and b,z in R^{I_n}, this inductive proposition has one constructor CholeskySolve.ForwardRun.mk. Its three proof fields assert: T_{ij}=0 for all i<j in I_n; updateValid(u,rnd,b_i,T_{ii},forwardTerms(T,z,i)) for every i; and z_i=update(rnd,b_i,T_{ii},forwardTerms(T,z,i)) for every i. It is a relation certifying a supplied lower-triangular system and result with nonzero divisors and local rounding conditions, not an algorithm constructing z."
+    },
+    {
+      "name": "CholeskySolve.BackwardRun",
+      "description": "For every implicit n in N, u in R, rnd:R->R, real n by n matrix T and b,z in R^{I_n}, this inductive proposition has one constructor CholeskySolve.BackwardRun.mk. Its three proof fields assert: T_{ij}=0 for all j<i in I_n; updateValid(u,rnd,b_i,T_{ii},backwardTerms(T,z,i)) for every i; and z_i=update(rnd,b_i,T_{ii},backwardTerms(T,z,i)) for every i. It certifies a supplied upper-triangular system and result with nonzero divisors and local rounding conditions; it does not compute z."
+    },
+    {
+      "name": "CholeskySolve.SolveRun",
+      "description": "For every implicit n in N, u in R, rnd:R->R, real n by n matrices A,R and b,y,x in R^{I_n}, this inductive proposition has one constructor CholeskySolve.SolveRun.mk with three proof fields: CholeskyRun(u,rnd,A,R), ForwardRun(u,rnd,R^T,b,y), and BackwardRun(u,rnd,R,y,x). It packages certificates for the supplied rounded factorization recurrence and rounded triangular solves. A,b,R,y,x are parameters, not algorithmically generated outputs."
+    },
+    {
+      "name": "CholeskySolve.factorResidual",
+      "description": "For every implicit n in N and arbitrary real n by n matrices A,R, factorResidual(A,R)=R^T R-A. Its (i,j) entry is sum_{k=0}^{n-1}R_{ki}R_{kj}-A_{ij}. All operations are exact; no run or triangularity hypotheses are required."
+    },
+    {
+      "name": "CholeskySolve.solvePerturbation",
+      "description": "For every implicit n in N and arbitrary real n by n matrices A,R,L,U, solvePerturbation(A,R,L,U)=(R^T R-A)+R^T U+L R+L U=(R^T+L)(R+U)-A. These are exact matrix operations. L,U are arbitrary input matrices without triangularity or error assumptions; the definition does not compute them. The target only asserts existence of DeltaA and does not identify its witness with solvePerturbation or specify L,U, so no such witness identification is part of the translated theorem."
+    }
+  ],
+  "assumptions": [
+    "Mat n is the real matrix space Matrix (Fin n) (Fin n) R; Vec n is Fin n -> R. All indices range over I_n=Fin n. All dimensions are natural numbers with no n>0 requirement. Lists are finite ordered lists of real pairs. Empty sums are zero.",
+    "The target universally quantifies n,u,rnd,A,b,R,y,x and assumes exactly 0<=u, (n+1)u<1, A^T=A, positive definiteness of A, and SolveRun(u,rnd,A,b,R,y,x). Nonzero-divisor and local rounding hypotheses are the proof fields and predicates expanded in the construction descriptions. The scalar hypotheses ensure positive denominators for gamma_n and gamma_{n+1}.",
+    "rnd is an arbitrary function R->R. There is no global rounding axiom or specified floating-point format. No extra constraints on b,x,y or existence of a run are assumed. Definition-level real parameters are unrestricted except where a stated predicate constrains them.",
+    "Matrix multiplication, matrix-vector multiplication and arithmetic outside explicitly applied rnd are exact real operations. Formal real division is total with a/0=0. Real sqrt is the nonnegative square root for nonnegative inputs and zero for negative inputs; the square-root inputs in CholeskyRun must be strictly positive."
+  ],
+  "missing_context": []
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the actual rounded sequential block matrix-vector algorithm over real-valued inputs using the source standard relative-error model. Prove its scalar sequential block-dot-product bound as a helper, deriving coefficients from operation-level rounding errors rather than assuming the desired backward bound. Construct each matrix perturbation entry as A[i,j] times its derived coefficient error, then assemble the row identities into the selected matrix theorem. Keep the vector x unchanged, use exactly gamma_(T+ceil(n/T)-1), and cover zero padding and boundary cases. This is a construction and proof-obligation plan, not the completed target proof.",
+  "obligations": [
+    {
+      "id": "source_fidelity",
+      "description": "Use /spec/source.txt as authoritative for theorem:block_matrix_vector_product and /spec/paper.tex for the scalar calculation and row-assembly motivation. /spec/PROMPT.txt requires local Lean/Mathlib, actual constructions, and no axioms or placeholders. No /spec/feedback.json is present and no supporting source files were found under /spec/support. Preserve arbitrary real A and x, arbitrary row count, sequential block and partial-sum reductions, no overflow/underflow, and the exact stated smallness condition; do not assume a scalar backward-error theorem without proving it."
+    },
+    {
+      "id": "dimensions_and_constants",
+      "description": "Represent A as Matrix (Fin m) (Fin n) Real and x as Fin n -> Real. Make explicit that a block size is a positive natural T (the semantic domain of a block size, not a new numerical stability hypothesis). Define B=ceil(n/T), for instance (n+T-1)/T with its correctness lemma, and K=T+B-1. Define gamma K = ((K:Real)*u)/(1-(K:Real)*u). Use u>=0 from the meaning of unit roundoff and K*u<1 to establish positive denominators. Do not strengthen the condition to n*u<1 or add binary-tree assumptions. Address empty inputs by a zero-result convention instead of silently excluding n=0; if any interpretation genuinely cannot be reconciled with the source, record that precisely."
+    },
+    {
+      "id": "rounded_operations",
+      "description": "Specify actual addition and multiplication evaluation, either by rounded-operation functions with universally valid fl(a op b)=(a op b)*(1+delta), |delta|<=u on the execution, or an explicit execution trace carrying these per-operation witnesses. The standard model and absence of overflow/underflow justify only these local constraints. Permit arbitrary legal rounding errors, including their dependence on the inputs. The computed output must be the result of the defined execution on the given A and x, never an arbitrary vector postulated to satisfy a global error representation."
+    },
+    {
+      "id": "algorithm_construction",
+      "description": "For each row and block b<B, define padded operands at index b*T+t, t<T, agreeing with A[i,j] and x[j] whenever j<n and zero outside the input. Compute all T rounded products and accumulate sequentially, initializing the accumulator with the first rounded product; then sequentially reduce the B partial sums, initializing with the first partial sum. This entails T multiplications and T-1 additions per full block, and B-1 outer additions when B>0. Give executable or recursive definitions for these folds, with the empty outer fold equal to zero. A fold initialized at zero must justify exact first addition (choose delta=0 there) to avoid incorrectly charging T+1 errors."
+    },
+    {
+      "id": "block_indexing_and_padding",
+      "description": "Prove each original column j<n appears exactly once, with b=j/T and t=j%T, b<B and t<T, and establish the finite-sum reindexing from padded B-by-T blocks to Fin n. Prove padded products contribute exactly zero under the relative model. Handle partial final blocks, T>n, T=1, B=1, and n=0 explicitly in definitions and helper statements; avoid assuming divisibility of n by T."
+    },
+    {
+      "id": "sequential_expansion",
+      "description": "Prove by induction on the sequential fold that each block output is a sum of its original products multiplied by the corresponding multiplication factor and the subsequent addition factors. Prove the analogous expansion for the outer sequential sum. Compose these expansions to obtain, for each row i, yhat[i]=sum_j A[i,j]*x[j]*c[i,j], with c[i,j] explicitly obtained from the path of operation-level factors for that original term. At most T factors occur within a block and at most B-1 additional factors occur outside it. Treat T=1 separately or use a general path-length description, since the paper formula T-max(2,t)+2 needs care at this endpoint."
+    },
+    {
+      "id": "product_error_bound",
+      "description": "Prove a finite-product lemma: for k<=K, |delta_r|<=u, u>=0, and K*u<1, the coefficient c=product_r(1+delta_r) satisfies |c-1|<=gamma K. A practical route inducts on k with |c_next-1|<=|c-1|*(1+u)+u, bounds this by gamma(k+1) using positive denominators, and then proves gamma monotonicity up to K. Alternatively pad factor lists with zero errors to length K. Prove this helper in Lean from real inequalities; the paper statement about theta is not an additional axiom. Only positive-exponent factors are needed for this target."
+    },
+    {
+      "id": "scalar_block_helper",
+      "description": "Combine the actual scalar execution expansion, path-length count, finite-product estimate, and padding reindexing into the sequential block-dot-product backward-error helper. Its hypotheses must be operation-level rounding assumptions and K*u<1, with its conclusion derived for arbitrary input operands. This supplies the role of corollary:block_dot_product_sequential without assuming an unproved paper lemma or importing a binary-tree-depth condition."
+    },
+    {
+      "id": "matrix_perturbation_construction",
+      "description": "Define DeltaA[i,j]=A[i,j]*(c[i,j]-1), or construct each row perturbation from the proved scalar helper with witnesses tied to that row execution. Show yhat[i]=sum_j (A[i,j]+DeltaA[i,j])*x[j]. Prove |DeltaA[i,j]|<=gamma K*|A[i,j]| via the factor bound and absolute-value multiplication. This construction works when A[i,j]=0 or x[j]=0 without dividing by either input. Dependence of DeltaA on A, x, and the actual rounding trace is allowed; a common perturbation of x across all rows is not required."
+    },
+    {
+      "id": "selected_theorem_and_validation",
+      "description": "State and prove the full selected theorem with an existential perturbation matrix for the computed blocked output, equality to (A+DeltaA).mulVec x, and a componentwise bound for every row and column. Use function extensionality and Matrix.mulVec finite-sum definitions to connect the scalar construction to the matrix statement. Compile using installed Lean/Mathlib and check that no sorry, admit, custom axioms, desired global error bound as a hypothesis, replacement of the original inputs, or weakened constants enter the final candidate. If prerequisites fail, report the exact mathematical or formalization blocker rather than changing the theorem."
+    }
+  ]
+}

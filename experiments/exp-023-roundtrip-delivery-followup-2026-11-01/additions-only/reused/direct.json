@@ -1,0 +1,45 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:28 proves only multiplication perturbations; Research/Submission.lean:48 proves roundedDotProduct_additions_only under depth*u<1, relative to roundedProductTree with gamma(depth,u). No declaration proves the requested exactProductTree bound gamma(depth+1,u) under (depth+1)*u<1. Model.lean:15-19 supplies nonnegative u and the relative-error specification; no circular or exact-arithmetic assumption appears in these partial theorems.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "Research/Submission.lean:28-44 and :48-57 prove separate multiplication and addition results. The file ends at :59 without a theorem composing them into the requested bound. Reduction.lean:174-180 proves only rounded addition of real leaves.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "State and prove, for every Model and Tree (real pairs), that (depth+1)*u<1 implies an existential perturbation of exactProductTree with bound gamma(depth+1,u) whose exactSum equals roundedDotProduct."
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "Research/Submission.lean:51-54 relates the final roundedDotProduct to perturbations of roundedProductTree, not exactProductTree. The exact-product relation at :30 stops at roundedProductTree.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-exact-product-link"
+      ],
+      "correction": "Compose the multiplication perturbation with the reduction perturbation so the final existential witness is bounded relative to exactProductTree."
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "Research/Submission.lean:52 uses gamma tree.depth model.u for additions only. No theorem combines this with the multiplication error at :30 to establish gamma (tree.depth+1) model.u.",
+      "verdict": "fail",
+      "defect_categories": [
+        "wrong-error-count"
+      ],
+      "correction": "Prove the composed error is at most gamma(depth+1,u), using the requested (depth+1)*u<1 hypothesis."
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "The full dot-product perturbation theorem relative to exact products is not proved.",
+    "The multiplication and reduction perturbations are not composed into the required gamma(depth+1,u) bound."
+  ],
+  "limitations": [
+    "Stopped after the definite completeness failure; offline verification evidence and independent compilation were not needed or reviewed."
+  ]
+}

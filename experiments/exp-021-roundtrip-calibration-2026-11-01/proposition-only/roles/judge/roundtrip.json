@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "00318c35f142d86ba7ef9111a93dbd4617b819cba1387f1befdd4d82bc03acf0",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": false,
+  "source_implies_lean": true,
+  "relation": "mismatch",
+  "target_evidence": "The translation proves only the leafwise multiplication perturbation |r(ab)-ab|<=u|ab| and two definitional multiplication identities. It defines the full rounded dot product but supplies no theorem for its scalar output or accumulated addition errors. These targets do not recover the original claim. Conversely, under the shared original model, the identities follow from definitions and the product perturbation follows directly from r(z)=z(1+delta), |delta|<=u, for all u>=0; hence the translated targets hold without smallness.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The targets are two multiplication identities and roundedProductTree_isPerturbation. None represents roundedDotProduct as an exact sum of perturbed exact products under (depth+1)u<1. The statement explicitly says no supplied target bounds the final scalar reduction.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Prove the full final-scalar perturbation theorem for every model and tree satisfying the stated smallness hypothesis."
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "exactProductTree sends each original leaf (a,b) to ab. The perturbation target compares this same ordered leaf with r(ab) and proves |r(ab)-ab|<=u|ab|. Thus the supplied product-stage perturbations are linked to exact products. The missing final-scalar representation is recorded under target-completeness.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "The equality targets identify the leaf operation with r(ab); roundedProductTree_isPerturbation bounds its error by u|ab|. roundedDotProduct uses this rounded product tree, so the multiplication stage explicitly accounts for one rounding per leaf.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "roundedSum(node(L,R)) is defined as r(roundedSum(L)+roundedSum(R)), but no target propagates those addition errors into perturbations representing the final scalar. Defining the rounded reduction does not prove its error bound.",
+      "verdict": "fail",
+      "defect_categories": [
+        "addition-rounding-omitted"
+      ],
+      "correction": "Prove that every internal-node rounding error contributes to the final exact-product perturbations along the appropriate leaf-to-root paths."
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The only perturbation bound supplied is u for rounded products before addition. No target states gamma(depth+1,u), uses (depth+1)u<1, or bounds the combined multiplication and addition errors.",
+      "verdict": "fail",
+      "defect_categories": [
+        "wrong-error-count"
+      ],
+      "correction": "Establish the final componentwise gamma(depth+1,u) bound under the stated smallness assumption, including one multiplication error and at most depth addition errors per leaf."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "All translated targets quantify over arbitrary models, real operands, and finite ordered binary trees. The model assumes u>=0 and relative error for r. No exact-arithmetic restriction, additional target hypothesis, or assumed conclusion is introduced. Absence of smallness in the product-stage results adds no assumption.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "An exact-sum representation of roundedDotProduct by leafwise perturbations of exactProductTree for every admissible model and tree.",
+    "Propagation of every rounded internal-node addition into those final perturbations.",
+    "The componentwise gamma(depth+1,u) bound under (depth+1)u<1."
+  ],
+  "limitations": [
+    "Review is based only on the supplied source, contract, and translated mathematics; no Lean code or other evaluator material was inspected."
+  ]
+}

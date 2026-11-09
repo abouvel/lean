@@ -1,0 +1,36 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:49-56 proves roundedDotProduct_exists_perturbation only with hsmall and the additional hypothesis hzero : model.u = 0 (line 52). Its conclusion uses exactProductTree and gamma(tree.depth + 1, model.u), but no declaration proves this conclusion for every model under smallness alone.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "Research/Submission.lean:49-56 restricts the final theorem to model.u = 0. The other dot-product theorem, roundedProductTree_isPerturbation at lines 28-44, proves only the multiplication perturbation, not the full requested result.",
+      "verdict": "fail",
+      "defect_categories": [
+        "weakened-quantification"
+      ],
+      "correction": "Remove the hzero hypothesis and prove the full dot-product theorem for every Model and every tree assuming only the stated smallness condition."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "Research/Submission.lean:52 adds hzero : model.u = 0, which is absent from /spec/source.txt. Research/Common/FloatingPoint/Model.lean:15-19 requires only nonnegative u and the relative-error specification; it does not require zero roundoff. The extra hypothesis restricts the theorem to exact arithmetic, even though its proof body does not use hzero.",
+      "verdict": "fail",
+      "defect_categories": [
+        "strengthened-assumption"
+      ],
+      "correction": "Delete the exact-arithmetic restriction hzero : model.u = 0 from the theorem signature and retain only the original model and smallness assumptions."
+    }
+  ],
+  "assumptions_added": [
+    "Research/Submission.lean:52: hzero : model.u = 0."
+  ],
+  "missing_obligations": [
+    "The full dot-product backward-error theorem for arbitrary models satisfying (tree.depth + 1) * model.u < 1, including positive roundoff, is not proved."
+  ],
+  "limitations": [
+    "Stopped after the definite completeness failure, as required by the review protocol; offline verification evidence and further checks were not examined."
+  ]
+}

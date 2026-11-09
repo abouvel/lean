@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "555d97febc7d6250aea7f65623259f50439177ca2a0f9d4af54e342e75ad0311",
+  "status": "complete",
+  "statement": "The two target theorems represent a specified nested real summation with supplied multiplicative errors as multiplication by a componentwise perturbed matrix. Pad the rows of A and vector x by zeros, form B=ceil(n/T) blocks of T products, sequentially sum each block, then sequentially sum the block results. Products and additions after each first term receive the error factors specified below. RoundingTrace is arbitrary error data, not a rounding algorithm. Under T>0, u>=0, Valid(E,n,T,u), and k*u<1 with k=T+B-1, the explicitly constructed ΔA satisfies computed(A,x,T,E)=(A+ΔA)x and |ΔA(i,j)|<=gamma(k,u)|A(i,j)|. The other theorem asserts existence of a matrix with these properties. There are no positivity assumptions on m,n or divisibility assumption on n by T.",
+  "targets": [
+    {
+      "name": "BlockMatrixVector.block_matrix_vector_product_constructed",
+      "statement": "For all implicit m,n,T in N={0,1,2,...}, all A:Fin m × Fin n -> R, x:Fin n -> R, u in R, and E:RoundingTrace m, assume T>0, u>=0, Valid(E,n,T,u), and k*u<1, where B=blockCount(n,T) and k=errorCount(n,T), cast to R in real arithmetic. Valid means that for every i in Fin m, |E.mulError(i,b,t)|<=u for every natural b<B and t<T; |E.blockAddError(i,b,t)|<=u for every natural b<B and 1<=t<T; and |E.outerAddError(i,b)|<=u for every natural 1<=b<B. Let ΔA=perturbation(A,T,E), the explicit matrix A(i,j)*(pathCoefficient(T,E,i,j)-1). Then both computed(A,x,T,E)=(A+ΔA)x as vectors indexed by Fin m, and for every i in Fin m and j in Fin n, |ΔA(i,j)|<=gamma(k,u)*|A(i,j)|, where gamma(k,u)=k*u/(1-k*u). Vector equality means that for every i in Fin m, computed(A,x,T,E)(i)=sum over j in Fin n of (A(i,j)+ΔA(i,j))*x(j). The coefficient and nested computation are exactly those in the constructions below; the bound concerns this actual perturbation."
+    },
+    {
+      "name": "BlockMatrixVector.block_matrix_vector_product",
+      "statement": "For all implicit m,n,T in N={0,1,2,...}, all A:Fin m × Fin n -> R, x:Fin n -> R, u in R, and E:RoundingTrace m, assume T>0, u>=0, Valid(E,n,T,u), and k*u<1, where B=blockCount(n,T) and k=errorCount(n,T), cast to R in real arithmetic. Valid means that for every i in Fin m, |E.mulError(i,b,t)|<=u for every natural b<B and t<T; |E.blockAddError(i,b,t)|<=u for every natural b<B and 1<=t<T; and |E.outerAddError(i,b)|<=u for every natural 1<=b<B. There exists a real matrix ΔA:Fin m × Fin n -> R such that computed(A,x,T,E)=(A+ΔA)x as vectors and, for every i in Fin m and j in Fin n, |ΔA(i,j)|<=gamma(k,u)*|A(i,j)|, where gamma(k,u)=k*u/(1-k*u). The vector equality means that for every i in Fin m, computed(A,x,T,E)(i)=sum over j in Fin n of (A(i,j)+ΔA(i,j))*x(j). The left side is precisely the constructed nested sequential summation. The explicitly defined perturbation from the constructed theorem satisfies this existential conclusion; this theorem itself requires only existence."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "BlockMatrixVector.blockCount",
+      "description": "For n,T in N, blockCount(n,T)=((n+T) dotminus 1) div T, where dotminus is natural subtraction truncated at zero and div is natural division. For T>0 it is ceil(n/T), including 0 when n=0. At T=0 it is 0, since natural division by zero is 0."
+    },
+    {
+      "name": "BlockMatrixVector.errorCount",
+      "description": "For n,T in N, errorCount(n,T)=(T+blockCount(n,T)) dotminus 1, with natural subtraction truncated at zero. Under T>0, writing B=blockCount(n,T), this is T+B-1. It is the index of the gamma bound, not a count of all operations in the computation."
+    },
+    {
+      "name": "BlockMatrixVector.gamma",
+      "description": "For k in N and u in R, gamma(k,u)=k*u/(1-k*u), with k cast to R. This definition has no hypotheses. Real division is total, with division by zero equal to 0. In the target theorems k*u<1 makes the denominator positive."
+    },
+    {
+      "name": "BlockMatrixVector.padded",
+      "description": "For implicit n in N and v:Fin n -> R, padded(v):N -> R equals v(j) if j<n, using the corresponding Fin n index, and equals 0 if j>=n."
+    },
+    {
+      "name": "BlockMatrixVector.sequentialSum",
+      "description": "For arbitrary v,δ:N -> R, S(r)=sequentialSum(v,δ,r) is defined for every r in N by S(0)=0, S(1)=v(0), and S(k+1)=(S(k)+v(k))*(1+δ(k)) for k>=1. It combines the first r terms sequentially with supplied multiplicative errors on additions after the first term. δ(0) is unused. This is a recursive algorithm on real data, with no inherent bounds on δ."
+    },
+    {
+      "name": "BlockMatrixVector.RoundingTrace",
+      "description": "For each m in N this inductive record has one constructor, RoundingTrace.mk, taking three fields: mulError:Fin m -> N -> N -> R, blockAddError:Fin m -> N -> N -> R, and outerAddError:Fin m -> N -> R. Their projections return respectively the first, second, and third fields. The natural indices are block b and position t for the first two fields and block b for the third. The fields are arbitrary real arrays, defined also outside all ranges used by the computation. This type represents supplied error data; it is not a rounding algorithm and contains neither bounds nor validity proofs."
+    },
+    {
+      "name": "BlockMatrixVector.RoundingTrace.Valid",
+      "description": "For implicit m in N, E:RoundingTrace m, n,T in N, and u in R, this proposition is the conjunction: for every i in Fin m and every natural b<blockCount(n,T), (i) for every natural t<T, |E.mulError(i,b,t)|<=u, and (ii) for every natural 1<=t<T, |E.blockAddError(i,b,t)|<=u; and (iii) for every i in Fin m and every natural 1<=b<blockCount(n,T), |E.outerAddError(i,b)|<=u. Multiplication-error bounds include padded positions. The proposition imposes no restriction on blockAddError at t=0, outerAddError at b=0, or entries outside these ranges. T>0 and u>=0 are separate theorem hypotheses, not parts of Valid."
+    },
+    {
+      "name": "BlockMatrixVector.roundedProduct",
+      "description": "For implicit m,n in N, A:Fin m × Fin n -> R, x:Fin n -> R, T in N, E:RoundingTrace m, i in Fin m, and b,t in N, roundedProduct(A,x,T,E,i,b,t)=padded(A(i))(b*T+t)*padded(x)(b*T+t)*(1+E.mulError(i,b,t)). This is exact real multiplication with a supplied factor, not a machine-rounding operation. It is zero when b*T+t>=n."
+    },
+    {
+      "name": "BlockMatrixVector.blockPartial",
+      "description": "For implicit m,n in N, A:Fin m × Fin n -> R, x:Fin n -> R, T in N, E:RoundingTrace m, i in Fin m, and b in N, blockPartial(A,x,T,E,i,b)=sequentialSum(v,δ,T), where v(t)=roundedProduct(A,x,T,E,i,b,t) and δ(t)=E.blockAddError(i,b,t) for t in N. Thus it is 0 for T=0; otherwise it starts with v(0), and for t=1,...,T-1 replaces the accumulator by (accumulator+v(t))*(1+δ(t)). Its definition permits any natural b."
+    },
+    {
+      "name": "BlockMatrixVector.computed",
+      "description": "For implicit m,n in N, A:Fin m × Fin n -> R, x:Fin n -> R, T in N, and E:RoundingTrace m, computed(A,x,T,E):Fin m -> R has row i equal to sequentialSum(v,δ,B), where B=blockCount(n,T), v(b)=blockPartial(A,x,T,E,i,b), and δ(b)=E.outerAddError(i,b). For B=0 it is 0. Otherwise it starts with block 0 and for b=1,...,B-1 replaces the accumulator by (accumulator+blockPartial(A,x,T,E,i,b))*(1+E.outerAddError(i,b)). Each block includes T products, including zero padding. Addition factors at padded positions can still multiply previous nonzero contributions."
+    },
+    {
+      "name": "BlockMatrixVector.pathCoefficient",
+      "description": "For implicit m,n in N, T in N, E:RoundingTrace m, i in Fin m, and j in Fin n, put b=(the natural value of j) div T, t=(the natural value of j) mod T, and B=blockCount(n,T). Then C(i,j)=pathCoefficient(T,E,i,j)=(1+E.mulError(i,b,t)) times the product of (1+E.blockAddError(i,b,s)) over all natural max(1,t)<=s<T, times the product of (1+E.outerAddError(i,s)) over all natural max(1,b)<=s<B. Empty products are 1. Thus for t>=1 the inner product includes the factor at t itself, and for b>=1 the outer product includes the factor at b itself. For T>0 these are exactly the factors applied to the term A(i,j)*x(j) by the nested summation. The definition is also total at T=0, using natural j div 0=0 and j mod 0=j."
+    },
+    {
+      "name": "BlockMatrixVector.perturbation",
+      "description": "For implicit m,n in N, A:Fin m × Fin n -> R, T in N, and E:RoundingTrace m, perturbation(A,T,E) is the matrix ΔA:Fin m × Fin n -> R given by ΔA(i,j)=A(i,j)*(pathCoefficient(T,E,i,j)-1). It depends on A,T,E and the dimensions, but not on x or u, and is defined without hypotheses. Thus (A+ΔA)(i,j)=A(i,j)*pathCoefficient(T,E,i,j). The constructed target theorem identifies multiplication of this explicitly perturbed matrix by x with computed(A,x,T,E) and bounds every perturbation entry under its hypotheses."
+    }
+  ],
+  "assumptions": [
+    "In both targets m,n,T are implicit universally quantified natural parameters, including zero as a possible natural number; the hypotheses require T>0 but neither m>0 nor n>0. Fin r={0,...,r-1}.",
+    "In both targets A is any real m-by-n matrix, x any real n-vector, u any real number, and E any element of RoundingTrace m; all are universally quantified.",
+    "Both targets assume T>0 and u>=0.",
+    "Both targets assume Valid(E,n,T,u), exactly the three universally quantified families of absolute-error bounds given in its construction description.",
+    "Both targets assume (errorCount(n,T) cast to R)*u<1. With B=blockCount(n,T) and T>0, errorCount(n,T)=T+B-1, so the gamma denominator is positive.",
+    "There is no condition that n be divisible by T, no nonzero condition on matrix or vector entries, no probability model, and no machine-rounding rule. Operations are over R with supplied factors. Empty sums are 0 and empty products are 1. Natural subtraction is truncated at zero; natural division by zero is 0."
+  ],
+  "missing_context": []
+}

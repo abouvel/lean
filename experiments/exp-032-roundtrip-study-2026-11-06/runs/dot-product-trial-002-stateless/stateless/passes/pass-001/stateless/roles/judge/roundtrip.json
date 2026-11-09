@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "2bca15692312a14554e5a2ea113c7d70db850321937c40d792b9c94c8bc8104c",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "The explicit roundedDotProduct_exists_perturbation target states the complete universal backward-error theorem, including the exact-product reference, gamma(depth+1,u) componentwise bound, and equality of the perturbed exact sum with the recursively rounded dot product. The constructions define rounded leaf multiplication and rounded addition at every internal node. Existential perturbations are permitted by the source construction policy. No missing composition or connection needs to be supplied.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The explicit target universally quantifies every model M and every tree T of real pairs. Under (depth(T)+1)M.u < 1 it asserts existence of P satisfying both IsPerturbation(gamma(depth(T)+1,M.u),exactProductTree(T),P) and exactSum(P) = roundedDotProduct(M,T). Both requested final conclusions already occur in the target.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "exactProductTree maps each input leaf (a,b) to the exact product ab and preserves nodes. The target uses this exact tree as the reference in IsPerturbation, yielding |y-ab| <= gamma(depth(T)+1,M.u)|ab| for every corresponding output leaf y.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "roundedProductTree maps each leaf (a,b) to M.round(ab). roundedDotProduct is roundedSum applied to that tree; its equivalent leaf recurrence is D_M(leaf(a,b)) = M.round(ab). The target bounds perturbations relative to exact ab with depth+1 errors, including this multiplication rounding.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "roundedSum(M,node(L,R)) = M.round(roundedSum(M,L)+roundedSum(M,R)), and roundedDotProduct follows the same node recurrence after rounded leaf multiplication. The final target equates this result, including every internal rounded addition, with exactSum(P).",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The final target explicitly requires IsPerturbation(gamma(d+1,u),exactProductTree(T),P), with d = depth(T), gamma(k,u) = ku/(1-ku), and leaf condition |y-x| <= gamma(d+1,u)|x|. Depth is zero at a leaf and one plus the maximum child depth at a node. Thus the bound counts one multiplication and at most d additions; (d+1)u < 1 ensures a positive denominator.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "The abstract model assumes u >= 0 and for every real z existence of delta with |delta| <= u and M.round(z) = z(1+delta). The sole additional theorem hypothesis is (depth(T)+1)M.u < 1. All models and trees are quantified; there is no exact-arithmetic restriction, assumed perturbation conclusion, balance condition, or restriction on real inputs.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

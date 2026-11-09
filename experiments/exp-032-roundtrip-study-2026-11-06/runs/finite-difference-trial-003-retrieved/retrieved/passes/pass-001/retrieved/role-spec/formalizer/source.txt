@@ -1,0 +1,16 @@
+# Forward difference under a local derivative variation bound
+
+Define the forward-difference approximation for a real function f at x
+with step h as (f(x+h) - f(x)) / h.
+
+Prove that for every f and D from real numbers to real numbers and every
+real x, h, L, the following assumptions imply the stated error bound:
+- h > 0 and L >= 0;
+- f is continuous on the closed interval [x, x+h];
+- f has derivative D(t) at every t in the open interval (x, x+h);
+- for every t in the open interval (x, x+h),
+  |D(t) - D(x)| <= L * |t-x|.
+
+The absolute difference between the defined forward difference and D(x)
+is at most L*h. Here D(x) is the reference value in the variation bound.
+No derivative at either endpoint is required by this task.

@@ -1,0 +1,36 @@
+{
+  "axioms": [
+    "_private.Research.Submission.0.Research.impossible"
+  ],
+  "declarations": [
+    {
+      "body": "",
+      "dependencies": [
+        "False"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Research.target",
+      "type": "False"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "False"
+      ],
+      "kind": "axiom",
+      "module": "Research.Submission",
+      "name": "_private.Research.Submission.0.Research.impossible",
+      "type": "False"
+    }
+  ],
+  "schema_version": 1,
+  "sources": {
+    "Research/Submission.lean": "953991cc907c3f427e1915d005e8c606d01f9fb32e7852a03ec42585523e3fed"
+  },
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.28.0",
+    "manifest_sha256": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+  },
+  "candidate_hash": "7a366601195db05549c4eeef232d34b807d2139bd78856ea25f9f0bd0085feff"
+}

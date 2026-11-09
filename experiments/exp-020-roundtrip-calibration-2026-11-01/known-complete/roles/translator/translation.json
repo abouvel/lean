@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "8c576ed9c33c3a9db7650976ea8d05ee6dbe429f41cde3edfe37223230b5b74f",
+  "status": "complete",
+  "statement": "The supplied statements describe an abstract rounding model and a binary-tree evaluation of a sum of pairwise real products. A model has u >= 0 and r: R → R with ∀z ∈ R, ∃delta ∈ R, |delta| <= u and r(z) = z(1+delta). The construction replaces each leaf pair (x,y) by r(xy), preserves the ordered tree, and recursively combines child values a,b by r(a+b). The product tree is a leafwise perturbation with bound u of the exact-product tree. For every such model and input tree T, if (depth(T)+1)u < 1, the resulting scalar equals the exact sum of a same-shape real-leaf tree whose leaf p corresponding to (x,y) satisfies |p-xy| <= gamma(depth(T)+1,u)|xy|, with gamma(k,u) = ku/(1-ku). The remaining targets state the defining equalities linking the leaf operation, tree map, and model multiplication to this actual construction. All notation, domains, model conditions, and quantifiers are detailed below.",
+  "targets": [
+    {
+      "name": "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation",
+      "statement": "For every model m and every T in Tree(R × R), put u = m.u, r = m.round, d = depth(T), and k = d+1 in N. If (k cast to R)u < 1, then there exists P in Tree(R) such that IsPerturbation(gamma(k,u), exactProductTree(T), P) and exactSum(P) = roundedDotProduct(m,T). Explicitly, P has the same ordered branching structure as T, and at each corresponding leaf (x,y) of T and p of P, |p-xy| <= [ku/(1-ku)]|xy|. The exact sum of these p values equals the actual computation that rounds each xy and then rounds each recursive addition. The same P satisfies both conclusions. The model assumptions are A model m consists of u = m.u in R, u >= 0, and r = m.round: R → R satisfying: for every z in R there exists delta in R with |delta| <= u and r(z) = z(1+delta). The bound uses one plus the maximum root-to-leaf edge count, not the number of leaves; no balance, sign, nonzero-product, or representability restriction on T is assumed."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTerm.eq_1",
+      "statement": "For every model m and all x,y in R, roundedProductTerm(m,x,y) = m.mul(x,y). Both sides equal m.round(xy) by the supplied definitions. This identifies the operation used on each leaf pair of roundedProductTree. No additional hypothesis is imposed beyond membership in Model, whose assumptions are specified below."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree.eq_1",
+      "statement": "For every model m and every T in Tree(R × R), roundedProductTree(m,T) = Tree.map((x,y) ↦ roundedProductTerm(m,x,y),T). Thus this construction preserves every branch and replaces each leaf (x,y) by m.round(xy); it is the intermediate tree passed to roundedSum by roundedDotProduct. No additional hypothesis is imposed beyond membership in Model."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree_isPerturbation",
+      "statement": "For every model m and every T in Tree(R × R), IsPerturbation(m.u, exactProductTree(T), roundedProductTree(m,T)). Explicitly, these two constructed trees have the same ordered branching structure, and at every leaf pair (x,y) of T their respective labels xy and m.round(xy) satisfy |m.round(xy)-xy| <= m.u|xy|. This includes xy = 0, when the rounded value is zero. No depth condition or further hypothesis is imposed beyond membership in Model."
+    },
+    {
+      "name": "Research.FloatingPoint.Model.mul.eq_1",
+      "statement": "For every model m and all a,b in R, m.mul(a,b) = m.round(ab). This is the operation used by roundedProductTerm and hence by roundedProductTree at each leaf pair, before roundedDotProduct performs recursive rounded additions. No additional hypothesis is imposed beyond membership in Model."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BinaryTreeReduction.exactProductTree",
+      "description": "Domain Tree(R × R), codomain Tree(R). It applies Tree.map to (x,y) ↦ xy using exact real multiplication: E(leaf(x,y)) = leaf(xy), E(node(L,R)) = node(E(L),E(R)). Internal nodes preserve branching and do no arithmetic. exactSum(E(T)) is the exact sum of the pairwise leaf products. E(T) is the reference tree in both perturbation targets."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedDotProduct",
+      "description": "Domain Model × Tree(R × R), codomain R. For m with r = m.round, it first constructs roundedProductTree(m,T), then evaluates roundedSum(m,·) on that tree. Equivalently D_m(leaf(x,y)) = r(xy) and D_m(node(L,R)) = r(D_m(L)+D_m(R)). Individual inputs are not separately rounded; the product at each leaf is rounded once, and each internal addition is rounded once. A leaf is returned by roundedSum unchanged. This computes a sum of rounded pairwise products along the given binary structure. Under (depth(T)+1)m.u < 1, its target theorem represents this actual result as the exact sum of a tree of perturbed exact leaf products with relative absolute bound gamma(depth(T)+1,m.u)."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree",
+      "description": "Domain Model × Tree(R × R), codomain Tree(R). For r = m.round it applies Tree.map to (x,y) ↦ roundedProductTerm(m,x,y) = m.mul(x,y) = r(xy): Q_m(leaf(x,y)) = leaf(r(xy)), Q_m(node(L,R)) = node(Q_m(L),Q_m(R)). It preserves all ordered nodes; no multiplication or addition is performed at internal nodes. This tree is the input to roundedSum in roundedDotProduct. Its defining-equation target gives precisely this map; its perturbation target compares its leaf labels to exactProductTree with bound m.u."
+    }
+  ],
+  "assumptions": [
+    "A model m consists of u = m.u in R, u >= 0, and r = m.round: R → R satisfying: for every z in R there exists delta in R with |delta| <= u and r(z) = z(1+delta).",
+    "Tree(A) consists of finite nonempty ordered full binary trees, generated by leaf(a), a in A, and node(L,R), L,R in Tree(A). No balancing restriction is imposed. Input trees have A = R × R; all entries are arbitrary real numbers, including zero and negative numbers.",
+    "Tree.map applies a function at every leaf and preserves nodes. For real-leaf trees, S = exactSum is defined by S(leaf(v)) = v and S(node(L,R)) = S(L)+S(R), with exact real addition. Depth d is a natural number defined by d(leaf(v)) = 0 and d(node(L,R)) = 1+max(d(L),d(R)).",
+    "For any b in R, IsPerturbation(b,A,B) is the inductively defined relation on real-leaf trees: IsPerturbation(b,leaf(x),leaf(y)) holds exactly when |y-x| <= b|x|, and IsPerturbation(b,node(L,R),node(Lprime,Rprime)) holds exactly when the corresponding left and right trees satisfy the relation with the same b. No other cases are generated. Equivalently A and B have identical ordered branching structure and the bound holds at every corresponding leaf. The definition imposes no separate sign condition on b.",
+    "For k in N and u in R, gamma(k,u) = ((k cast to R)u)/(1-(k cast to R)u). The existence theorem uses k = depth(T)+1 and assumes ku < 1, so its denominator is positive and gamma(k,u) >= 0. No such premise is present in the other targets.",
+    "Model multiplication is m.mul(a,b) = r(ab), and model addition is m.add(a,b) = r(a+b). roundedProductTerm(m,x,y) = m.mul(x,y). roundedSum(m,leaf(v)) = v and roundedSum(m,node(L,R)) = r(roundedSum(m,L)+roundedSum(m,R)).",
+    "All model, input tree, and scalar arguments in the target statements are universally quantified. The existential tree in the existence theorem ranges over Tree(R). Error parameters delta may depend on z. No concrete floating-point format, representability condition, precision, exponent bound, monotonicity, or rounding-mode assumption is supplied. No upper bound on u is imposed except where implied by the explicit premise ku < 1."
+  ],
+  "missing_context": []
+}

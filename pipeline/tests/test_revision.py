@@ -121,6 +121,22 @@ class RevisionTests(unittest.TestCase):
         blinded = translation_bundle(c,{"targets":["Research.claim"],"construction_names":["Research.algorithm"]})
         self.assertNotIn("ORIGINAL_SECRET_TASK", json.dumps(blinded))
 
+    def test_bundle_includes_structure_and_constructor_but_rejects_theorem_or_missing_name(self):
+        c = context()
+        c["declarations"] += [
+            {"name": "Research.Trace", "module": "Research.Submission", "kind": "inductive",
+             "type": "Type", "body": "", "dependencies": ["Research.Trace.mk"]},
+            {"name": "Research.Trace.mk", "module": "Research.Submission", "kind": "constructor",
+             "type": "Nat → Research.Trace", "body": "", "dependencies": ["Research.Trace"]},
+        ]
+        result = translation_bundle(c, {"targets": ["Research.claim"],
+                                        "construction_names": ["Research.Trace", "Research.algorithm"]})
+        self.assertEqual({item["name"] for item in result["declarations"]},
+                         {"Research.claim", "Research.algorithm", "Research.Trace", "Research.Trace.mk"})
+        for invalid in ("Research.claim", "Research.Trace.mk", "Research.Missing"):
+            with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError, "Construction"):
+                translation_bundle(c, {"targets": ["Research.claim"], "construction_names": [invalid]})
+
     def test_translation_must_cover_exact_target_names_and_hash(self):
         for change in ("hash", "targets", "missing"):
             value = translation()

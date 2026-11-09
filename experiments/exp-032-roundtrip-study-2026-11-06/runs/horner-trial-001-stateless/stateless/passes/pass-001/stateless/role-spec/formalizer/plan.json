@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "strategy": "Copy the supplied prerequisite unchanged and formalize recursive exact evaluation P, rounded evaluation Q, and the prescribed exact-data envelope E on coefficient lists in increasing degree order. Prove the forward-error theorem by structural induction on the coefficient list. A reusable perturbation estimate for round, derived solely from Model.round_spec and u_nonneg, connects the two rounded operations in each Q step to the two nested terms in E. First compare the rounded product with x * P(tail,x), then compare the rounded sum with a + x * P(tail,x). Use nonnegativity of 1+u and absolute values when transporting the induction bound. Keep the construction valid for every model, every real x, and every finite coefficient list, with no additional hypotheses. This is a proof plan, not a completed target proof.",
+  "obligations": [
+    {
+      "id": "prerequisite",
+      "description": "Copy /spec/support/Research/Common/FloatingPoint/Model.lean unchanged into the formalization at its matching module path. Use Research.FloatingPoint.Model, including its real parameter u, proof u_nonneg, rounding function round, and existential relative-error law. Do not replace or strengthen the model or introduce custom axioms."
+    },
+    {
+      "id": "exact_evaluator",
+      "description": "Define P : List \u211d \u2192 \u211d \u2192 \u211d by P([],x)=0 and P(a::tail,x)=a+x*P(tail,x). Establish its defining equations with the given increasing-degree coefficient interpretation."
+    },
+    {
+      "id": "rounded_evaluator",
+      "description": "Define Q for an arbitrary Model by Q(model,[],x)=0 and Q(model,a::tail,x)=model.round(a+model.round(x*Q(model,tail,x))). This must perform exactly one rounded multiplication and one rounded addition per list step, including terminal list steps."
+    },
+    {
+      "id": "envelope_construction",
+      "description": "Define E : List \u211d \u2192 \u211d \u2192 \u211d \u2192 \u211d independently of Q and round. Set E([],x,u)=0. For v=P(tail,x) and e=E(tail,x,u), set E(a::tail,x,u)=u*|a+x*v|+(1+u)*(u*|x*v|+(1+u)*|x|*e). Preserve this exact prescribed recurrence, rather than substituting another valid error bound."
+    },
+    {
+      "id": "rounding_estimates",
+      "description": "Derive from round_spec the local estimate |model.round(z)-z| \u2264 model.u*|z|. Use triangle inequalities and u_nonneg to obtain the perturbed-reference estimate |model.round(z)-w| \u2264 model.u*|w|+(1+model.u)*|z-w| for arbitrary real z,w. These estimates require neither a bound u<1 nor nonzero arguments. Useful Lean tools include abs_mul, abs_add, abs_nonneg, mul_le_mul_of_nonneg_left, and ring normalization."
+    },
+    {
+      "id": "order_facts",
+      "description": "Make available 0\u2264u and 0\u22641+u when bounding products. If useful, prove E is nonnegative by list induction for nonnegative u; do not impose nonnegativity of coefficients or x."
+    },
+    {
+      "id": "induction_base",
+      "description": "State the theorem for every model, list, and real x with conclusion |Q(model,coefficients,x)-P(coefficients,x)| \u2264 E(coefficients,x,model.u). Handle the empty list from the three zero defining equations."
+    },
+    {
+      "id": "induction_product",
+      "description": "In the cons induction step abbreviate v=P(tail,x), q=Q(model,tail,x), and e=E(tail,x,model.u). Apply the perturbed-reference estimate to z=x*q and w=x*v. Use |x*q-x*v|=|x|*|q-v| and the induction hypothesis to bound the rounded-product error by model.u*|x*v|+(1+model.u)*|x|*e. Normalize multiplication association as needed."
+    },
+    {
+      "id": "induction_addition",
+      "description": "Apply the same perturbed-reference estimate to z=a+model.round(x*q) and w=a+x*v. Cancellation identifies |z-w| with the rounded-product error. Transport the product bound through the nonnegative factor 1+model.u and identify the resulting right-hand side with the defining cons expression for E. This establishes the required link between the constructed envelope and the theorem."
+    },
+    {
+      "id": "validation",
+      "description": "Check the final Lean candidate with local Lean and Mathlib. The completed candidate must contain all requested definitions and the fully quantified theorem, with no sorry, placeholders, custom axioms, smallness assumption, sign restriction, nonzero-input restriction, or exact-arithmetic assumption. No feedback file was present during planning; no candidate or prior feedback can weaken the original specification. Respect the stated builder time limit and do not use Aristotle."
+    }
+  ]
+}

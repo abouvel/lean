@@ -1,0 +1,46 @@
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+DENIED CONNECT sdmntpritalynorth.oaiusercontent.com 443
+ALLOWED sdmntprsouthcentralus.oaiusercontent.com 443
+ALLOWED chatgpt.com 443
+DENIED CONNECT sdmntprwestus.oaiusercontent.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED sdmntprcentralus.oaiusercontent.com 443
+DENIED CONNECT sdmntpreastus3.oaiusercontent.com 443
+ALLOWED chatgpt.com 443
+DENIED CONNECT ab.chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+DENIED CONNECT ab.chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+DENIED CONNECT sdmntpritalynorth.oaiusercontent.com 443
+ALLOWED sdmntprsouthcentralus.oaiusercontent.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+DENIED CONNECT sdmntprwestus.oaiusercontent.com 443
+ALLOWED sdmntprcentralus.oaiusercontent.com 443
+ALLOWED chatgpt.com 443
+DENIED CONNECT sdmntpreastus3.oaiusercontent.com 443
+ALLOWED chatgpt.com 443
+DENIED CONNECT ab.chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+ALLOWED chatgpt.com 443
+DENIED CONNECT ab.chatgpt.com 443

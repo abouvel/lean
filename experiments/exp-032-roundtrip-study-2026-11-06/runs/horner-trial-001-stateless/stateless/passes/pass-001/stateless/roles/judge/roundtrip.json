@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "4904d1ad214eddd10dc3354e4a9e0cd2b164105a37c8ec4d470e03a27410e1d0",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "Research.FloatingPoint.Horner.forward_error directly asserts the requested universal forward-error bound about the three explicitly defined recursions. Both directions preserve the model assumptions, input domains, exact recurrence, two-rounding algorithm, and prescribed envelope. No additional conclusion or formal bridge is needed.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full forward-error theorem for every model, coefficient list, and real evaluation point.",
+      "evidence": "The explicit target Research.FloatingPoint.Horner.forward_error asserts the full inequality for every model m, every finite real list c including [], and every real x. It is the final theorem itself, with no missing composition of supporting lemmas.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-horner",
+      "requirement": "Use the exact Horner recursion with zero for the empty list and coefficients in increasing degree order.",
+      "evidence": "Construction P defines P([],x)=0 and P(a::t,x)=a+x P(t,x) using exact real operations. It explicitly identifies the head as the constant coefficient and the list as coefficients in increasing degree order.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "rounded-horner",
+      "requirement": "Evaluate each cons step using a rounded multiplication of x and the rounded tail, then a rounded addition of the coefficient.",
+      "evidence": "Construction Q defines Q(m,[],x)=0 and Q(m,a::t,x)=r(a+r(x Q(m,t,x))), with r=round(m). This rounds the product with the rounded tail and then the addition, twice per element including the last.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "error-envelope",
+      "requirement": "Define the stated error envelope using exact values and u, with the requested recurrence and base case.",
+      "evidence": "Construction E defines E([],x,u)=0 and E(a::t,x,u)=u|a+x v|+(1+u)(u|x v|+(1+u)|x|e), where v=P(t,x) and e=E(t,x,u). This is exactly the requested recurrence, using only exact tail values and the listed inputs.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "conclusion-linkage",
+      "requirement": "Bound the absolute difference of the supplied rounded and exact evaluators by the supplied envelope.",
+      "evidence": "The target explicitly identifies P, Q, E with the supplied recursions and asserts |Q(m,c,x)-P(c,x)|<=E(c,x,u(m)). The list, argument, rounding model, and its parameter are linked exactly as requested.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use the supplied relative-error model without additional smallness, sign, nonzero, or exact-arithmetic premises.",
+      "evidence": "The model supplies only u>=0 and, for every real z, a delta with |delta|<=u and round(z)=z(1+delta). The target imposes no extra hypotheses or upper bound on u; all real coefficients and arguments are covered. Exact real reference operations do not assume that rounding is exact.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

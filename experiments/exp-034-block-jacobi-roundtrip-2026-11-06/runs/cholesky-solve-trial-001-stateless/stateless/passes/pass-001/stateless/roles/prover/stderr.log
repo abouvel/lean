@@ -1,0 +1,1 @@
+2026-11-06T20:17:21.409975Z ERROR codex_core::tools::router: error=exec_command failed: CreateProcess { message: "Rejected(\"`/bin/sh -lc 'rm -f Check.lean; git status --short 2>/dev/null; date -u'` rejected: rm -f style commands are not permitted. Use a safer approach\")" }

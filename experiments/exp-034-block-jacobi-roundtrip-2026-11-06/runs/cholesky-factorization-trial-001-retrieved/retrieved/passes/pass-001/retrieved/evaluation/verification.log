@@ -1,0 +1,41 @@
+⚠ [8026/8028] Built Research.Submission (16s)
+warning: Research/Submission.lean:398:44: unused variable `hG`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Research/Submission.lean:413:62: `Fin.lt_iff_val_lt_val` has been deprecated: Use `Fin.lt_def` instead
+warning: Research/Submission.lean:414:19: This simp argument is unused:
+  List.filter_eq_nil_iff
+
+Hint: Omit it from the simp argument list.
+  simp [dotInputs, L̵i̵s̵t̵.̵f̵i̵l̵t̵e̵r̵_̵e̵q̵_̵n̵i̵l̵_̵i̵f̵f̵,̵ ̵hnone]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Research/Submission.lean:452:15: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  simp only [̵i̵f̵_̵p̵o̵s̵ ̵r̵f̵l̵]̵ ̵at hb
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Research/Submission.lean:462:8: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Research/Submission.lean:471:8: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Research/Submission.lean:480:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Research/Submission.lean:495:79: This simp argument is unused:
+  id_eq
+
+Hint: Omit it from the simp argument list.
+  simp only [List.finRange, List.map_ofFn, List.sum_ofFn, Function.comp_apply,̵ ̵i̵d̵_̵e̵q̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Research/Submission.lean:528:24: unused variable `hPosDef`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [8027/8028] Built Research (4.8s)
+Build completed successfully (8028 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

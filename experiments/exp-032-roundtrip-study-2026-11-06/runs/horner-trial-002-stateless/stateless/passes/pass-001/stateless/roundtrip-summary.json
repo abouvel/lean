@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "8af33c7a487be6e15c8c7ea02a8ef1e198c2bb07a117db8316aeb51e6d10995d",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "The explicit target Research.Horner.forward_error already asserts the requested universal final inequality about the explicitly recursively defined P, Q, and E. Its model, domains, input linkage, and envelope coincide with the source. No missing composition or other formal bridge is needed.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full forward-error theorem for every model, coefficient list, and real evaluation point.",
+      "evidence": "Research.Horner.forward_error explicitly quantifies over every model, every finite real coefficient list, and every real x and asserts the full absolute forward-error inequality, including empty lists and all finite lengths.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-horner",
+      "requirement": "Use the exact Horner recursion with zero for the empty list and coefficients in increasing degree order.",
+      "evidence": "Research.Horner.P defines P([],x) = 0 and P(a::t,x) = a + x P(t,x). Its first coefficient is the constant coefficient, matching increasing degree order.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "rounded-horner",
+      "requirement": "Evaluate each cons step using a rounded multiplication of x and the rounded tail, then a rounded addition of the coefficient.",
+      "evidence": "Research.Horner.Q defines Q(model,[],x) = 0 and Q(model,a::t,x) = r(a + r(x Q(model,t,x))). The same model is used throughout, with precisely one rounded multiplication and one rounded addition at every cons step.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "error-envelope",
+      "requirement": "Define the stated error envelope using exact values and u, with the requested recurrence and base case.",
+      "evidence": "Research.Horner.E defines E([],x,u) = 0 and, with v = P(t,x) and e = E(t,x,u), E(a::t,x,u) = u |a + x v| + (1 + u)(u |x v| + (1 + u)|x| e). This exactly matches the requested recurrence using only exact tail values, x, coefficients, and u. Defining E for arbitrary real u imposes no extra theorem premise.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "conclusion-linkage",
+      "requirement": "Bound the absolute difference of the supplied rounded and exact evaluators by the supplied envelope.",
+      "evidence": "The explicit target bounds |Q(model,coefficients,x) - P(coefficients,x)| by E(coefficients,x,model.u), using the same coefficient list and x and the parameter of the model used by Q.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use the supplied relative-error model without additional smallness, sign, nonzero, or exact-arithmetic premises.",
+      "evidence": "The target model provides u >= 0 and, for every real z, a possibly input-dependent delta with |delta| <= u and r(z) = z(1 + delta). There are no further hypotheses, smallness bounds, sign restrictions, nonzero restrictions, or exact-rounding assumptions.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Cholesky.cholesky_factorization"
+  ],
+  "construction_names": [
+    "Cholesky.Rounded",
+    "Cholesky.DotTail",
+    "Cholesky.SequentialDot",
+    "Cholesky.Residual",
+    "Cholesky.dotInputs",
+    "Cholesky.writeEntry",
+    "Cholesky.EntryComputation",
+    "Cholesky.entryOrder",
+    "Cholesky.Execute",
+    "Cholesky.SuccessfulCholesky",
+    "Cholesky.gamma",
+    "Cholesky.entrywiseAbs",
+    "Cholesky.backwardPerturbation"
+  ],
+  "source_mapping": "Research/Submission.lean: Cholesky.cholesky_factorization formalizes the full active theorem:cholesky_factorization in /spec/source.txt (main.tex lines 500-545). The perturbation is explicitly Rhat.transpose * Rhat - A. The conclusion preserves symmetry, the exact Gram identity, and the componentwise gamma_(n+1) product-of-entrywise-absolute-values bound. Assumptions retain symmetric positive definite A, u >= 0, (n+1)*u < 1, and successful operation-level Cholesky execution on A. SuccessfulCholesky records column-order execution from a zero work matrix, sequential dot products, rounded subtraction and division, nonzero divisors, and nonnegative square-root radicands. Rounded models no overflow/underflow locally. Rounded square root is explicitly part of floating-point Cholesky semantics, as used by the source proof; the four-operation model alone does not specify sqrt. Empty dot products bypass subtraction by zero. Dimension zero and u=0 are allowed. No supporting source files were supplied under /spec/support/Research. No /spec/feedback.json was present; no statement revision was made in response to feedback. Only the final theorem proof is left as sorry scaffolding; all construction definitions have bodies."
+}

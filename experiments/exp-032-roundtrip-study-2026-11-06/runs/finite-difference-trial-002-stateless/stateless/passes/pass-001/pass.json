@@ -1,0 +1,447 @@
+{
+  "builder": {
+    "condition": "stateless",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 142.785,
+    "compiler_command_events": 6,
+    "token_usage": {
+      "input_tokens": 375451,
+      "cached_input_tokens": 318720,
+      "output_tokens": 3623,
+      "reasoning_output_tokens": 85
+    },
+    "roles": {
+      "planner": {
+        "condition": "stateless",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793985654.2145245,
+        "time_limit_seconds": 90,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 45.59,
+        "token_usage": {
+          "input_tokens": 118522,
+          "cached_input_tokens": 94720,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1467,
+          "reasoning_output_tokens": 32
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "stateless",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793985700.3969054,
+        "time_limit_seconds": 150,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 54.046,
+        "token_usage": {
+          "input_tokens": 128770,
+          "cached_input_tokens": 107904,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1361,
+          "reasoning_output_tokens": 41
+        },
+        "compiler_command_events": 3,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "stateless",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793985765.064562,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 43.149,
+        "token_usage": {
+          "input_tokens": 128159,
+          "cached_input_tokens": 116096,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 795,
+          "reasoning_output_tokens": 12
+        },
+        "compiler_command_events": 3,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "Research.forwardDifference_error_bound"
+      ],
+      "construction_names": [
+        "Research.forwardDifference"
+      ],
+      "source_mapping": "Research/Submission.lean: Research.forwardDifference defines (f (x + h) - f x) / h as requested by /spec/source.txt. Research.forwardDifference_error_bound states the complete error bound for arbitrary real functions f and D and real x, h, L, under precisely positive h, nonnegative L, continuity on the closed interval, prescribed derivatives on the open interval, and the local derivative variation bound. No endpoint derivative or continuity of D is assumed. Supporting sources: /spec/support contains no files. Statement revision record: initial statement; /spec/feedback.json is absent, so no feedback-driven revision was made. The theorem proof is temporary sorry scaffolding for the next role; the construction has an actual body."
+    }
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 12.646,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 32,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "8f8ce240fd1f2d73a112a446c626fc29528d2dd0a7007291e8bbd4ac057518a3",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "critic": {
+    "condition": "stateless",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1793985831.4441504,
+    "time_limit_seconds": 240,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 89.091,
+    "token_usage": {
+      "input_tokens": 281886,
+      "cached_input_tokens": 257408,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 3094,
+      "reasoning_output_tokens": 86
+    },
+    "compiler_command_events": 5,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "status": "accepted",
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793985654.2145245,
+      "time_limit_seconds": 90,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 45.59,
+      "token_usage": {
+        "input_tokens": 118522,
+        "cached_input_tokens": 94720,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1467,
+        "reasoning_output_tokens": 32
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793985700.3969054,
+      "time_limit_seconds": 150,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 54.046,
+      "token_usage": {
+        "input_tokens": 128770,
+        "cached_input_tokens": 107904,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1361,
+        "reasoning_output_tokens": 41
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793985765.064562,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 43.149,
+      "token_usage": {
+        "input_tokens": 128159,
+        "cached_input_tokens": 116096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 795,
+        "reasoning_output_tokens": 12
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "translator": {
+      "condition": "blind",
+      "kind": "translator",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793985921.0423794,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 52.291,
+      "token_usage": {
+        "input_tokens": 56271,
+        "cached_input_tokens": 51840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2137,
+        "reasoning_output_tokens": 60
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "judge": {
+      "condition": "blind",
+      "kind": "judge",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793985973.8816562,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 47.017,
+      "token_usage": {
+        "input_tokens": 57497,
+        "cached_input_tokens": 52736,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1842,
+        "reasoning_output_tokens": 63
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "report": {
+    "schema_version": 2,
+    "candidate_hash": "8f8ce240fd1f2d73a112a446c626fc29528d2dd0a7007291e8bbd4ac057518a3",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "Research.forwardDifference_error_bound already asserts the complete universally quantified error theorem with exactly the source hypotheses. Research.forwardDifference is explicitly defined as (f(x+h)-f(x))/h. Thus both implications hold and the final conclusion requires no missing composition or connection.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full error theorem for arbitrary real functions f, D and real x, h, L satisfying the stated hypotheses.",
+        "evidence": "Research.forwardDifference_error_bound explicitly states the full implication for every f,D: R -> R and every real x,h,L, with all specified hypotheses and the final absolute error bound.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "difference-construction",
+        "requirement": "Define the actual forward quotient (f(x+h)-f(x))/h.",
+        "evidence": "The constructions entry explicitly defines Research.forwardDifference(f,x,h)=(f(x+h)-f(x))/h using evaluations, subtraction, and division. Its total definition at h=0 does not affect the theorem for h>0.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "derivative-hypotheses",
+        "requirement": "Use continuity on the closed interval and actual derivative D(t) on the open interval.",
+        "evidence": "The target assumes f continuous on the closed interval [x,x+h] and the ordinary real derivative of f equal to D(t) at every t with x<t<x+h. These match the source domains exactly.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "variation-hypothesis",
+        "requirement": "Use the pointwise absolute variation bound relative to D(x) on the open interval.",
+        "evidence": "The target assumes |D(t)-D(x)| <= L|t-x| for every real t with x<t<x+h. D(x) is the reference value of the independently quantified function D.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "conclusion-linkage",
+        "requirement": "Prove an absolute error at most L*h between the defined forward difference and D(x).",
+        "evidence": "The target itself concludes |Research.forwardDifference(f,x,h)-D(x)| <= Lh and explicitly gives the equivalent expanded quotient. The definition and theorem use the same f,x,h and reference D(x).",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use only the specified hypotheses, including h > 0 and L >= 0, without requiring derivatives at endpoints or global smoothness.",
+        "evidence": "The target assumes 0<h, 0<=L and exactly the required continuity, interior derivative, and interior variation hypotheses. No endpoint differentiability, continuity of D, global smoothness, or pairwise Lipschitz bound is imposed.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "direct_report": {
+    "overall_verdict": "pass",
+    "phase": "final",
+    "target_evidence": "Research/Submission.lean:12-30 proves Research.forwardDifference_error_bound, universally quantified over f D : real-to-real functions and x h L : real numbers, under exactly the requested hypotheses at lines 14-19, concluding |forwardDifference f x h - D x| <= L * h at line 20. The actual quotient is defined at lines 6-7. Offline /evaluation/verification.log reports a successful build with no placeholders or custom axioms; independent compilation of the current source and elaborated declaration/axiom inspection also succeed.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full error theorem for arbitrary real functions f, D and real x, h, L satisfying the stated hypotheses.",
+        "evidence": "Research/Submission.lean:12-30 proves Research.forwardDifference_error_bound for arbitrary f D : real-to-real functions and x h L : real numbers, with precisely the requested premises (lines 13-19) and conclusion (line 20). Independent lake env lean Research/Submission.lean exited 0.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "difference-construction",
+        "requirement": "Define the actual forward quotient (f(x+h)-f(x))/h.",
+        "evidence": "Research/Submission.lean:6-7 defines forwardDifference f x h as (f (x + h) - f x) / h. Independent Lean printing confirms this exact definition.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "derivative-hypotheses",
+        "requirement": "Use continuity on the closed interval and actual derivative D(t) on the open interval.",
+        "evidence": "Research/Submission.lean:16 requires ContinuousOn f (Set.Icc x (x + h)); line 17 requires HasDerivAt f (D t) t only for t in Set.Ioo x (x + h). Lines 22-23 apply exists_hasDerivAt_eq_slope with these premises; its Mathlib declaration in Analysis/Calculus/Deriv/MeanValue.lean:76-77,120-127 requires exactly these interval conditions.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "variation-hypothesis",
+        "requirement": "Use the pointwise absolute variation bound relative to D(x) on the open interval.",
+        "evidence": "Research/Submission.lean:18-19 assumes the pointwise bound |D t - D x| <= L * |t - x| on Set.Ioo x (x + h), and line 30 applies it to the interior mean-value point c.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "conclusion-linkage",
+        "requirement": "Prove an absolute error at most L*h between the defined forward difference and D(x).",
+        "evidence": "Research/Submission.lean:20 states |forwardDifference f x h - D x| <= L * h. Lines 27-29 identify D c with the defined quotient using the mean value slope and (x + h) - x = h. Lines 24-26 prove |c - x| <= h, and line 30 multiplies this by nonnegative L and composes the bounds.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use only the specified hypotheses, including h > 0 and L >= 0, without requiring derivatives at endpoints or global smoothness.",
+        "evidence": "Research/Submission.lean:13-19 quantifies all requested inputs and assumes only 0 < h, 0 <= L, closed-interval continuity, interior HasDerivAt, and the interior variation bound. There is no endpoint derivative, global smoothness, circular conclusion premise, or vacuous added premise. Independent Lean axiom inspection reports only propext, Classical.choice, Quot.sound; /evaluation/verification.json reports no unapproved axioms or protected-source failures.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "roundtrip": {
+    "schema_version": 2,
+    "candidate_hash": "8f8ce240fd1f2d73a112a446c626fc29528d2dd0a7007291e8bbd4ac057518a3",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "Research.forwardDifference_error_bound already asserts the complete universally quantified error theorem with exactly the source hypotheses. Research.forwardDifference is explicitly defined as (f(x+h)-f(x))/h. Thus both implications hold and the final conclusion requires no missing composition or connection.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full error theorem for arbitrary real functions f, D and real x, h, L satisfying the stated hypotheses.",
+        "evidence": "Research.forwardDifference_error_bound explicitly states the full implication for every f,D: R -> R and every real x,h,L, with all specified hypotheses and the final absolute error bound.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "difference-construction",
+        "requirement": "Define the actual forward quotient (f(x+h)-f(x))/h.",
+        "evidence": "The constructions entry explicitly defines Research.forwardDifference(f,x,h)=(f(x+h)-f(x))/h using evaluations, subtraction, and division. Its total definition at h=0 does not affect the theorem for h>0.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "derivative-hypotheses",
+        "requirement": "Use continuity on the closed interval and actual derivative D(t) on the open interval.",
+        "evidence": "The target assumes f continuous on the closed interval [x,x+h] and the ordinary real derivative of f equal to D(t) at every t with x<t<x+h. These match the source domains exactly.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "variation-hypothesis",
+        "requirement": "Use the pointwise absolute variation bound relative to D(x) on the open interval.",
+        "evidence": "The target assumes |D(t)-D(x)| <= L|t-x| for every real t with x<t<x+h. D(x) is the reference value of the independently quantified function D.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "conclusion-linkage",
+        "requirement": "Prove an absolute error at most L*h between the defined forward difference and D(x).",
+        "evidence": "The target itself concludes |Research.forwardDifference(f,x,h)-D(x)| <= Lh and explicitly gives the equivalent expanded quotient. The definition and theorem use the same f,x,h and reference D(x).",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use only the specified hypotheses, including h > 0 and L >= 0, without requiring derivatives at endpoints or global smoothness.",
+        "evidence": "The target assumes 0<h, 0<=L and exactly the required continuity, interior derivative, and interior variation hypotheses. No endpoint differentiability, continuity of D, global smoothness, or pairwise Lipschitz bound is imposed.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "number": 1,
+  "wall_time_seconds": 367.2616400659899,
+  "evidence": "stateless/passes/pass-001"
+}

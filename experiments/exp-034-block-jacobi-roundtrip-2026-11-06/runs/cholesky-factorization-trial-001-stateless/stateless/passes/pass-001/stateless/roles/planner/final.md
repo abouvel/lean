@@ -1,0 +1,1 @@
+Saved [plan.json](/output/plan.json) atomically with 10 obligations covering the residual construction, its connection to the theorem, and the square-root modeling gap. `/workspace` was not edited; no completed proof was written.

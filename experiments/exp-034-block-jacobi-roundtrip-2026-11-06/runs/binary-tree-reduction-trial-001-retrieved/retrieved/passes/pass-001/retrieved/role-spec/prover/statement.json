@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "ParallelBinaryTree.parallel_binary_tree_reduction_constructed",
+    "ParallelBinaryTree.parallel_binary_tree_reduction"
+  ],
+  "construction_names": [
+    "ParallelBinaryTree.Vector",
+    "ParallelBinaryTree.Addition",
+    "ParallelBinaryTree.depth",
+    "ParallelBinaryTree.width",
+    "ParallelBinaryTree.gamma",
+    "ParallelBinaryTree.states",
+    "ParallelBinaryTree.computedResult",
+    "ParallelBinaryTree.exactSum",
+    "ParallelBinaryTree.RoundingModel",
+    "ParallelBinaryTree.localError",
+    "ParallelBinaryTree.nodeError",
+    "ParallelBinaryTree.parent",
+    "ParallelBinaryTree.ancestor",
+    "ParallelBinaryTree.pathFactor",
+    "ParallelBinaryTree.perturbation"
+  ],
+  "source_mapping": "Research/Submission.lean formalizes the complete selected theorem theorem:parallel_binary_tree_reduction from /spec/source.txt and /spec/paper.tex. Source n is positive, vector dimension d is arbitrary, inputs are Fin n -> Fin d -> Real, unit roundoff u is nonnegative, depth is literally Nat.ceil (Real.logb 2 n), and gamma is L*u/(1-L*u). width n l is ceil(n/2^l); states implements the source split-half pairing with exact odd-width carries and zero padding. computedResult is the level-depth root, not a backward-error definition. RoundingModel states only the standard relative-error model for actual additions, encoding the no-overflow/no-underflow assumption; it permits independent errors at each level, node, and component. perturbation is explicitly input times (product of local path factors minus one). The constructed theorem establishes the equality and componentwise bound for those perturbations; the final existential theorem reproduces the selected result. All definitions have bodies. The constructed theorem proof alone is temporary sorry scaffolding for the next role. No desired algorithmic bound or paper lemma is an assumption. Supplied source.txt, source.pdf, paper.tex, and references.bib were copied unchanged into Research. Statement revision record: initial statement; /spec/feedback.json was absent, so there was no feedback-driven revision. The handoff plan requirement to complete proofs is superseded by the user-requested formalizer skeleton workflow."
+}

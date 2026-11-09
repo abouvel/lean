@@ -1,0 +1,191 @@
+{
+  "status": "infrastructure_error",
+  "error": "[Errno 13] Permission denied: '/home/abouvel/fall26/research/experiments/exp-024-multi-agent-dot-product-pair-2026-11-01/runs/dot-product-trial-001-retrieved/retrieved/passes/pass-001/retrieved/evaluation/verification.json'",
+  "builder": {
+    "condition": "retrieved",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 175.348,
+    "compiler_command_events": 7,
+    "token_usage": {
+      "input_tokens": 533850,
+      "cached_input_tokens": 482048,
+      "output_tokens": 6240,
+      "reasoning_output_tokens": 325
+    },
+    "roles": {
+      "planner": {
+        "condition": "retrieved",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793574302.6493447,
+        "time_limit_seconds": 90,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 58.119,
+        "token_usage": {
+          "input_tokens": 122547,
+          "cached_input_tokens": 97664,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2845,
+          "reasoning_output_tokens": 209
+        },
+        "compiler_command_events": 1,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "retrieved",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793574361.5242262,
+        "time_limit_seconds": 150,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 62.701,
+        "token_usage": {
+          "input_tokens": 194815,
+          "cached_input_tokens": 180352,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1787,
+          "reasoning_output_tokens": 71
+        },
+        "compiler_command_events": 1,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "retrieved",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793574440.6980867,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 54.528,
+        "token_usage": {
+          "input_tokens": 216488,
+          "cached_input_tokens": 204032,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1608,
+          "reasoning_output_tokens": 45
+        },
+        "compiler_command_events": 5,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation"
+      ],
+      "construction_names": [
+        "Research.BinaryTreeReduction.exactProductTree",
+        "Research.BinaryTreeReduction.roundedProductTree",
+        "Research.BinaryTreeReduction.roundedDotProduct"
+      ],
+      "source_mapping": "Authoritative /spec/source.txt is formalized in Research/Submission.lean: exactProductTree maps each pair to its exact real product; roundedProductTree maps each pair to Model.mul; roundedDotProduct uses roundedSum on those rounded products. The final theorem quantifies over every supplied Model and pair tree, assumes only ((tree.depth + 1 : Nat) : Real) * model.u < 1, and asserts a shape-preserving leafwise perturbation of exactProductTree bounded by gamma (tree.depth + 1) model.u whose exactSum equals roundedDotProduct. All five supplied supporting modules were copied unchanged. Statement revision: none; /spec/feedback.json was absent. The theorem proof is temporary sorry scaffolding for the next proof role; all construction bodies are defined."
+    }
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 39.221,
+    "source_files": [
+      "Research/Submission.lean",
+      "Research/Projects/BinaryTreeReduction/Tree.lean",
+      "Research/Projects/BinaryTreeReduction/Reduction.lean",
+      "Research/Projects/BinaryTreeReduction/Algorithm.lean",
+      "Research/Common/FloatingPoint/Gamma.lean",
+      "Research/Common/FloatingPoint/Model.lean"
+    ],
+    "source_lines": 767,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793574302.6493447,
+      "time_limit_seconds": 90,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 58.119,
+      "token_usage": {
+        "input_tokens": 122547,
+        "cached_input_tokens": 97664,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2845,
+        "reasoning_output_tokens": 209
+      },
+      "compiler_command_events": 1,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793574361.5242262,
+      "time_limit_seconds": 150,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 62.701,
+      "token_usage": {
+        "input_tokens": 194815,
+        "cached_input_tokens": 180352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1787,
+        "reasoning_output_tokens": 71
+      },
+      "compiler_command_events": 1,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793574440.6980867,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 54.528,
+      "token_usage": {
+        "input_tokens": 216488,
+        "cached_input_tokens": 204032,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1608,
+        "reasoning_output_tokens": 45
+      },
+      "compiler_command_events": 5,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "number": 1,
+  "wall_time_seconds": 247.96190400499927,
+  "evidence": "retrieved/passes/pass-001"
+}

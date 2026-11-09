@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "8f8ce240fd1f2d73a112a446c626fc29528d2dd0a7007291e8bbd4ac057518a3",
+  "status": "complete",
+  "statement": "For every f,D: R -> R and x,h,L in R, if h>0, L>=0, f is continuous on [x,x+h], f has derivative D(t) at every t in (x,x+h), and |D(t)-D(x)| <= L|t-x| throughout that open interval, then |(f(x+h)-f(x))/h-D(x)| <= Lh. The quotient is precisely Research.forwardDifference(f,x,h). D(x) is the value of the independently quantified function D; no derivative of f at x is assumed.",
+  "targets": [
+    {
+      "name": "Research.forwardDifference_error_bound",
+      "statement": "For every pair of functions f,D: R -> R and every x,h,L in R, assume 0<h, 0<=L, and f is continuous on the closed interval [x,x+h]. Assume also that for every real t satisfying x<t<x+h, f has ordinary real derivative D(t) at t, and that for every real t satisfying x<t<x+h, |D(t)-D(x)| <= L|t-x|. Then |Research.forwardDifference(f,x,h)-D(x)| <= Lh, equivalently |(f(x+h)-f(x))/h-D(x)| <= Lh. The derivative is taken for f on R at each interior point. There is no endpoint differentiability hypothesis. The condition on D compares each interior value only with D(x), rather than bounding differences for arbitrary pairs of points."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.forwardDifference",
+      "description": "A function (R -> R) -> R -> R -> R, defined for every f: R -> R and x,h in R by Research.forwardDifference(f,x,h)=(f(x+h)-f(x))/h. It evaluates f at x+h and x, subtracts f(x) from f(x+h), and divides by h. It performs no limit or derivative operation. The definition requires neither regularity of f nor nonzero h; formal real division is total and gives value 0 when h=0. The target theorem applies this construction only for h>0."
+    }
+  ],
+  "assumptions": [
+    "R carries its usual real arithmetic, order, absolute value, and topology. Both f and D have domain R and codomain R; x,h,L and each quantified t are real.",
+    "The target universally quantifies f,D,x,h,L and assumes h>0 and L>=0.",
+    "f is continuous on [x,x+h].",
+    "For every real t in (x,x+h), f has derivative D(t) at t.",
+    "For every real t in (x,x+h), |D(t)-D(x)| <= L|t-x|.",
+    "No hypothesis asserts differentiability of f at either endpoint, identifies D(x) with a derivative of f at x, requires continuity of D, or imposes a Lipschitz bound between arbitrary pairs of points."
+  ],
+  "missing_context": []
+}

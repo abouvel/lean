@@ -1,0 +1,108 @@
+{
+  "condition": "retrieved",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 3846.702,
+  "compiler_command_events": 17,
+  "token_usage": {
+    "input_tokens": 763733,
+    "cached_input_tokens": 711424,
+    "output_tokens": 14922,
+    "reasoning_output_tokens": 2496
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794005070.1060903,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 74.058,
+      "token_usage": {
+        "input_tokens": 113152,
+        "cached_input_tokens": 104448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3164,
+        "reasoning_output_tokens": 204
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794005144.7645576,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 126.772,
+      "token_usage": {
+        "input_tokens": 234326,
+        "cached_input_tokens": 223104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4630,
+        "reasoning_output_tokens": 1110
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794005281.0335402,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 3645.872,
+      "token_usage": {
+        "input_tokens": 416255,
+        "cached_input_tokens": 383872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7128,
+        "reasoning_output_tokens": 1182
+      },
+      "compiler_command_events": 13,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "TriangularUpdate.triangular_update_constructed",
+      "TriangularUpdate.triangular_update"
+    ],
+    "construction_names": [
+      "TriangularUpdate.gamma",
+      "TriangularUpdate.entry",
+      "TriangularUpdate.lastIndex",
+      "TriangularUpdate.roundedProduct",
+      "TriangularUpdate.sequentialDot",
+      "TriangularUpdate.computedValue",
+      "TriangularUpdate.LocalErrors",
+      "TriangularUpdate.IsEvaluation",
+      "TriangularUpdate.dotWeight",
+      "TriangularUpdate.finalWeight",
+      "TriangularUpdate.perturbation",
+      "TriangularUpdate.BackwardEquation"
+    ],
+    "source_mapping": "Research/Submission.lean formalizes the full active lemma:traingular_update in /spec/source.txt and /spec/paper.tex lines 403-452. Source coordinates 1,...,k correspond to Fin k values 0,...,k-1. The inner product uses exactly the first k-1 entries; its first rounded product initializes the accumulator and subsequent additions are rounded. IsEvaluation existentially quantifies bounded local relative errors for these operations, subtraction, and division; this is the standard floating-point model under no overflow/underflow, with no assumed algorithmic bound. Unit roundoff is nonnegative and k*u<1. computedValue is the actual evaluation, and perturbation gives an explicit witness with dot-product factors and inverse final-operation factors. triangular_update_constructed states the exact backward equation and every gamma_k component bound for this witness; triangular_update states the source existential result for every such evaluation. Supporting source.txt, paper.tex, references.bib, and source.pdf were copied unchanged to Research; /spec/support contained no files. No feedback.json was present; no feedback-driven statement revision was made. The plan is used only as a fallible handoff. Only the proof of triangular_update_constructed is temporarily sorry; all construction definitions have actual bodies, and triangular_update is derived from it."
+  }
+}

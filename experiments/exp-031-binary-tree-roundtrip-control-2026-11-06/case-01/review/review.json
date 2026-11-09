@@ -1,0 +1,52 @@
+{
+  "overall_verdict": "pass",
+  "phase": "final",
+  "target_evidence": "Research/Submission.lean:391–408 proves theorem_3_1: for every nonempty real input list and operation satisfying ExecutionModel, with 0 ≤ u and depth(length)*u < 1, there exist perturbations indexed by Fin xs.length whose sum equals algorithm add xs and whose absolute values satisfy gamma(depth(length),u)*|xs.get i|. Lines 411–417 derive the global rounding-model corollary. Lines 431–438 and 465–472 certify the actual algorithm output and exact ceiling-logarithmic tree height.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "The candidate proves the full requested theorem, not only a definition or example.",
+      "evidence": "Research/Submission.lean:391–408 proves theorem_3_1 with the requested existential perturbations, reconstruction equality, and per-occurrence bound. Lines 377–388 prove the underlying universal list result. Independent compilation of the current source succeeded; /evaluation/verification.json and verification.log also report a successful build and no unapproved axioms.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "algorithm-linkage",
+      "requirement": "The proved theorem applies to the requested algorithm and its output.",
+      "evidence": "Research/Submission.lean:53–70 defines numerical offset pairing and exactly depth xs.length rounds, returning the head. Lines 92–105 prove pairing at ceil(current_length/2), with unchanged unmatched entries; 447–450 identify this offset with ceil(n/2^(ell+1)). Lines 245–252 link numerical execution to the symbolic tree; 465–472 certify a singleton final stage and tree height equal to depth. Lines 45 and 475–476 identify depth with Nat.clog 2 and its least-power characterization. /output/IndependentChecks.lean compiled successfully, checking acceptance levels [2,3,4,5,6], [7,9,4], [11,9], [20], singleton behavior and unchanged carries using an inexact operation.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "input-occurrences",
+      "requirement": "The result is connected to every occurrence in the original input.",
+      "evidence": "Research/Submission.lean:143–170 preserves the entire leaf multiset by List.Perm; 227–242 connects final-tree leaves to the original list. Lines 344–374 construct one perturbed value per leaf via List.Forall₂; 383–388 transport these back to original input order. Lines 394–408 index perturbations by Fin xs.length, preserving duplicate occurrences. Independent checks cover five duplicate inputs, arbitrary singleton values and odd-length traces.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "componentwise-backward-error",
+      "requirement": "The requested componentwise backward-error conclusion is proved.",
+      "evidence": "Research/Submission.lean:255 defines gamma d u = d*u/(1-d*u). Lines 307–326 prove the one-round perturbation bound, and 345–374 induct over bounded tree depth. The actual theorem at 391–408 states algorithm add xs = sum_i (xs.get i + Delta i) and forall i, |Delta i| ≤ gamma (depth xs.length) u * |xs.get i|. This is a bound for each input occurrence, including zero values, and can be applied independently to each real coordinate of componentwise reduction.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "The candidate does not assume, circularly encode, or vacuously imply the conclusion.",
+      "evidence": "Research/Submission.lean:285–294 defines ExecutionModel solely by local relative-error equations at actual internal tree additions, not by a backward-error conclusion. Main assumptions at 392–393 are nonempty input, nonnegative unit roundoff, ExecutionModel and depth*u < 1. Lines 280–281 and 296–305 derive ExecutionModel from the standard operationwise model. /output/IndependentChecks.lean instantiates the target for every nonempty input with exact addition and u=0, demonstrating nonvacuity. Source imports Mathlib at line 1 and Research.lean imports Research.Submission. No sorry, admit or custom axiom declarations were found. Printed axioms of theorem_3_1, algorithm1_spec and depth_spec are only propext, Classical.choice and Quot.sound.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": [
+    "Floating-point arithmetic is abstracted by a real-valued addition operation and the standard relative-error model; hardware floating-point formats and overflow/underflow detection are not implemented. The scalar theorem applies independently to each component."
+  ]
+}

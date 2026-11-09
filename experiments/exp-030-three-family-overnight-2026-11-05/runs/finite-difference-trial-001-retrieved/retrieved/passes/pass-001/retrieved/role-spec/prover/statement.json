@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.forwardDifference_error_bound"
+  ],
+  "construction_names": [
+    "Research.forwardDifference"
+  ],
+  "source_mapping": "/spec/source.txt: forwardDifference is exactly (f (x+h) - f x) / h. forwardDifference_error_bound universally quantifies f D : \u211d \u2192 \u211d and x h L : \u211d, and assumes exactly 0 < h, 0 \u2264 L, continuity of f on [x,x+h], HasDerivAt f (D t) t for every interior t, and |D t - D x| \u2264 L * |t-x| for every interior t. It concludes |forwardDifference f x h - D x| \u2264 L*h. No endpoint derivative is assumed. No supplied supporting sources exist. No /spec/feedback.json was present. Statement revision: none; the handoff statement matches the original source. The mean-value witness is a proof step, not an additional requested construction. The theorem proof is temporary sorry scaffolding for the next role."
+}

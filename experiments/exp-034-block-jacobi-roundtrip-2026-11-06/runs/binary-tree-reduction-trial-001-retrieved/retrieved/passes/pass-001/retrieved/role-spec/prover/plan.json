@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "strategy": "Implement the source level-by-level binary-tree reduction with exact carries, prove its original-input leaf-path expansion, and derive componentwise backward perturbations using a separately proved finite-product gamma estimate. Prove the integer depth characterization connecting the construction to ceil(log_2 n).",
+  "obligations": [
+    {
+      "id": "scope",
+      "description": "Quantify over positive n, arbitrary finite vector dimension and original real input vectors, nonnegative unit roundoff u, and the supplied componentwise floating-point addition model valid without overflow or underflow. Retain L*u<1 and gamma_L=(L*u)/(1-L*u). Positivity of n and nonnegativity of u express the meaning of the source logarithm and unit roundoff. Include n=1, L=0, zero components, and cancellation. Do not add n*u<1, power-of-two, or input sign assumptions."
+    },
+    {
+      "id": "depth",
+      "description": "Define L=ceil(log_2 n), or a computable natural equivalent with a proved equivalence. Define level widths b_l=ceil(n/2^l) by natural ceiling division. Prove b_0=n, b_L=1, b_(l+1)=ceil(b_l/2), and the pairing partition of active indices at each level. This connects the implemented depth to the exact logarithmic constant in the theorem."
+    },
+    {
+      "id": "reduction_construction",
+      "description": "Construct computed states from S^0_i=x_i. At level l and zero-based k<b_(l+1), put j=k+b_(l+1). If j<b_l, use componentwise floating-point addition of S^l_k and S^l_j; otherwise copy S^l_k exactly. Define yhat as the level-L root. Preserve the actual source pairing and odd-width carries. A local addition interface satisfying the standard roundoff model is permitted; defining the output through its desired backward bound is not."
+    },
+    {
+      "id": "rounding_witnesses",
+      "description": "Extract per-node, per-level, per-component delta with |delta|<=u and computed addition=(exact sum)*(1+delta). Represent carries by delta=0. These witnesses may depend on computed operands. Do not assume a single common error for all leaves or components, and do not divide by an input or sum."
+    },
+    {
+      "id": "paths",
+      "description": "Construct the ancestor of each original leaf at each level. A child r maps to r when r<b_(l+1), otherwise to r-b_(l+1). Prove active-index validity and termination at root 0. Establish a descendant partition or equivalent finite-sum reindexing invariant showing that every original input occurs exactly once and no nonexistent leaf contributes."
+    },
+    {
+      "id": "expansion",
+      "description": "Prove by induction on computed levels that each state is the sum of its descendant original inputs times their path factors. At the root derive yhat_c=sum_i x_(i,c)*P_(i,c), with P_(i,c) a product of L factors, using factor 1 on carries, or at most L actual addition factors. Derive this from the constructed algorithm; it must not be an extra hypothesis or a replacement definition of yhat."
+    },
+    {
+      "id": "product_bound",
+      "description": "Prove the helper |product_(r<m)(1+e_r)-1|<=gamma_m for |e_r|<=u, 0<=u and m*u<1, including the empty product. One route is product-difference induction using u+(1+u)*gamma_m<=gamma_(m+1). Establish denominator positivity before rational inequalities. Pad short paths by zero errors, or prove gamma_m<=gamma_L for m<=L. Do not assume an unproved paper lemma or the desired bound."
+    },
+    {
+      "id": "perturbations",
+      "description": "Explicitly construct Delta x_(i,c)=x_(i,c)*(P_(i,c)-1). Derive vector equality yhat=sum_i(x_i+Delta x_i) from the root expansion, and the componentwise inequality |Delta x_(i,c)|<=gamma_L*|x_(i,c)| from the product bound. Preserve indexing by the actual original inputs and the exact constant."
+    },
+    {
+      "id": "integrity",
+      "description": "Complete the actual Lean constructions and full selected theorem using local Lean and Mathlib, with proved helpers and no custom axioms, placeholders, or desired algorithmic conclusions as assumptions. The source proof has schematic theta notation: formalize distinct leaf/component factors. Record genuine blockers precisely without weakening the statement. No /spec/feedback.json was present. This plan does not supply the completed target proof."
+    }
+  ]
+}

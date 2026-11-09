@@ -1,0 +1,13 @@
+{
+  "search_queries": [
+    "rg --files /spec /memory /workspace -g AGENTS.md -g source.txt -g plan.json -g feedback.json -g index.md -g lakefile.* -g lean-toolchain",
+    "rg --files /spec/support /workspace/Research"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

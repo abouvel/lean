@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "29d49865fb0dd0158273f066ddbc8fd6d55cf02efa6daab13265a525524a8dcc",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": false,
+  "source_implies_lean": true,
+  "relation": "mismatch",
+  "target_evidence": "The translated existence target requires both (depth(T)+1)*u_M<1 and u_M=0. It therefore establishes only the exact-arithmetic case, not the source theorem for all admissible models. The independent product perturbation result does not close the missing addition-accumulation argument. Conversely, the original theorem specializes to the translated existence theorem; the auxiliary multiplication bound follows from the stated relative-error model, and the other targets are defining equations for the supplied constructions.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The only perturbation existence theorem explicitly assumes u_M=0 in addition to smallness. It covers only exact arithmetic, whereas the source quantifies over every admissible relative-error model. The other targets do not provide the missing general reduction theorem.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem",
+        "weakened-quantification"
+      ],
+      "correction": "Prove perturbation existence for every model and tree under the smallness inequality alone."
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "The existence target relates P to exactProductTree(T), which preserves ordered shape and maps each input leaf (a,b) to exact a*b. Its leaf inequality is |q-a*b|<=gamma(depth(T)+1,u_M)*|a*b|.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "roundedProductTree maps each leaf (a,b) to round_M(a*b). The unrestricted roundedProductTree_isPerturbation theorem proves |round_M(a*b)-a*b|<=u_M*|a*b| at each leaf, accounting for one multiplication rounding.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "The construction correctly rounds the sum at every internal node. However, the only reduction perturbation theorem assumes u_M=0, making all addition errors vanish. There is no translated result accounting for accumulated nonzero addition errors along arbitrary paths.",
+      "verdict": "fail",
+      "defect_categories": [
+        "addition-rounding-omitted"
+      ],
+      "correction": "Prove the reduction perturbation representation for general admissible u_M, incorporating every internal-node rounding into the leafwise bound."
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The existence theorem displays gamma(depth(T)+1,u_M) with the correct error count, but establishes it only when u_M=0, where gamma is zero. The unrestricted product theorem supplies only a single multiplication error bound, not the accumulated bound after rounded reduction.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Establish the gamma(depth(T)+1,u_M) componentwise bound under smallness alone, combining one multiplication error with at most depth(T) addition errors."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "The existence theorem explicitly adds u_M=0. The source forbids restricting the model to exact arithmetic and allows positive u_M satisfying (depth(T)+1)*u_M<1.",
+      "verdict": "fail",
+      "defect_categories": [
+        "strengthened-assumption"
+      ],
+      "correction": "Remove the u_M=0 premise and prove the result for the full stated relative-error model."
+    }
+  ],
+  "assumptions_added": [
+    "The perturbation existence theorem adds u_M=0."
+  ],
+  "missing_obligations": [
+    "Perturbation existence and the full gamma(depth(T)+1,u_M) leafwise bound for all admissible positive-u_M models, including accumulated rounded-addition errors."
+  ],
+  "limitations": []
+}

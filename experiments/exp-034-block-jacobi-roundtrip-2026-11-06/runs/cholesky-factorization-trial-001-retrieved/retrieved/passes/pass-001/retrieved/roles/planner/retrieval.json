@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "cholesky_factorization|Cholesky Factorization|sqrt|square root"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require explicit positive gamma denominators before clearing denominators in rounding-product and monotonicity proofs."
+    }
+  ]
+}

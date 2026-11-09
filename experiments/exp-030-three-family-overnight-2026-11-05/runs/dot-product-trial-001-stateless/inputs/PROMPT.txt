@@ -1,0 +1,13 @@
+Formalize the mathematics in /spec/source.txt.
+Five proved prerequisite modules are provided under /spec/support/Research;
+copy them unchanged into /workspace/Research. They cover the abstract rounding
+model, gamma inequalities, binary trees, and rounded-sum analysis. No completed
+dot-product theorem is supplied. Define exactProductTree, roundedProductTree,
+and roundedDotProduct, and prove the full original componentwise backward-error
+claim. The final theorem's name may vary. The algorithm is abstract real-valued
+rounding under the supplied relative-error model; executable IEEE arithmetic is
+not requested. An existential perturbation witness is the intended conclusion.
+Follow your role-specific workflow. Formalizer proof skeletons may temporarily
+use sorry, but the completed candidate must contain no placeholders or custom
+axioms. Do not alter protected prerequisites or configuration. Use only local
+Lean, Mathlib, and the approved memory snapshot when available. No Aristotle.

@@ -1,0 +1,1 @@
+Saved the complete translation atomically to [translation.json](/output/translation.json), with both targets and the construction included exactly once and no missing context.

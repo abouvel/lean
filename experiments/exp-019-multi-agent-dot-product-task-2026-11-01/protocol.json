@@ -1,0 +1,35 @@
+{
+  "experiment_id": "exp-019-multi-agent-dot-product-task-2026-11-01",
+  "task_id": "multi-agent-dot-product-roundtrip-pilot",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "stateless",
+    "retrieved"
+  ],
+  "trials_per_condition": 1,
+  "role_budgets_seconds": {
+    "planner": 90,
+    "formalizer": 150,
+    "prover": 180,
+    "translator": 180,
+    "judge": 180
+  },
+  "critic_seconds": 240,
+  "max_passes": 2,
+  "whole_job_seconds": 3600,
+  "verification_command": "bash pipeline/verify.sh",
+  "acceptance_tests": [
+    "Both jobs produce validated result bundles through all role boundaries",
+    "Accepted proofs pass Lean, protected-source checks, formalizer signature checks, and transitive axiom audit",
+    "Accepted candidates receive agreeing independent direct and round-trip semantic passes",
+    "Translator and judge receive neither research memory nor condition labels; translator receives no original task",
+    "Source, mathematical prerequisites, models, and budgets remain identical across conditions; target proofs are absent from retrieval"
+  ],
+  "human_review": "pending; this is an automated integration pilot, not expert-certified evaluator accuracy",
+  "allowed_tools": [
+    "isolated local Lean and Mathlib",
+    "five approved prerequisites",
+    "frozen generic artifact only for retrieved production roles"
+  ]
+}

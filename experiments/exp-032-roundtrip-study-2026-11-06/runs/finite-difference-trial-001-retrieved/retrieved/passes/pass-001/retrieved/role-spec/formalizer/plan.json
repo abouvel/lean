@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "strategy": "Define the forward-difference approximation as (f (x + h) - f x) / h. Construct an interior mean-value witness c using Mathlib exists_hasDerivAt_eq_slope with f' = D, a = x, and b = x + h. This construction connects the secant slope in the target to D c, where the given local variation bound applies. Normalize (x + h) - x to h, then combine the variation estimate at c with the interval distance bound and L >= 0. Use the existing mean value theorem; no integration, endpoint differentiability, continuity of D, or stronger assumptions are needed. The relevant local source is Mathlib/Analysis/Calculus/Deriv/MeanValue.lean. No feedback file or custom supporting prerequisite was present.",
+  "obligations": [
+    {
+      "id": "forward_difference_definition",
+      "description": "Provide a real-valued definition of the forward-difference approximation taking f, x, and h and returning (f (x + h) - f x) / h; ensure the target uses this definition or its exact unfolded expression."
+    },
+    {
+      "id": "faithful_statement",
+      "description": "Universally quantify f D : \u211d \u2192 \u211d and x h L : \u211d. Assume 0 < h, 0 <= L, ContinuousOn f (Set.Icc x (x + h)), HasDerivAt f (D t) t for each t in Set.Ioo x (x + h), and abs (D t - D x) <= L * abs (t - x) only on that open interval. Conclude abs (forwardDifference f x h - D x) <= L * h. Do not assume HasDerivAt f (D x) x or any derivative at x + h."
+    },
+    {
+      "id": "mean_value_construction",
+      "description": "Derive x < x + h from 0 < h. Apply exists_hasDerivAt_eq_slope f D with the supplied closed-interval continuity and open-interval HasDerivAt hypotheses. Retain both c in Set.Ioo x (x + h) and D c = (f (x + h) - f x) / ((x + h) - x). The theorem accepts D directly, avoiding any unnecessary replacement by deriv f."
+    },
+    {
+      "id": "identify_secant",
+      "description": "Normalize (x + h) - x = h in the mean-value equality and align its orientation with the forward-difference expression, so the target error can be rewritten as abs (D c - D x)."
+    },
+    {
+      "id": "interior_distance",
+      "description": "From the two strict interval inequalities establish 0 <= c - x and c - x <= h. Rewrite abs (c - x) using abs_of_nonneg. Apply mul_le_mul_of_nonneg_left with 0 <= L to obtain L * abs (c - x) <= L * h, including the case L = 0."
+    },
+    {
+      "id": "combine_and_validate",
+      "description": "Specialize the given local variation bound at the constructed c and combine it transitively with the distance estimate after rewriting the secant error. The formalizer must compile the resulting definitions and theorem with local Lean/Mathlib and remove all sorry placeholders and custom axioms. Preserve the exact original assumptions throughout."
+    }
+  ]
+}

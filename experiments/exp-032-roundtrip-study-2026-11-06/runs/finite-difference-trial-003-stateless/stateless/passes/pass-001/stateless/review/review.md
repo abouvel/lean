@@ -1,0 +1,3 @@
+Pass. Research/Submission.lean:15–33 proves the complete requested theorem under exactly the original hypotheses. Lines 6–7 define the forward quotient. The mean value theorem gives an interior c with quotient D(c); the variation hypothesis and 0 ≤ L give |D(c) − D(x)| ≤ L|c−x| ≤ Lh. No endpoint differentiability or global regularity is assumed.
+
+All six requirements pass. Offline verification reports a successful build with no placeholders or custom axioms. Independent Lean 4.28.0 compilation succeeds; the printed declaration matches the requested theorem and depends only on propext, Classical.choice, and Quot.sound.

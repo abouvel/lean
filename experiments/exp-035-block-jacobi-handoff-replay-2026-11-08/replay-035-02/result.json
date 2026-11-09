@@ -1,0 +1,260 @@
+{
+  "job_id": "block-dot-product-trial-001-retrieved",
+  "condition": "retrieved",
+  "outcome": "needs_human",
+  "success": false,
+  "record": {
+    "task_id": "block-dot-product",
+    "passes": [
+      {
+        "number": 1,
+        "verification": {
+          "verification_command": "bash pipeline/verify.sh",
+          "build_and_scans_exit_code": 0,
+          "nontrivial_submission": true,
+          "formal_gate_passed": true,
+          "semantic_review": "pending",
+          "wall_time_seconds": 27.865,
+          "source_files": [
+            "Research/Submission.lean"
+          ],
+          "source_lines": 342,
+          "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+          "formal_audit": {
+            "schema_version": 1,
+            "unapproved_axioms": [],
+            "protected_source_failures": [],
+            "candidate_hash": "7f4fef968b46c3ef426e2e042f37748ab27ece5c3665be5664425a4f35305305",
+            "passed": true,
+            "changed_declarations": []
+          }
+        },
+        "direct_report": {
+          "overall_verdict": "pass",
+          "phase": "final",
+          "target_evidence": "Research/Submission.lean:281-340 proves Research.BlockDotProduct.block_dot_product, with both backward-error representations for computed T x y e. Its premises at lines 282-285 are positive block size, nonnegative unit roundoff, local operation error bounds, and (T + treeDepth n T)*u < 1. Independent compilation of the current source succeeded; its theorem depends only on propext, Classical.choice, and Quot.sound.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "Research/Submission.lean:281-290 states both existential perturbations, both equalities, and every componentwise bound. Lines 291-340 prove the statement. The offline verification evidence in /evaluation/verification.json and /evaluation/verification.log reports successful compilation and no placeholders or custom axioms; independent lake env lean Research/Submission.lean also exited 0.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums.",
+              "evidence": "Research/Submission.lean:21 uses (n+T-1)/T, which is ceil(n/T) for positive T. Lines 24 and Mathlib/Data/Nat/Log.lean:396 identify depth as the least exponent with blockCount <= 2^depth. Lines 31-32 zero extend original entries; lines 51-64 multiply and sequentially accumulate each block, seeding with the first product. Lines 67-78 zero pad block leaves to tree capacity and recursively add children 2*j and 2*j+1 with local rounding. Lines 82-83 define the final computation.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T)))).",
+              "evidence": "Research/Submission.lean:27-28 defines gamma u k = k*u/(1-k*u). Lines 145-164 bound a sequential block with T errors; lines 170-185 add one error level per tree height. Lines 246-265 establish the resulting global absolute error with exponent T+treeDepth; lines 124-137 compare it to gamma under the budget. Lines 301-340 construct both perturbations, handle zero total absolute product mass, and prove the exact equalities and required individual bounds.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Research/Submission.lean:53 reads padded x and y at j*T+t; computed at lines 82-83 runs those blocks through the defined binary reduction. Coverage and layout lemmas at lines 198-244 connect all block terms to the original Fin n inputs, with padding contributing zero. Lines 246-265 apply the error analysis to this computation, and the final theorem at lines 287-290 explicitly equates computed T x y e to perturbed sums over the original x and y.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "Research/Submission.lean:44-48 constrains only individual multiplication/addition/tree relative errors, implementing the source floating-point model without overflow or underflow. The theorem at lines 282-285 quantifies arbitrary n, positive T, arbitrary real input vectors and every admissible error tape. Positive T is required by the source block partition; nonnegative u is intrinsic to unit roundoff. The budget is exactly the source hypothesis. No global expansion, error bound, perturbation, or conclusion is assumed. Independent audit of the current source reports only the standard axioms propext, Classical.choice, Quot.sound.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "roundtrip": {
+          "schema_version": 2,
+          "candidate_hash": "7f4fef968b46c3ef426e2e042f37748ab27ece5c3665be5664425a4f35305305",
+          "overall_verdict": "uncertain",
+          "phase": "final",
+          "lean_implies_source": "uncertain",
+          "source_implies_lean": "uncertain",
+          "relation": "uncertain",
+          "delivery_complete": "uncertain",
+          "construction_complete": "uncertain",
+          "missing_formal_steps": [],
+          "target_evidence": "The translation explicitly reports insufficient_context. Its sole target asserts all four requested final conjuncts, but uses K=T+Nat.clog(2,blockCount(n,T)); no specification of Nat.clog is supplied. This prevents verification of the exact depth, complete block coverage, and required gamma parameter. No specific missing final composition is evidenced.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "The target block_dot_product explicitly asserts both exact backward-error representations and both entrywise bounds for the same computed value. These are final conclusions, not merely helper lemmas. Full delivery remains uncertain because its depth parameter has no supplied mathematical specification.",
+              "verdict": "uncertain",
+              "defect_categories": [],
+              "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums.",
+              "evidence": "padded zero-extends each vector. roundedProduct uses index j*T+t; sequentialBlock starts with the first rounded product and rounds subsequent additions; blockLeaf uses T products and zero leaves beyond B. binaryReduction recursively combines adjacent children. B=((n+T)-1) div T equals ceil(n/T) for positive T. However computed uses exactly 2^d leaves with d=Nat.clog(2,B), whose meaning is explicitly unresolved in the translation. Required height and block coverage cannot be verified.",
+              "verdict": "uncertain",
+              "defect_categories": [],
+              "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T)))).",
+              "evidence": "The target asserts computed=sum (x+Delta_x)*y and computed=sum x*(y+Delta_y), and bounds each perturbation by gamma(u,K) times the magnitude of the corresponding original entry, for all Fin(n) indices. gamma(u,K)=K*u/(1-K*u), K=T+d, and K*u<1 is assumed. Without a specification of Nat.clog, K cannot be identified with T+ceil(log2(ceil(n/T))).",
+              "verdict": "uncertain",
+              "defect_categories": [],
+              "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Both representations use the same computed(T,x,y,e), the original x,y, and the same error record. The described products use their zero extensions directly. This gives explicit input linkage, but full linkage to the specified algorithm remains uncertain: coverage of all B blocks by the 2^d reduced leaves depends on the unresolved depth.",
+              "verdict": "uncertain",
+              "defect_categories": [],
+              "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "The target quantifies arbitrary natural n, positive T, nonnegative real u, arbitrary real vectors and arbitrary admissible error records. Admissible bounds the relative errors of the specified products and additions, consistent with the source rounding model under no overflow or underflow. It assumes neither perturbations nor their bounds. There is no divisibility restriction, sign restriction on entries, or independence assumption. Positive block size and nonnegative unit roundoff are implicit source domain conditions. The smallness premise has the source form, subject to resolving d.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [
+            "Resolve the mathematical specification of Nat.clog(2,B), including boundary conventions, its ceiling-logarithm value and power-of-two coverage, to verify the required construction and exact bound."
+          ],
+          "limitations": [
+            "The reported insufficient_context requires an uncertain verdict.",
+            "Only the source, contracts and blind translation were inspected; no Lean code or external specification of Nat.clog was consulted.",
+            "No definite missing formal bridge is established; both completeness judgments remain uncertain."
+          ]
+        },
+        "report": {
+          "schema_version": 2,
+          "candidate_hash": "7f4fef968b46c3ef426e2e042f37748ab27ece5c3665be5664425a4f35305305",
+          "overall_verdict": "uncertain",
+          "phase": "final",
+          "lean_implies_source": "uncertain",
+          "source_implies_lean": "uncertain",
+          "relation": "uncertain",
+          "delivery_complete": "uncertain",
+          "construction_complete": "uncertain",
+          "missing_formal_steps": [],
+          "target_evidence": "The translation explicitly reports insufficient_context. Its sole target asserts all four requested final conjuncts, but uses K=T+Nat.clog(2,blockCount(n,T)); no specification of Nat.clog is supplied. This prevents verification of the exact depth, complete block coverage, and required gamma parameter. No specific missing final composition is evidenced.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "The target block_dot_product explicitly asserts both exact backward-error representations and both entrywise bounds for the same computed value. These are final conclusions, not merely helper lemmas. Full delivery remains uncertain because its depth parameter has no supplied mathematical specification. Calibration evaluators disagree or lack sufficient evidence; human review required.",
+              "verdict": "uncertain",
+              "defect_categories": [],
+              "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums.",
+              "evidence": "padded zero-extends each vector. roundedProduct uses index j*T+t; sequentialBlock starts with the first rounded product and rounds subsequent additions; blockLeaf uses T products and zero leaves beyond B. binaryReduction recursively combines adjacent children. B=((n+T)-1) div T equals ceil(n/T) for positive T. However computed uses exactly 2^d leaves with d=Nat.clog(2,B), whose meaning is explicitly unresolved in the translation. Required height and block coverage cannot be verified.",
+              "verdict": "uncertain",
+              "defect_categories": [],
+              "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T)))).",
+              "evidence": "The target asserts computed=sum (x+Delta_x)*y and computed=sum x*(y+Delta_y), and bounds each perturbation by gamma(u,K) times the magnitude of the corresponding original entry, for all Fin(n) indices. gamma(u,K)=K*u/(1-K*u), K=T+d, and K*u<1 is assumed. Without a specification of Nat.clog, K cannot be identified with T+ceil(log2(ceil(n/T))).",
+              "verdict": "uncertain",
+              "defect_categories": [],
+              "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Both representations use the same computed(T,x,y,e), the original x,y, and the same error record. The described products use their zero extensions directly. This gives explicit input linkage, but full linkage to the specified algorithm remains uncertain: coverage of all B blocks by the 2^d reduced leaves depends on the unresolved depth.",
+              "verdict": "uncertain",
+              "defect_categories": [],
+              "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "The target quantifies arbitrary natural n, positive T, nonnegative real u, arbitrary real vectors and arbitrary admissible error records. Admissible bounds the relative errors of the specified products and additions, consistent with the source rounding model under no overflow or underflow. It assumes neither perturbations nor their bounds. There is no divisibility restriction, sign restriction on entries, or independence assumption. Positive block size and nonnegative unit roundoff are implicit source domain conditions. The smallness premise has the source form, subject to resolving d.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [
+            "Resolve the mathematical specification of Nat.clog(2,B), including boundary conventions, its ceiling-logarithm value and power-of-two coverage, to verify the required construction and exact bound."
+          ],
+          "limitations": [
+            "The reported insufficient_context requires an uncertain verdict.",
+            "Only the source, contracts and blind translation were inspected; no Lean code or external specification of Nat.clog was consulted.",
+            "No definite missing formal bridge is established; both completeness judgments remain uncertain.",
+            "No expert adjudication performed; automatic acceptance stopped."
+          ]
+        },
+        "roles": {
+          "translator": {
+            "condition": "blind",
+            "kind": "translator",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794178808.0456212,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 115.244,
+            "token_usage": {
+              "input_tokens": 74187,
+              "cached_input_tokens": 53504,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 5123,
+              "reasoning_output_tokens": 245
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "judge": {
+            "condition": "blind",
+            "kind": "judge",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794178923.8990922,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 62.734,
+            "token_usage": {
+              "input_tokens": 68012,
+              "cached_input_tokens": 50304,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2686,
+              "reasoning_output_tokens": 187
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.TriangularSolve.solution_of_a_triangular_system"
+  ],
+  "construction_names": [
+    "Research.TriangularSolve.Direction",
+    "Research.TriangularSolve.Arithmetic",
+    "Research.TriangularSolve.RelativeRound",
+    "Research.TriangularSolve.gamma",
+    "Research.TriangularSolve.Triangular",
+    "Research.TriangularSolve.rowOrder",
+    "Research.TriangularSolve.previousColumns",
+    "Research.TriangularSolve.dotAcc",
+    "Research.TriangularSolve.roundedDot",
+    "Research.TriangularSolve.DotAccValid",
+    "Research.TriangularSolve.DotValid",
+    "Research.TriangularSolve.rowNumerator",
+    "Research.TriangularSolve.solveRow",
+    "Research.TriangularSolve.RowValid",
+    "Research.TriangularSolve.solveRows",
+    "Research.TriangularSolve.RowsValid",
+    "Research.TriangularSolve.computedSolution",
+    "Research.TriangularSolve.ExecutionValid"
+  ],
+  "source_mapping": "Research/Submission.lean states the full selected theorem theorem:solution_of_a_traingular_system from /spec/source.txt and /spec/paper.tex, lines 457-490. Nonsingularity is T.det \u2260 0; Triangular selects lower or upper orientation; computedSolution executes sequential rounded dot products followed by subtraction and division, using direct division for the first row. ExecutionValid imposes the standard relative rounding model only at executed operations and represents the no-overflow/no-underflow assumption. The theorem assumes nonnegative unit roundoff and n*u<1 and concludes an existential matrix perturbation with the exact original right-hand side, matching triangular orientation, and componentwise gamma_n bound. Increasing forward and decreasing backward traversal are explicit, including their sequential dot-product order. Dimension zero is allowed without arithmetic. No paper error bound is assumed. All construction definitions have bodies; the final theorem alone has temporary sorry proof scaffolding for the next role. Supplied paper.tex, references.bib, source.txt, and source.pdf are copied unchanged under Research/SupportingSources; /spec/support has no files. Statement revision record: /spec/feedback.json was absent; this is the initial statement, with no feedback-driven revisions."
+}

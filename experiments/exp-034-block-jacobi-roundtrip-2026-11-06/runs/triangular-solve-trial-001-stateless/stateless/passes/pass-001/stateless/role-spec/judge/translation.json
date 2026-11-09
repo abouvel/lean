@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "24a0e646799958ca1b5c0ff8511eeec518c62c7ea4ac7dccad7e7d806eab158c",
+  "status": "complete",
+  "statement": "The specified logged forward or backward substitution using arbitrary real arithmetic functions has a conditional componentwise backward-error guarantee: for every natural dimension n, triangular nonsingular real T, real b and u with u>=0 and n*u<1, if the calls of that actual execution satisfy the stated relative-error model whenever division operands have nonzero denominator, its returned vector x solves (T+Delta)x=b for some Delta triangular in the same direction and satisfying |Delta_ij|<=n*u/(1-n*u)*|T_ij| for every entry. The model is a hypothesis about the actual call log, not a global property of the supplied arithmetic functions. Dimension zero is included.",
+  "targets": [
+    {
+      "name": "TriangularSolve.solution_of_a_triangular_system",
+      "statement": "For every n in N including 0, direction in {lower,upper}, arithmetic record ar=(A,S,M,D) consisting of four arbitrary total functions R x R -> R, matrix T in R^(I_n x I_n), vector b in R^I_n, and u in R, with I_n={0,...,n-1}, assume: 0<=u; n*u<1 (casting n to R); det(T)!=0; IsTriangular(direction,T); and Execution.SatisfiesModel(run,ar,u), where run=substitution(direction,ar,T,b) is exactly the constructed execution described below. Write x=run.value. The model hypothesis means that for every recorded nondivision call c, and for every recorded division call c whose right operand is nonzero, there exists delta in R with |delta|<=u and computed_ar(c)=exact(c)*(1+delta). There exists a real matrix Delta on I_n x I_n such that (T+Delta)x=b, equivalently for every i in I_n, sum over j in I_n of (T_ij+Delta_ij)*x_j equals b_i; for every i,j in I_n, |Delta_ij|<=gamma(n,u)*|T_ij| with gamma(n,u)=n*u/(1-n*u); and IsTriangular(direction,Delta). Explicitly T and Delta have zero entries when i<j in the lower case and when j<i in the upper case. Delta may depend on all quantified data, and x is the actual returned value rather than an independently chosen vector. The theorem permits n=0, with empty sums and index quantifiers."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "TriangularSolve.gamma",
+      "description": "For all n in N and u in R, gamma(n,u) = n*u/(1-n*u), casting n to R. The definition has no restrictions; Lean real division is total, with division by zero equal to zero. The target hypotheses make the denominator positive."
+    },
+    {
+      "name": "TriangularSolve.perform",
+      "description": "For any arithmetic record ar=(A,S,M,D) of four arbitrary total functions R x R -> R, op in {add,sub,mul,div}, and a,b in R, form call c=(op,a,b) and return the execution (computed_ar(c),[c]). An execution is a value together with a finite ordered call list. computed_ar(c) applies A,S,M,D respectively; exact(c) applies ordinary real addition, subtraction, multiplication, division respectively. No error condition is enforced here."
+    },
+    {
+      "name": "TriangularSolve.dotTail",
+      "description": "For any ar, real-valued execution acc=(v,L), and finite list of real pairs, traverse the list left to right. For each (a,b), compute p=M(a,b), then s=A(v,p); append calls (mul,a,b) and (add,v,p) to L in that order and replace v by s. Return the resulting execution. The empty list returns acc unchanged. Its prior value and prior calls are the starting state; each pair appends two calls."
+    },
+    {
+      "name": "TriangularSolve.sequentialDot",
+      "description": "For any ar and finite list of real pairs, the empty list returns (0,[]). For [(a_1,b_1),...,(a_k,b_k)] with k>=1, start with perform(ar,mul,a_1,b_1), then dotTail on the remaining pairs. The result is the left-associated value v_1=M(a_1,b_1), v_t=A(v_(t-1),M(a_t,b_t)) for 2<=t<=k. Its log records k multiplications and k-1 additions in execution order. There is no initial addition to zero, and arbitrary ar need not give the exact dot product."
+    },
+    {
+      "name": "TriangularSolve.forwardRow",
+      "description": "For every n in N, ar, T in R^(I_n x I_n), b,x in R^I_n, and i in I_n, where I_n={0,...,n-1}: if i=0 return perform(ar,div,b_i,T_ii). If i>0 form the ordered pairs (T_ij,x_j) for j=0,...,i-1; let p=sequentialDot(ar,pairs), s=perform(ar,sub,b_i,p.value), and q=perform(ar,div,s.value,T_ii). Return q.value with p.calls followed by s.calls followed by q.calls. Entries with j>i are ignored. The definition assumes neither triangularity nor a nonzero diagonal. For i=0 there is just one division call; for i>0 there are i multiplications, i-1 additions, one subtraction, and one division."
+    },
+    {
+      "name": "TriangularSolve.forwardStep",
+      "description": "For every n in N, ar, real n by n matrix T, vector b on I_n, vector-valued execution state, and i in I_n, compute row=forwardRow(ar,T,b,state.value,i). Return state.value updated only at coordinate i to row.value, with state.calls followed by row.calls. This accepts any supplied state and index, without a requirement that earlier coordinates were computed."
+    },
+    {
+      "name": "TriangularSolve.forwardSubstitution",
+      "description": "For every n in N, ar, T in R^(I_n x I_n) and b in R^I_n, begin with the zero vector and empty call list, and apply forwardStep at indices 0,1,...,n-1 in that order by a left fold. Return the final vector and accumulated calls. Coordinate 0 becomes D(b_0,T_00); each coordinate i>0 becomes D(S(b_i,p_i),T_ii), where p_i is the sequentialDot value on (T_ij,x_j) for j=0,...,i-1 with the already computed coordinates. For n=0 the result is the unique empty vector with no calls. No matrix or arithmetic checks are performed; entries above the diagonal are unused."
+    },
+    {
+      "name": "TriangularSolve.reverseMatrix",
+      "description": "For every n in N and T in R^(I_n x I_n), return the matrix with entry (i,j) equal to T_(n-1-i,n-1-j), for i,j in I_n. This reverses both index orders. For n=0 it is the empty matrix."
+    },
+    {
+      "name": "TriangularSolve.reverseVector",
+      "description": "For every n in N and b in R^I_n, return the vector with coordinate i equal to b_(n-1-i) for every i in I_n. For n=0 it is the unique empty vector."
+    },
+    {
+      "name": "TriangularSolve.backwardSubstitution",
+      "description": "For every n in N, ar, real n by n matrix T and b in R^I_n, compute run=forwardSubstitution(ar,reverseMatrix(T),reverseVector(b)), then return reverseVector(run.value) together with exactly run.calls. Reversing the returned vector adds no calls and does not reverse the call log. In original indices, coordinates are computed in order n-1,n-2,...,0; row i uses the terms with j>i in descending j order. The last original row uses only division. Entries below the diagonal are ignored. It is defined without triangularity or nonsingularity hypotheses."
+    },
+    {
+      "name": "TriangularSolve.IsTriangular",
+      "description": "For every n in N, direction in {lower,upper}, and real matrix T on I_n x I_n: IsTriangular(lower,T) means for all i,j in I_n, i<j implies T_ij=0; IsTriangular(upper,T) means for all i,j in I_n, j<i implies T_ij=0. This imposes no diagonal or nonsingularity condition."
+    },
+    {
+      "name": "TriangularSolve.substitution",
+      "description": "For every n in N, direction in {lower,upper}, ar, real n by n matrix T and b in R^I_n, select forwardSubstitution(ar,T,b) for lower and backwardSubstitution(ar,T,b) for upper. This selection performs no triangularity test. The target theorem assumes the error model for the log of this exact execution and asserts its perturbed-system conclusion for this exact returned vector."
+    },
+    {
+      "name": "TriangularSolve.Call.SatisfiesModel",
+      "description": "For every call c=(op,a,b), arithmetic record ar of four total real binary functions, and u in R, the predicate is ((op=div implies b!=0) implies there exists delta in R with |delta|<=u and computed_ar(c)=exact(c)*(1+delta)). Here exact(c) is the ordinary real operation on the recorded operands and computed_ar(c) uses the corresponding supplied function. For nondivision calls the existential condition is required unconditionally; for division with b!=0 it is required; division with b=0 satisfies the predicate vacuously. No sign restriction on u is part of this definition. The witness may depend on the call. Operands may be previously computed values."
+    },
+    {
+      "name": "TriangularSolve.Execution.SatisfiesModel",
+      "description": "For every type alpha, execution run with value in alpha and a finite list of calls, arithmetic record ar, and u in R: for every call c belonging to run.calls, Call.SatisfiesModel(c,ar,u) holds. This constrains precisely the recorded calls with their recorded operands, with no separate condition on the returned value or on arithmetic inputs absent from the log. The target uses run=substitution(direction,ar,T,b)."
+    }
+  ],
+  "assumptions": [
+    "All matrix and vector entries, arithmetic operands, error parameters and witnesses are real; n is any natural number including zero, and I_n={0,...,n-1}. Direction has exactly the choices lower and upper. Arithmetic is a record of arbitrary total real binary functions for addition, subtraction, multiplication and division.",
+    "The target hypotheses are 0<=u, n*u<1, det(T)!=0, IsTriangular(direction,T), and Execution.SatisfiesModel(substitution(direction,ar,T,b),ar,u). There is no additional hypothesis that the arithmetic functions satisfy the model on every possible input.",
+    "The constructions themselves impose no triangularity, nonsingularity or denominator conditions. The call model is vacuous for division by zero. Under the target hypotheses triangularity and nonsingularity imply every diagonal entry is nonzero, so the algorithm divisions have nonzero denominators.",
+    "The target is translated as its declared conditional existence statement. Its name and omitted proof do not supply additional assumptions or conclusions."
+  ],
+  "missing_context": []
+}

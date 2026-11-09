@@ -1,0 +1,22 @@
+# Rounded Horner evaluation with a forward-error bound
+
+Use the supplied abstract relative-error rounding model. Coefficients form
+a finite list of real numbers in increasing degree order. For every such
+list and every real x, construct exact and rounded Horner evaluation.
+
+The exact evaluator P returns 0 on the empty list and satisfies
+P(a :: tail, x) = a + x * P(tail, x).
+The rounded evaluator Q returns 0 on the empty list and satisfies
+Q(a :: tail, x) = round(a + round(x * Q(tail, x))).
+Use one rounded multiplication and one rounded addition per list step.
+
+Construct an error envelope E using only the exact evaluator, x, the
+coefficients, and the model parameter u. The empty-list envelope is 0.
+At a cons step, put v = P(tail, x) and e = E(tail, x, u). The envelope is
+
+u * |a + x*v| + (1+u) * (u * |x*v| + (1+u) * |x| * e).
+
+Prove |Q(coefficients, x) - P(coefficients, x)| <= E(coefficients, x, u)
+for every supplied model, coefficient list, and x. The model already gives
+u >= 0 and the relative rounding law. The result needs no smallness,
+sign, nonzero-input, or exact-arithmetic hypothesis.

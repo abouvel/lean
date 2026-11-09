@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "7f4fef968b46c3ef426e2e042f37748ab27ece5c3665be5664425a4f35305305",
+  "status": "insufficient_context",
+  "statement": "The target asserts componentwise backward-error representations of the supplied zero-padded, sequential-block, binary-reduction real computation. Under T>0, u>=0, the stated bounds on error factors, and (T+d)*u<1, its value is an exact dot product after perturbing either input vector separately, with componentwise bound gamma(u,T+d) times the magnitude of that vector entry. The depth d is defined using Nat.clog, whose specification is absent, preventing a fully explicit interpretation of the construction and bound.",
+  "targets": [
+    {
+      "name": "Research.BlockDotProduct.block_dot_product",
+      "statement": "For all implicit n,T in N with T>0, all u in R with u>=0, all x,y:Fin(n)->R, and all e:RoundingErrors, assume Admissible(u,n,T,e). Set B=blockCount(n,T), d=treeDepth(n,T), K=T+d, and assume K*u<1, casting K to R. Then there exist Delta_x,Delta_y:Fin(n)->R satisfying all four conditions: computed(T,x,y,e)=sum_{i in Fin(n)}(x(i)+Delta_x(i))*y(i); for every i in Fin(n), |Delta_x(i)|<=gamma(u,K)*|x(i)|; computed(T,x,y,e)=sum_{i in Fin(n)}x(i)*(y(i)+Delta_y(i)); for every i in Fin(n), |Delta_y(i)|<=gamma(u,K)*|y(i)|. Here Fin(n)={i in N:i<n} and gamma(u,K)=K*u/(1-K*u), with positive denominator under these assumptions. Both representations concern the same explicitly constructed value and the same error record e. They perturb one vector at a time, and do not assert a simultaneous perturbation formula. No n>0, divisibility requirement, sign restriction on vector entries, error independence, or particular rounding rule is assumed. For n=0 the sums and component conditions are empty. The meaning of d remains dependent on the undefined Nat.clog."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BlockDotProduct.blockCount",
+      "description": "A total function of n,T in N: B(n,T)=((n+T)-1) div T, with truncated natural subtraction and natural division (a div 0=0). For T>0 it equals ceil(n/T), including B(0,T)=0. No positivity condition is part of the definition."
+    },
+    {
+      "name": "Research.BlockDotProduct.treeDepth",
+      "description": "A function of n,T in N defined as d(n,T)=Nat.clog(2,blockCount(n,T)). The supplied data do not define Nat.clog or specify its boundary values or relation to powers of two. The computed construction uses this unresolved natural value as its binary recursion height."
+    },
+    {
+      "name": "Research.BlockDotProduct.gamma",
+      "description": "For u in R and k in N, gamma(u,k)=(k*u)/(1-k*u), casting k to R. This is a total real expression (division by zero has value zero in Lean); its definition requires no inequality. The theorem applies it only where k*u<1."
+    },
+    {
+      "name": "Research.BlockDotProduct.padded",
+      "description": "For implicit n in N and x:Fin(n)->R, padded(x):N->R sends i<n to x evaluated at the Fin(n) index i and every i>=n to zero. It is the zero extension of the vector."
+    },
+    {
+      "name": "Research.BlockDotProduct.RoundingErrors",
+      "description": "A data structure with one constructor Research.BlockDotProduct.RoundingErrors.mk taking three functions N->N->R, in order mul, add, tree. These are its three fields and their projections. The values e.mul(j,t), e.add(j,t), e.tree(h,j) are arbitrary real parameters used for product, sequential-addition, and binary-addition factors. This structure is not an algorithm, and it imposes no bounds or rounding-rule properties."
+    },
+    {
+      "name": "Research.BlockDotProduct.Admissible",
+      "description": "A predicate on u in R, n,T in N, and e:RoundingErrors. Put B=blockCount(n,T), d=treeDepth(n,T). It is exactly the conjunction: for every j,t in N with j<B and t<T, |e.mul(j,t)|<=u; for every j,t in N with j<B and 0<t<T, |e.add(j,t)|<=u; and for every h,j in N with h<d and j<2^(d-(h+1)), |e.tree(h,j)|<=u. Subtraction in the exponent is truncated natural subtraction. Other field values are unrestricted. Neither u>=0 nor T>0 is separately included in this predicate."
+    },
+    {
+      "name": "Research.BlockDotProduct.roundedProduct",
+      "description": "For implicit n in N, T in N, x,y:Fin(n)->R, e:RoundingErrors, and arbitrary j,t in N, P(j,t)=padded(x,j*T+t)*padded(y,j*T+t)*(1+e.mul(j,t)). This is a real expression with a prescribed factor, without a specified machine rounding operation or index-bound requirement. It is zero when j*T+t>=n."
+    },
+    {
+      "name": "Research.BlockDotProduct.sequentialBlock",
+      "description": "For implicit n in N, T in N, x,y:Fin(n)->R, e:RoundingErrors, and j in N, defines S_j(m) for every m in N by S_j(0)=0, S_j(1)=P(j,0), and S_j(k+1)=(S_j(k)+P(j,k))*(1+e.add(j,k)) for k>=1, where P=roundedProduct(T,x,y,e). It accumulates the first m products in increasing offset order. There is no addition factor on the first product. The argument m is not restricted to m<=T; T sets the stride j*T. blockLeaf uses m=T."
+    },
+    {
+      "name": "Research.BlockDotProduct.blockLeaf",
+      "description": "For implicit n in N, T in N, x,y:Fin(n)->R, e:RoundingErrors, and every j in N, equals sequentialBlock(T,x,y,e,j,T) if j<blockCount(n,T), and zero otherwise. For T>0, valid leaves accumulate T consecutive zero-extended products. A partial last block includes its zero products and the specified sequential addition factors. The function is defined for all natural leaf indices."
+    },
+    {
+      "name": "Research.BlockDotProduct.binaryReduction",
+      "description": "For e:RoundingErrors and any leaf:N->R, defines R(h,j) for all h,j in N by R(0,j)=leaf(j) and R(h+1,j)=(R(h,2*j)+R(h,2*j+1))*(1+e.tree(h,j)). Thus R(h,j) combines the 2^h leaves indexed from j*2^h to (j+1)*2^h-1. A parent whose children have height h uses error level h. This recursion itself imposes no admissibility bounds, chooses no height, and does not pad the supplied leaf function."
+    },
+    {
+      "name": "Research.BlockDotProduct.computed",
+      "description": "For implicit n in N, T in N, x,y:Fin(n)->R, and e:RoundingErrors, equals binaryReduction(e,blockLeaf(T,x,y,e),treeDepth(n,T),0). At depth d it combines precisely leaves 0,...,2^d-1; leaves j<blockCount(n,T) use the length-T sequential computation, and other included leaves are zero. Each binary parent adds its child values and multiplies by its prescribed tree factor. This is a deterministic real computation parameterized by error functions, without a supplied floating-point format or rounding map. Whether its leaves cover every block depends on the absent specification of Nat.clog."
+    }
+  ],
+  "assumptions": [
+    "The target universally quantifies implicit n,T in N, assumes T>0, and universally quantifies u in R with u>=0, x,y:Fin(n)->R, and e:RoundingErrors. Natural indices include zero; all vector entries and error values are real.",
+    "Admissible(u,n,T,e) bounds multiplication errors for every j<B,t<T, sequential addition errors for every j<B,0<t<T, and tree errors for every h<d,j<2^(d-(h+1)), each in absolute value by u, with B=blockCount(n,T) and d=treeDepth(n,T).",
+    "The additional target hypothesis is (T+d)*u<1. There are no further supplied hypotheses on n, vector entries, errors, or machine arithmetic. Definitions themselves are total and do not require the theorem hypotheses."
+  ],
+  "missing_context": [
+    "Nat.clog is referenced by treeDepth but has no definition or mathematical specification in the supplied data. Its values, including at block counts zero and one, and its relation to powers of two are needed to resolve the depth, coverage of blocks by the reduction, tree-error index ranges, and numerical perturbation-bound parameter."
+  ]
+}

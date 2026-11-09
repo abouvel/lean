@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "e7fdc27fc7008789161c8ea575e8e4b7c75fdd7eb1f1a0223873fed68fc939ac",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "Research.BlockJacobi.block_jacobi_real explicitly includes every selected final conclusion. Its concrete residual-correction recursion and specified solution recover the original exact block-Jacobi algorithm; the correction index shift is harmless. Spectral radius is taken over the complexification, as required for arbitrary real matrices.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "The sole target block_jacobi_real explicitly asserts all requested conclusions in four conjuncts: the update equations, error identities and bounds, spectral-radius equality, convergence equivalence for every initial guess, and sufficient convergence and contraction. These are final target assertions, not supporting lemmas requiring further composition.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+      "evidence": "correctionAt(A,D,b,y)=D^(-1)(b-Ay); update(y)=y+correctionAt(y); iterate starts at x₀ and recursively applies this update. Target (1) explicitly asserts D c_k=b-Ay_k and y_(k+1)=y_k+c_k. Its c_k denotes the source correction c^{k+1}, an equivalent index convention. Under nonsingularity, applying the inverse of block-diagonal D is exactly the prescribed block solve.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+      "evidence": "Target (1) asserts e_(k+1)=T e_k, e_k=T^k e_0, the coordinatewise inequality |(e_k)_i|≤((|T|)^k |e_0|)_i, and ||e_k||∞≤||T||∞^k ||e_0||∞ for every x₀,k,i. Targets (2)-(3) assert rho(T)=rho(D^(-1)N) and convergence for every initial vector iff rho(T)<1. Target (4) explicitly supplies convergence and ||U(u)-U(v)||∞≤||T||∞ ||u-v||∞ when 0≤||T||∞<1. The norms have the required maximum-coordinate and maximum-row-sum definitions. The complexified finite matrix has finite spectral radius, so the real conversion preserves it.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "The theorem uses the specified A,D,N,b,x with A=D+N and Ax=b; T=-D^(-1)N and e_k=iterate(A,D,b,x₀,k)-x. All initial guesses are universal and convergence is to that same specified x. The final Lipschitz bound concerns the actual update U(y)=y+D^(-1)(b-Ay). Block labels encode the original within-block D and off-block N support.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "The base hypotheses are precisely the decomposition and block support, nonsingularity expressed as det D a unit over R, and Ax=b. There is no additional convergence or spectral premise. The norm condition is only the antecedent of the sufficient-condition conclusion. Arbitrary block labels impose no size or label restrictions. All natural indices and initial vectors are covered. Including dimension zero is consistent: the unique vector sequence converges, both norms and the spectral radius are zero, and the identities hold. Product-topology convergence equals infinity-norm convergence in finite dimensions.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

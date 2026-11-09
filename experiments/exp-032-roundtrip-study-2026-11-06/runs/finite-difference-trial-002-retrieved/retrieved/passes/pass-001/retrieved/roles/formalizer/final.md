@@ -1,0 +1,3 @@
+Created [Submission.lean](/workspace/Research/Submission.lean) with the forward-difference definition and full theorem statement, preserving all assumptions and endpoint scope. Only the theorem proof contains temporary `sorry` scaffolding.
+
+`lake build` passed. Saved [statement.json](/output/statement.json) and [retrieval.json](/output/retrieval.json) atomically. No statement revisions or supporting files were needed.

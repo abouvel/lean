@@ -1,0 +1,106 @@
+{
+  "condition": "retrieved",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 424.79,
+  "compiler_command_events": 15,
+  "token_usage": {
+    "input_tokens": 932167,
+    "cached_input_tokens": 872064,
+    "output_tokens": 14372,
+    "reasoning_output_tokens": 2661
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794003312.7608066,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 58.185,
+      "token_usage": {
+        "input_tokens": 86747,
+        "cached_input_tokens": 75520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2207,
+        "reasoning_output_tokens": 172
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794003371.7245038,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 115.37,
+      "token_usage": {
+        "input_tokens": 244884,
+        "cached_input_tokens": 212864,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3733,
+        "reasoning_output_tokens": 721
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794003502.7329295,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 251.235,
+      "token_usage": {
+        "input_tokens": 600536,
+        "cached_input_tokens": 583680,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8432,
+        "reasoning_output_tokens": 1768
+      },
+      "compiler_command_events": 11,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "Research.BlockDotProduct.block_dot_product"
+    ],
+    "construction_names": [
+      "Research.BlockDotProduct.blockCount",
+      "Research.BlockDotProduct.treeDepth",
+      "Research.BlockDotProduct.gamma",
+      "Research.BlockDotProduct.padded",
+      "Research.BlockDotProduct.RoundingErrors",
+      "Research.BlockDotProduct.Admissible",
+      "Research.BlockDotProduct.roundedProduct",
+      "Research.BlockDotProduct.sequentialBlock",
+      "Research.BlockDotProduct.blockLeaf",
+      "Research.BlockDotProduct.binaryReduction",
+      "Research.BlockDotProduct.computed"
+    ],
+    "source_mapping": "The target is the full active theorem:block_dot_product in /spec/source.txt and /spec/paper.tex lines 235\u2013291. Research/Submission.lean uses zero-based Fin n inputs and explicitly constructs T-term sequential blocks and a complete, zero-padded binary reduction of depth Nat.clog 2 ((n+T-1)/T). Both existential backward representations and their componentwise bounds use gamma u (T+depth). Assumptions: positive block size, nonnegative unit roundoff, local relative-error bounds at every executed multiplication/addition (the standard no-overflow/no-underflow model), and (T+depth)*u<1. No algorithmic error bound is assumed. n=0 is additionally supported with blockCount=depth=0 and computed result zero. Supporting source directory contains no files. Statement revision record: initial statement; /spec/feedback.json is absent, so no feedback-driven revisions. Only the final theorem proof is temporarily sorry; all construction definitions have bodies."
+  }
+}

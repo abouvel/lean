@@ -1,0 +1,3 @@
+⚠ [8026/8028] Replayed Research.Submission
+warning: Research/Submission.lean:388:8: declaration uses `sorry`
+Build completed successfully (8028 jobs).

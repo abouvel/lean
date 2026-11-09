@@ -1,0 +1,18 @@
+{
+  "search_queries": [
+    "AGENTS.md lakefile lean-toolchain",
+    "files in /spec/support and /workspace"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Use lake build to rebuild the newly copied imported model and validate the skeleton together, avoiding reliance on stale imported declarations."
+    }
+  ]
+}

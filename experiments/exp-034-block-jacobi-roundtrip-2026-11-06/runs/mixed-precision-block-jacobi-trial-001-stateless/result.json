@@ -1,0 +1,623 @@
+{
+  "schema_version": 1,
+  "job_id": "mixed-precision-block-jacobi-trial-001-stateless",
+  "pair_id": "mixed-precision-block-jacobi-trial-001",
+  "condition": "stateless",
+  "success": false,
+  "outcome": "formal_failed",
+  "record": {
+    "schema_version": 1,
+    "artifact_id": "2026-11-06-stateless",
+    "date": "2026-11-06",
+    "experiment_id": "mixed-precision-block-jacobi-trial-001-stateless",
+    "condition": "stateless",
+    "status": "partial",
+    "outcome": "formal_failed",
+    "success": false,
+    "task_id": "mixed-precision-block-jacobi",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "starting_commit": "a911f8e142b128c47eb015921ead27ec93f97402",
+    "project": "mixed-precision-block-jacobi",
+    "memory_mode": "stateless",
+    "time_limit": {
+      "max_passes": 2,
+      "builder_seconds_per_pass": 900,
+      "critic_seconds_per_pass": 300,
+      "revision": {
+        "schema_version": 1,
+        "mode": "calibration",
+        "seconds": {
+          "planner": 180,
+          "formalizer": 420,
+          "prover": 900,
+          "translator": 240,
+          "judge": 240
+        },
+        "construction_policy": "Define the mixed-precision update and its specified matrix-vector, residual, Cholesky correction, and update operations. Prove the exact alpha/beta recurrence, the finite-iterate bound, and the limsup consequence under the stated hypotheses."
+      }
+    },
+    "artifact_snapshot": {
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/inputs/source.pdf": "b93d44db05250bf799848305a25271090e0248e6818bc3cd62e9a42fc32f425b",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/inputs/references.bib": "70c5a06292fdf4172602bfa6428a123c1c38a55992aed3246c57a49920ee5fa6",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/inputs/paper.tex": "6e61d2a17d4ffe5ca618a4db312c205ae83bf4902f02aa6b85c880d01bcc4bb1",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/inputs/PROMPT.txt": "fdd19f7e8ec8facfd5cd03ce17701d27bbfa38a6538d0d80d95c233dcacf5774",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/inputs/source.txt": "0e612e4dea7375594b9e14db825ac3fcefe5142bcda8c7cd6873ff76935f2757",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/evaluator/requirements.json": "da8ddd3ba8d479a1f3be627f0fb47cc3ddc0f967145a446aaa6d121664b7d17f",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/evaluator/REVIEWER.txt": "ba95c41e7b95443a57e0068b32a700e56df92b80f95fa0baff346f0c081a29d6",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/mixed-precision-block-jacobi-trial-001-stateless/experiment.json": "383d626845106275804f6fc992d23894ffecefd2c8880ab30cff13434d11cb17",
+      "pipeline/resources.py": "1cf72ddc6cedefbe93d7d41199e355e163a95c69d8368570cdd5b5c32eef41c9",
+      "pipeline/run.py": "79721e0e4ec5a130af02d55b93a02d8897947566a28668afa1bba903ccbc2043",
+      "pipeline/worker.py": "a8152114fc2e9ea38d9e2a856220fb480d4cc6f7090aef75918ad7ad51765f6a",
+      "pipeline/smoke_model.py": "3dabe73c64b0b4c13fc04a31d9a82d4f4cad4452d2583c69869be70f72a9ae53",
+      "pipeline/engine.py": "0ebb6552c762f39fd02aca10f02396dc0cf60c9d761c26a9b5b6e5dd3871d9b9",
+      "pipeline/critic_benchmark.py": "4f05b57d833bd276a26f193570b88fe2eba0f6931f4b911f531526514714d3a8",
+      "pipeline/metrics.py": "6ae5538bf7b09722cc5d2ec604b3379a22d540d568cf0fec037620333c7fd2b8",
+      "pipeline/verify.py": "a885c2c7c297d10497410e7389bace1e53255b7bee3cee2f686d5c9c39c22f8d",
+      "pipeline/stages.py": "e82b52a781b2ccf2b0d1e38f9cf971d7de86c69a5a3a039b1635d16c64d4808a",
+      "pipeline/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+      "pipeline/roundtrip.py": "a9defc7bd028b66d90ba1d8da6414cd0805c215a7f45c7b8e7abf44054f0b2fa",
+      "pipeline/artifacts.py": "1810bfca20ddbceecf9995021e099492eb2d7abd092ef1d063f03e903282fd82",
+      "pipeline/roles.py": "92445f90205da7fd1ea136ff571575cb8a5cea826161aa5f23faa30e251f2528",
+      "pipeline/formal_context.py": "556fe4202db760b924ca89045e23d6f5dfd1dfe9b33110648ddc369ec54fb057",
+      "pipeline/batch.py": "420d6b4074dbfebe939146cbd4d6305ef88642482663dd0fb078ee13a7710d10",
+      "pipeline/agent.py": "3645e7d35478b2b8558d45ebe4e906e073bab41b24d778cef8076114bc7a8597",
+      "pipeline/role_agent.py": "3fe71ebd480677b341ac2a605cb1b0239fe7a33b7c2a9971f0ff9dc5703d6811",
+      "pipeline/critic.py": "21d211337c58d3a8d0ec872120454c8360f1b6f0ae25d40b24d4486c6be65acf",
+      "pipeline/ExtractContext.lean": "bb1dd9980d3d02547eee7594a905a2bc8dea8a15d93f1c2eb6c4ab17f465c047",
+      "pipeline/passes.py": "a2eedc54d5d42b3ccb9bb12beffeab5317a6c69de98f0be0877b4a393ffb4263",
+      "pipeline/binary_tree_control.py": "75d0f5256861fdd30725b19520c0a5a1d9211f9862768d79d44c39a8857dd821",
+      "pipeline/docker/Dockerfile": "9f9c499509672ebbfeb1817521c175861dd3eb722d85d0ab1da884e604e991d1",
+      "pipeline/docker/Dockerfile.ready": "8fba11b7730c46a8b41dfdc98c9c56efdff4c1a28227e1a00d3eb96369fdc8ba",
+      "pipeline/docker/proxy.py": "2e79cf96635643f540385207755ad37c3c4265795929cbb63ae2e85e9b63e72b"
+    },
+    "retrieved_artifacts": [],
+    "verification_command": "bash pipeline/verify.sh",
+    "passes": [
+      {
+        "builder": {
+          "condition": "stateless",
+          "kind": "production-pipeline",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium",
+          "exit_code": 0,
+          "timed_out": false,
+          "api_cost": "unknown",
+          "aristotle_calls": 0,
+          "wall_time_seconds": 1232.326,
+          "compiler_command_events": 31,
+          "token_usage": {
+            "input_tokens": 3857009,
+            "cached_input_tokens": 3759744,
+            "output_tokens": 43031,
+            "reasoning_output_tokens": 16021
+          },
+          "roles": {
+            "planner": {
+              "condition": "stateless",
+              "kind": "planner",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793997519.3907256,
+              "time_limit_seconds": 180,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 65.238,
+              "token_usage": {
+                "input_tokens": 135861,
+                "cached_input_tokens": 115456,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 2604,
+                "reasoning_output_tokens": 110
+              },
+              "compiler_command_events": 0,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "formalizer": {
+              "condition": "stateless",
+              "kind": "formalizer",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793997585.4095337,
+              "time_limit_seconds": 420,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 401.064,
+              "token_usage": {
+                "input_tokens": 903174,
+                "cached_input_tokens": 875904,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 14843,
+                "reasoning_output_tokens": 5843
+              },
+              "compiler_command_events": 9,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "prover": {
+              "condition": "stateless",
+              "kind": "prover",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793998027.7363455,
+              "time_limit_seconds": 900,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 766.024,
+              "token_usage": {
+                "input_tokens": 2817974,
+                "cached_input_tokens": 2768384,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 25584,
+                "reasoning_output_tokens": 10068
+              },
+              "compiler_command_events": 22,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            }
+          },
+          "statement": {
+            "schema_version": 1,
+            "targets": [
+              "MixedPrecisionBlockJacobi.mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic"
+            ],
+            "construction_names": [
+              "MixedPrecisionBlockJacobi.Vec",
+              "MixedPrecisionBlockJacobi.Mat",
+              "MixedPrecisionBlockJacobi.Tape",
+              "MixedPrecisionBlockJacobi.TapeAdmissible",
+              "MixedPrecisionBlockJacobi.subTape",
+              "MixedPrecisionBlockJacobi.rounded",
+              "MixedPrecisionBlockJacobi.roundedSum",
+              "MixedPrecisionBlockJacobi.roundedDot",
+              "MixedPrecisionBlockJacobi.entry",
+              "MixedPrecisionBlockJacobi.tiledDot",
+              "MixedPrecisionBlockJacobi.tiledMatvec",
+              "MixedPrecisionBlockJacobi.blockDiagonal",
+              "MixedPrecisionBlockJacobi.cholNumerator",
+              "MixedPrecisionBlockJacobi.cholOffDiagonal",
+              "MixedPrecisionBlockJacobi.cholDiagonal",
+              "MixedPrecisionBlockJacobi.cholesky",
+              "MixedPrecisionBlockJacobi.computedFactor",
+              "MixedPrecisionBlockJacobi.triangularRow",
+              "MixedPrecisionBlockJacobi.forwardSubstitution",
+              "MixedPrecisionBlockJacobi.backwardSubstitution",
+              "MixedPrecisionBlockJacobi.Execution",
+              "MixedPrecisionBlockJacobi.Execution.Admissible",
+              "MixedPrecisionBlockJacobi.factorBlocks",
+              "MixedPrecisionBlockJacobi.computedFactors",
+              "MixedPrecisionBlockJacobi.computedResidual",
+              "MixedPrecisionBlockJacobi.convertedResidual",
+              "MixedPrecisionBlockJacobi.computedCorrection",
+              "MixedPrecisionBlockJacobi.jacobiStep",
+              "MixedPrecisionBlockJacobi.iterates",
+              "MixedPrecisionBlockJacobi.error",
+              "MixedPrecisionBlockJacobi.vectorInfNorm",
+              "MixedPrecisionBlockJacobi.matrixInfNorm",
+              "MixedPrecisionBlockJacobi.matrixAbs",
+              "MixedPrecisionBlockJacobi.gamma",
+              "MixedPrecisionBlockJacobi.c\u2081",
+              "MixedPrecisionBlockJacobi.c\u2082",
+              "MixedPrecisionBlockJacobi.gain",
+              "MixedPrecisionBlockJacobi.eta",
+              "MixedPrecisionBlockJacobi.q",
+              "MixedPrecisionBlockJacobi.p",
+              "MixedPrecisionBlockJacobi.alpha",
+              "MixedPrecisionBlockJacobi.beta"
+            ],
+            "source_mapping": "Authoritative source: /spec/source.txt, selected theorem theorem:mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic; proof and algorithm context: /spec/paper.tex, lines 703-1270 and the earlier tiled-matvec, triangular-solve and Cholesky sections. Exact copies are Research/source.txt, Research/paper.tex and Research/references.bib. The supplied support/Research directory contains no files. No /spec/feedback.json was present; this is the initial skeleton, with no feedback-driven statement revision. Research/Submission.lean defines actual local-error rounded sequential/tiled dot products, column-oriented upper Cholesky with explicit success/failure, two triangular substitutions, componentwise residual conversion and update, recursively computed iterates, exact block assembly using an index equivalence, genuine matrix inverse, infinity norms, and precisely the source constants gamma, c1, c2, G, eta, q, p, alpha and beta. The final target states the one-step estimate for all natural k and, conditionally on alpha<1, the finite-time estimate and limsup bound for the actual error sequence. Explicit assumptions: positive S,T; S divides n; complete T-sized block partition; SPD blocks; A=D+N; A*x=b; 0<=us<uc; (S+n/S-1)*us<1; (T+1)*uc<1; admissible local relative errors at every operation (the no-overflow/no-underflow standard real model); successful computation of all block Cholesky factors; eta<1. No desired backward-error bound or recurrence, invertibility of A, q<1, or inverse identity is assumed. Successful Cholesky unpacks the source reference to computed factors and the helper successful-completion premise. Square roots are explicitly modeled by the standard relative-error sqrt convention for positive radicands; the displayed four-operation model alone does not specify sqrt, so this interpretation and its specification boundary are documented in Research/STATEMENT_NOTES.md. No unbudgeted matrix/input rounding is introduced. Empty ambient dimensions have zero norm. The final theorem proof is intentionally left as one sorry for the proving role; construction definitions have no sorry. See Research/STATEMENT_NOTES.md for the detailed source mapping and outstanding proof obligations. Validation: lake build completed successfully (8028 jobs), with only the intentional final-theorem sorry warning. A separate Lean audit verified the inverse expressions definitionally and that iterates, computed factors, and both norms have no sorryAx dependency; copied source files match byte for byte."
+          }
+        },
+        "verification": {
+          "verification_command": "bash pipeline/verify.sh",
+          "build_and_scans_exit_code": 1,
+          "nontrivial_submission": true,
+          "formal_gate_passed": false,
+          "semantic_review": "pending",
+          "wall_time_seconds": 216.923,
+          "source_files": [
+            "Research/Submission.lean"
+          ],
+          "source_lines": 726,
+          "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."
+        },
+        "critic": {},
+        "status": "formal_failed",
+        "roles": {
+          "planner": {
+            "condition": "stateless",
+            "kind": "planner",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793997519.3907256,
+            "time_limit_seconds": 180,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 65.238,
+            "token_usage": {
+              "input_tokens": 135861,
+              "cached_input_tokens": 115456,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2604,
+              "reasoning_output_tokens": 110
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "formalizer": {
+            "condition": "stateless",
+            "kind": "formalizer",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793997585.4095337,
+            "time_limit_seconds": 420,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 401.064,
+            "token_usage": {
+              "input_tokens": 903174,
+              "cached_input_tokens": 875904,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 14843,
+              "reasoning_output_tokens": 5843
+            },
+            "compiler_command_events": 9,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "prover": {
+            "condition": "stateless",
+            "kind": "prover",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793998027.7363455,
+            "time_limit_seconds": 900,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 766.024,
+            "token_usage": {
+              "input_tokens": 2817974,
+              "cached_input_tokens": 2768384,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 25584,
+              "reasoning_output_tokens": 10068
+            },
+            "compiler_command_events": 22,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          }
+        },
+        "number": 1,
+        "wall_time_seconds": 1498.6421210719855,
+        "evidence": "stateless/passes/pass-001",
+        "retrieval_record": "unknown"
+      },
+      {
+        "builder": {
+          "condition": "stateless",
+          "kind": "production-pipeline",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium",
+          "exit_code": 0,
+          "timed_out": false,
+          "api_cost": "unknown",
+          "aristotle_calls": 0,
+          "wall_time_seconds": 572.974,
+          "compiler_command_events": 17,
+          "token_usage": {
+            "input_tokens": 2136119,
+            "cached_input_tokens": 2028416,
+            "output_tokens": 15928,
+            "reasoning_output_tokens": 3421
+          },
+          "roles": {
+            "planner": {
+              "condition": "stateless",
+              "kind": "planner",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793999024.8383164,
+              "time_limit_seconds": 180,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 86.578,
+              "token_usage": {
+                "input_tokens": 211554,
+                "cached_input_tokens": 175360,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 3074,
+                "reasoning_output_tokens": 72
+              },
+              "compiler_command_events": 1,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "formalizer": {
+              "condition": "stateless",
+              "kind": "formalizer",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793999121.202056,
+              "time_limit_seconds": 420,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 133.969,
+              "token_usage": {
+                "input_tokens": 439715,
+                "cached_input_tokens": 408192,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 2830,
+                "reasoning_output_tokens": 323
+              },
+              "compiler_command_events": 3,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "prover": {
+              "condition": "stateless",
+              "kind": "prover",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793999291.1890063,
+              "time_limit_seconds": 900,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 352.427,
+              "token_usage": {
+                "input_tokens": 1484850,
+                "cached_input_tokens": 1444864,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 10024,
+                "reasoning_output_tokens": 3026
+              },
+              "compiler_command_events": 13,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            }
+          },
+          "statement": {
+            "schema_version": 1,
+            "targets": [
+              "MixedPrecisionBlockJacobi.mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic"
+            ],
+            "construction_names": [
+              "MixedPrecisionBlockJacobi.TapeAdmissible",
+              "MixedPrecisionBlockJacobi.subTape",
+              "MixedPrecisionBlockJacobi.rounded",
+              "MixedPrecisionBlockJacobi.roundedSum",
+              "MixedPrecisionBlockJacobi.roundedDot",
+              "MixedPrecisionBlockJacobi.entry",
+              "MixedPrecisionBlockJacobi.tiledDot",
+              "MixedPrecisionBlockJacobi.tiledMatvec",
+              "MixedPrecisionBlockJacobi.blockDiagonal",
+              "MixedPrecisionBlockJacobi.cholNumerator",
+              "MixedPrecisionBlockJacobi.cholOffDiagonal",
+              "MixedPrecisionBlockJacobi.cholDiagonal",
+              "MixedPrecisionBlockJacobi.cholesky",
+              "MixedPrecisionBlockJacobi.computedFactor",
+              "MixedPrecisionBlockJacobi.triangularRow",
+              "MixedPrecisionBlockJacobi.forwardSubstitution",
+              "MixedPrecisionBlockJacobi.backwardSubstitution",
+              "MixedPrecisionBlockJacobi.Execution",
+              "MixedPrecisionBlockJacobi.Execution.Admissible",
+              "MixedPrecisionBlockJacobi.factorBlocks",
+              "MixedPrecisionBlockJacobi.computedFactors",
+              "MixedPrecisionBlockJacobi.computedResidual",
+              "MixedPrecisionBlockJacobi.convertedResidual",
+              "MixedPrecisionBlockJacobi.computedCorrection",
+              "MixedPrecisionBlockJacobi.jacobiStep",
+              "MixedPrecisionBlockJacobi.iterates",
+              "MixedPrecisionBlockJacobi.error",
+              "MixedPrecisionBlockJacobi.vectorInfNorm",
+              "MixedPrecisionBlockJacobi.matrixInfNorm",
+              "MixedPrecisionBlockJacobi.matrixAbs",
+              "MixedPrecisionBlockJacobi.gamma",
+              "MixedPrecisionBlockJacobi.c\u2081",
+              "MixedPrecisionBlockJacobi.c\u2082",
+              "MixedPrecisionBlockJacobi.gain",
+              "MixedPrecisionBlockJacobi.eta",
+              "MixedPrecisionBlockJacobi.q",
+              "MixedPrecisionBlockJacobi.p",
+              "MixedPrecisionBlockJacobi.alpha",
+              "MixedPrecisionBlockJacobi.beta"
+            ],
+            "source_mapping": "/spec/source.txt selected theorem theorem:mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic, with proof context /spec/paper.tex lines 703\u20131270, maps to Research/Submission.lean in namespace MixedPrecisionBlockJacobi. Concrete block Cholesky, tiled matvec, residual conversion, triangular solves, updates and recursive iterates implement the source algorithm. Constants and all three conclusions retain the source formulas. Explicit execution assumptions instantiate the standard relative-error model and successful computed Cholesky factors. See Research/STATEMENT_NOTES.md for detailed mapping and feedback record: /spec/feedback.json read; no mathematical statement revisions; the sole remaining sorry is temporary one-step theorem proof scaffolding for the next role. Supplied /spec/support/Research contains no files."
+          }
+        },
+        "verification": {
+          "verification_command": "bash pipeline/verify.sh",
+          "build_and_scans_exit_code": 1,
+          "nontrivial_submission": true,
+          "formal_gate_passed": false,
+          "semantic_review": "pending",
+          "wall_time_seconds": 35.632,
+          "source_files": [
+            "Research/Submission.lean"
+          ],
+          "source_lines": 928,
+          "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required."
+        },
+        "critic": {},
+        "status": "formal_failed",
+        "roles": {
+          "planner": {
+            "condition": "stateless",
+            "kind": "planner",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793999024.8383164,
+            "time_limit_seconds": 180,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 86.578,
+            "token_usage": {
+              "input_tokens": 211554,
+              "cached_input_tokens": 175360,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 3074,
+              "reasoning_output_tokens": 72
+            },
+            "compiler_command_events": 1,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "formalizer": {
+            "condition": "stateless",
+            "kind": "formalizer",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793999121.202056,
+            "time_limit_seconds": 420,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 133.969,
+            "token_usage": {
+              "input_tokens": 439715,
+              "cached_input_tokens": 408192,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2830,
+              "reasoning_output_tokens": 323
+            },
+            "compiler_command_events": 3,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "prover": {
+            "condition": "stateless",
+            "kind": "prover",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793999291.1890063,
+            "time_limit_seconds": 900,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 352.427,
+            "token_usage": {
+              "input_tokens": 1484850,
+              "cached_input_tokens": 1444864,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 10024,
+              "reasoning_output_tokens": 3026
+            },
+            "compiler_command_events": 13,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          }
+        },
+        "number": 2,
+        "wall_time_seconds": 662.393965707015,
+        "evidence": "stateless/passes/pass-002",
+        "retrieval_record": "unknown"
+      }
+    ],
+    "metrics": {
+      "wall_time_seconds": 2161.3917375290184,
+      "passes_used": 2,
+      "first_success_pass": null,
+      "builder_seconds": 1805.3000000000002,
+      "critic_seconds": 0,
+      "compiler_command_events": 48,
+      "tokens": "unknown",
+      "cost": "unknown",
+      "aristotle_calls": 0,
+      "verification_calls": 2,
+      "critic_calls": 0,
+      "formal_failures": 2,
+      "critic_rejections": 0,
+      "final_source_lines": 928,
+      "builder_tokens": {
+        "input_tokens": 5993128,
+        "cached_input_tokens": 5788160,
+        "output_tokens": 58959,
+        "reasoning_output_tokens": 19442
+      },
+      "critic_tokens": {
+        "input_tokens": "unknown",
+        "cached_input_tokens": "unknown",
+        "output_tokens": "unknown",
+        "reasoning_output_tokens": "unknown"
+      },
+      "roles": {
+        "planner": {
+          "calls": 2,
+          "wall_time_seconds": 151.816,
+          "tokens": {
+            "input_tokens": 347415,
+            "cached_input_tokens": 290816,
+            "output_tokens": 5678,
+            "reasoning_output_tokens": 182
+          }
+        },
+        "formalizer": {
+          "calls": 2,
+          "wall_time_seconds": 535.033,
+          "tokens": {
+            "input_tokens": 1342889,
+            "cached_input_tokens": 1284096,
+            "output_tokens": 17673,
+            "reasoning_output_tokens": 6166
+          }
+        },
+        "prover": {
+          "calls": 2,
+          "wall_time_seconds": 1118.451,
+          "tokens": {
+            "input_tokens": 4302824,
+            "cached_input_tokens": 4213248,
+            "output_tokens": 35608,
+            "reasoning_output_tokens": 13094
+          }
+        },
+        "translator": {
+          "calls": 0,
+          "wall_time_seconds": 0,
+          "tokens": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          }
+        },
+        "judge": {
+          "calls": 0,
+          "wall_time_seconds": 0,
+          "tokens": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          }
+        }
+      },
+      "total_model_seconds": 1805.3000000000002,
+      "total_model_calls": 6
+    },
+    "reuse": {
+      "approved": false,
+      "reason": "Review and remove target answers before freezing for a future run."
+    },
+    "candidate_lessons": [],
+    "semantic_review_status": "automated-calibration; expert validation pending"
+  }
+}

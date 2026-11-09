@@ -1,0 +1,3 @@
+Build completed successfully (4 jobs).
+Auditing project axiom dependencies
+FORMAL_CONTEXT_JSON:{"axioms":["_private.Research.Submission.0.Research.impossible"],"declarations":[{"body":"","dependencies":["False"],"kind":"axiom","module":"Research.Submission","name":"_private.Research.Submission.0.Research.impossible","type":"False"},{"body":"","dependencies":["False"],"kind":"theorem","module":"Research.Submission","name":"Research.target","type":"False"}],"schema_version":1}

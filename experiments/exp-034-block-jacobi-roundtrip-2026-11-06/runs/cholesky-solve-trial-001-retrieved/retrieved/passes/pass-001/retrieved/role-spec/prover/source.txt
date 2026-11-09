@@ -1,0 +1,133 @@
+Source: Sahil Bhola, Self-contained Proof for a Mixed-precision Block Jacobi Algorithm.
+
+Selected deliverable: the full active result labeled theorem:cholesky_solve in main.tex (lines 550-610).
+
+The original mathematical proof is available in paper.tex. The selected statement below is authoritative. Earlier statements and notation supply context. A referenced result may be proved as a helper. Do not assume a desired algorithmic bound or an unproved paper lemma as an added hypothesis.
+
+SELECTED STATEMENT (verbatim LaTeX, proof omitted)
+\begin{theorem}[Cholesky Solve]\label{theorem:cholesky_solve}
+Let $\mat{a}\ireal{n\times n}$ be symmetric positive definite and let
+$\vect{b}\ireal{n}$. Suppose that $\mat{a}\vect{x}=\vect{b}$ is solved in
+floating-point arithmetic by computing an upper-triangular Cholesky factor
+$\widehat{\mat{r}}$, followed by forward and backward substitution. Assume
+that the factorization completes successfully, no overflow or underflow
+occurs, and $(n+1)\urd<1$. Then the computed solution
+$\hat{\vect{x}}$ satisfies
+\begin{align}
+    (\mat{a}+\Delta\mat{a})\hat{\vect{x}}=\vect{b},
+\end{align}
+where
+\begin{align}
+    \abs{\Delta\mat{a}}
+    &\leq
+    \left(\gamma_{n+1}+2\gamma_n+\gamma_n^2\right)
+    \abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}}
+    \\
+    &\leq
+    \left(3\gamma_{n+1}+\gamma_n^2\right)
+    \abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}}.
+\end{align}
+The inequalities are interpreted componentwise.
+\end{theorem}
+
+SECTION CONTEXT
+\subsection{Cholesky Factorization}\label{sec:cholesky_factorization}
+To solve a linear system of equations via Cholesky factorization, we need to compute the Cholesky factors given by the recurrance relation
+\begin{align}
+    \mat{r}_{i,j} = \left(\mat{a}_{i,j} - \sum_{k=1}^{i-1} \mat{r}_{k,i}\mat{r}_{k,j}\right) / \mat{r}_{i,i}, \qquad i = 1,\cdots, j - 1 \\
+   \mat{r}_{j,j} =  \left(\mat{a}_{j,j} - \sum_{k=1}^{j-1} \mat{r}_{k,j}^2 \right)^{1/2}, \qquad j = 1,\dots,n. 
+\end{align}
+In the follwing result, we present the backward error analysis for performing Cholesky factorization, re-deriving~\cite[Theorem 10.4]{higham2002accuracy}.
+
+
+[Earlier statement and proof omitted here.]
+
+
+
+Now, using~\cref{theorem:solution_of_a_traingular_system,theorem:cholesky_factorization} we can obtain the backward error bounds for solving a linear system of equations via Cholesky factorization.
+
+EARLIER STATEMENTS FOR CONTEXT
+\begin{theorem}[Solution of a Triangular System]\label{theorem:solution_of_a_traingular_system}
+Let $\mat{t}\ireal{n\times n}$ be a nonsingular triangular matrix and let
+$\vect{b}\ireal{n}$. Suppose that $\mat{t}\vect{x}=\vect{b}$ is solved by
+forward substitution when $\mat{t}$ is lower triangular, or by backward
+substitution when $\mat{t}$ is upper triangular. Assume that no overflow
+or underflow occurs and that $n\urd<1$. Then the computed solution
+$\hat{\vect{x}}$ satisfies
+\begin{align}
+    (\mat{t}+\Delta\mat{t})\hat{\vect{x}}=\vect{b},
+    \qquad
+    \abs{\Delta\mat{t}}\leq\gamma_n\abs{\mat{t}},
+\end{align}
+where the inequality is interpreted componentwise,
+$\Delta\mat{t}$ has the same triangular structure as $\mat{t}$, and
+$\gamma_n=n\urd/(1-n\urd)$.
+\end{theorem}
+
+\begin{theorem}[Cholesky Factorization]\label{theorem:cholesky_factorization}
+Let $\mat{a}\ireal{n\times n}$ be symmetric positive definite, and suppose
+that the Cholesky algorithm applied to $\mat{a}$ completes successfully in
+floating-point arithmetic, producing an upper-triangular factor
+$\widehat{\mat{r}}$. Assume that no overflow or underflow occurs and that
+$(n+1)\urd<1$. Then there exists a symmetric perturbation $\Delta\mat{a}$
+such that
+\begin{align}
+    \widehat{\mat{r}}^{T}\widehat{\mat{r}}
+    &=\mat{a}+\Delta\mat{a},
+    &
+    \abs{\Delta\mat{a}}
+    &\leq
+    \gamma_{n+1}
+    \abs{\widehat{\mat{r}}^{T}}
+    \abs{\widehat{\mat{r}}},
+\end{align}
+where the inequality is interpreted componentwise and
+$\gamma_{n+1}=(n+1)\urd/(1-(n+1)\urd)$.
+\end{theorem}
+
+COMMON ROUNDING MODEL AND ERROR CONSTANTS
+\section{Floating-Point Model}
+We assume the standard floating-point model~\cite{higham2002accuracy}: for every elementary
+operation $\circ \in \{+,-,\times,/\}$,
+\begin{equation}
+    \fl(a \circ b) = (a \circ b)(1+\delta),
+    \qquad
+    \abs{\delta} \le \urd,
+    \label{eq:fp-model}
+\end{equation}
+where $\urd$ is the unit roundoff and $\delta$ is the relative roundoff error.
+Using~\cref{eq:fp-model} for numerical analysis we typicall obtain the product
+\begin{align}
+    \prod_{i=1}^n (1 + \delta_i)^{\rho_i} \define 1 + \theta_n, \qquad \rho = \pm 1,
+    \label{eq:theta_n}
+\end{align}
+where $n$ denotes the number of accumulated roundoff error terms.
+For numerical analysis, we seek reliable and sharp bounds for $\theta_n$.
+
+
+\section{Deterministic Rounding Error Analysis}
+The deterministic rounding error analysis proposes the following problem-size dependent constant
+\begin{align}
+\gamma_{n} \define \frac{n\urd}{1 - n\urd}, 
+\label{eq:drea}
+\end{align}
+for $n\urd < 1$.
+Here, $n$ is the number of accumulated error terms~\cite{higham2002accuracy}.
+The problem-size dependent constant is monotonic, that is, $\gamma_{n+1} > \gamma_{n}$ for $\urd > 0$.
+Performing backward/forward error analysis using~\cref{eq:drea} we obtain
+\begin{align}
+    \abs{\theta_n} \leq \gamma_n.
+\end{align}
+
+SOURCE NOTATION MACROS
+\newcommand{\urd}{\ensuremath{\mathrm{u}}}
+\newcommand{\define}{\ensuremath{\triangleq}}
+\newcommand{\vect}[1]{\mathbf{\MakeLowercase{#1}}}
+\newcommand{\mat}[1]{\mathbf{\MakeUppercase{#1}}}
+\newcommand{\ireal}[1]{\in\mathbb{R}^{#1}}
+\newcommand{\norm}[2][]{\left\|#2\right\|_{#1}}
+\DeclareMathOperator{\fl}{fl}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\widehatgamma}[1]{\widehat{\gamma}_{#1}}

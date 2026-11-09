@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "bd2b6e92a989f362b70b5b35511f822a2744e67fedf05003a3c50988dbde9c05",
+  "status": "complete",
+  "statement": "The sole target asserts componentwise backward-error representations for a dot product formed by sequentially summing padded, error-scaled products within blocks and then sequentially summing the block partials. Under all the trace bounds and smallness assumptions stated below, either input can separately be perturbed by at most gamma(T+blockCount(n,T)\u22121,u) times its coordinate magnitude to represent the computed result exactly. The trace is arbitrary real-valued data subject to the specified bounds; no actual floating-point rounding implementation is supplied.",
+  "targets": [
+    {
+      "name": "Research.BlockDotProduct.block_dot_product_sequential",
+      "statement": "For every pair of natural numbers n,T with T>0, every real u>=0, all vectors x,y:Fin n -> R, and every trace e:RoundingTrace, put B=blockCount(n,T), d=treeDepth(n,T), and K=errorIndex(n,T). Assume Admissible(e,n,T,u), (T+d)*u<1, and K*u<1, with the natural indices cast to reals in these products. Then there exist two functions \u0394x,\u0394y:Fin n -> R such that simultaneously: computedDot(T,x,y,e)=sum_{i in Fin n}(x(i)+\u0394x(i))*y(i); for every i in Fin n, |\u0394x(i)|<=gamma(K,u)*|x(i)|; computedDot(T,x,y,e)=sum_{i in Fin n}x(i)*(y(i)+\u0394y(i)); and for every i in Fin n, |\u0394y(i)|<=gamma(K,u)*|y(i)|. These are two separate representations of the same computed scalar, perturbing one input at a time, not an assertion about the sum with both inputs perturbed. Here gamma(K,u)=K*u/(1\u2212K*u). There is no hypothesis n>0, so n=0 is included, with empty sums and vacuous coordinate bounds. The computed scalar is the supplied-error, two-stage sequential accumulation defined in the constructions; no balanced-tree reduction is used. The explicit backwardPerturbation construction absorbs termCoefficient\u22121 into each coordinate of either vector and connects the recurrence to these backward-error representations. The target declaration itself existentially quantifies the perturbations without naming that construction."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BlockDotProduct.blockCount",
+      "description": "For n,T in the natural numbers (including 0), B=blockCount(n,T)=((n+T)\u22121)/T, using truncated natural subtraction and natural integer division. For T>0 this is ceil(n/T), including B=0 when n=0. Natural division by 0 is 0, so the definition is total and B=0 for T=0."
+    },
+    {
+      "name": "Research.BlockDotProduct.treeDepth",
+      "description": "For n,T natural, treeDepth(n,T)=Nat.clog(2,blockCount(n,T)): the ceiling base-2 logarithm of B=blockCount(n,T), equal to the least d>=0 with B<=2^d (in particular it is 0 for B=0 or 1). This is a numerical parameter only; the computed reduction below is sequential and does not construct or evaluate a binary tree."
+    },
+    {
+      "name": "Research.BlockDotProduct.errorIndex",
+      "description": "For n,T natural, K=errorIndex(n,T)=T+blockCount(n,T)\u22121, with subtraction truncated at 0. For T>0 and B>=1 this is T+B\u22121; it bounds one multiplication factor, up to T\u22121 within-block addition factors, and up to B\u22121 reduction addition factors per original term."
+    },
+    {
+      "name": "Research.BlockDotProduct.gamma",
+      "description": "For k natural and u real, gamma(k,u)=(k*u)/(1\u2212k*u), where k is cast to a real. This is a total real-valued definition, with real division by 0 giving 0; the target hypothesis K*u<1 makes its particular denominator strictly positive."
+    },
+    {
+      "name": "Research.BlockDotProduct.padded",
+      "description": "For the implicit natural parameter n, a vector x:Fin n -> R is a function on {0,...,n\u22121}. padded(x):N -> R takes value x(i) if i<n and 0 otherwise. This is zero extension to all natural indices."
+    },
+    {
+      "name": "Research.BlockDotProduct.RoundingTrace",
+      "description": "A data type with the single constructor Research.BlockDotProduct.RoundingTrace.mk(m,b,r), accepting arbitrary functions m:N -> N -> R, b:N -> N -> R, and r:N -> R. Its three fields/projections are mulError=m, blockAddError=b, and reductionAddError=r. It stores real multiplicative-error parameters indexed by block and position, or by reduction position; its constructor imposes no bounds, floating-point representation, rounding rule, or relation between the fields and input vectors. It is a record of data, not an algorithm."
+    },
+    {
+      "name": "Research.BlockDotProduct.RoundingTrace.Admissible",
+      "description": "For e:RoundingTrace, n,T natural and u real, put B=blockCount(n,T), m=e.mulError, b=e.blockAddError, r=e.reductionAddError. Admissible(e,n,T,u) is precisely the conjunction: for every natural j<B and natural t<T, |m(j,t)|<=u; for every natural j<B and natural t with 0<t<T, |b(j,t)|<=u; and for every natural j with 0<j<B, |r(j)|<=u. It does not itself assume u>=0 or T>0. It constrains multiplication errors even at padded positions, does not constrain b(j,0) or r(0), and imposes no bounds outside these index ranges. This is a predicate on trace data, not a rounding algorithm."
+    },
+    {
+      "name": "Research.BlockDotProduct.sequentialSum",
+      "description": "For arbitrary sequences a,delta:N -> R and a natural count c, define S(c)=sequentialSum(a,delta,c) recursively by S(0)=0, S(1)=a(0), and S(k+1)=(S(k)+a(k))*(1+delta(k)) for every natural k>=1. Thus it accumulates the entries in index order; initialization takes the first entry directly and uses no addition error, and delta(0) is unused. It is a real arithmetic recurrence driven by supplied error factors."
+    },
+    {
+      "name": "Research.BlockDotProduct.roundedProduct",
+      "description": "For implicit n natural, T natural, x,y:Fin n -> R, e:RoundingTrace, and natural j,t, roundedProduct(T,x,y,e,j,t)=padded(x,j*T+t)*padded(y,j*T+t)*(1+e.mulError(j,t)). It is defined for all natural j,t, not only active blocks or positions. It multiplies padded real entries and a supplied error factor; it does not apply a separately specified machine-rounding operation."
+    },
+    {
+      "name": "Research.BlockDotProduct.blockPartial",
+      "description": "For implicit n natural, T natural, x,y:Fin n -> R, e:RoundingTrace, and any natural block index j, blockPartial(T,x,y,e,j)=sequentialSum(a,b,T), where a(t)=roundedProduct(T,x,y,e,j,t) and b(t)=e.blockAddError(j,t). It sequentially accumulates exactly T padded products, with the first product taken directly; for T=0 it returns 0. The last active block also processes its padded zero positions and their associated addition factors."
+    },
+    {
+      "name": "Research.BlockDotProduct.computedDot",
+      "description": "For implicit n natural, T natural, x,y:Fin n -> R and e:RoundingTrace, computedDot(T,x,y,e)=sequentialSum(j -> blockPartial(T,x,y,e,j), e.reductionAddError, B), where B=blockCount(n,T). It forms B blocks of T positions and sequentially accumulates the resulting partial sums in increasing block order. The first partial sum is taken directly, and each later addition at index j is multiplied by 1+e.reductionAddError(j). This reduction is sequential, regardless of the name treeDepth. The result is 0 if B=0, including n=0 or T=0."
+    },
+    {
+      "name": "Research.BlockDotProduct.sequentialWeight",
+      "description": "For delta:N -> R and count,i natural, sequentialWeight(delta,count,i)=product over natural k satisfying max(1,i)<=k<count of (1+delta(k)); an empty product is 1. For i<count it is the multiplier contributed by subsequent sequentialSum additions to entry a(i), including the addition inserting that entry when i>=1. It is defined even for i>=count, where the product is empty."
+    },
+    {
+      "name": "Research.BlockDotProduct.termCoefficient",
+      "description": "For n,T natural, e:RoundingTrace and i:Fin n, write v for the natural value of i, j=v div T, t=v mod T, and B=blockCount(n,T). Then termCoefficient(n,T,e,i)=(1+e.mulError(j,t))*sequentialWeight(e.blockAddError(j),T,t)*sequentialWeight(e.reductionAddError,B,j). Natural division and remainder are used, with v div 0=0 and v mod 0=v. For T>0, j and t locate the original entry in its block, and this coefficient is the product of its multiplication factor and all within-block and final sequential-addition factors affecting it. Expanding the two recurrences for T>0 gives computedDot(T,x,y,e)=sum over i:Fin n of x(i)*y(i)*termCoefficient(n,T,e,i); padded entries contribute zero."
+    },
+    {
+      "name": "Research.BlockDotProduct.backwardPerturbation",
+      "description": "For implicit n natural, T natural, e:RoundingTrace, x:Fin n -> R and i:Fin n, backwardPerturbation(T,e,x,i)=(termCoefficient(n,T,e,i)\u22121)*x(i). This explicitly constructs a perturbation vector from the trace and x. For T>0 the coefficient expansion gives computedDot(T,x,y,e)=sum_i (x(i)+backwardPerturbation(T,e,x,i))*y(i), and also the analogous identity with the perturbation applied to y. The target asserts existence of perturbations with bounds; its statement does not specify them to be this function. This construction explains how the same coefficient can be absorbed into either input separately."
+    }
+  ],
+  "assumptions": [
+    "All natural-number parameters and indices include 0; Fin n denotes exactly the natural indices i<n, and vectors and perturbations are real-valued functions on Fin n. Finite sums over Fin 0 are 0, and empty products are 1.",
+    "The target universally quantifies implicit n,T:N and requires T>0; n need not be positive. It universally quantifies u:R with u>=0, x,y:Fin n -> R, and e:RoundingTrace.",
+    "The target requires |e.mulError(j,t)|<=u for all j<blockCount(n,T) and t<T; |e.blockAddError(j,t)|<=u for all j<blockCount(n,T) and 0<t<T; and |e.reductionAddError(j)|<=u for all 0<j<blockCount(n,T). All these indices are natural.",
+    "The target requires both (T+treeDepth(n,T))*u<1 and errorIndex(n,T)*u<1, casting the natural-number quantities to reals. Both hypotheses are retained even though computedDot performs sequential reduction.",
+    "The definitions are total and do not individually require the theorem hypotheses. Natural subtraction is truncated, natural division is integer division with a div 0=0, natural remainder satisfies a mod 0=a, and real division by 0 is 0.",
+    "No additional relation between trace values and actual hardware rounding, no nonzero-coordinate assumption, and no restriction on signs or magnitudes of x and y appears in the supplied statements."
+  ],
+  "missing_context": []
+}

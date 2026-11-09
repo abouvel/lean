@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "64c3a1fc37aa3e950c7ccf7976da8b7cab607cada9e4753cc46b7a12bc466cb1",
+  "status": "complete",
+  "statement": "For every rounding model, every finite real coefficient list c, and every real x, the recursively rounded evaluation Q_model(c,x) and exact polynomial evaluation P(c,x) satisfy |Q_model(c,x) - P(c,x)| <= E(c,x,u_model). A model consists of a real u with 0 <= u and a function r: R -> R such that for every z in R there exists delta in R with |delta| <= u and r(z) = z(1 + delta). The delta may depend on z; r and u are fixed within an evaluation. E is the explicit recurrence below using exact tail polynomial values.",
+  "targets": [
+    {
+      "name": "Research.Horner.forward_error_bound",
+      "statement": "For every model in Research.FloatingPoint.Model, every coefficients in List(R), and every x in R, |Q_model(coefficients,x) - P(coefficients,x)| <= E(coefficients,x,u_model), where P, Q, and E are the constructions below. A model consists of a real u with 0 <= u and a function r: R -> R such that for every z in R there exists delta in R with |delta| <= u and r(z) = z(1 + delta). The delta may depend on z; r and u are fixed within an evaluation. Here r is model.round and u_model is model.u. The list may be empty and has arbitrary finite length. There is no upper bound on u_model and no restriction on x or the coefficients."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.Horner.P",
+      "description": "P: List(R) -> R -> R is defined, for every real x, by P([],x) = 0 and P(a::t,x) = a + x P(t,x) for every real a and finite real list t. Thus for c = [a_0,...,a_(n-1)], P(c,x) = sum over 0 <= i < n of a_i x^i, with empty sum 0. The head is the constant coefficient. It recursively evaluates the tail and then multiplies by x and adds the head using exact real arithmetic."
+    },
+    {
+      "name": "Research.Horner.Q",
+      "description": "Q: Research.FloatingPoint.Model -> List(R) -> R -> R is defined for every model and real x by Q_model([],x) = 0 and Q_model(a::t,x) = r(a + r(x Q_model(t,x))) for every real a and finite real list t, where r = model.round. It recursively evaluates the tail, rounds the product with x, adds the head, and rounds that sum. It does not separately round the input coefficients or x. There are two applications of r for every list entry, including the final entry, and none for the empty list. The model property stated above supplies the restrictions on r."
+    },
+    {
+      "name": "Research.Horner.E",
+      "description": "E: List(R) -> R -> R -> R is defined for every finite real list and every real x,u, without a sign restriction on u in the definition. E([],x,u) = 0. For every real a and finite real list t, set v = P(t,x) and e = E(t,x,u); then E(a::t,x,u) = u |a + x v| + (1 + u)(u |x v| + (1 + u)|x| e). This recursively computes a real expression using exact polynomial values of tails, rather than rounded tail values. In the target, its third argument is the nonnegative u of the same model used by Q, and the expression bounds the absolute difference between Q and P."
+    }
+  ],
+  "assumptions": [
+    "A model consists of a real u with 0 <= u and a function r: R -> R such that for every z in R there exists delta in R with |delta| <= u and r(z) = z(1 + delta). The delta may depend on z; r and u are fixed within an evaluation.",
+    "All coefficients and the evaluation argument x are arbitrary real numbers. Coefficient lists are finite, of arbitrary length, and may be empty. All operations other than explicit applications of model.round are exact real operations.",
+    "The target has no additional hypotheses: in particular, no condition u < 1, no coefficient representability assumption, and no degree bound are supplied."
+  ],
+  "missing_context": []
+}

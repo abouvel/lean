@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "3d2fd3dca468199113d70ebae26263376e96e64d9727e8f42b780504da58c29e",
+  "status": "complete",
+  "statement": "The supplied target states a componentwise backward-error representation for the particular reduction defined here: for positive input count n, arbitrary real coordinate arrays, nonnegative u, active-addition errors bounded in absolute value by u, and depth(n) u<1, its output equals an exact sum of perturbed inputs with componentwise perturbation at most gamma(depth(n),u) times the absolute input. At each stage the construction pairs positions separated by the next stage size, multiplies each paired sum by 1+\u03b4, copies unpaired positions unchanged, and discards inactive positions by setting them to zero. It returns position 0 after the ceiling base-2 logarithm of n stages. Coefficients follow that same recurrence from indicator inputs; backwardPerturbation uses final coefficients minus one times each input. The theorem is existential and does not explicitly designate that constructed perturbation as its witness.",
+  "targets": [
+    {
+      "name": "Research.BinaryTreeReduction.parallel_binary_tree_reduction",
+      "statement": "For every type \u03b9 at any universe level and every n \u2208 \u2115 with 0<n, for every x : Fin n \u2192 (\u03b9 \u2192 \u211d), every real u with 0\u2264u, and every \u03b4 : \u2115 \u2192 \u2115 \u2192 \u03b9 \u2192 \u211d satisfying LocalRoundingModel(n,u,\u03b4), assume also (d : \u211d)u<1, where d=depth(n). Then there exists \u0394x : Fin n \u2192 (\u03b9 \u2192 \u211d) such that computed(x,\u03b4)=\u2211_{i\u2208Fin n}(x(i)+\u0394x(i)) as functions \u03b9 \u2192 \u211d, and for every i \u2208 Fin n and c \u2208 \u03b9, |\u0394x(i,c)|\u2264gamma(d,u)|x(i,c)|=((d : \u211d)u/(1\u2212(d : \u211d)u))|x(i,c)|. Here Fin n is {0,\u2026,n\u22121}; addition and sums of functions are pointwise. Equivalently, for every c \u2208 \u03b9, stage(x,\u03b4,d,0,c)=\u2211_{i=0}^{n\u22121}(x(i,c)+\u0394x(i,c)). LocalRoundingModel means precisely the active-pair bounds given in its construction description. This theorem concerns the specified offset-pairing recurrence, evaluated at stage d and position 0. Its existential conclusion does not explicitly identify \u0394x with the separately constructed backwardPerturbation."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BinaryTreeReduction.depth",
+      "description": "For n \u2208 \u2115, depth(n) = Nat.clog(2,n), the natural ceiling logarithm base 2. It is 0 for n = 0; for n > 0 it is the least d \u2208 \u2115 with n \u2264 2^d. In particular depth(1) = 0. This is the stage used for the final output and coefficients and the factor in the target bound."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.stageSize",
+      "description": "For all n,\u2113 \u2208 \u2115, s_\u2113 = stageSize(n,\u2113) = (n+2^\u2113\u22121) div 2^\u2113 = ceil(n/2^\u2113). Subtraction is truncated natural subtraction and div is natural integer division. Since 2^\u2113 \u2265 1 the subtraction does not truncate here. In particular s_0 = n and stageSize(0,\u2113) = 0. These sizes determine the active positions and pairing offsets."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.gamma",
+      "description": "For every k \u2208 \u2115 and u \u2208 \u211d, gamma(k,u) = ((k : \u211d)u)/(1\u2212(k : \u211d)u). This definition has no hypotheses: Lean real division is total, with a zero denominator giving zero. In the target, k = depth(n), 0 \u2264 u and k u < 1, so the denominator is positive."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.stage",
+      "description": "For an arbitrary type \u03b9, n \u2208 \u2115, x : Fin n \u2192 \u03b9 \u2192 \u211d and \u03b4 : \u2115 \u2192 \u2115 \u2192 \u03b9 \u2192 \u211d, define S_\u2113(k,c) = stage(x,\u03b4,\u2113,k,c) for every \u2113,k \u2208 \u2115 and c \u2208 \u03b9. Set S_0(k,c) = x(\u27e8k,k<n\u27e9,c) if k<n and 0 otherwise. At each \u2113 let m = stageSize(n,\u2113+1), s = stageSize(n,\u2113). For k \u2265 m set S_{\u2113+1}(k,c)=0. For k<m and k+m<s set S_{\u2113+1}(k,c)=(S_\u2113(k,c)+S_\u2113(k+m,c))(1+\u03b4(\u2113,k,c)). For k<m and k+m\u2265s set S_{\u2113+1}(k,c)=S_\u2113(k,c). Thus it pairs positions k and k+m of the preceding stage, where m is the next size; it does not pair consecutive indices 2k and 2k+1. An unpaired entry is copied with no error factor. The operations are exact real operations with supplied multiplicative factors. The definition specifies no machine arithmetic, parallel execution schedule, or probabilistic mechanism. It is defined for all stages, even beyond depth(n), without rounding hypotheses."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.computed",
+      "description": "For every type \u03b9, n \u2208 \u2115, x : Fin n \u2192 \u03b9 \u2192 \u211d and \u03b4 : \u2115 \u2192 \u2115 \u2192 \u03b9 \u2192 \u211d, computed(x,\u03b4) is the function c \u21a6 stage(x,\u03b4,depth(n),0,c). For n>0 the active size at this stage is one. For n=0 this definition returns the zero function, although the target excludes n=0. For n=1 it returns the sole input unchanged."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.LocalRoundingModel",
+      "description": "For every type \u03b9, n \u2208 \u2115, u \u2208 \u211d and \u03b4 : \u2115 \u2192 \u2115 \u2192 \u03b9 \u2192 \u211d, LocalRoundingModel(n,u,\u03b4) means: for every \u2113 \u2208 \u2115 with \u2113<depth(n), every k \u2208 \u2115 with k<stageSize(n,\u2113+1) and k+stageSize(n,\u2113+1)<stageSize(n,\u2113), and every c \u2208 \u03b9, |\u03b4(\u2113,k,c)|\u2264u. It bounds exactly active paired additions used before the final output stage. It places no restrictions on unused entries, unpaired positions, or stages at or beyond depth(n). It does not itself assume u\u22650 and is vacuous if there are no active pairs."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.coefficient",
+      "description": "For every type \u03b9, n \u2208 \u2115 and \u03b4 : \u2115 \u2192 \u2115 \u2192 \u03b9 \u2192 \u211d, define A_\u2113(k,i,c)=coefficient(\u03b4,\u2113,k,i,c), for \u2113,k \u2208 \u2115, i \u2208 Fin n and c \u2208 \u03b9. Set A_0(k,i,c)=1 when k equals the natural value of i, and 0 otherwise. For every \u2113 put m=stageSize(n,\u2113+1), s=stageSize(n,\u2113). If k\u2265m set A_{\u2113+1}(k,i,c)=0. If k<m and k+m<s set A_{\u2113+1}(k,i,c)=(A_\u2113(k,i,c)+A_\u2113(k+m,i,c))(1+\u03b4(\u2113,k,c)). If k<m and k+m\u2265s set A_{\u2113+1}(k,i,c)=A_\u2113(k,i,c). This is the same recurrence applied to the indicator input for i; it does not depend on x. Consequently the definitions yield S_\u2113(k,c)=\u2211_{i\u2208Fin n} A_\u2113(k,i,c)x(i,c). Final coefficients are A_depth(n)(0,i,c)."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.backwardPerturbation",
+      "description": "For every type \u03b9, n \u2208 \u2115, x : Fin n \u2192 \u03b9 \u2192 \u211d, \u03b4 : \u2115 \u2192 \u2115 \u2192 \u03b9 \u2192 \u211d, i \u2208 Fin n and c \u2208 \u03b9, backwardPerturbation(x,\u03b4,i,c)=x(i,c)(coefficient(\u03b4,depth(n),0,i,c)\u22121). Thus x(i,c)+backwardPerturbation(x,\u03b4,i,c)=x(i,c)coefficient(\u03b4,depth(n),0,i,c). The coefficient expansion of stage connects this specific perturbation to computed: its perturbed inputs sum exactly to computed. The definition imposes no rounding or smallness hypotheses. The target asserts existence of a bounded perturbation but does not explicitly name backwardPerturbation as its witness."
+    }
+  ],
+  "assumptions": [
+    "The coordinate index \u03b9 is any type at any universe level; neither finiteness nor inhabitance is required. All coordinate quantifiers range over every c \u2208 \u03b9.",
+    "The target quantifies over all n \u2208 \u2115 subject to 0<n. Input indices range over Fin n={0,\u2026,n\u22121}.",
+    "The input x : Fin n \u2192 \u03b9 \u2192 \u211d is arbitrary; there is no sign, magnitude, or nonzero-entry assumption.",
+    "The real parameter u satisfies 0\u2264u.",
+    "The error array \u03b4 : \u2115 \u2192 \u2115 \u2192 \u03b9 \u2192 \u211d satisfies |\u03b4(\u2113,k,c)|\u2264u whenever \u2113<depth(n), k<stageSize(n,\u2113+1), and k+stageSize(n,\u2113+1)<stageSize(n,\u2113), for every coordinate c. No restrictions are imposed on other error entries.",
+    "The additional hypothesis is (depth(n) : \u211d)u<1. There is no separate assumption u<1; when n=1 its depth is zero.",
+    "The constructions are defined without the target hypotheses for all natural n and all real arrays and parameters in their domains. Stage indices, sizes and comparisons use natural numbers; data values and factors use real arithmetic."
+  ],
+  "missing_context": []
+}

@@ -1,0 +1,1 @@
+Saved atomically to [translation.json](/output/translation.json) with status `complete`, including the target theorem, construction, all hypotheses, and no missing context.

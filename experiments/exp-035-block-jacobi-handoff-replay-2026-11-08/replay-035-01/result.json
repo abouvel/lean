@@ -1,0 +1,247 @@
+{
+  "job_id": "block-dot-product-trial-001-stateless",
+  "condition": "stateless",
+  "outcome": "accepted",
+  "success": true,
+  "record": {
+    "task_id": "block-dot-product",
+    "passes": [
+      {
+        "number": 1,
+        "verification": {
+          "verification_command": "bash pipeline/verify.sh",
+          "build_and_scans_exit_code": 0,
+          "nontrivial_submission": true,
+          "formal_gate_passed": true,
+          "semantic_review": "pending",
+          "wall_time_seconds": 15.509,
+          "source_files": [
+            "Research/Submission.lean"
+          ],
+          "source_lines": 455,
+          "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+          "formal_audit": {
+            "schema_version": 1,
+            "unapproved_axioms": [],
+            "protected_source_failures": [],
+            "candidate_hash": "1da037325eb3b769654318351379dd168658add1d63e06ed9a5279d4783d238d",
+            "passed": true,
+            "changed_declarations": []
+          }
+        },
+        "direct_report": {
+          "overall_verdict": "pass",
+          "phase": "final",
+          "target_evidence": "Research/Submission.lean:425-439 proves block_dot_product for arbitrary original real inputs, positive n and T, nonnegative unit roundoff, admissible local operation errors, a covering binary tree of height at most ceil(log2(ceil(n/T))), and (T+depth)*u<1. Research/Submission.lean:442-453 proves block_dot_product_balanced for the explicitly constructed canonical tree, discharging schedule validity. Both conclusions existentially supply both perturbations with the requested componentwise gamma bounds.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "Research/Submission.lean:425-439 and :442-453 are proved theorems, not proposition definitions. Each concludes both exact backward-error equalities and both per-input absolute perturbation bounds for the computed block dot product. Independent lake env lean Research/Submission.lean exited 0; independent #print axioms for both final theorems and canonicalTree_valid reports only propext, Classical.choice, and Quot.sound. /evaluation/verification.json and verification.log also record successful build and formal audit.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums.",
+              "evidence": "Research/Submission.lean:12 defines ceil division as (n+T-1)/T; :15 defines the ceiling binary logarithm with Nat.clog 2. Mathlib/Data/Nat/Log.lean:396 characterizes this as the least depth with blockCount<=2^depth. Submission.lean:20-21 zero-extends the original inputs; :37-53 rounds each multiplication and sequentially adds T products, initializing with the first product. :79-104 constructs a balanced binary reduction, carries unmatched subtrees, and rounds each node addition. :143-148 proves exact block coverage and the required depth bound.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T)))).",
+              "evidence": "Research/Submission.lean:17 defines gamma(u,k)=k*u/(1-k*u). :191-213 bounds sequential block error; :228-256 propagates it through the tree using T+depth; :259-280 proves the power-to-gamma bound under k*u<1. :325-349 obtains the resulting forward error, and :352-414 constructs perturbations to either original operand, including the zero total absolute-product case. :431-439 and :447-453 conclude both representations and every componentwise bound with gamma u (T+reductionDepth n T).",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Research/Submission.lean:102-104 defines computedResult by evaluating the rounded blockPartial values on the submitted tree. :283-319 proves block flattening and removal of padded slots. :339-346 uses the schedule permutation to identify exact block sums and their absolute-product mass with sums over the original Fin n inputs. :442-453 explicitly applies the theorem to canonicalTree n T, so the final result concerns an actual defined algorithm and the original x and y.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "Research/Submission.lean:25-35 assumes only operation-local relative errors bounded by nonnegative unit roundoff, representing the source standard floating-point model without overflow/underflow. :426-430 quantifies arbitrary real input functions and admissible executions with positive dimensions and block size, the source algorithmic coverage/depth condition, and the original smallness condition. Positive n,T are the natural domain of the source partition and logarithm; u>=0 is intrinsic to unit roundoff. :418-420 and :452-453 discharge the schedule condition for the canonical construction. No global error bound, perturbation existence, or paper lemma is assumed; the forward bound and perturbations are proved in :325-414.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "roundtrip": {
+          "schema_version": 2,
+          "candidate_hash": "1da037325eb3b769654318351379dd168658add1d63e06ed9a5279d4783d238d",
+          "overall_verdict": "pass",
+          "phase": "final",
+          "lean_implies_source": true,
+          "source_implies_lean": true,
+          "relation": "faithful",
+          "delivery_complete": true,
+          "construction_complete": true,
+          "missing_formal_steps": [],
+          "target_evidence": "BlockDotProduct.block_dot_product and BlockDotProduct.block_dot_product_balanced explicitly assert both separate backward-error representations and their required componentwise bounds for the constructed blocked dot product. The error-field formulation is the standard rounding-model encoding. The balanced target supplies a concrete tree; the general target covers valid schedules. This review assesses the supplied translated mathematics without inspecting Lean code.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "Both listed targets explicitly state both exact backward-error representations and both pointwise bounds for the same computed result. The balanced target fixes canonicalTree without a schedule premise, so no missing composition is needed to obtain the final theorem.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums.",
+              "evidence": "padded returns the original entry below n and zero otherwise. blockPartial accumulates T rounded products at indices j*T+t using blockPrefix, initialized with the first product and adding subsequent products sequentially. canonicalTree recursively splits the block interval and removes empty branches. evaluateTree combines the resulting partials by rounded binary additions. These are explicit recursive constructions.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T)))).",
+              "evidence": "Each target explicitly asserts C=sum_i (x(i)+Delta_x(i))*y(i) and C=sum_i x(i)*(y(i)+Delta_y(i)), with both pointwise bounds g times the magnitude of the corresponding original entry. Here g=K*u/(1-K*u), K=T+Nat.clog(2,blockCount(n,T)), and blockCount=ceil(n/T) for positive T. The hypothesis K*u<1 is present.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "C is computedResult(x,y,T,e,tree), evaluating blockPartial of those same original x,y. Both perturbation equalities sum over Fin n, excluding padding. The general target requires each block label exactly once and height at most the specified depth; the balanced target directly selects the constructed canonical tree.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "The targets quantify arbitrary real inputs, positive n,T, nonnegative unit roundoff, and arbitrary error fields bounded by u, with the required K*u<1. Positive sizes and nonnegative unit roundoff express the meaningful domain of the source algorithm. Supplied multiplicative error factors encode the stated standard rounding model under the no-overflow/no-underflow hypothesis. Bounds on unused error indices impose no restriction on actual executions, since unused fields can be zero. There is no T<=n restriction, independence requirement, or assumed backward-error bound.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "report": {
+          "schema_version": 2,
+          "candidate_hash": "1da037325eb3b769654318351379dd168658add1d63e06ed9a5279d4783d238d",
+          "overall_verdict": "pass",
+          "phase": "final",
+          "lean_implies_source": true,
+          "source_implies_lean": true,
+          "relation": "faithful",
+          "delivery_complete": true,
+          "construction_complete": true,
+          "missing_formal_steps": [],
+          "target_evidence": "BlockDotProduct.block_dot_product and BlockDotProduct.block_dot_product_balanced explicitly assert both separate backward-error representations and their required componentwise bounds for the constructed blocked dot product. The error-field formulation is the standard rounding-model encoding. The balanced target supplies a concrete tree; the general target covers valid schedules. This review assesses the supplied translated mathematics without inspecting Lean code.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "Both listed targets explicitly state both exact backward-error representations and both pointwise bounds for the same computed result. The balanced target fixes canonicalTree without a schedule premise, so no missing composition is needed to obtain the final theorem.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums.",
+              "evidence": "padded returns the original entry below n and zero otherwise. blockPartial accumulates T rounded products at indices j*T+t using blockPrefix, initialized with the first product and adding subsequent products sequentially. canonicalTree recursively splits the block interval and removes empty branches. evaluateTree combines the resulting partials by rounded binary additions. These are explicit recursive constructions.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T)))).",
+              "evidence": "Each target explicitly asserts C=sum_i (x(i)+Delta_x(i))*y(i) and C=sum_i x(i)*(y(i)+Delta_y(i)), with both pointwise bounds g times the magnitude of the corresponding original entry. Here g=K*u/(1-K*u), K=T+Nat.clog(2,blockCount(n,T)), and blockCount=ceil(n/T) for positive T. The hypothesis K*u<1 is present.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "C is computedResult(x,y,T,e,tree), evaluating blockPartial of those same original x,y. Both perturbation equalities sum over Fin n, excluding padding. The general target requires each block label exactly once and height at most the specified depth; the balanced target directly selects the constructed canonical tree.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "The targets quantify arbitrary real inputs, positive n,T, nonnegative unit roundoff, and arbitrary error fields bounded by u, with the required K*u<1. Positive sizes and nonnegative unit roundoff express the meaningful domain of the source algorithm. Supplied multiplicative error factors encode the stated standard rounding model under the no-overflow/no-underflow hypothesis. Bounds on unused error indices impose no restriction on actual executions, since unused fields can be zero. There is no T<=n restriction, independence requirement, or assumed backward-error bound.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "roles": {
+          "translator": {
+            "condition": "blind",
+            "kind": "translator",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794178607.8441684,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 126.347,
+            "token_usage": {
+              "input_tokens": 122557,
+              "cached_input_tokens": 97152,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 5515,
+              "reasoning_output_tokens": 117
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "judge": {
+            "condition": "blind",
+            "kind": "judge",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794178734.650456,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 61.719,
+            "token_usage": {
+              "input_tokens": 89686,
+              "cached_input_tokens": 80768,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2478,
+              "reasoning_output_tokens": 182
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          }
+        }
+      }
+    ]
+  }
+}

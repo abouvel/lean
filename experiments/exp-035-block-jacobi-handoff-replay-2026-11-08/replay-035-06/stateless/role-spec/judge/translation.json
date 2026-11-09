@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "4164d580e5d83a4d6ccc2201c1deca9293cc123fa74a1fd0347b08295371f312",
+  "status": "complete",
+  "statement": "The supplied target is a componentwise backward-error statement for a real-valued matrix-vector computation defined by zero padding, blockwise sequential sums, and supplied multiplicative error data. For arbitrary nonnegative matrix dimensions, positive block size T, nonnegative bound u, admissible error data, and K(n,T)u<1, its output equals (A+DeltaA)x for some real matrix DeltaA whose entries satisfy |DeltaA(i,j)|<=gamma(K(n,T),u)|A(i,j)|. The construction includes an explicit entrywise perturbation obtained from products of the supplied factors. Roundoff is a structure storing arbitrary real functions, distinct from the algorithms using it.",
+  "targets": [
+    {
+      "name": "BlockMatrixVector.block_matrix_vector_product",
+      "statement": "For every m,n in N (both implicit parameters), every real matrix A:Fin(m) x Fin(n)->R, every vector x:Fin(n)->R, every T in N, u in R, and e:Roundoff(m), assume 0<T, 0<=u, Admissible(n,T,u,e), and (K(n,T) cast into R)u<1, where B(n,T)=((n+T) dotminus 1) div T and K(n,T)=(T+B(n,T)) dotminus 1. Admissibility means that for every i in Fin(m): |e.mulError(i,r,t)|<=u for all natural r<B(n,T), t<T; |e.innerError(i,r,t)|<=u for all natural r<B(n,T), 1<=t<T; and |e.outerError(i,r)|<=u for all natural 1<=r<B(n,T). Then there exists a real matrix DeltaA:Fin(m) x Fin(n)->R such that computedVector(A,x,T,e)=(A+DeltaA)x as vectors, and for every i in Fin(m) and j in Fin(n), |DeltaA(i,j)|<=gamma(K(n,T),u)|A(i,j)|, with gamma(k,u)=k u/(1-k u). The vector equality means for every i, computedVector(A,x,T,e)(i)=sum over j=0,...,n-1 of (A(i,j)+DeltaA(i,j))x(j); the empty sum is zero. The computed vector is exactly the two-level sequential recurrence described in the constructions, using all T slots per block including padding. Neither m nor n is assumed positive, and there are no further restrictions on A or x. The existential matrix in this theorem is not explicitly equated to the separately defined perturbation in the statement."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "BlockMatrixVector.blockCount",
+      "description": "For n,T in N={0,1,2,...}, B(n,T)=((n+T) dotminus 1) div T, where dotminus is natural subtraction truncated at zero and div is natural integer division (division by zero returns zero). For T>0 this is ceil(n/T), including B(0,T)=0. The definition itself requires no positivity assumption."
+    },
+    {
+      "name": "BlockMatrixVector.errorCount",
+      "description": "For n,T in N, K(n,T)=(T+B(n,T)) dotminus 1 in N, with B=blockCount and truncated natural subtraction. This is a defined bound parameter, not a count obtained by executing the construction. It is defined also when n=0 or T=0."
+    },
+    {
+      "name": "BlockMatrixVector.gamma",
+      "description": "For k in N and u in R, gamma(k,u)=(k u)/(1-k u), with k cast into R. Real division is totalized: a zero denominator gives zero. The definition has no side conditions; in the target theorem k u<1 makes the denominator positive."
+    },
+    {
+      "name": "BlockMatrixVector.slotIndex",
+      "description": "For arbitrary T,r,t in N, slotIndex(T,r,t)=rT+t. No bound on r or t is part of this definition."
+    },
+    {
+      "name": "BlockMatrixVector.zeroPad",
+      "description": "For implicit n in N, v:{0,...,n-1}->R, and j in N, zeroPad(v,j)=v(j) if j<n, and zero otherwise. It extends a finite real vector by zeros."
+    },
+    {
+      "name": "BlockMatrixVector.Roundoff",
+      "description": "For each m in N this is a data structure, with one constructor Roundoff.mk taking three arbitrary functions: mulError:Fin(m) x N x N -> R, innerError:Fin(m) x N x N -> R, and outerError:Fin(m) x N -> R. Here Fin(m)={0,...,m-1}. Its three projections return these functions. These are supplied real data indexed by row, block, and (where applicable) slot; the structure imposes no bounds, derives no errors from arithmetic, and is not itself an algorithm."
+    },
+    {
+      "name": "BlockMatrixVector.Admissible",
+      "description": "For implicit m in N, n,T in N, u in R, and e:Roundoff(m), this predicate is the conjunction of: for every i in Fin(m) and r,t in N with r<B(n,T) and t<T, |e.mulError(i,r,t)|<=u; for every i in Fin(m) and r,t in N with r<B(n,T) and 1<=t<T, |e.innerError(i,r,t)|<=u; and for every i in Fin(m) and r in N with 1<=r<B(n,T), |e.outerError(i,r)|<=u. It does not separately assert u>=0 or T>0, and imposes no restrictions on other indices."
+    },
+    {
+      "name": "BlockMatrixVector.sequentialSum",
+      "description": "For term,err:N->R define S(L)=sequentialSum(term,err,L) for L in N by S(0)=0, S(1)=term(0), and S(k+2)=(S(k+1)+term(k+1))(1+err(k+1)) for every k in N. Thus the first term is used without an addition-error factor; each later addition scales the entire updated sum. err(0) is unused. This is real arithmetic with supplied multiplicative factors, not a definition of a floating-point rounding operation."
+    },
+    {
+      "name": "BlockMatrixVector.roundedProduct",
+      "description": "For implicit m,n in N, A:Fin(m) x Fin(n)->R, x:Fin(n)->R, T in N, e:Roundoff(m), i in Fin(m), and r,t in N, roundedProduct(A,x,T,e,i,r,t)=zeroPad(A(i,-),rT+t) zeroPad(x,rT+t) (1+e.mulError(i,r,t)). It multiplies two zero-extended entries and the supplied error factor. Out-of-range slots give zero. No rounding rule or machine arithmetic is defined."
+    },
+    {
+      "name": "BlockMatrixVector.blockPartial",
+      "description": "For implicit m,n in N, A:Fin(m) x Fin(n)->R, x:Fin(n)->R, T in N, e:Roundoff(m), i in Fin(m), and r in N, blockPartial(A,x,T,e,i,r)=sequentialSum(t -> roundedProduct(A,x,T,e,i,r,t), t -> e.innerError(i,r,t), T). It sums exactly T slots of the block starting at rT using the stated sequential recurrence, including zero-padded slots. Its domain permits every r, including blocks beyond the vector."
+    },
+    {
+      "name": "BlockMatrixVector.computedVector",
+      "description": "For implicit m,n in N, A:Fin(m) x Fin(n)->R, x:Fin(n)->R, T in N, and e:Roundoff(m), computedVector(A,x,T,e):Fin(m)->R has component i equal to sequentialSum(r -> blockPartial(A,x,T,e,i,r), r -> e.outerError(i,r), B(n,T)). For T>0 it partitions each row-vector product into B(n,T) consecutive blocks of T slots, pads the last block with zeros, forms each block sum, then sequentially combines the block sums with supplied outer factors. Even zero-padded slots participate in the inner recurrence. If B(n,T)=0, the output is zero; in particular this holds for n=0 or T=0. All operations are defined over R."
+    },
+    {
+      "name": "BlockMatrixVector.additionFactor",
+      "description": "For err:N->R and length,p in N, additionFactor(err,length,p)=product over integers k with max(1,p)<=k<length of (1+err(k)); an empty product is 1. It gives the later addition factors affecting the term at position p in sequentialSum of length length, for p<length. Positions 0 and 1 have the same starting factor index 1. The definition also accepts p>=length and then returns 1."
+    },
+    {
+      "name": "BlockMatrixVector.entryFactor",
+      "description": "For implicit m in N, explicit n,T in N, e:Roundoff(m), i in Fin(m), and j in Fin(n), let r=j div T and t=j mod T, using the natural value of j. Then entryFactor(n,T,e,i,j)=(1+e.mulError(i,r,t)) additionFactor(k -> e.innerError(i,r,k),T,t) additionFactor(k -> e.outerError(i,k),B(n,T),r). Natural division and remainder are total: j div 0=0 and j mod 0=j. For T>0 this is the product of the multiplication factor and all subsequent inner and outer addition factors affecting entry j in computedVector."
+    },
+    {
+      "name": "BlockMatrixVector.perturbation",
+      "description": "For implicit m,n in N, A:Fin(m) x Fin(n)->R, T in N, and e:Roundoff(m), perturbation(A,T,e) is the real m-by-n matrix with entry A(i,j)(entryFactor(n,T,e,i,j)-1). It does not take x as an argument. Thus A+perturbation has entries A(i,j) entryFactor(n,T,e,i,j). For T>0, expanding the defined recurrences shows that computedVector(A,x,T,e)=(A+perturbation(A,T,e))x. This explains the explicit construction associated with the target existential matrix; the target statement itself only asserts existence of a matrix with its equality and bound and does not name perturbation as its witness."
+    }
+  ],
+  "assumptions": [
+    "The target universally quantifies implicit m,n in N, A in R^(m x n), x in R^n, T in N, u in R, and e:Roundoff(m); Fin(q) denotes the natural indices less than q.",
+    "The block size satisfies T>0.",
+    "The real error bound satisfies u>=0.",
+    "Admissible(n,T,u,e) imposes exactly the three families of bounds on multiplication, inner-addition, and outer-addition error data stated in its construction description, including padded multiplication and inner-addition slots.",
+    "With K(n,T)=(T+B(n,T)) dotminus 1, the real inequality K(n,T)u<1 holds.",
+    "There is no positivity assumption on m or n, no restriction on matrix or vector entries, and no requirement that the supplied real error functions arise from a particular floating-point format or rounding procedure."
+  ],
+  "missing_context": []
+}

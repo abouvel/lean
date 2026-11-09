@@ -1,0 +1,20 @@
+{
+  "search_queries": [
+    "prod.*(one|1).*sub|abs_prod_sub|prod_one_add",
+    "sum.*(div|mod)|sum_range.*mul|sum_range.*(div|mod)",
+    "sum_range_mul|sum.*div.*mod|sum.*mod.*div",
+    "sorry|admit|axiom|Aristotle"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for the product-error induction and established positive denominators before clearing rational inequalities."
+    }
+  ]
+}

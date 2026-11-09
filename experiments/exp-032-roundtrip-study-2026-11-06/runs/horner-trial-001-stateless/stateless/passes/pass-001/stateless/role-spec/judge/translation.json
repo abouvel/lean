@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "4904d1ad214eddd10dc3354e4a9e0cd2b164105a37c8ec4d470e03a27410e1d0",
+  "status": "complete",
+  "statement": "For every admissible real relative-error model m, every finite list c of real coefficients, and every real x, |Q(m,c,x) - P(c,x)| <= E(c,x,u(m)). P is exact polynomial evaluation with the head as constant coefficient; Q applies the model function to each recursive multiplication and then to each addition. E is the supplied recursive bound using exact tail values P. The model assumptions and all three recursions are specified below.",
+  "targets": [
+    {
+      "name": "Research.FloatingPoint.Horner.forward_error",
+      "statement": "For every m in Research.FloatingPoint.Model, every finite real list c (including the empty list), and every x in R, |Q(m,c,x) - P(c,x)| <= E(c,x,u(m)). A model supplies a real u(m) >= 0 and a function r = round(m): R -> R satisfying: for every z in R, there exists delta in R with |delta| <= u(m) and r(z) = z(1 + delta). P, Q, and E are precisely the recursions below. The inequality bounds the absolute difference of Q from the exact value P by E evaluated on the same list and argument with parameter u(m). There are no additional hypotheses, including no upper bound on u(m)."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.FloatingPoint.Horner.P",
+      "description": "P: List(R) x R -> R is defined, for every real x, by P([],x) = 0 and, for every real a and finite real list t, by P(a::t,x) = a + x P(t,x). All operations are exact real operations. For c = [a_0,...,a_(n-1)] with any integer n >= 0, this is the sum of a_i x^i over 0 <= i < n, with empty sum zero. The head coefficient is the constant term. P is the reference value in the target theorem and also supplies exact tail values in E."
+    },
+    {
+      "name": "Research.FloatingPoint.Horner.Q",
+      "description": "Q: Research.FloatingPoint.Model x List(R) x R -> R is defined for every model m and real x by Q(m,[],x) = 0. For every real a and finite real list t, Q(m,a::t,x) = r(a + r(x Q(m,t,x))), where r = round(m). It recursively evaluates the tail, applies r to the product with x, adds a, and applies r to that sum. There are two applications of r per list element, including the last element, whose recursive tail value is zero. No separate rounding of input coefficients or x is defined. The supplied model specifies only a real function with the relative-error property, not a particular floating-point format or rounding rule. The target theorem compares this value to P."
+    },
+    {
+      "name": "Research.FloatingPoint.Horner.E",
+      "description": "E: List(R) x R x R -> R is defined for every real x and u by E([],x,u) = 0. For every real a and finite real list t, put v = P(t,x) and e = E(t,x,u). Then E(a::t,x,u) = u |a + x v| + (1 + u)(u |x v| + (1 + u)|x| e). This is a recursion using exact tail values P(t,x), not rounded tail values Q. Its definition permits any real u; the target theorem uses u = u(m) >= 0 and asserts that this constructed value bounds |Q(m,c,x) - P(c,x)|."
+    }
+  ],
+  "assumptions": [
+    "Each model consists of a real u with 0 <= u, a function round: R -> R, and the property that for every z in R there exists delta in R such that |delta| <= u and round(z) = z(1 + delta). The witness delta may depend on z.",
+    "The theorem universally quantifies over all such models, all finite lists of real coefficients of any length including zero, and all real arguments x. There are no coefficient sign or magnitude restrictions and no restrictions on x.",
+    "All arithmetic and absolute values in the definitions and theorem are over R. No hypothesis u < 1, discrete floating-point representation, or additional rounding rule is supplied."
+  ],
+  "missing_context": []
+}

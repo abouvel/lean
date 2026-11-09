@@ -1,0 +1,9 @@
+✔ [8026/8033] Built Research.Common.FloatingPoint.Model (7.2s)
+✔ [8027/8033] Built Research.Projects.BinaryTreeReduction.Tree (7.8s)
+✔ [8028/8033] Built Research.Common.FloatingPoint.Gamma (12s)
+✔ [8029/8033] Built Research.Projects.BinaryTreeReduction.Algorithm (12s)
+✔ [8030/8033] Built Research.Projects.BinaryTreeReduction.Reduction (9.8s)
+✔ [8031/8033] Built Research.Submission (8.7s)
+✔ [8032/8033] Built Research (6.6s)
+Build completed successfully (8033 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.BlockJacobi.block_jacobi_real"
+  ],
+  "construction_names": [
+    "Research.BlockJacobi.IsBlockDecomposition",
+    "Research.BlockJacobi.vectorInfNorm",
+    "Research.BlockJacobi.matrixInfNorm",
+    "Research.BlockJacobi.vectorAbs",
+    "Research.BlockJacobi.matrixAbs",
+    "Research.BlockJacobi.complexification",
+    "Research.BlockJacobi.rho",
+    "Research.BlockJacobi.iterationMatrix",
+    "Research.BlockJacobi.correctionAt",
+    "Research.BlockJacobi.update",
+    "Research.BlockJacobi.iterate",
+    "Research.BlockJacobi.correction",
+    "Research.BlockJacobi.error"
+  ],
+  "source_mapping": "Research/Submission.lean: Research.BlockJacobi.block_jacobi_real formalizes the complete authoritative theorem:block_jacobi_real from /spec/source.txt (paper.tex, selected result), with explicit A = D + N block support, IsUnit D.det, and A * x = b assumptions. The correction and iterate are constructed from the residual, for all initial guesses and all natural dimensions. The conclusions include the update equations, signed error recurrence, power identity, componentwise bound, maximum-row-sum infinity-norm bound, equality of the complex spectral radii under negation, convergence for every initial guess iff rho(P) < 1, and norm-based sufficiency with the contraction inequality. Complex spectral radius is Mathlib spectralRadius of the complexified matrix converted to real; finite matrix spectra are bounded and the empty-dimensional convention is zero. Only the final theorem proof uses sorry as authorized scaffolding. No feedback.json was present; no statement revision was requested or made. /spec/support contains no files, so there are no supplied supporting sources to copy. The fallible plan was used as a checklist without adding assumptions."
+}

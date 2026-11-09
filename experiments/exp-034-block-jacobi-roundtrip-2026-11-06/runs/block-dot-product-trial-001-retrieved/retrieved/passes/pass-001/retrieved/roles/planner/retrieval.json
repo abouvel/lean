@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "block_dot_product|sequential|gamma.*gamma|theta"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Explicitly require positive gamma denominators before clearing rational inequalities in the finite-product helper."
+    }
+  ]
+}

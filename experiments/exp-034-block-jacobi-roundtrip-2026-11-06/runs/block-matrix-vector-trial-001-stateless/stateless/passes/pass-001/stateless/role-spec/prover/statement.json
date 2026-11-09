@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "BlockMatrixVector.block_matrix_vector_product_constructed",
+    "BlockMatrixVector.block_matrix_vector_product"
+  ],
+  "construction_names": [
+    "BlockMatrixVector.blockCount",
+    "BlockMatrixVector.errorCount",
+    "BlockMatrixVector.gamma",
+    "BlockMatrixVector.padded",
+    "BlockMatrixVector.sequentialSum",
+    "BlockMatrixVector.RoundingTrace",
+    "BlockMatrixVector.RoundingTrace.Valid",
+    "BlockMatrixVector.roundedProduct",
+    "BlockMatrixVector.blockPartial",
+    "BlockMatrixVector.computed",
+    "BlockMatrixVector.pathCoefficient",
+    "BlockMatrixVector.perturbation"
+  ],
+  "source_mapping": "/spec/source.txt selected theorem:block_matrix_vector_product is formalized in /workspace/Research/Submission.lean. blockCount n T=(n+T-1)/T is ceil(n/T) for positive T; errorCount is T+blockCount-1; gamma is k*u/(1-k*u). A and x are arbitrary original real matrix/vector inputs, with unrestricted natural dimensions m,n, explicit positive block size T and nonnegative unit roundoff u. RoundingTrace.Valid imposes only per-executed-operation relative-error bounds, representing the standard model when no overflow or underflow occurs. computed evaluates zero-padded rounded products, first-term-initialized sequential block sums, and first-partial-initialized sequential outer sums; empty sums are zero. pathCoefficient explicitly multiplies each original term's operation factors, and perturbation A T E i j=A i j*(pathCoefficient T E i j-1). The constructed theorem asserts the actual output equals (A+perturbation).mulVec x and the componentwise gamma_(T+ceil(n/T)-1) bound. The existential target is the source theorem and follows directly from that constructed theorem. Only the constructed theorem proof has temporary sorry scaffolding; every construction has a body. /spec/paper.tex supplies the sequential path-factor interpretation; no paper lemma or algorithmic error bound is assumed. Supporting sources: /spec/support contained no files to copy. Statement revision record: initial statement only; /spec/feedback.json was absent. No source hypothesis or conclusion was weakened; positive T and u>=0 expose the implicit domains, and n=0 is covered by a zero-output convention."
+}

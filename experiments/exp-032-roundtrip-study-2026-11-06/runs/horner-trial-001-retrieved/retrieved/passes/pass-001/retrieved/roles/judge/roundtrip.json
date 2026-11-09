@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "64c3a1fc37aa3e950c7ccf7976da8b7cab607cada9e4753cc46b7a12bc466cb1",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "The explicit target Research.Horner.forward_error_bound already asserts the complete requested universal inequality about the recursively defined P, Q, and E. The constructions match the source base cases and recurrences exactly, and the model has precisely the stated relative-error assumptions. No missing final composition, inequality, induction, or linkage must be supplied by the judge.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full forward-error theorem for every model, coefficient list, and real evaluation point.",
+      "evidence": "Research.Horner.forward_error_bound explicitly states the full absolute forward-error inequality for every model, every finite real coefficient list including the empty list, and every real x.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-horner",
+      "requirement": "Use the exact Horner recursion with zero for the empty list and coefficients in increasing degree order.",
+      "evidence": "Research.Horner.P is defined by P([],x)=0 and P(a::t,x)=a+x P(t,x). The head is the constant coefficient; the described polynomial is sum_i a_i x^i.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "rounded-horner",
+      "requirement": "Evaluate each cons step using a rounded multiplication of x and the rounded tail, then a rounded addition of the coefficient.",
+      "evidence": "Research.Horner.Q is defined by Q_model([],x)=0 and Q_model(a::t,x)=r(a+r(x Q_model(t,x))). The same model.round supplies both calls, with two calls per entry and no separate rounding of coefficients or x.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "error-envelope",
+      "requirement": "Define the stated error envelope using exact values and u, with the requested recurrence and base case.",
+      "evidence": "Research.Horner.E is defined by E([],x,u)=0 and E(a::t,x,u)=u |a+x v|+(1+u)(u |x v|+(1+u)|x| e), where v=P(t,x) and e=E(t,x,u). This is exactly the source recurrence and uses exact tail values.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "conclusion-linkage",
+      "requirement": "Bound the absolute difference of the supplied rounded and exact evaluators by the supplied envelope.",
+      "evidence": "The explicit target bounds |Q_model(coefficients,x)-P(coefficients,x)| by E(coefficients,x,u_model). All inputs are identical, and u_model is explicitly the parameter of the same model used by Q.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use the supplied relative-error model without additional smallness, sign, nonzero, or exact-arithmetic premises.",
+      "evidence": "The model requires only nonnegative u and, for each real z, a delta with |delta|<=u and r(z)=z(1+delta). The target has no upper bound on u or restrictions on x or coefficients. Exact real operations outside round calls specify the requested abstract arithmetic; they do not assume that rounding itself is exact.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

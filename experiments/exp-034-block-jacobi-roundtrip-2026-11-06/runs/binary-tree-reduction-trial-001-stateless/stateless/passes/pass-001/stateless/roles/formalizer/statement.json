@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.BinaryTreeReduction.parallel_binary_tree_reduction"
+  ],
+  "construction_names": [
+    "Research.BinaryTreeReduction.depth",
+    "Research.BinaryTreeReduction.stageSize",
+    "Research.BinaryTreeReduction.gamma",
+    "Research.BinaryTreeReduction.stage",
+    "Research.BinaryTreeReduction.computed",
+    "Research.BinaryTreeReduction.LocalRoundingModel",
+    "Research.BinaryTreeReduction.coefficient",
+    "Research.BinaryTreeReduction.backwardPerturbation"
+  ],
+  "source_mapping": "Research/Submission.lean formalizes /spec/source.txt, selected theorem:parallel_binary_tree_reduction (paper.tex lines 180-216). depth is Nat.clog 2 n; stageSize is ceil(n/2^level). stage and computed implement the source zero-based stage schedule with exact unmatched-node copies. LocalRoundingModel encodes the supplied no-overflow/no-underflow relative addition model through coordinatewise errors only at performed additions. coefficient and backwardPerturbation construct individual input perturbations. parallel_binary_tree_reduction states the complete existential backward-error conclusion, derived from canonical_backward_error, whose proof is temporary sorry scaffolding for the next role. Explicit domain assumptions are 0<n, 0<=u, and depth(n)*u<1, with arbitrary coordinate type. Statement revision record: initial statement; no feedback.json was present, and no revision was required. /spec/support contained no files to copy."
+}

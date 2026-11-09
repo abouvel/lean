@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "cfd1f0a8fcfa4469b7fb148f68918af93b0afcd8d1a2e00cde586c7015bbf08e",
+  "status": "complete",
+  "statement": "The construction is the real forward difference quotient (f(x+h)-f(x))/h. For every f,D: R -> R and x,h,L in R, if h>0, L>=0, f is continuous on [x,x+h], f has derivative D(t) at every t in (x,x+h), and |D(t)-D(x)|<=L|t-x| for every such t, the quotient differs from D(x) by at most Lh.",
+  "targets": [
+    {
+      "name": "Research.forwardDifference_error_bound",
+      "statement": "For all functions f,D: R -> R and all real numbers x,h,L, assume 0<h, 0<=L, and f is continuous on the closed interval [x,x+h]. Assume that for every real t with x<t<x+h, f has derivative D(t) at t, as a function on R. Assume also that for every real t with x<t<x+h, |D(t)-D(x)|<=L|t-x|. Then |Research.forwardDifference(f,x,h)-D(x)|<=Lh, equivalently |(f(x+h)-f(x))/h-D(x)|<=Lh. Here D(x) is the value of the supplied function D at x; the hypotheses do not assert that f has derivative D(x) at x."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.forwardDifference",
+      "description": "A function (R -> R) -> R -> R -> R defined for every f: R -> R and x,h in R by Research.forwardDifference(f,x,h)=(f(x+h)-f(x))/h. It evaluates f at x+h and x, subtracts the second value from the first, and divides by h. The definition imposes no regularity on f and no restriction on h. With the total real division used in the formal definition, its value at h=0 is 0. In the target theorem h>0, and this quotient is compared with the supplied value D(x)."
+    }
+  ],
+  "assumptions": [
+    "All parameters are universally quantified: f and D range over functions R -> R, and x,h,L range over R, with the usual real arithmetic, order, absolute value, and topology.",
+    "The theorem assumes h>0 and L>=0.",
+    "The theorem assumes f is continuous on [x,x+h].",
+    "For every t in (x,x+h), the theorem assumes f has derivative D(t) at t.",
+    "For every t in (x,x+h), the theorem assumes |D(t)-D(x)|<=L|t-x|. This compares D(t) with D at the fixed endpoint x; it does not assume a bound comparing every pair of points.",
+    "There is no separate continuity or differentiability assumption on D and no differentiability assumption on f at either endpoint. D is defined on all of R, including x, but its agreement with the derivative of f is assumed only on (x,x+h)."
+  ],
+  "missing_context": []
+}

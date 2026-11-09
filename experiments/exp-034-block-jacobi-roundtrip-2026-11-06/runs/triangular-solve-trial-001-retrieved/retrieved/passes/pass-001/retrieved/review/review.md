@@ -1,0 +1,3 @@
+Pass. Research/Submission.lean:509-559 proves the complete selected triangular solve backward-error theorem for both orientations. The concrete execution and its operation-level rounding assumptions match the source model; the theorem proves the matrix identity, triangular perturbation structure, and gamma(n) componentwise bound. Nonzero pivots are derived from nonsingularity. No conclusion is assumed.
+
+Offline verification passed. Independent source compilation and an audit copy also passed; theorem axioms are only propext, Classical.choice, and Quot.sound. Only nonfatal linter warnings were emitted.

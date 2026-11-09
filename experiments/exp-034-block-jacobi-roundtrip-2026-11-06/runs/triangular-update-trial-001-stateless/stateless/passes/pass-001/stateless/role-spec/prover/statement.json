@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.TriangularUpdate.triangular_update"
+  ],
+  "construction_names": [
+    "Research.TriangularUpdate.gamma",
+    "Research.TriangularUpdate.ErrorTrace",
+    "Research.TriangularUpdate.ErrorTrace.Valid",
+    "Research.TriangularUpdate.prefixIndex",
+    "Research.TriangularUpdate.lastIndex",
+    "Research.TriangularUpdate.roundedProduct",
+    "Research.TriangularUpdate.sequentialAccumulator",
+    "Research.TriangularUpdate.sequentialInnerProduct",
+    "Research.TriangularUpdate.roundedNumerator",
+    "Research.TriangularUpdate.computedUpdate",
+    "Research.TriangularUpdate.innerCoefficient",
+    "Research.TriangularUpdate.lastCoefficient",
+    "Research.TriangularUpdate.perturbation"
+  ],
+  "source_mapping": "Research/Submission.lean formalizes the complete selected lemma lemma:traingular_update from /spec/source.txt (original paper.tex lines 403-452). Fin k uses zero-based indices; prefixIndex enumerates the first k-1 coordinates and lastIndex is the paper coordinate k. ErrorTrace.Valid gives the elementary relative-error bounds for every executed operation, encoding the standard no-overflow/no-underflow model. sequentialAccumulator initializes with the first rounded product and then rounds each sequential addition; computedUpdate then rounds subtraction and division. perturbation explicitly constructs the single backward perturbation vector, with the inverse of the final two rounding factors in its last coordinate. triangular_update asserts the exact perturbed equation and all gamma_k componentwise bounds under k>=2, u>=0, k*u<1 and b_k nonzero. Initial statement: no revision to an earlier formal statement; /spec/feedback.json is absent. Supporting source copies are unchanged in Research/Sources; /spec/support contains no files. Only the final theorem proof is left as sorry scaffolding for the proving role."
+}

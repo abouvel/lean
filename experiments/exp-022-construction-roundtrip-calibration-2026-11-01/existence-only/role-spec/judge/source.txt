@@ -1,0 +1,7 @@
+Construct an explicit real root of x*x = 0 and verify it.
+Provide a standalone definition of the answer as a concrete numeric or algebraic
+expression, and prove that this specific answer has square zero. A bare existence
+theorem does not fulfill the construction requirement. Defining the answer by
+an abstract choice/selection from an existence proof also does not fulfill the
+requested explicit expression. Classical reasoning inside the correctness proof
+is permitted. No executable IEEE arithmetic is requested.

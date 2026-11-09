@@ -1,0 +1,251 @@
+{
+  "job_id": "cholesky-solve-trial-001-stateless",
+  "condition": "stateless",
+  "outcome": "accepted",
+  "success": true,
+  "record": {
+    "task_id": "cholesky-solve",
+    "passes": [
+      {
+        "number": 1,
+        "verification": {
+          "verification_command": "bash pipeline/verify.sh",
+          "build_and_scans_exit_code": 0,
+          "nontrivial_submission": true,
+          "formal_gate_passed": true,
+          "semantic_review": "pending",
+          "wall_time_seconds": 26.711,
+          "source_files": [
+            "Research/Submission.lean"
+          ],
+          "source_lines": 620,
+          "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+          "formal_audit": {
+            "schema_version": 1,
+            "unapproved_axioms": [],
+            "protected_source_failures": [],
+            "candidate_hash": "5f09f554b13196136023c37522200efa150094ef2471de6d916098a094bd8663",
+            "passed": true,
+            "changed_declarations": []
+          }
+        },
+        "direct_report": {
+          "overall_verdict": "pass",
+          "phase": "final",
+          "target_evidence": "Research/Submission.lean:568-616 proves Research.CholeskySolve.cholesky_solve under the original SPD/symmetry, roundoff-size, and successful floating-point execution hypotheses. Its conclusion at lines 574-583 contains the original perturbed system and both exact componentwise bounds. Independent source compilation and theorem signature/axiom inspection succeeded; offline verification also passed.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "Research/Submission.lean:568-616 proves cholesky_solve, with the full existential perturbation, original perturbed system, and both componentwise inequalities at lines 574-583. Independent compilation of the source exited 0; /evaluation/verification.json also reports a successful build and formal audit.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define the computed Cholesky factorization followed by the two triangular solves.",
+              "evidence": "Research/Submission.lean:36-63 defines per-operation relative rounding, sequential rounded products/sums, residual subtraction, division, and successful rounded square root. Lines 66-99 define precisely the k<i Cholesky updates and forward substitution and k>i backward substitution. FactorTrace at lines 83-87 enforces the upper-triangular factor recurrence. SolveTrace at lines 103-108 composes factorization, the forward solve with R.transpose, and the backward solve with R.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the original perturbed system and both stated componentwise bounds with their exact coefficients.",
+              "evidence": "Research/Submission.lean:28 defines gamma u k = k*u/(1-k*u), and lines 31-32 define entrywise absolute value. Lines 574-583 state (A+DeltaA)x=b, |DeltaA_ij| <= (gamma_(n+1)+2*gamma_n+gamma_n^2)(|R^T||R|)_ij, and the comparison to (3*gamma_(n+1)+gamma_n^2)(|R^T||R|)_ij. Lines 587-608 prove the equation and first bound using derived factor and solve perturbations; lines 609-616 prove the second comparison by gamma monotonicity and entrywise nonnegativity.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Research/Submission.lean:103-108 links the same A,b,R,y,x through all three execution stages. The theorem at lines 569-575 takes those original inputs and concludes the system for the same x and b. Lines 111-118 define the perturbation from R^T R-A and the two derived solve perturbations. Lines 590-594 prove the assembled system by composing the actual forward and backward equations.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "Research/Submission.lean:569-573 quantifies arbitrary n,u,A,b,R,y,x, requires nonnegative unit roundoff, (n+1)*u<1, positive definiteness, symmetry, and successful execution. The execution hypothesis unfolds exclusively into operation traces (lines 36-108), with nonzero divisors and positive diagonal radicands/outputs expressing successful factorization. It contains no backward-error conclusion or desired bound. Factor and solve estimates are proved at lines 203-545. Square-root relative rounding at lines 61-63 makes explicit the standard floating-point square root implicit in the source algorithm. The unused hA is harmless: the proof works under the weaker symmetry and successful execution conditions. Independent #print axioms reports only propext, Classical.choice, and Quot.sound.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "roundtrip": {
+          "schema_version": 2,
+          "candidate_hash": "5f09f554b13196136023c37522200efa150094ef2471de6d916098a094bd8663",
+          "overall_verdict": "pass",
+          "phase": "final",
+          "lean_implies_source": true,
+          "source_implies_lean": true,
+          "relation": "faithful",
+          "delivery_complete": true,
+          "construction_complete": true,
+          "missing_formal_steps": [],
+          "target_evidence": "Research.CholeskySolve.cholesky_solve explicitly delivers the perturbed-system equation and both exact bounds for every supplied SolveTrace. SolveTrace fully specifies the rounded Cholesky recurrence followed by forward substitution using R^T and backward substitution using R. This relational operational encoding matches the source standard relative-error model; a deterministic solver is not required. No additional final theorem or witness identification is needed.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "The target cholesky_solve already asserts the existence of DeltaA, the perturbed-system equation, and both componentwise bounds together. No missing composition or inequality is needed.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define the computed Cholesky factorization followed by the two triangular solves.",
+              "evidence": "FactorTrace specifies upper triangularity, positive rounded diagonal square roots, and rounded off-diagonal residual/division recurrences with precisely k<i. DotTrace specifies each rounded product and ordered sum. ForwardTrace uses k<i and BackwardTrace uses k>i. SolveTrace combines FactorTrace(u,A,R), ForwardTrace(u,R^T,b,y), and BackwardTrace(u,R,y,x). These acyclic recurrences constitute a relational definition of the computed algorithm. The source relative-error model and construction policy do not demand a deterministic rounding function or executable implementation; no abstract choice substitutes for the recurrences.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the original perturbed system and both stated componentwise bounds with their exact coefficients.",
+              "evidence": "The target explicitly asserts (A+DeltaA)x=b and |DeltaA_ij| <= C B_ij <= D B_ij for all i,j, where C=gamma(u,n+1)+2 gamma(u,n)+gamma(u,n)^2, D=3 gamma(u,n+1)+gamma(u,n)^2, gamma(u,k)=ku/(1-ku), and B_ij=sum_k |R_ki||R_kj|. These are exactly the original equation and two componentwise bounds.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "The same A,b,R,y,x occur in SolveTrace and the target. FactorTrace uses the entries of A and R, the forward trace uses R^T and the original b, and the backward trace uses R and that forward output y. The target bounds use that R and the equation uses that x and b. The backward-error perturbation may legitimately be existential; identifying it with the named solvePerturbation expression is not required.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "Arbitrary real SPD A, arbitrary b, and arbitrary n are covered under 0<=u and (n+1)u<1. Explicit symmetry repeats the source SPD requirement. Positive residuals and diagonal entries and nonzero divisors represent successful Cholesky computation. Rounded imposes only elementary relative errors bounded by u, rather than any desired backward-error estimate. Finite real operations with that model represent the no-overflow/no-underflow setting. Nonnegative unit roundoff is implicit in the source. The target denominator restrictions validate gamma at both required indices. No n>0 or b!=0 restriction is imposed.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": [
+            "Review is based on the supplied mathematical translation, source, and contracts only; Lean code and proof checking were not inspected."
+          ]
+        },
+        "report": {
+          "schema_version": 2,
+          "candidate_hash": "5f09f554b13196136023c37522200efa150094ef2471de6d916098a094bd8663",
+          "overall_verdict": "pass",
+          "phase": "final",
+          "lean_implies_source": true,
+          "source_implies_lean": true,
+          "relation": "faithful",
+          "delivery_complete": true,
+          "construction_complete": true,
+          "missing_formal_steps": [],
+          "target_evidence": "Research.CholeskySolve.cholesky_solve explicitly delivers the perturbed-system equation and both exact bounds for every supplied SolveTrace. SolveTrace fully specifies the rounded Cholesky recurrence followed by forward substitution using R^T and backward substitution using R. This relational operational encoding matches the source standard relative-error model; a deterministic solver is not required. No additional final theorem or witness identification is needed.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "The target cholesky_solve already asserts the existence of DeltaA, the perturbed-system equation, and both componentwise bounds together. No missing composition or inequality is needed.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define the computed Cholesky factorization followed by the two triangular solves.",
+              "evidence": "FactorTrace specifies upper triangularity, positive rounded diagonal square roots, and rounded off-diagonal residual/division recurrences with precisely k<i. DotTrace specifies each rounded product and ordered sum. ForwardTrace uses k<i and BackwardTrace uses k>i. SolveTrace combines FactorTrace(u,A,R), ForwardTrace(u,R^T,b,y), and BackwardTrace(u,R,y,x). These acyclic recurrences constitute a relational definition of the computed algorithm. The source relative-error model and construction policy do not demand a deterministic rounding function or executable implementation; no abstract choice substitutes for the recurrences.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the original perturbed system and both stated componentwise bounds with their exact coefficients.",
+              "evidence": "The target explicitly asserts (A+DeltaA)x=b and |DeltaA_ij| <= C B_ij <= D B_ij for all i,j, where C=gamma(u,n+1)+2 gamma(u,n)+gamma(u,n)^2, D=3 gamma(u,n+1)+gamma(u,n)^2, gamma(u,k)=ku/(1-ku), and B_ij=sum_k |R_ki||R_kj|. These are exactly the original equation and two componentwise bounds.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "The same A,b,R,y,x occur in SolveTrace and the target. FactorTrace uses the entries of A and R, the forward trace uses R^T and the original b, and the backward trace uses R and that forward output y. The target bounds use that R and the equation uses that x and b. The backward-error perturbation may legitimately be existential; identifying it with the named solvePerturbation expression is not required.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "Arbitrary real SPD A, arbitrary b, and arbitrary n are covered under 0<=u and (n+1)u<1. Explicit symmetry repeats the source SPD requirement. Positive residuals and diagonal entries and nonzero divisors represent successful Cholesky computation. Rounded imposes only elementary relative errors bounded by u, rather than any desired backward-error estimate. Finite real operations with that model represent the no-overflow/no-underflow setting. Nonnegative unit roundoff is implicit in the source. The target denominator restrictions validate gamma at both required indices. No n>0 or b!=0 restriction is imposed.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": [
+            "Review is based on the supplied mathematical translation, source, and contracts only; Lean code and proof checking were not inspected."
+          ]
+        },
+        "roles": {
+          "translator": {
+            "condition": "blind",
+            "kind": "translator",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794180407.776453,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 67.487,
+            "token_usage": {
+              "input_tokens": 54764,
+              "cached_input_tokens": 44416,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2992,
+              "reasoning_output_tokens": 124
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "judge": {
+            "condition": "blind",
+            "kind": "judge",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794180475.8767016,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 72.062,
+            "token_usage": {
+              "input_tokens": 71383,
+              "cached_input_tokens": 62720,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 3117,
+              "reasoning_output_tokens": 530
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "overall_verdict": "pass",
+  "phase": "final",
+  "target_evidence": "Research/Submission.lean:81-114 proves Research.FloatingPoint.Horner.forward_error (model : Model) (coefficients : List ℝ) (x : ℝ) : |Q model coefficients x - P coefficients x| ≤ E coefficients x model.u. Its only model assumptions are Research/Common/FloatingPoint/Model.lean:15-19. The exact requested recurrences appear at Submission.lean:18-35. Offline /evaluation/verification.json and verification.log report successful compilation and formal audit; independent Lean compilation succeeds and axiom inspection finds only standard Lean axioms.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full forward-error theorem for every model, coefficient list, and real evaluation point.",
+      "evidence": "Research/Submission.lean:81-114 proves forward_error for arbitrary model : Model, coefficients : List ℝ, and x : ℝ. The conclusion at line 82 is exactly the requested absolute forward-error bound; lines 84-114 supply a list-induction proof, not merely a proposition definition. Independent lake env lean Research/Submission.lean completed with exit code 0.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-horner",
+      "requirement": "Use the exact Horner recursion with zero for the empty list and coefficients in increasing degree order.",
+      "evidence": "Research/Submission.lean:18-20 defines P [] x = 0 and P (a :: tail) x = a + x * P tail x, giving increasing-degree coefficient order. Lines 37-40 prove the defining equations by reflexivity.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "rounded-horner",
+      "requirement": "Evaluate each cons step using a rounded multiplication of x and the rounded tail, then a rounded addition of the coefficient.",
+      "evidence": "Research/Submission.lean:24-26 defines Q model [] x = 0 and Q model (a :: tail) x = model.round (a + model.round (x * Q model tail x)). This performs exactly the prescribed rounded product followed by rounded addition at each cons step; lines 42-45 expose the same equations.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "error-envelope",
+      "requirement": "Define the stated error envelope using exact values and u, with the requested recurrence and base case.",
+      "evidence": "Research/Submission.lean:30-35 defines E with empty value 0 and cons value u * |a + x * v| + (1 + u) * (u * |x * v| + (1 + u) * |x| * e), where v = P tail x and e = E tail x u. It uses only exact P, coefficients, x, and u; lines 47-52 confirm the recurrence.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "conclusion-linkage",
+      "requirement": "Bound the absolute difference of the supplied rounded and exact evaluators by the supplied envelope.",
+      "evidence": "Research/Submission.lean:82 directly bounds |Q model coefficients x - P coefficients x| by E coefficients x model.u. Lines 87-102 bound the rounded product using the induction hypothesis; lines 103-114 unfold the supplied P, Q, and E and apply the rounded-addition estimate to obtain that exact envelope.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use the supplied relative-error model without additional smallness, sign, nonzero, or exact-arithmetic premises.",
+      "evidence": "Research/Common/FloatingPoint/Model.lean:15-19 supplies only u, u_nonneg, round, and the universal relative rounding law. Research/Submission.lean:81-82 adds no hypotheses beyond model, list, and real x. Lines 54-76 derive rounding estimates from round_spec and u_nonneg; line 83 derives nonnegativity of 1 + u. No circular conclusion or input restriction is assumed. The model is nonvacuous (identity rounding with u = 0 satisfies its fields). /evaluation/verification.json reports no unapproved axioms or protected-source failures; independent recompilation and #print axioms show only propext, Classical.choice, and Quot.sound.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

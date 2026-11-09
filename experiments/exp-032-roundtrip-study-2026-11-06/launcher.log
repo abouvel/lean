@@ -1,0 +1,7 @@
+Temporary Windows keep-awake request active.
+RUN case-01
+RESULT case-01 pass pass pass True
+RUN case-02
+RESULT case-02 pass fail fail True
+BINARY_TREE_CONTROL_PASS
+Finished 18 jobs; comparison: /home/abouvel/fall26/research/experiments/exp-032-roundtrip-study-2026-11-06/comparison.json

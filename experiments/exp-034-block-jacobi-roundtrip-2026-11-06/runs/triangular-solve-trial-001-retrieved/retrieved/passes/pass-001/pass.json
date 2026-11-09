@@ -1,0 +1,231 @@
+{
+  "status": "infrastructure_error",
+  "error": "Construction is absent or is not a definition: Research.TriangularSolve.Direction",
+  "builder": {
+    "condition": "retrieved",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 154078.909,
+    "compiler_command_events": 26,
+    "token_usage": {
+      "input_tokens": 1441029,
+      "cached_input_tokens": 1355904,
+      "output_tokens": 22198,
+      "reasoning_output_tokens": 4336
+    },
+    "roles": {
+      "planner": {
+        "condition": "retrieved",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794009227.0165114,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 79.65,
+        "token_usage": {
+          "input_tokens": 99427,
+          "cached_input_tokens": 85376,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3395,
+          "reasoning_output_tokens": 118
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "retrieved",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794009307.2169533,
+        "time_limit_seconds": 420,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 125.262,
+        "token_usage": {
+          "input_tokens": 229875,
+          "cached_input_tokens": 215552,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 4816,
+          "reasoning_output_tokens": 854
+        },
+        "compiler_command_events": 4,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "retrieved",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794009442.342792,
+        "time_limit_seconds": 900,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 153873.997,
+        "token_usage": {
+          "input_tokens": 1111727,
+          "cached_input_tokens": 1054976,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 13987,
+          "reasoning_output_tokens": 3364
+        },
+        "compiler_command_events": 22,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "Research.TriangularSolve.solution_of_a_triangular_system"
+      ],
+      "construction_names": [
+        "Research.TriangularSolve.Direction",
+        "Research.TriangularSolve.Arithmetic",
+        "Research.TriangularSolve.RelativeRound",
+        "Research.TriangularSolve.gamma",
+        "Research.TriangularSolve.Triangular",
+        "Research.TriangularSolve.rowOrder",
+        "Research.TriangularSolve.previousColumns",
+        "Research.TriangularSolve.dotAcc",
+        "Research.TriangularSolve.roundedDot",
+        "Research.TriangularSolve.DotAccValid",
+        "Research.TriangularSolve.DotValid",
+        "Research.TriangularSolve.rowNumerator",
+        "Research.TriangularSolve.solveRow",
+        "Research.TriangularSolve.RowValid",
+        "Research.TriangularSolve.solveRows",
+        "Research.TriangularSolve.RowsValid",
+        "Research.TriangularSolve.computedSolution",
+        "Research.TriangularSolve.ExecutionValid"
+      ],
+      "source_mapping": "Research/Submission.lean states the full selected theorem theorem:solution_of_a_traingular_system from /spec/source.txt and /spec/paper.tex, lines 457-490. Nonsingularity is T.det \u2260 0; Triangular selects lower or upper orientation; computedSolution executes sequential rounded dot products followed by subtraction and division, using direct division for the first row. ExecutionValid imposes the standard relative rounding model only at executed operations and represents the no-overflow/no-underflow assumption. The theorem assumes nonnegative unit roundoff and n*u<1 and concludes an existential matrix perturbation with the exact original right-hand side, matching triangular orientation, and componentwise gamma_n bound. Increasing forward and decreasing backward traversal are explicit, including their sequential dot-product order. Dimension zero is allowed without arithmetic. No paper error bound is assumed. All construction definitions have bodies; the final theorem alone has temporary sorry proof scaffolding for the next role. Supplied paper.tex, references.bib, source.txt, and source.pdf are copied unchanged under Research/SupportingSources; /spec/support has no files. Statement revision record: /spec/feedback.json was absent; this is the initial statement, with no feedback-driven revisions."
+    }
+  },
+  "critic": {
+    "condition": "retrieved",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1794163370.0847073,
+    "time_limit_seconds": 300,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 72.339,
+    "token_usage": {
+      "input_tokens": 247917,
+      "cached_input_tokens": 224128,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2082,
+      "reasoning_output_tokens": 216
+    },
+    "compiler_command_events": 2,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 32.745,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 563,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "433d6e961453bec14dc195deb1736b443c42b87a53565797877263772d9a2554",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794009227.0165114,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 79.65,
+      "token_usage": {
+        "input_tokens": 99427,
+        "cached_input_tokens": 85376,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3395,
+        "reasoning_output_tokens": 118
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794009307.2169533,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 125.262,
+      "token_usage": {
+        "input_tokens": 229875,
+        "cached_input_tokens": 215552,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4816,
+        "reasoning_output_tokens": 854
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794009442.342792,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 153873.997,
+      "token_usage": {
+        "input_tokens": 1111727,
+        "cached_input_tokens": 1054976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13987,
+        "reasoning_output_tokens": 3364
+      },
+      "compiler_command_events": 22,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "number": 1,
+  "wall_time_seconds": 1075.7380956690176,
+  "evidence": "retrieved/passes/pass-001"
+}

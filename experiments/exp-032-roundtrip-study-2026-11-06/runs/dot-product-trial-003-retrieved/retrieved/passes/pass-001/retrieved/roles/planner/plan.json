@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "strategy": "Use the five supplied prerequisite modules unchanged. Define exactProductTree by mapping each pair (a,b) to a*b, roundedProductTree by mapping it to model.mul a b, and roundedDotProduct as roundedSum model of roundedProductTree. Construct a multiplication perturbation with bound model.u by tree induction. Apply the supplied roundedSum_exists_perturbation to roundedProductTree, whose depth equals the original depth, obtaining the final existential witness. Compose multiplication and addition perturbations using IsPerturbation.trans. With d = tree.depth and g = gamma d model.u, the composite bound is u + g*(1+u), which equals g + u*(1+g) and is at most gamma (d+1) u by gamma_step. Apply IsPerturbation.mono to finish the bound while retaining the rounded-sum witness equality. This is the required construction: each witness leaf incorporates its multiplication error and all addition errors on its path to the root, connecting the computed dot product to leafwise perturbations of exactProductTree. No completed target proof is included in this plan.",
+  "obligations": [
+    {
+      "id": "preserve_prerequisites",
+      "description": "For implementation, copy all five approved Research prerequisite modules unchanged and preserve configuration. Use local Lean and Mathlib only; do not add axioms or leave placeholders in the completed candidate."
+    },
+    {
+      "id": "define_product_construction",
+      "description": "Define exactProductTree : Tree (Real \u00d7 Real) \u2192 Tree Real by Tree.map of pairwise exact multiplication; define roundedProductTree using Model.mul at every leaf; define roundedDotProduct model tree = roundedSum model (roundedProductTree model tree). Retain the original binary shape and use rounded addition at every internal node."
+    },
+    {
+      "id": "depth_preservation",
+      "description": "Establish that the product-tree maps preserve tree.depth, using Tree.depth_map, so the addition error bound is indexed by the original depth."
+    },
+    {
+      "id": "multiplication_perturbation",
+      "description": "For every model and pair tree, establish IsPerturbation model.u (exactProductTree tree) (roundedProductTree model tree). At a leaf use model.round_spec (a*b), derive |model.mul a b - a*b| \u2264 model.u * |a*b| from the relative-error factor, and combine children with IsPerturbation.node. This must include zero products without division by the product."
+    },
+    {
+      "id": "smallness_and_nonnegativity",
+      "description": "From (((tree.depth + 1 : Nat) : Real) * model.u < 1) and model.u_nonneg derive ((tree.depth : Real) * model.u < 1). Obtain 0 \u2264 gamma tree.depth model.u using gamma_nonneg. Make natural-to-real casts explicit as needed."
+    },
+    {
+      "id": "addition_witness",
+      "description": "Instantiate roundedSum_exists_perturbation on roundedProductTree model tree and transport its depth using depth preservation. Obtain perturbed : Tree Real with IsPerturbation (gamma tree.depth model.u) (roundedProductTree model tree) perturbed and perturbed.exactSum = roundedDotProduct model tree."
+    },
+    {
+      "id": "compose_and_bound",
+      "description": "Apply IsPerturbation.trans to the multiplication perturbation and addition witness, supplying nonnegativity of the second bound. Rearrange model.u + gamma d model.u * (1 + model.u) to gamma d model.u + model.u * (1 + gamma d model.u), where d = tree.depth. Bound it by gamma (d+1) model.u using gamma_step with the original smallness hypothesis, and enlarge the perturbation bound using IsPerturbation.mono."
+    },
+    {
+      "id": "full_target_statement",
+      "description": "Prove for arbitrary model : Model and tree : Tree (Real \u00d7 Real), under only (((tree.depth + 1 : Nat) : Real) * model.u < 1), existence of perturbed : Tree Real such that IsPerturbation (gamma (tree.depth + 1) model.u) (exactProductTree tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. The theorem must cover leaf trees and unbalanced trees and account for one multiplication rounding plus at most tree.depth addition roundings; neither exact arithmetic nor the desired conclusion may be assumed."
+    },
+    {
+      "id": "verification",
+      "description": "Compile the new module against unchanged prerequisites with the local Lean toolchain. Check the final declaration has the full quantified statement and no sorry, custom axioms, or hidden assumptions; inspect dependencies if necessary. Do not substitute a rounded-products-only or forward-error statement for the existential componentwise claim."
+    }
+  ]
+}

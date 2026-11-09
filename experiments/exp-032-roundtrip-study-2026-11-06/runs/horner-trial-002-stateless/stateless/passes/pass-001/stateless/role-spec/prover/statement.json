@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.Horner.forward_error"
+  ],
+  "construction_names": [
+    "Research.Horner.P",
+    "Research.Horner.Q",
+    "Research.Horner.E"
+  ],
+  "source_mapping": "From /spec/source.txt: Research.Horner.P is exact Horner evaluation on increasing-degree coefficient lists; Research.Horner.Q uses exactly the prescribed nested rounded multiplication and addition; Research.Horner.E is the exact specified recursive envelope. Research.Horner.forward_error universally quantifies over the supplied Research.FloatingPoint.Model, every List \u211d, and every real x, with only the model fields u_nonneg and round_spec as assumptions. Supporting Model.lean copied unchanged from /spec/support/Research/Common/FloatingPoint/Model.lean. Statement revision record: initial statement; /spec/feedback.json was absent, so no feedback-driven revisions. The theorem proof is temporary sorry scaffolding for the next proof role; all constructions have actual recursive bodies."
+}

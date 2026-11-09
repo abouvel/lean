@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "3a5e0d4a0ab512b0d09742e3f915b1dadf35814eae7475e4b39e16b67f4e6203",
+  "status": "complete",
+  "statement": "There exists a real number x with x·x = 0. Research.answer is a real number defined by classical choice of a witness to this existence statement. Research.answer_correct states that this chosen real number satisfies Research.answer·Research.answer = 0. Real arithmetic consequently forces the chosen value to be 0; the defining construction selects a witness rather than explicitly returning the numeral 0.",
+  "targets": [
+    {
+      "name": "Research.answer._proof_1",
+      "statement": "There exists x ∈ ℝ such that x·x = 0. There are no additional hypotheses or free parameters. Multiplication and 0 are real multiplication and real zero."
+    },
+    {
+      "name": "Research.answer_correct",
+      "statement": "For the real number Research.answer defined by classical choice from Research.answer._proof_1, Research.answer·Research.answer = 0. There are no additional hypotheses, free parameters, or quantified variables."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.answer",
+      "description": "A real number defined as Classical.choose applied to Research.answer._proof_1: it selects a witness x of ∃ x ∈ ℝ, x·x = 0. It has no arguments or implicit parameters. Its defining body is classical witness selection; Research.answer_correct states that the selected witness satisfies the equation. Since the only real number whose square is zero is zero, its value is necessarily 0."
+    }
+  ],
+  "assumptions": [
+    "Both target statements are closed: neither has any explicit or implicit hypothesis, free parameter, or numerical bound.",
+    "The existential variable x has domain ℝ, as identified by the supplied real multiplication and zero instances. All displayed products and zeros are in ℝ.",
+    "The construction uses classical choice on the existence theorem Research.answer._proof_1."
+  ],
+  "missing_context": []
+}

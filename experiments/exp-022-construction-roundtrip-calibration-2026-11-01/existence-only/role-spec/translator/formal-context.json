@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "7c841c41a621b919921874ac68765dcba1c66de51b86fc103e9374f38488697d",
+  "targets": [
+    "Research.root_exists"
+  ],
+  "construction_names": [],
+  "declarations": [
+    {
+      "body": "",
+      "dependencies": [
+        "Exists",
+        "Real",
+        "Eq",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "Research.root_exists",
+      "type": "\u2203 x, Eq.{1} (HMul.hMul.{0, 0, 0} x x) 0"
+    }
+  ],
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.28.0",
+    "manifest_sha256": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+  }
+}

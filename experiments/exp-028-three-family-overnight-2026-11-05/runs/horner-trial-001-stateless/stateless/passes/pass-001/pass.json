@@ -1,0 +1,8 @@
+{
+  "status": "infrastructure_error",
+  "error": "Worker interrupted by signal 15",
+  "roles": {},
+  "number": 1,
+  "wall_time_seconds": 49.15111635399808,
+  "evidence": "stateless/passes/pass-001"
+}

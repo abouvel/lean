@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "7c841c41a621b919921874ac68765dcba1c66de51b86fc103e9374f38488697d",
+  "status": "complete",
+  "statement": "There exists a real number x such that x multiplied by itself equals the real number zero. The statement has no hypotheses or additional parameters. No constructed objects are listed.",
+  "targets": [
+    {
+      "name": "Research.root_exists",
+      "statement": "There exists x ∈ ℝ such that x · x = 0, where multiplication and zero are those of the real numbers. There are no hypotheses, additional parameters, or bounds on x."
+    }
+  ],
+  "constructions": [],
+  "assumptions": [],
+  "missing_context": []
+}

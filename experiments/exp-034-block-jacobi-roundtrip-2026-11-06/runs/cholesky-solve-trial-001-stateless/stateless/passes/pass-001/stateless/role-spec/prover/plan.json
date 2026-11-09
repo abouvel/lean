@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the full algorithm-to-backward-error implication for the authoritative Cholesky Solve statement in /spec/source.txt, using /spec/paper.tex as proof guidance. Build an operational rounded Cholesky computation followed by rounded forward and backward substitution, prove the required local error bounds from its operation traces, and only then combine them through a generic matrix perturbation lemma. Use real matrices indexed by Fin n, entrywise absolute values and inequalities, and gamma(k)=k*u/(1-k*u). The required final witness is DeltaA = (R.transpose*R-A) + R.transpose*EU + EL*R + EL*EU, with EL and EU obtained from the actual forward and backward substitution executions. This construction connects the algorithm to the theorem by identifying A+DeltaA with (R.transpose+EL)*(R+EU). Do not replace successful execution by the desired backward-error estimates as hypotheses. No feedback.json or populated supporting-source files were present when inspected. This document is a plan, not the completed target proof.",
+  "obligations": [
+    {
+      "id": "source_contract",
+      "description": "State the full selected theorem for arbitrary n, real SPD A and real b, unit roundoff u, and the computed R, intermediate yhat and final xhat linked to a successful Cholesky/forward/backward execution on those original inputs. Preserve no-overflow/no-underflow and (n+1)*u<1, both componentwise bounds with exactly gamma(n+1)+2*gamma(n)+gamma(n)^2 and 3*gamma(n+1)+gamma(n)^2, and an existential DeltaA satisfying (A+DeltaA)*xhat=b. Interpret u>=0 as part of unit roundoff. Do not require the final DeltaA to be symmetric; only the factorization perturbation has that property."
+    },
+    {
+      "id": "operational_construction",
+      "description": "Define executable recurrences or a faithful operation-level trace relation for sequential dot products, subtraction, division and Cholesky square roots, with each operation recording its relative error bounded by u. Construct upper-triangular R from A in dependency order, yhat by forward substitution with R.transpose and b, and xhat by backward substitution with R and that same yhat. Successful factorization must encode positive valid diagonal pivots and nonzero computed diagonal entries, sufficient for both solves. Do not take exact Cholesky factors, arbitrary output matrices, or a record containing the desired global error bounds as a substitute for this construction."
+    },
+    {
+      "id": "rounding_model_audit",
+      "description": "Resolve precisely the square-root modeling gap: the displayed common model in source.txt lists only +,-,*,/. The factorization argument additionally needs the standard correctly rounded square-root relative-error model. Check whether the intended floating-point semantics justifies it and prove or explicitly define that semantics without adding an unexplained theorem hypothesis. If only the four-operation model is available and square roots are unconstrained, report this precise blocker rather than assert the factorization helper. Treat the paper diagonal bound containing an undefined primed factor as a proof typo to be resolved by deriving the authoritative bound, not by changing the theorem."
+    },
+    {
+      "id": "gamma_products",
+      "description": "Prove positivity of relevant denominators, n*u<1, nonnegativity and monotonicity of gamma through n+1, and the finite product bound for factors (1+delta) and their inverses with |delta|<=u. Establish the actual operation counts instead of assuming a theta bound for the algorithm. Handle u=0, the empty n=0 case, and one-entry kernels explicitly where the paper triangular-update helper requires k>=2."
+    },
+    {
+      "id": "triangular_update",
+      "description": "Derive the sequential dot-product expansion and perturbed row identity for a rounded subtraction/division update with nonzero diagonal. Establish coefficient perturbations bounded by gamma(row length) times their original coefficients. For a row with no previous terms, use its actual division trace to obtain gamma(1), rather than applying the k>=2 lemma outside its range. Define perturbations multiplicatively so zero entries do not require division by matrix entries."
+    },
+    {
+      "id": "triangular_solve_helpers",
+      "description": "Prove forward and backward substitution backward-error theorems from the operational recurrences and row-update helper, assembling row witnesses into matrices with the same triangular support. Applied to the constructed execution, obtain (R.transpose+EL)*yhat=b and (R+EU)*xhat=yhat with |EL|<=gamma(n)*|R.transpose| and |EU|<=gamma(n)*|R|. Derive the required nonsingularity from successful Cholesky diagonal positivity and triangularity rather than assuming a helper conclusion."
+    },
+    {
+      "id": "cholesky_factorization_helper",
+      "description": "Prove the factorization backward-error theorem from the computed Cholesky recurrences. Analyze off-diagonal updates and rounded diagonal square roots separately, including the additional inverse square-root error factors and their gamma(j+1) count. Construct EF=R.transpose*R-A, prove symmetry using symmetry of A, and prove |EF|<=gamma(n+1)*(|R.transpose|*|R|) entrywise by finite sums and triangular support. Local entry perturbation witnesses may depend on the entry being analyzed; do not assume a single globally consistent perturbed factor without proof."
+    },
+    {
+      "id": "matrix_inequalities",
+      "description": "Supply finite-dimensional real matrix lemmas for |X+Y|<=|X|+|Y|, |X*Y|<=|X|*|Y|, entrywise nonnegativity of absolute matrices, monotonicity of products of nonnegative matrices, and extraction of nonnegative scalar factors from products. Here absolute value is entrywise, not a norm, determinant, or spectral absolute value; matrix multiplication is the finite sum operation."
+    },
+    {
+      "id": "final_witness_linkage",
+      "description": "Construct DeltaA=EF+R.transpose*EU+EL*R+EL*EU from the previously derived witnesses. Establish the matrix identity A+DeltaA=(R.transpose+EL)*(R+EU), and use associativity of matrix-vector multiplication with the two computed-solve identities to obtain the required system for the actual xhat. Keep the quadratic EL*EU term and preserve multiplication order."
+    },
+    {
+      "id": "sharp_constants",
+      "description": "Use the three helper error bounds and entrywise matrix inequalities to bound the two linear solve terms by gamma(n)*(|R.transpose|*|R|) each and the quadratic term by gamma(n)^2 times that product. Combine with the EF bound for the first exact coefficient. Use gamma(n)<=gamma(n+1) and nonnegativity of |R.transpose|*|R| to establish the second comparison, including equality cases."
+    },
+    {
+      "id": "lean_delivery_validation",
+      "description": "Use local Lean and Mathlib to implement definitions and all non-library helper proofs; inspect available APIs as needed without altering the mathematical contract. Check that the final theorem has the operational trace hypothesis linking A,b,R,yhat,xhat, rather than assumed factorization or solve bounds. Compile the complete target, check for placeholders and custom axioms, and record any unresolved modeling or mathematical blocker precisely. No completed Lean target is supplied, and cited paper lemmas cannot be left unproved or imported as axioms."
+    }
+  ]
+}

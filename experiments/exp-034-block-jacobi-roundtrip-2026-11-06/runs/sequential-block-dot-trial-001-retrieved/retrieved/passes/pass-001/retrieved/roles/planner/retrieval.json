@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "block_dot_product|Sequential Reduction|sequential summation|gamma_"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require explicit denominator positivity before clearing gamma rational inequalities; use the generic Lean arithmetic guidance only, not as evidence for the target result."
+    }
+  ]
+}

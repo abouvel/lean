@@ -1,0 +1,9 @@
+'MixedPrecisionBlockJacobi.vectorInf_mulVec_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MixedPrecisionBlockJacobi.matrixInf_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MixedPrecisionBlockJacobi.rounded_residual_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MixedPrecisionBlockJacobi.affine_recurrence_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MixedPrecisionBlockJacobi.affine_recurrence_limsup' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MixedPrecisionBlockJacobi.mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

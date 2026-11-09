@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "555d97febc7d6250aea7f65623259f50439177ca2a0f9d4af54e342e75ad0311",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "The two explicit final targets each state the entire matrix backward-error conclusion for the constructed nested sequential summation. The supplied multiplicative error traces encode the source elementary-operation rounding model. The explicit coefficient perturbation is the expansion of that same computation, and the constructed target already asserts both its identity and full bound. The existential target independently delivers the selected theorem.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "Both block_matrix_vector_product_constructed and block_matrix_vector_product explicitly assert computed(A,x,T,E)=(A+DeltaA)x and the componentwise perturbation bound. The former specifies the witness; the latter states the entire existential conclusion. No final theorem is left to composition of helpers.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the rowwise size-T block matrix-vector product with sequential reduction and zero padding.",
+      "evidence": "padded returns zero beyond n. roundedProduct uses padded(A(i))(b*T+t)*padded(x)(b*T+t)*(1+E.mulError(i,b,t)). blockPartial sequentially sums T products, and computed sequentially sums B block partials for each row. sequentialSum starts with its first term and rounds all subsequent additions. blockCount=((n+T) dotminus 1) div T equals ceil(n/T) for T>0. Padded trailing additions still multiply prior accumulated contributions.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the perturbation matrix identity and the entrywise gamma(T + ceil(n/T) - 1) bound.",
+      "evidence": "Both targets explicitly assert the identity and |DeltaA(i,j)|<=gamma(k,u)*|A(i,j)| for every i,j. Here k=errorCount(n,T)=T+ceil(n/T)-1 and gamma(k,u)=k*u/(1-k*u). The constructed target proves these for DeltaA(i,j)=A(i,j)*(pathCoefficient(T,E,i,j)-1). pathCoefficient includes the product error and all inner and outer addition factors affecting the term: max(1,t)<=s<T and max(1,b)<=s<B, respectively.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "Both targets use the defined computed(A,x,T,E) on the left and the same original A and x on the right. Each original column j is linked to block j div T and position j mod T in pathCoefficient, using the same trace E as the computation. Thus the perturbation identity concerns the actual nested summation of the original inputs.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "The hypotheses T>0 and u>=0 express positive block size and nonnegative unit roundoff implicit in the source. Valid imposes only absolute bounds on the relative errors of the elementary operations; these are the source standard rounding-model assumptions, not a desired algorithmic bound. Universal arbitrary valid traces cover executions under that model with no overflow or underflow. The remaining hypothesis is precisely (T+ceil(n/T)-1)*u<1. There are no divisibility, nonzero-entry, or positive-dimension restrictions. The computation and perturbation are independently defined.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

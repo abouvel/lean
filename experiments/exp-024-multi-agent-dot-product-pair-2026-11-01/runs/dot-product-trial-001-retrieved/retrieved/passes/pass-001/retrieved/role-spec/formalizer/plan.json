@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "strategy": "Map the input pair tree to exact products and rounded products, then evaluate the latter with roundedSum. Construct the existential witness using roundedSum_exists_perturbation on the rounded product tree. Compose its addition perturbation with a structural multiplication perturbation via IsPerturbation.trans. The composite bound u + gamma d u * (1 + u) equals gamma d u + u * (1 + gamma d u); gamma_step and IsPerturbation.mono therefore yield gamma (d + 1) u relative to exactProductTree. Reuse protected prerequisites unchanged. This construction directly connects the actual rounded dot product to exact products and counts one multiplication plus at most d additions per leaf path.",
+  "obligations": [
+    {
+      "id": "definitions",
+      "description": "Define exactProductTree tree as tree.map (fun p => p.1 * p.2), roundedProductTree model tree as tree.map (fun p => model.mul p.1 p.2), and roundedDotProduct model tree as roundedSum model (roundedProductTree model tree), for tree : Tree (\u211d \u00d7 \u211d). Preserve shape and leaf multiplicity."
+    },
+    {
+      "id": "multiplication",
+      "description": "Prove IsPerturbation model.u (exactProductTree tree) (roundedProductTree model tree) by structural induction. At each leaf use model.round_spec on the exact product; algebra and abs_mul turn |\u03b4| \u2264 model.u into the required absolute leaf error bound. Use IsPerturbation.node for children. Avoid division by the exact product so zero products are covered."
+    },
+    {
+      "id": "depth-and-smallness",
+      "description": "Set d := tree.depth. Use Tree.depth_map to obtain depth d for the rounded product tree. From ((d + 1 : \u2115) : \u211d) * model.u < 1 and model.u_nonneg derive (d : \u211d) * model.u < 1, handling casts explicitly. Obtain 0 \u2264 gamma d model.u using gamma_nonneg."
+    },
+    {
+      "id": "addition-witness",
+      "description": "Apply roundedSum_exists_perturbation to roundedProductTree model tree with the derived depth and smallness. Retain the witness perturbed, its IsPerturbation (gamma d model.u) relation to roundedProductTree, and perturbed.exactSum = roundedDotProduct model tree."
+    },
+    {
+      "id": "composition",
+      "description": "Use IsPerturbation.trans with first bound model.u and second bound gamma d model.u; discharge second-bound nonnegativity. Rewrite the resulting model.u + gamma d model.u * (1 + model.u) to gamma d model.u + model.u * (1 + gamma d model.u). Apply gamma_step d with original smallness, then IsPerturbation.mono to obtain the requested gamma (d + 1) bound."
+    },
+    {
+      "id": "full-contract",
+      "description": "State the universal theorem for every supplied Model and every pair tree under only the specified depth-plus-one smallness: there exists perturbed : Tree \u211d with IsPerturbation (gamma (tree.depth + 1) model.u) (exactProductTree tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. Track each leaf occurrence separately, including repeated values and zero products. A single leaf must still include multiplication rounding; do not replace depth + 1 by depth or relate the final witness only to rounded products."
+    },
+    {
+      "id": "integrity",
+      "description": "In the implementation phase copy the five supplied prerequisite modules unchanged, preserve protected configuration, and compile the new definitions and full theorem with local Lean and Mathlib. No placeholders, custom axioms, exact-arithmetic restriction, assumed conclusion, or additional smallness assumption are permitted. Algorithm 1 and logarithmic-depth specializations are unnecessary for this universal-tree target. No feedback.json was present during planning."
+    }
+  ]
+}

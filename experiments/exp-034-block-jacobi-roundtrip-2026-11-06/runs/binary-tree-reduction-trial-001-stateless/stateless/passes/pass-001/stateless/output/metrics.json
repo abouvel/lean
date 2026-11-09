@@ -1,0 +1,103 @@
+{
+  "condition": "stateless",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 339.32,
+  "compiler_command_events": 16,
+  "token_usage": {
+    "input_tokens": 632085,
+    "cached_input_tokens": 563712,
+    "output_tokens": 10448,
+    "reasoning_output_tokens": 1602
+  },
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990088.6078262,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 58.006,
+      "token_usage": {
+        "input_tokens": 95528,
+        "cached_input_tokens": 81152,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1889,
+        "reasoning_output_tokens": 100
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990147.21174,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 100.279,
+      "token_usage": {
+        "input_tokens": 215622,
+        "cached_input_tokens": 180992,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3437,
+        "reasoning_output_tokens": 581
+      },
+      "compiler_command_events": 5,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793990256.9336445,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 181.035,
+      "token_usage": {
+        "input_tokens": 320935,
+        "cached_input_tokens": 301568,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5122,
+        "reasoning_output_tokens": 921
+      },
+      "compiler_command_events": 11,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "Research.BinaryTreeReduction.parallel_binary_tree_reduction"
+    ],
+    "construction_names": [
+      "Research.BinaryTreeReduction.depth",
+      "Research.BinaryTreeReduction.stageSize",
+      "Research.BinaryTreeReduction.gamma",
+      "Research.BinaryTreeReduction.stage",
+      "Research.BinaryTreeReduction.computed",
+      "Research.BinaryTreeReduction.LocalRoundingModel",
+      "Research.BinaryTreeReduction.coefficient",
+      "Research.BinaryTreeReduction.backwardPerturbation"
+    ],
+    "source_mapping": "Research/Submission.lean formalizes /spec/source.txt, selected theorem:parallel_binary_tree_reduction (paper.tex lines 180-216). depth is Nat.clog 2 n; stageSize is ceil(n/2^level). stage and computed implement the source zero-based stage schedule with exact unmatched-node copies. LocalRoundingModel encodes the supplied no-overflow/no-underflow relative addition model through coordinatewise errors only at performed additions. coefficient and backwardPerturbation construct individual input perturbations. parallel_binary_tree_reduction states the complete existential backward-error conclusion, derived from canonical_backward_error, whose proof is temporary sorry scaffolding for the next role. Explicit domain assumptions are 0<n, 0<=u, and depth(n)*u<1, with arbitrary coordinate type. Statement revision record: initial statement; no feedback.json was present, and no revision was required. /spec/support contained no files to copy."
+  }
+}

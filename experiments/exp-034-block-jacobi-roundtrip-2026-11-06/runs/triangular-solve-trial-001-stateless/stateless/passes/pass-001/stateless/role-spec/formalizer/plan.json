@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the actual sequential triangular substitution computation over real-valued floating-point operations satisfying the source relative-error model, and derive its backward error rather than assuming it. First prove finite products of rounding factors and reciprocal factors satisfy the exact gamma bound; next prove the sequential dot-product and triangular-update lemmas; then construct the lower-triangular perturbation row by row for the recursively computed solution. Transfer this construction to upper-triangular backward substitution by reversing both indices and the right-hand side, with a proved correspondence of algorithms and outputs. Preserve arbitrary original T and b, nonsingularity, n*u<1, the precise gamma_n, both triangular orientations, and the computed output. The paper proof omits the one-entry row case, which must be treated as a single rounded division. This is a plan only, not a completed target proof. Read sources: /spec/source.txt, /spec/PROMPT.txt, /spec/paper.tex (floating-point model and triangular solve section), /spec/references.bib, and relevant installed Mathlib matrix definitions. /spec/support is empty, /spec/feedback.json is absent, and the current submission contains only import Mathlib.",
+  "obligations": [
+    {
+      "id": "statement_and_quantifiers",
+      "description": "State the full selected theorem for n : Nat, T : Matrix (Fin n) (Fin n) Real, b : Fin n -> Real, and unit roundoff u with its standard nonnegativity and n*u<1. Use det T != 0 or an equivalent nonsingularity predicate and the disjunction of lower/upper triangular structure. Define gamma m u = (m:Real)*u/(1-(m:Real)*u). Conclude existence of a matrix Delta linked to the computed solution with (T+Delta).mulVec xhat=b, pointwise |Delta i j| <= gamma n u * |T i j|, and the corresponding triangular support. Do not replace the algorithm by an arbitrary xhat satisfying the intended backward error."
+    },
+    {
+      "id": "operational_rounding_model",
+      "description": "Define rounded multiplication, addition, subtraction, and division, or an explicit execution trace with per-operation errors, satisfying fl(a op b)=(a op b)*(1+delta), |delta|<=u for every executed operation (division requires nonzero divisor). Express absence of overflow/underflow through applicability of this real relative-error model throughout the execution. Operation-law assumptions are legitimate source semantics; rowwise perturbation bounds and the target system equation are not permissible input assumptions. Preserve the original matrix and right-hand side as exact algorithm inputs."
+    },
+    {
+      "id": "construct_sequential_dot",
+      "description": "Construct the sequential dot product used in each row. For a nonempty list of terms, start with the first rounded product and then round each subsequent product and running addition; for an empty list return zero. Prove its recurrence and expansion in terms of the actual entries and computed predecessor components, with one multiplication factor per term and addition factors only along that term's accumulation path. Avoid adding an unjustified extra rounding of the initial addition to zero."
+    },
+    {
+      "id": "construct_substitution",
+      "description": "Define forward substitution by well-founded recursion on the row index or an explicit fold storing the solved prefix. Its first component is rounded b[0]/T[0,0]; later rows compute the sequential dot product of T[i,j]*xhat[j] for j<i, then rounded subtraction from b[i], then rounded division by T[i,i]. Prove the defining row recurrences for the full returned vector. Define backward substitution on upper-triangular matrices with the corresponding reverse dependency order. A relation encoding a complete actual execution is acceptable only with an actual construction/existence result, not a record containing the desired error estimate."
+    },
+    {
+      "id": "diagonal_nonzero",
+      "description": "Derive every diagonal pivot T[i,i] != 0 from nonsingularity and triangularity; do not strengthen the target by independently assuming all pivots. Mathlib Matrix.det_of_lowerTriangular and Matrix.det_of_upperTriangular in LinearAlgebra/Matrix/Block.lean express the determinant as the diagonal product, using BlockTriangular toDual/id respectively. Conclude every division in the constructed substitution is well-defined."
+    },
+    {
+      "id": "gamma_and_factor_bounds",
+      "description": "Prove nonnegativity and monotonicity gamma m u <= gamma n u for m<=n and n*u<1. For products of at most m factors (1+delta) or their reciprocals, with |delta|<=u and m*u<1, prove nonzero/positive denominators and |product-1|<=gamma m u. Supply this as a proved arithmetic helper rather than assuming the paper's theta bound. Handle m=0 and u=0; only infer u<1 when a positive row size exists."
+    },
+    {
+      "id": "dot_product_error",
+      "description": "From the sequential-dot construction, prove pHat = sum_j a[j]*t[j]*q[j], with q[j] a product of the actual rounding factors and |q[j]-1| bounded by gamma at the appropriate factor count. For a dot product of length k-1 the maximum count is k-1, hence is at most k. Establish the expansion by induction on the accumulation, retaining dependence on actual row coefficients and computed predecessors."
+    },
+    {
+      "id": "prove_triangular_update",
+      "description": "Prove the source triangular-update helper for k>=2, not as an extra hypothesis. With pHat the dot product, xHat=((c-pHat)*(1+eta)*(1+zeta))/d. Construct off-diagonal perturbations t[j]*(q[j]-1) and diagonal perturbation d*(((1+eta)*(1+zeta))^(-1)-1). Prove the perturbed row identity by algebra and nonzero factors, and bound all perturbations by gamma k u times the absolute original coefficients. Interpret a[j] as already computed solution entries and t[j] as original matrix coefficients, so errors perturb T rather than xhat or b."
+    },
+    {
+      "id": "first_row_and_empty_dimension",
+      "description": "For a one-entry row use only the rounded division: diagonal perturbation d*((1+zeta)^(-1)-1), bounded by gamma 1 u * |d|. The paper's k>=2 lemma cannot be applied here. If the implementation literally subtracts an empty sum first, justify exact subtraction of zero for representable b rather than allowing a spurious independent error; the bare relative-error equation alone does not ensure that exactness. Handle n=0 by the empty vector/matrix and Delta=0, and n=1 without imposing n>=2."
+    },
+    {
+      "id": "assemble_lower_perturbation",
+      "description": "For each lower row i, instantiate the proved update on the prefix of length i.val+1 using the actual recursive output. Assemble the row witnesses into one Delta; set Delta[i,j]=0 whenever i<j. Prove each entrywise bound using i.val+1<=n and gamma monotonicity, and prove each finite row sum equals b[i]. Convert those component equations to Matrix.mulVec equality by function extensionality and splitting the sum into j<i, j=i, and j>i. Explicitly show triangular support and preservation of zero matrix entries through the relative bound or multiplicative construction."
+    },
+    {
+      "id": "upper_case_transport",
+      "description": "Use Fin.revPerm or equivalent index reversal to form L[i,j]=T[rev i,rev j] and c[i]=b[rev i]. Prove upper triangularity becomes lower triangularity and nonsingularity is preserved. Prove the forward computation on (L,c) corresponds to backward substitution on (T,b), including dot-product accumulation order and all operation errors. Transport the output vector and perturbation back, and verify the original-index mulVec equation, pointwise bound with the unchanged gamma n u, and upper triangular structure. Transposing alone is insufficient because it does not establish the required algorithm/output correspondence."
+    },
+    {
+      "id": "audit_and_blockers",
+      "description": "Compile the complete construction and all helper proofs using local Lean 4.28.0/Mathlib, then audit the final theorem's hypotheses and dependencies: no custom axioms, sorry, placeholders, unproved product bound, assumed triangular-update bound, or assumed target certificate. Do not alter the bound to gamma_(n+1), drop an orientation, restrict dimension, or lose linkage to T, b, and the computed xhat. If exact-zero operation semantics, an indexing convention, or another source issue prevents the exact theorem, record that precise blocker rather than silently changing the theorem. The 900-second builder limit guides prioritization, not mathematical weakening."
+    }
+  ]
+}

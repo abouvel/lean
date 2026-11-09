@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "strategy": "Use the five approved prerequisite modules unchanged. Construct the exact and rounded product trees by shape-preserving maps, and define the rounded dot product by applying roundedSum to the rounded product tree. Establish a leafwise multiplication perturbation with bound u, obtain an existential addition perturbation with bound gamma depth u from the supplied rounded-sum theorem, and compose these witnesses using IsPerturbation.trans. The composition bound u + gamma depth u * (1 + u) equals gamma depth u + u * (1 + gamma depth u), so gamma_step upgrades it to gamma (depth + 1) u. This explicitly accounts for one multiplication and at most depth additions along each path. No candidate or feedback file was present in /spec; the generic memory artifact was inspected but did not affect the mathematical plan. This plan supplies construction and obligations only, not a completed proof.",
+  "obligations": [
+    {
+      "id": "preserve-prerequisites",
+      "description": "The formalizer must copy all five supplied Research modules unchanged into the corresponding /workspace/Research paths, preserve protected configuration, and use only local Lean/Mathlib and approved sources. The planner must not edit /workspace."
+    },
+    {
+      "id": "define-constructions",
+      "description": "For tree : Tree (\u211d \u00d7 \u211d), define exactProductTree tree := tree.map (fun p => p.1 * p.2), roundedProductTree model tree := tree.map (fun p => model.mul p.1 p.2), and roundedDotProduct model tree := roundedSum model (roundedProductTree model tree). These must preserve the original reduction shape and perform rounding on every product and every internal addition."
+    },
+    {
+      "id": "multiplication-witness",
+      "description": "Establish IsPerturbation model.u (exactProductTree tree) (roundedProductTree model tree) by structural induction. At a leaf use model.round_spec (a*b) to obtain \u03b4 with |\u03b4| \u2264 u and round(a*b) = (a*b)*(1+\u03b4); bound the absolute difference by u*|a*b| using absolute-value multiplication and commutativity. At nodes combine the two child relations. This construction must also handle zero and negative products without division."
+    },
+    {
+      "id": "depth-and-smallness",
+      "description": "Use Tree.depth_map to identify the rounded product tree depth with tree.depth. From (((tree.depth + 1 : \u2115) : \u211d) * model.u < 1) and model.u_nonneg derive ((tree.depth : \u211d) * model.u < 1). Manage Nat-to-real casts explicitly so that the hypothesis counts depth plus one rounding operations."
+    },
+    {
+      "id": "addition-witness",
+      "description": "Apply roundedSum_exists_perturbation to roundedProductTree model tree under the derived depth smallness. Obtain perturbed : Tree \u211d with IsPerturbation (gamma tree.depth model.u) (roundedProductTree model tree) perturbed and perturbed.exactSum = roundedDotProduct model tree, simplifying mapped depth and the algorithm definition."
+    },
+    {
+      "id": "compose-and-bound",
+      "description": "Prove gamma tree.depth model.u is nonnegative using gamma_nonneg and the derived smallness, then apply IsPerturbation.trans to the multiplication relation and addition witness. Rewrite its bound model.u + gamma tree.depth model.u * (1 + model.u) as gamma tree.depth model.u + model.u * (1 + gamma tree.depth model.u). Use gamma_step at tree.depth with the original smallness and IsPerturbation.mono to reach gamma (tree.depth + 1) model.u."
+    },
+    {
+      "id": "full-original-theorem",
+      "description": "State and establish for every model : Model and tree : Tree (\u211d \u00d7 \u211d), assuming only (((tree.depth + 1 : \u2115) : \u211d) * model.u < 1), the conclusion \u2203 perturbed : Tree \u211d, IsPerturbation (gamma (tree.depth + 1) model.u) (exactProductTree tree) perturbed \u2227 perturbed.exactSum = roundedDotProduct model tree. Its witness gives the exact computed value as a sum of perturbed exact products, each leaf satisfying |y - a*b| \u2264 gamma (depth+1) u * |a*b|. Do not weaken this to perturbations of already rounded products or assume the desired existence."
+    },
+    {
+      "id": "validation-and-edge-cases",
+      "description": "The formalizer must compile the completed target with the supplied prerequisites and check there are no sorry/admit placeholders or custom axioms, no modifications to protected prerequisites, and no restriction to exact rounding or a special tree family. In particular a single-leaf tree must retain multiplication rounding and use gamma 1 u; unbalanced trees must use the maximum path depth. No executable IEEE implementation or logarithmic-depth algorithm corollary is required."
+    }
+  ]
+}

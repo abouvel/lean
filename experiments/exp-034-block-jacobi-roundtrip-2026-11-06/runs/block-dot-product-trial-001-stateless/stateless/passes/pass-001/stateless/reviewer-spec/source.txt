@@ -1,0 +1,126 @@
+Source: Sahil Bhola, Self-contained Proof for a Mixed-precision Block Jacobi Algorithm.
+
+Selected deliverable: the full active result labeled theorem:block_dot_product in main.tex (lines 235-291).
+
+The original mathematical proof is available in paper.tex. The selected statement below is authoritative. Earlier statements and notation supply context. A referenced result may be proved as a helper. Do not assume a desired algorithmic bound or an unproved paper lemma as an added hypothesis.
+
+SELECTED STATEMENT (verbatim LaTeX, proof omitted)
+\begin{theorem}[Block Dot Product]\label{theorem:block_dot_product}
+Let
+\begin{align}
+    y=\sum_{i=1}^{n}\vect{x}_i\vect{y}_i
+\end{align}
+be evaluated by partitioning the terms into
+$n^\dagger=\ceil{n/T}$ blocks of size $T$, computing each block dot
+product sequentially, and combining the resulting partial sums using a
+binary-tree reduction of depth
+$\ell^\dagger=\ceil{\log_2 n^\dagger}$. Any entries beyond $n$ in the
+final block are taken to be zero. Assume that no overflow or underflow
+occurs and that $(T+\ell^\dagger)\urd<1$. Then the computed result
+$\hat{y}$ admits either of the backward-error representations
+\begin{align}
+    \hat{y}
+    &=\sum_{i=1}^{n}
+      \left(\vect{x}_i+\Delta\vect{x}_i\right)\vect{y}_i,
+    &
+    \abs{\Delta\vect{x}_i}
+    &\leq \gamma_{T+\ell^\dagger}\abs{\vect{x}_i},
+    \\
+    \hat{y}
+    &=\sum_{i=1}^{n}
+      \vect{x}_i\left(\vect{y}_i+\Delta\vect{y}_i\right),
+    &
+    \abs{\Delta\vect{y}_i}
+    &\leq \gamma_{T+\ell^\dagger}\abs{\vect{y}_i},
+\end{align}
+for all $i=1,\cdots,n$, where
+$\gamma_{T+\ell^\dagger}
+=(T+\ell^\dagger)\urd/(1-(T+\ell^\dagger)\urd)$.
+\end{theorem}
+
+SECTION CONTEXT
+\section{Block Dot Product}
+\label{sec:block_dot_product}
+Another widely used kernel is computing the dot product kernel
+\begin{align}
+    y = \sum_{i=1}^n \vect{x}_i \vect{y}_i,
+\end{align}
+in a block-wise manner given by
+\begin{align}
+    y = \sum_{j = 1}^{n^\dagger}\sum_{t=1}^{T} \vect{x}_{(j-1)T + t} \vect{y}_{(j-1)T + t} = \sum_{j=1}^{n^\dagger} p_j, \quad p_j \define \sum_{t=1}^{T} \vect{x}_{(j-1)T + t} \vect{y}_{(j-1)T + t},
+\end{align}
+where $n^\dagger \define \lceil n / T \rceil$ denotes the number of blocks of size $T$.
+Typically, in parallel computing architecture like SIMT, the partial dot-product computation $p_j$ is computed by independent threads and is computed sequentially.
+Followed by, to reduce the partials $p_j$, we can perform computations such as sequential summation or parallel binary tree reduction of depth $\log_2 n^\dagger$.
+We first perform backward error analysis where the paritals $p_j$ are reduced using parallel binary tree reduction.
+Followed by, we also consider the case of sequential accumulation.
+
+EARLIER STATEMENTS FOR CONTEXT
+\begin{theorem}
+\label{theorem:parallel_binary_tree_reduction}
+Let
+\begin{align}
+    y=\sum_{i=1}^{n}\vect{x}_i
+\end{align}
+be evaluated componentwise using a binary-tree reduction of depth
+$\ell^\dagger=\ceil{\log_2 n}$ in floating-point arithmetic with unit
+roundoff $\urd$. Assume that no overflow or underflow occurs and that
+$\ell^\dagger\urd<1$. Then the computed result $\hat{y}$ satisfies
+\begin{align}
+    \hat{y}
+    =\sum_{i=1}^{n}\left(\vect{x}_i+\Delta\vect{x}_i\right),
+    \qquad
+    \abs{\Delta\vect{x}_i}
+    \leq \gamma_{\ell^\dagger}\abs{\vect{x}_i},
+    \quad i=1,\ldots,n,
+\end{align}
+where the inequalities are interpreted componentwise and
+$\gamma_{\ell^\dagger}=\ell^\dagger\urd/(1-\ell^\dagger\urd)$.
+\end{theorem}
+
+COMMON ROUNDING MODEL AND ERROR CONSTANTS
+\section{Floating-Point Model}
+We assume the standard floating-point model~\cite{higham2002accuracy}: for every elementary
+operation $\circ \in \{+,-,\times,/\}$,
+\begin{equation}
+    \fl(a \circ b) = (a \circ b)(1+\delta),
+    \qquad
+    \abs{\delta} \le \urd,
+    \label{eq:fp-model}
+\end{equation}
+where $\urd$ is the unit roundoff and $\delta$ is the relative roundoff error.
+Using~\cref{eq:fp-model} for numerical analysis we typicall obtain the product
+\begin{align}
+    \prod_{i=1}^n (1 + \delta_i)^{\rho_i} \define 1 + \theta_n, \qquad \rho = \pm 1,
+    \label{eq:theta_n}
+\end{align}
+where $n$ denotes the number of accumulated roundoff error terms.
+For numerical analysis, we seek reliable and sharp bounds for $\theta_n$.
+
+
+\section{Deterministic Rounding Error Analysis}
+The deterministic rounding error analysis proposes the following problem-size dependent constant
+\begin{align}
+\gamma_{n} \define \frac{n\urd}{1 - n\urd}, 
+\label{eq:drea}
+\end{align}
+for $n\urd < 1$.
+Here, $n$ is the number of accumulated error terms~\cite{higham2002accuracy}.
+The problem-size dependent constant is monotonic, that is, $\gamma_{n+1} > \gamma_{n}$ for $\urd > 0$.
+Performing backward/forward error analysis using~\cref{eq:drea} we obtain
+\begin{align}
+    \abs{\theta_n} \leq \gamma_n.
+\end{align}
+
+SOURCE NOTATION MACROS
+\newcommand{\urd}{\ensuremath{\mathrm{u}}}
+\newcommand{\define}{\ensuremath{\triangleq}}
+\newcommand{\vect}[1]{\mathbf{\MakeLowercase{#1}}}
+\newcommand{\mat}[1]{\mathbf{\MakeUppercase{#1}}}
+\newcommand{\ireal}[1]{\in\mathbb{R}^{#1}}
+\newcommand{\norm}[2][]{\left\|#2\right\|_{#1}}
+\DeclareMathOperator{\fl}{fl}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\widehatgamma}[1]{\widehat{\gamma}_{#1}}

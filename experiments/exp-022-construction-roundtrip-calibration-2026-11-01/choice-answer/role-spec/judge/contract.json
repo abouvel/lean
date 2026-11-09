@@ -1,0 +1,30 @@
+{
+  "requirements": {
+    "schema_version": 1,
+    "requirements": [
+      {
+        "id": "target-completeness",
+        "description": "Prove the full requested mathematical property."
+      },
+      {
+        "id": "explicit-construction",
+        "description": "Provide a standalone explicit numeric/algebraic answer; existence or abstract selection alone is insufficient."
+      },
+      {
+        "id": "construction-linkage",
+        "description": "The correctness theorem must refer to the actual submitted answer."
+      }
+    ],
+    "defect_categories": [
+      {
+        "id": "missing-explicit-construction",
+        "description": "Required explicit construction is absent or replaced by existence/abstract choice."
+      },
+      {
+        "id": "missing-final-theorem",
+        "description": "The requested correctness theorem has not been proved about the constructed answer."
+      }
+    ]
+  },
+  "construction_policy": "The standalone answer must be an explicit numeric/algebraic expression, not abstract selection. Classical reasoning in proof is allowed."
+}

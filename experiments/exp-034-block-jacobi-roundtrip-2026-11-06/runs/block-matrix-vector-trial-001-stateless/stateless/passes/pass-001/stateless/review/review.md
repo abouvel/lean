@@ -1,0 +1,5 @@
+Pass. All five frozen requirements are satisfied.
+
+The final theorem is `BlockMatrixVector.block_matrix_vector_product` (Research/Submission.lean:303-313), supported by the explicit construction theorem at lines 278-298. The computation uses zero padding, sequential block dot products, and sequential reduction of partial sums. The proof expands that actual computation, counts at most T+ceil(n/T)-1 rounding factors per term, and constructs the matrix perturbation without dividing by matrix entries. Only local operation rounding bounds and the original smallness condition are required; positive T and nonnegative u express the implicit domains.
+
+Offline evidence: /evaluation/verification.json and verification.log report a successful build, no proof placeholders, and no custom axioms. Independent compilation of the candidate succeeded. A separate temporary Lean audit confirmed the final theorem signature, standard axioms only, zero blocks when n=0, and the strict lower coverage inequality characterizing the positive-n ceiling block count; candidate block_coverage supplies the upper inequality. The candidate was kept read-only.

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "obligations": [
+    {
+      "id": "forward_difference_definition",
+      "description": "Define the real forward difference by forwardDifference f x h = (f (x + h) - f x) / h. State the theorem for arbitrary f D : \u211d \u2192 \u211d and x h L : \u211d, concluding |forwardDifference f x h - D x| \u2264 L * h."
+    },
+    {
+      "id": "faithful_hypotheses",
+      "description": "Retain precisely h > 0, 0 \u2264 L, ContinuousOn f (Set.Icc x (x + h)), \u2200 t \u2208 Set.Ioo x (x + h), HasDerivAt f (D t) t, and \u2200 t \u2208 Set.Ioo x (x + h), |D t - D x| \u2264 L * |t - x|. D x is an independent reference value; require neither endpoint differentiability nor continuity of D."
+    },
+    {
+      "id": "mean_value_construction",
+      "description": "Construct an interior witness c \u2208 Set.Ioo x (x + h) with D c = (f (x + h) - f x) / h by applying Mathlib exists_hasDerivAt_eq_slope to f and D with endpoints x and x + h. Establish endpoint order from h > 0 and normalize (x + h) - x to h. This witness identifies the forward difference with a derivative value to which the assumed variation estimate applies."
+    },
+    {
+      "id": "interior_distance_bound",
+      "description": "Use the two strict interval inequalities for c to establish 0 \u2264 c - x and c - x \u2264 h, hence |c - x| \u2264 h. Multiply this estimate by L using 0 \u2264 L."
+    },
+    {
+      "id": "transfer_to_target",
+      "description": "Specialize the local variation assumption at c, combine it with L * |c - x| \u2264 L * h, and transport the resulting estimate through the witness equality and the forward-difference definition."
+    },
+    {
+      "id": "formal_completion",
+      "description": "The formalizer must supply all definitions and proofs without sorry, placeholders, or custom axioms and check the resulting Lean file using local Lean and Mathlib. Preserve the original quantifiers, domain restrictions, and error constant."
+    }
+  ],
+  "strategy": "Use the scalar Lagrange mean value theorem, importing Mathlib.Analysis.Calculus.Deriv.MeanValue (or Mathlib). The local source confirms exists_hasDerivAt_eq_slope takes f, D, strict endpoint order, continuity on Icc, and HasDerivAt hypotheses only on Ioo, and returns an interior witness with D c equal to the secant quotient. The required construction is that witness, rather than an endpoint derivative or an integral remainder. Normalize the interval length to h, bound the witness distance from x by h, and apply monotonicity of multiplication by the nonnegative L to the supplied local variation estimate. Basic interval arithmetic can use linarith, abs_of_nonneg, and mul_le_mul_of_nonneg_left. No supporting prerequisites or feedback were supplied: /spec/support contains no files and /spec/feedback.json is absent. This is a construction and obligation plan, not the completed target proof."
+}

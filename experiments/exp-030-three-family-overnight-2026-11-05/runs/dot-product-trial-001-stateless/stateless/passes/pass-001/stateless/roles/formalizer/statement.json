@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation"
+  ],
+  "construction_names": [
+    "Research.BinaryTreeReduction.exactProductTree",
+    "Research.BinaryTreeReduction.roundedProductTree",
+    "Research.BinaryTreeReduction.roundedDotProduct"
+  ],
+  "source_mapping": "Authoritative source: /spec/source.txt. Research/Projects/BinaryTreeReduction/DotProduct.lean defines exactProductTree by shape-preserving exact multiplication, roundedProductTree by model.mul at every leaf, and roundedDotProduct by roundedSum of roundedProductTree. roundedDotProduct_exists_perturbation states the complete componentwise backward-error claim for every Model and every Tree (\u211d \u00d7 \u211d), assuming only ((tree.depth + 1 : \u2115) : \u211d) * model.u < 1, with a same-shape existential perturbation of exactProductTree bounded by gamma (tree.depth + 1) model.u and exact sum equal to roundedDotProduct. All five supplied supporting modules were copied byte-for-byte unchanged. No /spec/feedback.json was present; no statement revision was made. The theorem proof is temporary sorry scaffolding for the next proof role; all three construction definitions have actual bodies."
+}

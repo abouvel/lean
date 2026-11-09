@@ -1,0 +1,13 @@
+{
+  "search_queries": [
+    "File discovery for AGENTS.md, source.txt, plan.json, feedback.json, index.md, lakefile*, lean-toolchain",
+    "Supporting source file discovery under /spec/support and /workspace/Research"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": []
+}

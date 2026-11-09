@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.FloatingPoint.Horner.forward_error"
+  ],
+  "construction_names": [
+    "Research.FloatingPoint.Horner.P",
+    "Research.FloatingPoint.Horner.Q",
+    "Research.FloatingPoint.Horner.E"
+  ],
+  "source_mapping": "/spec/source.txt: P and Q implement the specified empty and cons recurrences on increasing-degree coefficient lists; E implements the exact prescribed envelope using only P, coefficients, x, and u. Research.FloatingPoint.Horner.forward_error states the full universal bound for every supplied Model, list, and real x with no extra assumptions. The Model source was copied unchanged from /spec/support/Research/Common/FloatingPoint/Model.lean. /spec/feedback.json is absent; no feedback-driven statement revision was made. Only the final theorem proof is temporary sorry scaffolding for the next role."
+}

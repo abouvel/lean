@@ -1,0 +1,3 @@
+Created the constructions and full theorem statement in [Submission.lean](/workspace/Research/Submission.lean). `lake build` passed; only the final theorem proof contains `sorry`.
+
+Supporting sources were copied unchanged. The manifest was saved atomically to [statement.json](/output/statement.json). No feedback file was present; the initial-statement record is in [STATEMENT_NOTES.md](/workspace/Research/STATEMENT_NOTES.md).

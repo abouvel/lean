@@ -1,0 +1,105 @@
+{
+  "source_experiment": "exp-034-block-jacobi-roundtrip-2026-11-06",
+  "cases": [
+    {
+      "case": "replay-035-01",
+      "job_id": "block-dot-product-trial-001-stateless",
+      "condition": "stateless",
+      "task_id": "block-dot-product",
+      "original_failure": "Construction is absent or is not a definition: BlockDotProduct.RoundingErrors",
+      "candidate_hash": "1da037325eb3b769654318351379dd168658add1d63e06ed9a5279d4783d238d"
+    },
+    {
+      "case": "replay-035-02",
+      "job_id": "block-dot-product-trial-001-retrieved",
+      "condition": "retrieved",
+      "task_id": "block-dot-product",
+      "original_failure": "Construction is absent or is not a definition: Research.BlockDotProduct.RoundingErrors",
+      "candidate_hash": "7f4fef968b46c3ef426e2e042f37748ab27ece5c3665be5664425a4f35305305"
+    },
+    {
+      "case": "replay-035-03",
+      "job_id": "sequential-block-dot-trial-001-stateless",
+      "condition": "stateless",
+      "task_id": "sequential-block-dot",
+      "original_failure": "Construction is absent or is not a definition: Research.BlockDotProduct.RoundingTrace",
+      "candidate_hash": "bd2b6e92a989f362b70b5b35511f822a2744e67fedf05003a3c50988dbde9c05"
+    },
+    {
+      "case": "replay-035-04",
+      "job_id": "sequential-block-dot-trial-001-retrieved",
+      "condition": "retrieved",
+      "task_id": "sequential-block-dot",
+      "original_failure": "Construction is absent or is not a definition: BlockDotProduct.RoundingTrace",
+      "candidate_hash": "89ea5e9e971371faf2c6fc9415bf73b37b20c91250d788d72c550a382e93948f"
+    },
+    {
+      "case": "replay-035-05",
+      "job_id": "block-matrix-vector-trial-001-stateless",
+      "condition": "stateless",
+      "task_id": "block-matrix-vector",
+      "original_failure": "Construction is absent or is not a definition: BlockMatrixVector.RoundingTrace",
+      "candidate_hash": "555d97febc7d6250aea7f65623259f50439177ca2a0f9d4af54e342e75ad0311"
+    },
+    {
+      "case": "replay-035-06",
+      "job_id": "block-matrix-vector-trial-001-retrieved",
+      "condition": "retrieved",
+      "task_id": "block-matrix-vector",
+      "original_failure": "Construction is absent or is not a definition: BlockMatrixVector.Roundoff",
+      "candidate_hash": "4164d580e5d83a4d6ccc2201c1deca9293cc123fa74a1fd0347b08295371f312"
+    },
+    {
+      "case": "replay-035-07",
+      "job_id": "triangular-update-trial-001-stateless",
+      "condition": "stateless",
+      "task_id": "triangular-update",
+      "original_failure": "Construction is absent or is not a definition: Research.TriangularUpdate.ErrorTrace",
+      "candidate_hash": "3d5fca98a7b9ef779991e8aed0ab32f36f2b060243177cb2912f43f90a207249"
+    },
+    {
+      "case": "replay-035-08",
+      "job_id": "triangular-solve-trial-001-retrieved",
+      "condition": "retrieved",
+      "task_id": "triangular-solve",
+      "original_failure": "Construction is absent or is not a definition: Research.TriangularSolve.Direction",
+      "candidate_hash": "433d6e961453bec14dc195deb1736b443c42b87a53565797877263772d9a2554"
+    },
+    {
+      "case": "replay-035-09",
+      "job_id": "cholesky-factorization-trial-001-stateless",
+      "condition": "stateless",
+      "task_id": "cholesky-factorization",
+      "original_failure": "Construction is absent or is not a definition: Cholesky.FloatingPoint",
+      "candidate_hash": "f727cc9db97b3e8d68856aaca573b6f668d972af5ab14f0467cd7511d42b97ef"
+    },
+    {
+      "case": "replay-035-10",
+      "job_id": "cholesky-factorization-trial-001-retrieved",
+      "condition": "retrieved",
+      "task_id": "cholesky-factorization",
+      "original_failure": "Construction is absent or is not a definition: Cholesky.DotTail",
+      "candidate_hash": "4b7b69d0999087608c59bf55234737a68bd6ccf6fe9d885cb18a9b7111f9dec5"
+    },
+    {
+      "case": "replay-035-11",
+      "job_id": "cholesky-solve-trial-001-stateless",
+      "condition": "stateless",
+      "task_id": "cholesky-solve",
+      "original_failure": "Construction is absent or is not a definition: Research.CholeskySolve.DotTrace",
+      "candidate_hash": "5f09f554b13196136023c37522200efa150094ef2471de6d916098a094bd8663"
+    },
+    {
+      "case": "replay-035-12",
+      "job_id": "cholesky-solve-trial-001-retrieved",
+      "condition": "retrieved",
+      "task_id": "cholesky-solve",
+      "original_failure": "Construction is absent or is not a definition: CholeskySolve.CholeskyRun",
+      "candidate_hash": "4cd60a945747fee615a6653ee410a0a6050f992b8e7375fc18219e6eefb762c7"
+    }
+  ],
+  "verification": "Reuse the original trusted Lean build and audit after verifying its fingerprint and source hashes.",
+  "evaluation": "Reuse each valid original direct-critic report. Run fresh isolated blind translation and round-trip judgment.",
+  "production_roles_invoked": false,
+  "expert_verdict": "pending"
+}

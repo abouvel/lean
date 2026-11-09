@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "f727cc9db97b3e8d68856aaca573b6f668d972af5ab14f0467cd7511d42b97ef",
+  "status": "complete",
+  "statement": "Let I_n=Fin n={0,...,n-1}, for any natural n including 0. Matrices are real functions on I_n x I_n; (BC)_{ij}=sum_{k in I_n} B_{ik}C_{kj}, and transpose is ordinary transpose. For fp: FloatingPoint u, r denotes its round field and P its InRange predicate. The constructions below specify rounded list accumulation, range predicates, and relations on a supplied upper-triangular matrix R. The sole target theorem says that if A is symmetric positive definite, 0<=u, (n+1)u<1, and R satisfies both the stated rounded recurrence relation and its range conditions, then its symmetric residual R^T R-A is bounded entrywise by gamma(n+1,u) times entryAbs(R^T) entryAbs(R). The perturbation definition gives exactly this residual. Real arithmetic is used throughout, with total real division (a/0=0). Real.sqrt is the nonnegative square root for nonnegative arguments and 0 for negative arguments. Definition domains carry no additional unstated positivity, nonzero, or range assumptions.",
+  "targets": [
+    {
+      "name": "Cholesky.cholesky_factorization",
+      "statement": "For every natural n (including 0), every real matrices A,R indexed by I_n x I_n, every real u, and every fp: FloatingPoint u, assume: A is symmetric, meaning A_{ij}=A_{ji} for all i,j in I_n; A is positive definite, meaning for every nonzero real vector x indexed by I_n, sum_{i,j in I_n} x_i A_{ij} x_j>0; 0<=u; (n+1)u<1; SuccessfulRun fp A R; and NoOverflowUnderflow fp A R. Then there exists a real matrix Delta A indexed by I_n x I_n such that Delta A is symmetric, R^T R=A+Delta A, and for every i,j in I_n, |Delta A_{ij}| <= gamma(n+1,u) (entryAbs(R^T) entryAbs(R))_{ij} = ((n+1)u/(1-(n+1)u)) sum_{k in I_n} |R_{ki}| |R_{kj}|. The run and range assumptions are exactly the relations specified in the construction descriptions, for this same fp,A,R. The equation uniquely identifies Delta A with perturbation(A,R). Thus the theorem is a conditional bound for a supplied matrix satisfying the rounded recurrence; it does not establish existence of such a matrix or compute it. There is no further restriction on n; empty-index assertions use their usual vacuous or empty-sum meanings."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Cholesky.FloatingPoint",
+      "description": "For each real u this is a structure with the single constructor Cholesky.FloatingPoint.mk. It stores a function r=round: real -> real, a predicate P=InRange: real -> Prop, and a proof that for every real x, P(x) implies that there exists a real delta with |delta|<=u and r(x)=x(1+delta). The supplied round and InRange projections select these fields. No nonnegativity of u, concrete representable set, particular rounding rule, or behavior outside P is imposed by this structure. This is data with a conditional relative-error property, not an algorithm."
+    },
+    {
+      "name": "Cholesky.gamma",
+      "description": "For every natural m and real u, gamma(m,u)=(m u)/(1-m u), with m cast to a real. It is defined for all inputs using total real division, including division by zero. In the target, m=n+1 and the assumed (n+1)u<1 makes the denominator positive."
+    },
+    {
+      "name": "Cholesky.entryAbs",
+      "description": "For every natural n and real matrix B indexed by I_n x I_n, entryAbs(B)_{ij}=|B_{ij}| for all i,j in I_n. This takes entrywise absolute values."
+    },
+    {
+      "name": "Cholesky.perturbation",
+      "description": "For every natural n and real matrices A,R indexed by I_n x I_n, perturbation(A,R)=R^T R-A. Its (i,j) entry is sum_{k in I_n} R_{ki}R_{kj}-A_{ij}. This is a residual defined without additional hypotheses. The target does not refer to this definition by name, but its equation uniquely forces its existential Delta A to equal this construction."
+    },
+    {
+      "name": "Cholesky.dotTail",
+      "description": "For every real u, fp: FloatingPoint u, real accumulator s and finite list L of real pairs, write T(s,L)=dotTail fp s L. Then T(s,[])=s and T(s,(a,b)::L)=T(r(s+r(a b)),L). Thus it processes pairs in list order, rounding each product and then rounding its addition to the current accumulator. This function has no range hypotheses."
+    },
+    {
+      "name": "Cholesky.roundedDot",
+      "description": "For every real u, fp: FloatingPoint u and finite list L of real pairs, write D(L)=roundedDot fp L. Then D([])=0 and D((a,b)::L)=T(r(a b),L), where T is dotTail. A nonempty list initializes the accumulator with the rounded first product, with no addition to zero; each later product and accumulator addition is separately rounded."
+    },
+    {
+      "name": "Cholesky.dotTailInRange",
+      "description": "For every real u, fp: FloatingPoint u, real s and finite list L of real pairs, write H(s,L)=dotTailInRange fp s L. This recursively defined predicate satisfies H(s,[])=True and H(s,(a,b)::L) iff P(a b) and P(s+r(a b)) and H(r(s+r(a b)),L). It records range membership of each exact product and each sum before rounding along the actual rounded accumulators in dotTail. It is a predicate, not a numerical routine."
+    },
+    {
+      "name": "Cholesky.dotInRange",
+      "description": "For every real u, fp: FloatingPoint u and finite list L of real pairs, write G(L)=dotInRange fp L. Then G([])=True, and G((a,b)::L) iff P(a b) and H(r(a b),L), with H=dotTailInRange. It records the range conditions for roundedDot, starting with the first product and then the remaining product/addition steps. It has no initial addition-to-zero condition."
+    },
+    {
+      "name": "Cholesky.prefixPairs",
+      "description": "For every natural n, real matrix R indexed by I_n x I_n, and i,j in I_n, L_{ij}=prefixPairs R i j is the list of pairs (R_{ki},R_{kj}) for k=0,...,i-1 in increasing order. Its length is the natural value of i; it is empty when i=0. List.ofFn runs over Fin(value(i)) and embeds k into Fin n. The supplied auxiliary theorem prefixPairs._proof_1 states that for every n, i in Fin n and k in Fin(value(i)), value(k)<n. This definition applies to all i,j, without requiring i<=j."
+    },
+    {
+      "name": "Cholesky.updateNumerator",
+      "description": "For every natural n, real u, fp: FloatingPoint u, real matrices A,R indexed by I_n x I_n and i,j in I_n, define N_{ij}=updateNumerator fp A R i j. If value(i)=0, N_{ij}=A_{ij}; otherwise N_{ij}=r(A_{ij}-D(L_{ij})), where D=roundedDot fp and L_{ij}=prefixPairs R i j. The first row is returned directly without a rounded subtraction; later rows subtract the rounded prefix dot product and round the result. This function reads the supplied R rather than constructing R."
+    },
+    {
+      "name": "Cholesky.SuccessfulRun",
+      "description": "For every natural n, real u, fp: FloatingPoint u and real matrices A,R indexed by I_n x I_n, this is a proposition with one constructor Cholesky.SuccessfulRun.mk and five proof fields: (1) for all i,j in I_n, j<i implies R_{ij}=0; (2) for all j in I_n, 0<=N_{jj}; (3) for all j in I_n, R_{jj}=r(sqrt(N_{jj})); (4) for all i,j in I_n, i<j implies R_{ii}!=0; (5) for all i,j in I_n, i<j implies R_{ij}=r(N_{ij}/R_{ii}). Here N is updateNumerator for the same fp,A,R. This is a relation certifying upper triangularity and rounded recurrence equations for a supplied R, not an algorithm producing R or an assertion that such an R exists. In particular, the nonzero-diagonal field only applies where there is a later column; it does not require the last diagonal entry to be nonzero."
+    },
+    {
+      "name": "Cholesky.NoOverflowUnderflow",
+      "description": "For every natural n, real u, fp: FloatingPoint u and real matrices A,R indexed by I_n x I_n, this is a proposition with one constructor Cholesky.NoOverflowUnderflow.mk and four proof fields: (1) for all i,j in I_n with i<=j, G(L_{ij}); (2) for all i,j in I_n with i<=j and value(i)!=0, P(A_{ij}-D(L_{ij})); (3) for all i,j in I_n with i<j, P(N_{ij}/R_{ii}); (4) for all j in I_n, P(sqrt(N_{jj})). Here G=dotInRange fp, D=roundedDot fp, L_{ij}=prefixPairs R i j, and N=updateNumerator for the same fp,A,R. These fields record membership of pre-rounding arguments in the arbitrary supplied range predicate P for the upper-triangular recurrence, including the dot-product arguments described recursively. This is a relation on given matrices, not an algorithm or a specification of concrete overflow/underflow thresholds. Nonnegative square-root inputs and nonzero division denominators are not fields of this relation; the corresponding conditions are in SuccessfulRun."
+    }
+  ],
+  "assumptions": [
+    "The target universally quantifies the implicit natural dimension n, real matrices A,R on Fin n x Fin n, real u, and fp: FloatingPoint u. Matrix indices and every vector in positive definiteness have this same finite index domain.",
+    "fp contains the conditional rounding property: for every real x in its supplied InRange predicate, some real delta satisfies |delta|<=u and round(x)=x(1+delta).",
+    "The target assumes symmetry and positive definiteness of A, 0<=u, and (n+1)u<1.",
+    "The target additionally assumes all five quantified fields of SuccessfulRun fp A R and all four quantified fields of NoOverflowUnderflow fp A R, explicitly rendered in the construction descriptions. These are hypotheses on supplied data, not conclusions inferred from the declarations names.",
+    "The individual function definitions only require their stated input domains and fp data; the theorem assumptions are not implicit requirements on those definitions."
+  ],
+  "missing_context": []
+}

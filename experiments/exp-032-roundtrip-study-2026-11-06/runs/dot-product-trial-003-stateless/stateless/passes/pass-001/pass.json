@@ -1,0 +1,454 @@
+{
+  "builder": {
+    "condition": "stateless",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 251.062,
+    "compiler_command_events": 8,
+    "token_usage": {
+      "input_tokens": 592147,
+      "cached_input_tokens": 545024,
+      "output_tokens": 6807,
+      "reasoning_output_tokens": 469
+    },
+    "roles": {
+      "planner": {
+        "condition": "stateless",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793982853.9002266,
+        "time_limit_seconds": 90,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 80.657,
+        "token_usage": {
+          "input_tokens": 104688,
+          "cached_input_tokens": 92544,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3213,
+          "reasoning_output_tokens": 348
+        },
+        "compiler_command_events": 1,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "stateless",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793982935.5401716,
+        "time_limit_seconds": 150,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 82.339,
+        "token_usage": {
+          "input_tokens": 200369,
+          "cached_input_tokens": 181888,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1947,
+          "reasoning_output_tokens": 53
+        },
+        "compiler_command_events": 2,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "stateless",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793983032.1010754,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 88.066,
+        "token_usage": {
+          "input_tokens": 287090,
+          "cached_input_tokens": 270592,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1647,
+          "reasoning_output_tokens": 68
+        },
+        "compiler_command_events": 5,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation"
+      ],
+      "construction_names": [
+        "Research.BinaryTreeReduction.exactProductTree",
+        "Research.BinaryTreeReduction.roundedProductTree",
+        "Research.BinaryTreeReduction.roundedDotProduct"
+      ],
+      "source_mapping": "The authoritative /spec/source.txt is formalized in Research/Submission.lean. exactProductTree maps each input pair to its exact real product; roundedProductTree maps each pair to Model.mul; roundedDotProduct applies roundedSum to roundedProductTree. roundedDotProduct_exists_perturbation quantifies over every supplied Model and Tree of real pairs, assumes only ((tree.depth + 1 : Nat) : Real) * model.u < 1 in addition to the Model contract, and concludes a shape-preserving leafwise IsPerturbation of exactProductTree bounded by gamma (tree.depth + 1) model.u whose exactSum equals roundedDotProduct. The five supporting modules were copied unchanged. No /spec/feedback.json was present; no statement revision was made. The final theorem proof is temporary sorry scaffolding for the next role; all construction definitions have actual bodies."
+    }
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 52.534,
+    "source_files": [
+      "Research/Submission.lean",
+      "Research/Projects/BinaryTreeReduction/Tree.lean",
+      "Research/Projects/BinaryTreeReduction/Reduction.lean",
+      "Research/Projects/BinaryTreeReduction/Algorithm.lean",
+      "Research/Common/FloatingPoint/Gamma.lean",
+      "Research/Common/FloatingPoint/Model.lean"
+    ],
+    "source_lines": 784,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "b128a2707df7086de9813230fc872cd721d8c55b3a929434b4a4a5ce3c13c16b",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "critic": {
+    "condition": "stateless",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1793983198.9978843,
+    "time_limit_seconds": 240,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 70.487,
+    "token_usage": {
+      "input_tokens": 242955,
+      "cached_input_tokens": 222976,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1863,
+      "reasoning_output_tokens": 63
+    },
+    "compiler_command_events": 3,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "status": "accepted",
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793982853.9002266,
+      "time_limit_seconds": 90,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 80.657,
+      "token_usage": {
+        "input_tokens": 104688,
+        "cached_input_tokens": 92544,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3213,
+        "reasoning_output_tokens": 348
+      },
+      "compiler_command_events": 1,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793982935.5401716,
+      "time_limit_seconds": 150,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 82.339,
+      "token_usage": {
+        "input_tokens": 200369,
+        "cached_input_tokens": 181888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1947,
+        "reasoning_output_tokens": 53
+      },
+      "compiler_command_events": 2,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793983032.1010754,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 88.066,
+      "token_usage": {
+        "input_tokens": 287090,
+        "cached_input_tokens": 270592,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1647,
+        "reasoning_output_tokens": 68
+      },
+      "compiler_command_events": 5,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "translator": {
+      "condition": "blind",
+      "kind": "translator",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793983270.3497288,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 79.745,
+      "token_usage": {
+        "input_tokens": 77144,
+        "cached_input_tokens": 66304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3405,
+        "reasoning_output_tokens": 82
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "judge": {
+      "condition": "blind",
+      "kind": "judge",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793983350.7349234,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 45.901,
+      "token_usage": {
+        "input_tokens": 59138,
+        "cached_input_tokens": 51456,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1759,
+        "reasoning_output_tokens": 64
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "report": {
+    "schema_version": 2,
+    "candidate_hash": "b128a2707df7086de9813230fc872cd721d8c55b3a929434b4a4a5ce3c13c16b",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation explicitly asserts the entire requested conjunction for every model and tree. The supplied recursive constructions define the actual rounded computation and its exact-product reference. The final bound and equality already appear together in the target; no missing composition, inequality, or connection is needed. Existential perturbation witnesses satisfy the construction policy.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+        "evidence": "The target explicitly quantifies over every Model m and every T in Tree(R x R). Under (depth(T)+1)u<1 it asserts a P satisfying both IsPerturbation(gamma(depth(T)+1,u),exactProductTree(T),P) and exactSum(P)=roundedDotProduct(m,T).",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "exact-product-linkage",
+        "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+        "evidence": "The target references exactProductTree(T), whose recursive construction maps each leaf (a,b) to exact real ab and preserves ordered shape. The target explicitly gives |p_i-a_i b_i|<=gamma(d+1,u)|a_i b_i|.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "multiplication-rounding",
+        "requirement": "Account for one rounded multiplication per leaf.",
+        "evidence": "roundedProductTree maps each original leaf (a,b) to r(ab). roundedDotProduct uses this tree; its leaf result is r(ab), with one multiplication rounding included in the asserted gamma(d+1,u) bound.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "addition-reduction",
+        "requirement": "Account for every rounded tree addition in the reduction.",
+        "evidence": "roundedSum at every internal node is r(roundedSum(L)+roundedSum(R)). The target equality refers to roundedDotProduct defined using this reduction, accounting for every internal-node rounded addition.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "accumulated-bound",
+        "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+        "evidence": "The target directly asserts the common componentwise bound gamma(d+1,u)=((d+1)u)/(1-(d+1)u). Depth is zero at leaves and 1+max of child depths at nodes. IsPerturbation preserves shape and bounds every leaf, including zero products.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+        "evidence": "The model assumptions are u>=0 and relative rounding error at every real input, with multiplication r(ab) and addition r(a+b). The theorem adds only (d+1)u<1. Arbitrary finite nonempty binary trees and real factors are allowed, without balance, sign, exact-arithmetic, or conclusion assumptions.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "direct_report": {
+    "overall_verdict": "pass",
+    "phase": "final",
+    "target_evidence": "Research/Submission.lean:47-88 proves roundedDotProduct_exists_perturbation universally over Model and Tree (real pairs), with only (depth+1)*u<1 beyond the Model contract. The conclusion is a shape-preserving componentwise perturbation of exactProductTree, bounded by gamma(depth+1,u), whose exactSum equals the products-then-additions roundedDotProduct. Independent Lean elaboration and axiom inspection succeeded.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+        "evidence": "Research/Submission.lean:47-88 proves roundedDotProduct_exists_perturbation for every Model and Tree (real pairs), assuming only (depth+1)*u<1; its existential conclusion includes both the leafwise bound and exact-sum equality. Independent /output/Audit.lean compiled successfully against the expanded product and rounding definitions.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "exact-product-linkage",
+        "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+        "evidence": "Research/Submission.lean:19-20 defines exactProductTree by mapping each pair to its exact real product. Lines 51-53 state IsPerturbation relative to this tree. Reduction.lean:17-23 enforces the same tree shape and a separate relative absolute-error bound at every leaf, including zero products.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "multiplication-rounding",
+        "requirement": "Account for one rounded multiplication per leaf.",
+        "evidence": "Research/Submission.lean:23-28 defines one model.mul at each leaf followed by roundedSum. Model.lean:25-27 defines mul as round(a*b). Submission.lean:54-72 derives IsPerturbation u between exact and rounded products directly from round_spec for every leaf.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "addition-reduction",
+        "requirement": "Account for every rounded tree addition in the reduction.",
+        "evidence": "Reduction.lean:11-13 rounds each internal addition. Lines 112-171 prove the reduction bound by depth induction: lines 150-165 obtain the node rounding error and scale both child perturbation trees; lines 166-171 prove the exact-sum identity. Submission.lean:76-80 applies this result to rounded products, preserving depth.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "accumulated-bound",
+        "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+        "evidence": "Tree.lean:21-23 defines depth as the maximum number of internal additions on a path. Gamma.lean:8-9 defines gamma(k,u)=k*u/(1-k*u); lines 33-54 prove gamma_step. Submission.lean:73-88 derives depth*u<1, composes multiplication bound u with addition bound gamma(depth,u), and bounds u+gamma(depth,u)*(1+u) by gamma(depth+1,u).",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+        "evidence": "Submission.lean:47-53 has only arbitrary model, arbitrary tree, and the required smallness hypothesis. Model.lean:15-19 supplies only nonnegative u and the relative-error rounding contract; it does not require exact arithmetic or assume the conclusion. Independent #print axioms reports only propext, Classical.choice, and Quot.sound. /evaluation/verification.json reports successful compilation, no unapproved axioms, and no protected-source failures.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "roundtrip": {
+    "schema_version": 2,
+    "candidate_hash": "b128a2707df7086de9813230fc872cd721d8c55b3a929434b4a4a5ce3c13c16b",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation explicitly asserts the entire requested conjunction for every model and tree. The supplied recursive constructions define the actual rounded computation and its exact-product reference. The final bound and equality already appear together in the target; no missing composition, inequality, or connection is needed. Existential perturbation witnesses satisfy the construction policy.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+        "evidence": "The target explicitly quantifies over every Model m and every T in Tree(R x R). Under (depth(T)+1)u<1 it asserts a P satisfying both IsPerturbation(gamma(depth(T)+1,u),exactProductTree(T),P) and exactSum(P)=roundedDotProduct(m,T).",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "exact-product-linkage",
+        "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+        "evidence": "The target references exactProductTree(T), whose recursive construction maps each leaf (a,b) to exact real ab and preserves ordered shape. The target explicitly gives |p_i-a_i b_i|<=gamma(d+1,u)|a_i b_i|.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "multiplication-rounding",
+        "requirement": "Account for one rounded multiplication per leaf.",
+        "evidence": "roundedProductTree maps each original leaf (a,b) to r(ab). roundedDotProduct uses this tree; its leaf result is r(ab), with one multiplication rounding included in the asserted gamma(d+1,u) bound.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "addition-reduction",
+        "requirement": "Account for every rounded tree addition in the reduction.",
+        "evidence": "roundedSum at every internal node is r(roundedSum(L)+roundedSum(R)). The target equality refers to roundedDotProduct defined using this reduction, accounting for every internal-node rounded addition.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "accumulated-bound",
+        "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+        "evidence": "The target directly asserts the common componentwise bound gamma(d+1,u)=((d+1)u)/(1-(d+1)u). Depth is zero at leaves and 1+max of child depths at nodes. IsPerturbation preserves shape and bounds every leaf, including zero products.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+        "evidence": "The model assumptions are u>=0 and relative rounding error at every real input, with multiplication r(ab) and addition r(a+b). The theorem adds only (d+1)u<1. Arbitrary finite nonempty binary trees and real factors are allowed, without balance, sign, exact-arithmetic, or conclusion assumptions.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "number": 1,
+  "wall_time_seconds": 543.4805648829933,
+  "evidence": "stateless/passes/pass-001"
+}

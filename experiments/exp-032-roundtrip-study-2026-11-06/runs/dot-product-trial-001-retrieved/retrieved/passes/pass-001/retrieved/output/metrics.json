@@ -1,0 +1,98 @@
+{
+  "condition": "retrieved",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 178.011,
+  "compiler_command_events": 8,
+  "token_usage": {
+    "input_tokens": 460923,
+    "cached_input_tokens": 405888,
+    "output_tokens": 5551,
+    "reasoning_output_tokens": 353
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793986436.5689175,
+      "time_limit_seconds": 90,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 48.316,
+      "token_usage": {
+        "input_tokens": 96021,
+        "cached_input_tokens": 83200,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1802,
+        "reasoning_output_tokens": 177
+      },
+      "compiler_command_events": 1,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793986485.412196,
+      "time_limit_seconds": 150,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 71.491,
+      "token_usage": {
+        "input_tokens": 187855,
+        "cached_input_tokens": 161408,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2002,
+        "reasoning_output_tokens": 120
+      },
+      "compiler_command_events": 2,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793986566.9678268,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 58.204,
+      "token_usage": {
+        "input_tokens": 177047,
+        "cached_input_tokens": 161280,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1747,
+        "reasoning_output_tokens": 56
+      },
+      "compiler_command_events": 5,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation"
+    ],
+    "construction_names": [
+      "Research.BinaryTreeReduction.exactProductTree",
+      "Research.BinaryTreeReduction.roundedProductTree",
+      "Research.BinaryTreeReduction.roundedDotProduct"
+    ],
+    "source_mapping": "/spec/source.txt is implemented in Research/Submission.lean: exactProductTree maps each pair to its exact real product; roundedProductTree uses the supplied Model.mul at each leaf; roundedDotProduct applies the supplied roundedSum to those rounded products. The final theorem quantifies over arbitrary supplied Model and Tree (\u211d \u00d7 \u211d), assumes only ((tree.depth + 1 : \u2115) : \u211d) * model.u < 1, and asserts a shape-preserving IsPerturbation witness relative to exactProductTree with bound gamma (tree.depth + 1) model.u whose exactSum equals roundedDotProduct. All five supporting sources are copied unchanged from /spec/support/Research. Statement revision: none; /spec/feedback.json is absent. The final theorem proof is temporary sorry scaffolding for the next role; all construction definitions have actual bodies."
+  }
+}

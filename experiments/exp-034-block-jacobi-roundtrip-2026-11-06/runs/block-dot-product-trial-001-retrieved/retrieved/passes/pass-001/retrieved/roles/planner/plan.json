@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the concrete two-stage computation over real inputs using the standard local floating-point model, and derive a per-original-term product of local rounding factors by induction through its sequential block and its binary reduction path. Prove the finite-product gamma estimate as a helper, with a common budget K = T + ceil(log2(ceil(n/T))). Flatten the padded block sum back to the original input indices and construct both backward perturbations from the same coefficient error. The local operation model is an admissible abstraction of floating-point arithmetic under no overflow/underflow; the desired global expansion or error bound must be proved from the algorithm, never supplied as a hypothesis. Use the paper as mathematical guidance, not as an unproved lemma. No completed target proof belongs in this plan.",
+  "obligations": [
+    {
+      "id": "source_contract",
+      "description": "State the full selected block-dot-product result with original inputs x,y, actual computed output, both existential backward representations, and bounds for every original index. Define u as a nonnegative unit roundoff and gamma(k)=((k:Real)*u)/(1-(k:Real)*u). Retain (T+depth)*u<1 and the operation-level model justified by absence of overflow/underflow. Treat T>0 and the nonempty logarithm domain as algorithm well-formedness, explicitly documenting these implicit source conventions rather than silently strengthening the analytic hypotheses. If supporting n=0, define the empty computation and depth convention and handle it separately; report any unresolved source-domain issue precisely."
+    },
+    {
+      "id": "block_layout",
+      "description": "Define b=ceil(n/T) by natural ceiling division and depth=ceil(log2 b), preferably Nat.clog 2 b with an explicit justification of its intended ceiling-log meaning for b>0. Prove n<=b*T, define padded inputs equal to originals below n and zero otherwise, and identify flat index j*T+t with its unique block j=i/T and position t=i%T. Prove coverage, uniqueness, and the finite-sum reindexing identity needed to recover exactly the n original terms."
+    },
+    {
+      "id": "local_rounding_construction",
+      "description": "Give multiplication and addition operations or an indexed execution trace satisfying fl(a op b)=(a op b)*(1+delta) with abs(delta)<=u at each executed operation. Define the output recursively from these operations. Any error tape must enter as local operation errors, and the theorem must quantify over every admissible execution. Do not replace the computation by an arbitrarily chosen weighted sum or assume its final coefficient representation."
+    },
+    {
+      "id": "sequential_block_construction",
+      "description": "For each block compute T rounded products, seed the accumulator with the first product, then perform rounded additions of products 2 through T. Define and connect these recurrences to the padded original x and y. Prove by induction the termwise expansion: one multiplication factor and the subsequent addition factors for that term, with at most T factors. Handle T=1 directly. A zero-seeded implementation needs exact fl(0+a)=a or an equivalent justification; counting an extra independently perturbed addition would only yield T+1 and would fail the selected constant."
+    },
+    {
+      "id": "tree_construction_and_depth",
+      "description": "Define an actual binary-tree reduction on the computed b block outputs, with depth exactly the source ceiling logarithm. A complete tree on 2^depth leaves padded with zero block values, or a ceil-halving implementation with carried unmatched nodes, is suitable when its connection to the stated binary reduction is explicit. Prove leaf coverage without loss or duplication, termination at one root, and that every genuine block leaf traverses at most depth rounded additions. For carried nodes use no additional rounding factor; for zero padding prove padded leaves contribute zero. Include b=1, depth=0."
+    },
+    {
+      "id": "tree_path_expansion",
+      "description": "Prove by structural or level induction that the computed root is the sum of its actual computed block leaves times the products of their ancestor addition factors. This is the required strengthened helper behind the earlier binary-tree theorem. All coefficient products must come from the executed tree and be bounded in length by depth. Do not postulate the earlier theorem or its stronger expansion as an extra assumption."
+    },
+    {
+      "id": "finite_product_bound",
+      "description": "Prove or locate and verify a Mathlib finite-product lemma: for m<=K local factors with abs(delta)<=u and K*u<1, abs(product(1+delta)-1)<=gamma(K). It suffices to treat positive exponents; reciprocal factors from the general paper notation are unnecessary. Establish positivity of 1-K*u and any intermediate denominators explicitly. One route is induction on m with the error recurrence and gamma composition inequalities. Cover m=0 and u=0 and justify all natural-to-real casts and monotonicity steps."
+    },
+    {
+      "id": "combine_factor_budgets",
+      "description": "Substitute each sequential block expansion into the proved tree expansion. For each original term concatenate its multiplication/addition factors and its block-to-root factors, obtaining a coefficient c_i with at most T+depth factors and abs(c_i-1)<=gamma(T+depth). Prove the concatenation and length estimate rather than multiplying independent global error bounds without justification. This construction is the direct link from the concrete two-stage algorithm to the theorem constant."
+    },
+    {
+      "id": "backward_witnesses",
+      "description": "Use the established coefficients to define perturbations on the original input domain by DeltaX_i=(c_i-1)*x_i and DeltaY_i=(c_i-1)*y_i. Discharge both computed-output equalities via the flattened sum, and both componentwise magnitude bounds using abs_mul and nonnegativity. Produce both representations, not a disjunction selecting only one. Preserve zero input components without dividing by x_i or y_i; retain dependence on the supplied original arrays."
+    },
+    {
+      "id": "validation_and_integrity",
+      "description": "Compile the construction and full theorem with local Lean and Mathlib, with no sorry, custom axioms, or placeholders. Check theorem dependencies and signatures for hidden global error assumptions, arbitrary output parameters disconnected from computation, modified constants, missing padding, or missing representation. Document any genuine source ambiguity as a blocker rather than weakening the target. Prove helper facts locally when not available; no external theorem-proving service is authorized."
+    }
+  ]
+}

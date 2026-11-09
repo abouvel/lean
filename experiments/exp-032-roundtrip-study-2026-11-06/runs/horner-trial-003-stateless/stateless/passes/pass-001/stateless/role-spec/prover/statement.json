@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.Horner.forward_error"
+  ],
+  "construction_names": [
+    "Research.Horner.P",
+    "Research.Horner.Q",
+    "Research.Horner.E"
+  ],
+  "source_mapping": "/spec/source.txt: exact evaluator P, rounded evaluator Q, and prescribed envelope E are defined by list recursion in /workspace/Research/Submission.lean. Research.Horner.forward_error states the requested bound for every Research.FloatingPoint.Model, List \u211d, and x : \u211d; model.u_nonneg and model.round_spec supply all assumptions. The supporting /spec/support/Research/Common/FloatingPoint/Model.lean is copied unchanged to /workspace/Research/Common/FloatingPoint/Model.lean. No /spec/feedback.json was present; no statement revision was made. The theorem proof is temporary sorry scaffolding for the next role."
+}

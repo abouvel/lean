@@ -1,0 +1,407 @@
+{
+  "schema_version": 1,
+  "job_id": "block-dot-product-trial-001-stateless",
+  "pair_id": "block-dot-product-trial-001",
+  "condition": "stateless",
+  "success": false,
+  "outcome": "infrastructure_error",
+  "record": {
+    "schema_version": 1,
+    "artifact_id": "2026-11-06-stateless",
+    "date": "2026-11-06",
+    "experiment_id": "block-dot-product-trial-001-stateless",
+    "condition": "stateless",
+    "status": "partial",
+    "outcome": "infrastructure_error",
+    "success": false,
+    "task_id": "block-dot-product",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "starting_commit": "a911f8e142b128c47eb015921ead27ec93f97402",
+    "project": "block-dot-product",
+    "memory_mode": "stateless",
+    "time_limit": {
+      "max_passes": 2,
+      "builder_seconds_per_pass": 900,
+      "critic_seconds_per_pass": 300,
+      "revision": {
+        "schema_version": 1,
+        "mode": "calibration",
+        "seconds": {
+          "planner": 180,
+          "formalizer": 420,
+          "prover": 900,
+          "translator": 240,
+          "judge": 240
+        },
+        "construction_policy": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums. Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T))))."
+      }
+    },
+    "artifact_snapshot": {
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/inputs/source.pdf": "98967781a00b587f277967e6be6a8c35146b70afbd27a676026dacd8d42b2616",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/inputs/references.bib": "70c5a06292fdf4172602bfa6428a123c1c38a55992aed3246c57a49920ee5fa6",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/inputs/paper.tex": "6e61d2a17d4ffe5ca618a4db312c205ae83bf4902f02aa6b85c880d01bcc4bb1",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/inputs/PROMPT.txt": "fdd19f7e8ec8facfd5cd03ce17701d27bbfa38a6538d0d80d95c233dcacf5774",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/inputs/source.txt": "f1497f7e5c37643465b7cf83133e9aaf01c3f715d5e5b9992b7ba22e4c461b60",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/memory/general-lean.md": "cce6d9aa5a0ac2fc04e8f249914b7306946a6cc88994bb8bda0f50c38232039d",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/memory/index.md": "38f57977b6c743170ae683ba5f733cec02d2b17da037a70d33ace11249bcc3c5",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/evaluator/Research.lean": "cde6db415a0bb4f48616881e996c74d28d73620487ff087b0c29fb9aad893697",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/evaluator/requirements.json": "deedc0a758f038ff3deee5e628b052a50a036e96b0dffff11412ee1d291d8686",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/evaluator/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/evaluator/lean-toolchain": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/evaluator/lakefile.toml": "f7a30d07baaa36a9569f8abb86d35e55c74e7f8075a3d33a203217f5efc9a909",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/evaluator/REVIEWER.txt": "ba95c41e7b95443a57e0068b32a700e56df92b80f95fa0baff346f0c081a29d6",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/evaluator/lake-manifest.json": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939",
+      "experiments/exp-034-block-jacobi-roundtrip-2026-11-06/runs/block-dot-product-trial-001-stateless/experiment.json": "632d0a2619b66528ea4fbff80931d5e71ef724692f1fa27921de219af2eaea2d",
+      "pipeline/resources.py": "1cf72ddc6cedefbe93d7d41199e355e163a95c69d8368570cdd5b5c32eef41c9",
+      "pipeline/run.py": "79721e0e4ec5a130af02d55b93a02d8897947566a28668afa1bba903ccbc2043",
+      "pipeline/worker.py": "a8152114fc2e9ea38d9e2a856220fb480d4cc6f7090aef75918ad7ad51765f6a",
+      "pipeline/smoke_model.py": "3dabe73c64b0b4c13fc04a31d9a82d4f4cad4452d2583c69869be70f72a9ae53",
+      "pipeline/engine.py": "0ebb6552c762f39fd02aca10f02396dc0cf60c9d761c26a9b5b6e5dd3871d9b9",
+      "pipeline/critic_benchmark.py": "4f05b57d833bd276a26f193570b88fe2eba0f6931f4b911f531526514714d3a8",
+      "pipeline/metrics.py": "6ae5538bf7b09722cc5d2ec604b3379a22d540d568cf0fec037620333c7fd2b8",
+      "pipeline/verify.py": "a885c2c7c297d10497410e7389bace1e53255b7bee3cee2f686d5c9c39c22f8d",
+      "pipeline/stages.py": "e82b52a781b2ccf2b0d1e38f9cf971d7de86c69a5a3a039b1635d16c64d4808a",
+      "pipeline/verify.sh": "dc05e34574ee64fdd628f5a14fd3b5d5fbbe09d499f82eb3ce73181ff7d15ef6",
+      "pipeline/roundtrip.py": "a9defc7bd028b66d90ba1d8da6414cd0805c215a7f45c7b8e7abf44054f0b2fa",
+      "pipeline/artifacts.py": "1810bfca20ddbceecf9995021e099492eb2d7abd092ef1d063f03e903282fd82",
+      "pipeline/roles.py": "92445f90205da7fd1ea136ff571575cb8a5cea826161aa5f23faa30e251f2528",
+      "pipeline/formal_context.py": "556fe4202db760b924ca89045e23d6f5dfd1dfe9b33110648ddc369ec54fb057",
+      "pipeline/batch.py": "420d6b4074dbfebe939146cbd4d6305ef88642482663dd0fb078ee13a7710d10",
+      "pipeline/agent.py": "3645e7d35478b2b8558d45ebe4e906e073bab41b24d778cef8076114bc7a8597",
+      "pipeline/role_agent.py": "3fe71ebd480677b341ac2a605cb1b0239fe7a33b7c2a9971f0ff9dc5703d6811",
+      "pipeline/critic.py": "21d211337c58d3a8d0ec872120454c8360f1b6f0ae25d40b24d4486c6be65acf",
+      "pipeline/ExtractContext.lean": "bb1dd9980d3d02547eee7594a905a2bc8dea8a15d93f1c2eb6c4ab17f465c047",
+      "pipeline/passes.py": "a2eedc54d5d42b3ccb9bb12beffeab5317a6c69de98f0be0877b4a393ffb4263",
+      "pipeline/binary_tree_control.py": "75d0f5256861fdd30725b19520c0a5a1d9211f9862768d79d44c39a8857dd821",
+      "pipeline/docker/Dockerfile": "9f9c499509672ebbfeb1817521c175861dd3eb722d85d0ab1da884e604e991d1",
+      "pipeline/docker/Dockerfile.ready": "8fba11b7730c46a8b41dfdc98c9c56efdff4c1a28227e1a00d3eb96369fdc8ba",
+      "pipeline/docker/proxy.py": "2e79cf96635643f540385207755ad37c3c4265795929cbb63ae2e85e9b63e72b"
+    },
+    "retrieved_artifacts": [],
+    "verification_command": "bash pipeline/verify.sh",
+    "passes": [
+      {
+        "status": "infrastructure_error",
+        "error": "Construction is absent or is not a definition: BlockDotProduct.RoundingErrors",
+        "builder": {
+          "condition": "stateless",
+          "kind": "production-pipeline",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium",
+          "exit_code": 0,
+          "timed_out": false,
+          "api_cost": "unknown",
+          "aristotle_calls": 0,
+          "wall_time_seconds": 534.858,
+          "compiler_command_events": 18,
+          "token_usage": {
+            "input_tokens": 950758,
+            "cached_input_tokens": 889600,
+            "output_tokens": 18489,
+            "reasoning_output_tokens": 3923
+          },
+          "roles": {
+            "planner": {
+              "condition": "stateless",
+              "kind": "planner",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793990744.6538703,
+              "time_limit_seconds": 180,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 73.438,
+              "token_usage": {
+                "input_tokens": 80258,
+                "cached_input_tokens": 69632,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 2420,
+                "reasoning_output_tokens": 136
+              },
+              "compiler_command_events": 0,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "formalizer": {
+              "condition": "stateless",
+              "kind": "formalizer",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793990818.6091447,
+              "time_limit_seconds": 420,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 127.173,
+              "token_usage": {
+                "input_tokens": 151935,
+                "cached_input_tokens": 134912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 4926,
+                "reasoning_output_tokens": 1323
+              },
+              "compiler_command_events": 4,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            },
+            "prover": {
+              "condition": "stateless",
+              "kind": "prover",
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium",
+              "started_unix": 1793990955.2668834,
+              "time_limit_seconds": 900,
+              "api_cost": "unknown",
+              "aristotle_calls": 0,
+              "exit_code": 0,
+              "timed_out": false,
+              "wall_time_seconds": 334.247,
+              "token_usage": {
+                "input_tokens": 718565,
+                "cached_input_tokens": 685056,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 11143,
+                "reasoning_output_tokens": 2464
+              },
+              "compiler_command_events": 14,
+              "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+            }
+          },
+          "statement": {
+            "schema_version": 1,
+            "targets": [
+              "BlockDotProduct.block_dot_product",
+              "BlockDotProduct.block_dot_product_balanced"
+            ],
+            "construction_names": [
+              "BlockDotProduct.blockCount",
+              "BlockDotProduct.reductionDepth",
+              "BlockDotProduct.gamma",
+              "BlockDotProduct.padded",
+              "BlockDotProduct.RoundingErrors",
+              "BlockDotProduct.RoundingErrors.Admissible",
+              "BlockDotProduct.roundedProduct",
+              "BlockDotProduct.blockPrefix",
+              "BlockDotProduct.blockPartial",
+              "BlockDotProduct.ReductionTree",
+              "BlockDotProduct.ReductionTree.leaves",
+              "BlockDotProduct.ReductionTree.height",
+              "BlockDotProduct.ValidSchedule",
+              "BlockDotProduct.join",
+              "BlockDotProduct.balancedTree",
+              "BlockDotProduct.canonicalTree",
+              "BlockDotProduct.evaluateTree",
+              "BlockDotProduct.computedResult"
+            ],
+            "source_mapping": "Authoritative source: /spec/source.txt, selected theorem:block_dot_product; proof context: /spec/paper.tex. Statements and actual construction bodies are in Research/Submission.lean, namespace BlockDotProduct. blockCount = (n+T-1)/T is exact ceiling division for T>0; reductionDepth = Nat.clog 2 blockCount is the exact ceiling binary logarithm. Inputs are Fin n -> Real with explicit n>0, T>0, and nonnegative unit roundoff. padded implements the final-block zero extension. RoundingErrors and Admissible encode only operation-local relative errors under the no-overflow/no-underflow model. blockPrefix starts with the first rounded multiplication and then rounds each sequential addition. ReductionTree, ValidSchedule, and evaluateTree implement arbitrary binary reduction schedules with each block present exactly once and height at most the source depth. canonicalTree constructs a consecutive balanced reduction with exact carries for absent children; canonicalTree_valid is a separate proof obligation. block_dot_product supplies both existential perturbation representations and both pointwise bounds simultaneously, with gamma_(T+ell), for all admissible executions and valid schedules. block_dot_product_balanced instantiates this theorem with the concrete canonical construction and has a complete corollary proof. Statement revision record: /spec/feedback.json was absent; there is no previous statement to revise. Relative to the fallible plan, the formal statement explicitly includes a general covering-tree theorem plus a concrete balanced corollary, uses heap addresses for local tree errors, and avoids postulating global coefficient bounds. No mathematical conclusion is weakened or added as a hypothesis. Temporary sorry scaffolding occurs only in canonicalTree_valid and block_dot_product; every construction has an actual body. /spec/support contains no files; its directory structure was copied. Supporting paper.tex, references.bib, source.txt, and source.pdf were copied byte-for-byte into Research."
+          }
+        },
+        "critic": {
+          "condition": "stateless",
+          "kind": "reviewer",
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium",
+          "started_unix": 1793991315.22158,
+          "time_limit_seconds": 300,
+          "api_cost": "unknown",
+          "aristotle_calls": 0,
+          "exit_code": 0,
+          "timed_out": false,
+          "wall_time_seconds": 73.945,
+          "token_usage": {
+            "input_tokens": 275699,
+            "cached_input_tokens": 230400,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 2730,
+            "reasoning_output_tokens": 211
+          },
+          "compiler_command_events": 3,
+          "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+        },
+        "verification": {
+          "verification_command": "bash pipeline/verify.sh",
+          "build_and_scans_exit_code": 0,
+          "nontrivial_submission": true,
+          "formal_gate_passed": true,
+          "semantic_review": "pending",
+          "wall_time_seconds": 15.509,
+          "source_files": [
+            "Research/Submission.lean"
+          ],
+          "source_lines": 455,
+          "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+          "formal_audit": {
+            "schema_version": 1,
+            "unapproved_axioms": [],
+            "protected_source_failures": [],
+            "candidate_hash": "1da037325eb3b769654318351379dd168658add1d63e06ed9a5279d4783d238d",
+            "passed": true,
+            "changed_declarations": []
+          }
+        },
+        "roles": {
+          "planner": {
+            "condition": "stateless",
+            "kind": "planner",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793990744.6538703,
+            "time_limit_seconds": 180,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 73.438,
+            "token_usage": {
+              "input_tokens": 80258,
+              "cached_input_tokens": 69632,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2420,
+              "reasoning_output_tokens": 136
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "formalizer": {
+            "condition": "stateless",
+            "kind": "formalizer",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793990818.6091447,
+            "time_limit_seconds": 420,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 127.173,
+            "token_usage": {
+              "input_tokens": 151935,
+              "cached_input_tokens": 134912,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 4926,
+              "reasoning_output_tokens": 1323
+            },
+            "compiler_command_events": 4,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "prover": {
+            "condition": "stateless",
+            "kind": "prover",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1793990955.2668834,
+            "time_limit_seconds": 900,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 334.247,
+            "token_usage": {
+              "input_tokens": 718565,
+              "cached_input_tokens": 685056,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 11143,
+              "reasoning_output_tokens": 2464
+            },
+            "compiler_command_events": 14,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          }
+        },
+        "number": 1,
+        "wall_time_seconds": 645.0639504910068,
+        "evidence": "stateless/passes/pass-001",
+        "retrieval_record": "unknown"
+      }
+    ],
+    "metrics": {
+      "wall_time_seconds": 645.0702480839973,
+      "passes_used": 1,
+      "first_success_pass": null,
+      "builder_seconds": 534.858,
+      "critic_seconds": 73.945,
+      "compiler_command_events": 18,
+      "tokens": "unknown",
+      "cost": "unknown",
+      "aristotle_calls": 0,
+      "verification_calls": 1,
+      "critic_calls": 1,
+      "formal_failures": 0,
+      "critic_rejections": 0,
+      "final_source_lines": 455,
+      "builder_tokens": {
+        "input_tokens": 950758,
+        "cached_input_tokens": 889600,
+        "output_tokens": 18489,
+        "reasoning_output_tokens": 3923
+      },
+      "critic_tokens": {
+        "input_tokens": 275699,
+        "cached_input_tokens": 230400,
+        "output_tokens": 2730,
+        "reasoning_output_tokens": 211
+      },
+      "roles": {
+        "planner": {
+          "calls": 1,
+          "wall_time_seconds": 73.438,
+          "tokens": {
+            "input_tokens": 80258,
+            "cached_input_tokens": 69632,
+            "output_tokens": 2420,
+            "reasoning_output_tokens": 136
+          }
+        },
+        "formalizer": {
+          "calls": 1,
+          "wall_time_seconds": 127.173,
+          "tokens": {
+            "input_tokens": 151935,
+            "cached_input_tokens": 134912,
+            "output_tokens": 4926,
+            "reasoning_output_tokens": 1323
+          }
+        },
+        "prover": {
+          "calls": 1,
+          "wall_time_seconds": 334.247,
+          "tokens": {
+            "input_tokens": 718565,
+            "cached_input_tokens": 685056,
+            "output_tokens": 11143,
+            "reasoning_output_tokens": 2464
+          }
+        },
+        "translator": {
+          "calls": 0,
+          "wall_time_seconds": 0,
+          "tokens": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          }
+        },
+        "judge": {
+          "calls": 0,
+          "wall_time_seconds": 0,
+          "tokens": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          }
+        }
+      },
+      "total_model_seconds": 608.8029999999999,
+      "total_model_calls": 4
+    },
+    "reuse": {
+      "approved": false,
+      "reason": "Review and remove target answers before freezing for a future run."
+    },
+    "candidate_lessons": [],
+    "semantic_review_status": "automated-calibration; expert validation pending"
+  }
+}

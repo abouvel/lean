@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "strategy": "Define the exact and rounded product trees by shape-preserving leaf maps, and define the rounded dot product by roundedSum on the rounded product tree. Construct a leafwise perturbation witness for multiplication using Model.round_spec. Apply the supplied rounded-sum theorem to that rounded product tree, then compose the multiplication perturbation with the addition perturbation using IsPerturbation.trans. The composed bound u + gamma(d,u)*(1+u) equals gamma(d,u) + u*(1+gamma(d,u)); gamma_step bounds it by gamma(d+1,u). Reuse the rounded-sum existential tree as the final witness relative to exactProductTree. This accounts for one multiplication and at most d additions per leaf without assumptions beyond the supplied model and smallness condition.",
+  "obligations": [
+    {
+      "id": "preserve_prerequisites",
+      "description": "Use the five approved prerequisite modules unchanged and preserve configuration. The planner makes no workspace edits; the eventual implementation must import the supplied Model, Gamma, Tree, Algorithm, and Reduction results without adding axioms or weakening their definitions."
+    },
+    {
+      "id": "define_computation",
+      "description": "For tree : Tree (\u211d \u00d7 \u211d), define exactProductTree tree as tree.map (fun p => p.1 * p.2); roundedProductTree model tree as tree.map (fun p => model.mul p.1 p.2); and roundedDotProduct model tree as roundedSum model (roundedProductTree model tree). Leaves undergo one rounded multiplication, and internal nodes undergo rounded addition."
+    },
+    {
+      "id": "shape_and_depth",
+      "description": "Record that each product map preserves the input tree shape and depth, using Tree.depth_map. This ensures rounded-sum analysis uses the original depth d, including d = 0."
+    },
+    {
+      "id": "multiplication_witness",
+      "description": "Establish IsPerturbation model.u (exactProductTree tree) (roundedProductTree model tree) by structural induction. At each leaf obtain \u03b4 with |\u03b4| \u2264 model.u and round(a*b) = (a*b)*(1+\u03b4) from Model.round_spec. Express the leaf difference as (a*b)*\u03b4 and bound its absolute value by model.u*|a*b|. Combine child relations with IsPerturbation.node. This must also cover zero and negative products without division by a product."
+    },
+    {
+      "id": "smallness",
+      "description": "From hsmall : ((tree.depth + 1 : \u2115) : \u211d) * model.u < 1 and model.u_nonneg derive (tree.depth : \u211d) * model.u < 1. Use preservation of depth to satisfy roundedSum_exists_perturbation on roundedProductTree. Obtain 0 \u2264 gamma tree.depth model.u from gamma_nonneg; handle natural-to-real casts explicitly."
+    },
+    {
+      "id": "addition_witness",
+      "description": "Apply roundedSum_exists_perturbation to obtain perturbed : Tree \u211d with IsPerturbation (gamma tree.depth model.u) (roundedProductTree model tree) perturbed and perturbed.exactSum = roundedDotProduct model tree after unfolding the definition and rewriting depth."
+    },
+    {
+      "id": "compose_and_bound",
+      "description": "Compose the multiplication relation as the first perturbation and the addition relation as the second using IsPerturbation.trans and nonnegativity of gamma. The resulting coefficient is model.u + gamma d model.u * (1 + model.u). Identify this by ring algebra with gamma d model.u + model.u * (1 + gamma d model.u), apply gamma_step d model.u model.u_nonneg hsmall, and enlarge the perturbation relation with IsPerturbation.mono."
+    },
+    {
+      "id": "original_target",
+      "description": "Conclude for every model : Model and tree : Tree (\u211d \u00d7 \u211d), under only ((tree.depth + 1 : \u2115) : \u211d) * model.u < 1, that there exists perturbed : Tree \u211d such that IsPerturbation (gamma (tree.depth + 1) model.u) (exactProductTree tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. The witness must preserve leaf occurrences through IsPerturbation; an aggregate forward-error inequality alone is insufficient."
+    },
+    {
+      "id": "validation",
+      "description": "Compile the completed candidate with local Lean and Mathlib, check that it contains no sorry, placeholders, or custom axioms, and verify that the final declaration quantifies over arbitrary supplied models and pair trees and refers to the actual rounded computation and exactProductTree. No exact-arithmetic restriction or hypothesis implying the desired conclusion is allowed."
+    }
+  ]
+}

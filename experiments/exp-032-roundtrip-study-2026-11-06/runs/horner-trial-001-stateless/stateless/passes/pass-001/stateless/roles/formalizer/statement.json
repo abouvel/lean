@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.FloatingPoint.Horner.forward_error"
+  ],
+  "construction_names": [
+    "Research.FloatingPoint.Horner.P",
+    "Research.FloatingPoint.Horner.Q",
+    "Research.FloatingPoint.Horner.E"
+  ],
+  "source_mapping": "/spec/source.txt is formalized in /workspace/Research/Submission.lean: P is exact increasing-degree Horner evaluation; Q uses exactly two nested model.round calls per cons step; E is the specified exact-data recurrence; forward_error states the bound for every Model, List ℝ, and real x, using only the assumptions already contained in Model. The supporting /spec/support/Research/Common/FloatingPoint/Model.lean is copied unchanged to /workspace/Research/Common/FloatingPoint/Model.lean. Statement revision record: /spec/feedback.json was absent; this is the initial statement, with no deviations or additional assumptions. Only the final theorem proof is temporary sorry scaffolding for the next role."
+}

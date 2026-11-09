@@ -1,0 +1,63 @@
+Source: Sahil Bhola, Self-contained Proof for a Mixed-precision Block Jacobi Algorithm.
+
+Selected deliverable: the full active result labeled theorem:block_jacobi_real in main.tex (lines 613-693).
+
+The original mathematical proof is available in paper.tex. The selected statement below is authoritative. Earlier statements and notation supply context. A referenced result may be proved as a helper. Do not assume a desired algorithmic bound or an unproved paper lemma as an added hypothesis.
+
+SELECTED STATEMENT (verbatim LaTeX, proof omitted)
+\begin{theorem}[Update-form Block Jacobi in Real Arithmetic]
+\label{theorem:block_jacobi_real}
+Let $\mat{a}\ireal{n\times n}$ be decomposed as
+$\mat{a}=\mat{d}+\mat{n}$, where $\mat{d}$ is a nonsingular block-diagonal
+matrix and $\mat{n}$ contains the off-diagonal blocks. Let
+$\vect{x}$ satisfy $\mat{a}\vect{x}=\vect{b}$, and consider the exact
+block-Jacobi iteration
+\begin{align}
+    \mat{d}\vect{c}^{k+1}
+    &=\vect{b}-\mat{a}\vect{x}^k,
+    &
+    \vect{x}^{k+1}
+    &=\vect{x}^k+\vect{c}^{k+1}.
+\end{align}
+Define the forward error $\vect{e}^k\define\vect{x}^k-\vect{x}$ and the
+iteration matrix $\mat{p}\define-\mat{d}^{-1}\mat{n}$. Then
+\begin{align}
+    \vect{e}^{k+1}=\mat{p}\vect{e}^k,
+    \qquad
+    \vect{e}^k=\mat{p}^k\vect{e}^0,
+\end{align}
+and hence
+\begin{align}
+    \abs{\vect{e}^k}
+    &\leq \abs{\mat{p}}^k\abs{\vect{e}^0},
+    &
+    \norm[\infty]{\vect{e}^k}
+    &\leq
+    \norm[\infty]{\mat{p}}^k
+    \norm[\infty]{\vect{e}^0}.
+\end{align}
+The iteration converges to $\vect{x}$ for every initial guess if and only
+if
+\begin{align}
+    \rho(\mat{p})
+    =\rho(\mat{d}^{-1}\mat{n})<1.
+\end{align}
+In particular, $\norm[\infty]{\mat{p}}<1$ is a sufficient condition for
+convergence and makes the iteration a contraction in the infinity norm.
+\end{theorem}
+
+SECTION CONTEXT
+\section{Block Jacobi Error Analysis in Reals}
+
+SOURCE NOTATION MACROS
+\newcommand{\urd}{\ensuremath{\mathrm{u}}}
+\newcommand{\define}{\ensuremath{\triangleq}}
+\newcommand{\vect}[1]{\mathbf{\MakeLowercase{#1}}}
+\newcommand{\mat}[1]{\mathbf{\MakeUppercase{#1}}}
+\newcommand{\ireal}[1]{\in\mathbb{R}^{#1}}
+\newcommand{\norm}[2][]{\left\|#2\right\|_{#1}}
+\DeclareMathOperator{\fl}{fl}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\widehatgamma}[1]{\widehat{\gamma}_{#1}}

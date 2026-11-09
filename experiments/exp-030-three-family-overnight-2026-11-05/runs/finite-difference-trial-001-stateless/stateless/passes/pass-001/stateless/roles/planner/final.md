@@ -1,0 +1,1 @@
+Saved [plan.json](/output/plan.json) atomically with schema version 1, a strategy, and seven obligations. It connects the forward-difference definition to Mathlib’s mean value theorem without requiring endpoint derivatives. No completed proof was written, and `/workspace` was unchanged.

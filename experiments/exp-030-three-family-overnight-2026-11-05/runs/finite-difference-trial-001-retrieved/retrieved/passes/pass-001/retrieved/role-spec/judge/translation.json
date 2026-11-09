@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "8ec2d503a77561df59a40e8f2a4d4a84cdf1689757fdcf8b7e22507c5b982622",
+  "status": "complete",
+  "statement": "For all functions f,D: \u211d \u2192 \u211d and all x,h,L \u2208 \u211d with h > 0 and L \u2265 0, if f is continuous on [x,x+h], has derivative D(t) at each t in (x,x+h), and satisfies |D(t)\u2212D(x)| \u2264 L|t\u2212x| for every such t, then the constructed quotient (f(x+h)\u2212f(x))/h satisfies |(f(x+h)\u2212f(x))/h\u2212D(x)| \u2264 Lh. No hypothesis asserts that D(x) is a derivative of f at x.",
+  "targets": [
+    {
+      "name": "Research.forwardDifference_error_bound",
+      "statement": "For every f: \u211d \u2192 \u211d, every D: \u211d \u2192 \u211d, and every x,h,L \u2208 \u211d, assume (1) 0 < h; (2) 0 \u2264 L; (3) f is continuous on [x,x+h] = {t \u2208 \u211d : x \u2264 t \u2264 x+h} in the usual real topology; (4) for every t \u2208 \u211d with x < t < x+h, f has ordinary two-sided derivative D(t) at t; and (5) for every t \u2208 \u211d with x < t < x+h, |D(t)\u2212D(x)| \u2264 L|t\u2212x|. Then |Research.forwardDifference(f,x,h)\u2212D(x)| \u2264 Lh. Substituting the supplied definition, this is |(f(x+h)\u2212f(x))/h\u2212D(x)| \u2264 Lh. The value D(x) is the value of the arbitrary supplied function D at x. Derivatives at the endpoints, continuity of D, and a pairwise Lipschitz inequality for D are not additional hypotheses."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.forwardDifference",
+      "description": "This function has domain (\u211d \u2192 \u211d) \u00d7 \u211d \u00d7 \u211d and codomain \u211d (expressed as a curried function). For any f: \u211d \u2192 \u211d and x,h \u2208 \u211d it returns (f(x+h)\u2212f(x))/h: it evaluates f at x+h and x, subtracts f(x), then divides by h. The definition has no hypotheses on f, x, or h. For nonzero h this is the secant slope between x and x+h; it takes no limit. Under Lean real division, which is total with inverse of zero equal to zero, the value at h=0 is zero. The target theorem applies this exact construction under the additional restriction h > 0."
+    }
+  ],
+  "assumptions": [
+    "All functions f,D: \u211d \u2192 \u211d and all real parameters x,h,L are universally quantified in the theorem.",
+    "The theorem assumes 0 < h and 0 \u2264 L.",
+    "The theorem assumes f is continuous on the closed interval [x,x+h].",
+    "For every real t in the open interval (x,x+h), the theorem assumes that f has derivative D(t) at t.",
+    "For every real t in the open interval (x,x+h), the theorem assumes |D(t)\u2212D(x)| \u2264 L|t\u2212x|.",
+    "The construction imposes no hypotheses and uses ordinary real arithmetic with Lean\u2019s total convention for division by zero."
+  ],
+  "missing_context": []
+}

@@ -1,0 +1,3 @@
+Pass. Research/Submission.lean:642-701 proves the full selected Cholesky Solve result with the original perturbed system and exact componentwise coefficients. The operational run relations define and connect all three computational stages; their assumptions concern successful execution and primitive rounding, not the desired backward-error bounds.
+
+The current source compiled independently. Its final theorem depends only on propext, Classical.choice, and Quot.sound. Offline verification also reports a successful build and formal audit. The numerical model explicitly specifies relative rounding for square roots as well as the arithmetic operations.

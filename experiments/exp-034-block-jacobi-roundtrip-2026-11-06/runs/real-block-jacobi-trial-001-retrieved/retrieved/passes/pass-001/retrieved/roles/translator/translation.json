@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "e7fdc27fc7008789161c8ea575e8e4b7c75fdd7eb1f1a0223873fed68fc939ac",
+  "status": "complete",
+  "statement": "For any natural number n, including 0, let I=Fin n={0,...,n-1}. RealMatrix n is R^(I×I), and Vector n is R^I. All vector operations are coordinatewise; (Mv)_i=sum over j in I of M_ij v_j. Matrix products and natural powers are ordinary matrix operations, with M^0 the identity. Write |v| and |M| for entrywise absolute values, ||v||∞=max({0}∪{|v_i|:i in I}), and ||M||∞=max({0}∪{sum over j in I of |M_ij|:i in I}); both are 0 for n=0. The total matrix inverse D^(-1) is the ordinary inverse when det D≠0 and the zero matrix when det D=0. Let T=-D^(-1)N, c(y)=D^(-1)(b-Ay), U(y)=y+c(y), y_0=x₀, y_(k+1)=U(y_k), c_k=c(y_k), and e_k=y_k-x. The function rho(M) takes the extended nonnegative complex spectral radius of the entrywise complexification of M and converts it to a real number using ENNReal.toReal, which sends infinity to 0. For these finite matrices this is the largest modulus of a complex eigenvalue, with value 0 for an empty spectrum. The sole target concerns this residual-correction iteration, under the splitting and solution hypotheses below, and asserts error identities, quantitative bounds, a convergence equivalence, and a sufficient contraction condition.",
+  "targets": [
+    {
+      "name": "Research.BlockJacobi.block_jacobi_real",
+      "statement": "For every natural number n≥0, arbitrary type/set B (at any universe level), function block:I→B, real matrices A,D,N in R^(I×I), and real vectors b,x in R^I, assume A=D+N; for all i,j in I, block(i)≠block(j) implies D_ij=0; for all i,j in I, block(i)=block(j) implies N_ij=0; det D is a unit in R (equivalently det D≠0); and Ax=b. Using exactly the constructions and notation in the summary, the following conjunction holds. (1) For every x₀ in R^I and integer k≥0, D c_k=b-Ay_k, y_(k+1)=y_k+c_k, e_(k+1)=T e_k, e_k=T^k e_0, for every i in I one has |(e_k)_i|≤((|T|)^k |e_0|)_i, and ||e_k||∞≤(||T||∞)^k ||e_0||∞. (2) rho(T)=rho(D^(-1)N). (3) The assertion that for every x₀ in R^I the sequence k↦y_k tends to x as k→∞ through the natural numbers is equivalent to rho(T)<1. Convergence is in the usual product topology on R^I, equivalently coordinatewise convergence. (4) If ||T||∞<1, then for every x₀ in R^I this convergence holds, 0≤||T||∞, and for every u,v in R^I one has ||U(u)-U(v)||∞≤||T||∞ ||u-v||∞. Here the actual update is U(y)=y+D^(-1)(b-Ay); under the hypotheses it also equals D^(-1)b+Ty. The given x is a fixed specified solution throughout all these conclusions. No positive-dimension restriction or injectivity/surjectivity condition on block is assumed."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BlockJacobi.IsBlockDecomposition",
+      "description": "For implicit n≥0 and arbitrary type/set B, takes block:I→B and A,D,N in R^(I×I). It asserts exactly A=D+N, and, for all i,j in I, D_ij=0 if block(i)≠block(j), while N_ij=0 if block(i)=block(j). Consequently D retains the within-label entries of A and N retains the between-label entries. It asserts no invertibility or condition on the labels."
+    },
+    {
+      "name": "Research.BlockJacobi.vectorInfNorm",
+      "description": "For implicit n≥0 and v in R^I, returns max({0}∪{|v_i|:i in I}) as a real number: the finite supremum of the nonnegative real norms of all coordinates, coerced to R. It is 0 for an empty index set."
+    },
+    {
+      "name": "Research.BlockJacobi.matrixInfNorm",
+      "description": "For implicit n≥0 and M in R^(I×I), returns max({0}∪{sum over j in I of |M_ij|:i in I}) as a real number. It sums nonnegative real entry norms in each row, takes their finite supremum, and coerces to R. It is 0 if n=0."
+    },
+    {
+      "name": "Research.BlockJacobi.vectorAbs",
+      "description": "For implicit n≥0 and v in R^I, returns the vector i↦|v_i| for every i in I."
+    },
+    {
+      "name": "Research.BlockJacobi.matrixAbs",
+      "description": "For implicit n≥0 and M in R^(I×I), returns the entrywise absolute-value matrix (i,j)↦|M_ij| for every i,j in I."
+    },
+    {
+      "name": "Research.BlockJacobi.complexification",
+      "description": "For implicit n≥0 and M in R^(I×I), returns the matrix in C^(I×I) whose entries are the images of M_ij under the canonical embedding R→C, that is M_ij+0i."
+    },
+    {
+      "name": "Research.BlockJacobi.rho",
+      "description": "For implicit n≥0 and M in R^(I×I), returns ENNReal.toReal(spectralRadius over C of complexification(M)). The extended nonnegative spectral radius is the supremum of the moduli of the complex spectrum; the real conversion preserves finite values and sends infinity to 0. For a finite matrix this is the maximum modulus of its complex eigenvalues, with empty-spectrum value 0. It uses the complexified matrix, so the spectrum is not restricted to real eigenvalues."
+    },
+    {
+      "name": "Research.BlockJacobi.iterationMatrix",
+      "description": "For implicit n≥0 and D,N in R^(I×I), returns -(D^(-1)N), using the total inverse convention in the summary. The definition requires neither nonsingularity nor a block decomposition."
+    },
+    {
+      "name": "Research.BlockJacobi.correctionAt",
+      "description": "For implicit n≥0, A,D in R^(I×I), and b,y in R^I, returns D^(-1)(b-Ay). It applies the inverse of the entire matrix D to the residual, with no block-label parameter or hypotheses."
+    },
+    {
+      "name": "Research.BlockJacobi.update",
+      "description": "For implicit n≥0, A,D in R^(I×I), and b,y in R^I, returns y+correctionAt(A,D,b,y)=y+D^(-1)(b-Ay). Under the theorem hypotheses it is D^(-1)b-D^(-1)Ny. Its definition has no hypotheses."
+    },
+    {
+      "name": "Research.BlockJacobi.iterate",
+      "description": "For implicit n≥0, A,D in R^(I×I), b,x₀ in R^I, and natural number k≥0, returns y_k from the recursion y_0=x₀ and y_(k+1)=update(A,D,b,y_k)=y_k+D^(-1)(b-Ay_k). The recursion repeatedly performs the residual update for fixed A,D,b. It does not take N or block as an argument and has no hypotheses."
+    },
+    {
+      "name": "Research.BlockJacobi.correction",
+      "description": "For implicit n≥0, A,D in R^(I×I), b,x₀ in R^I, and natural number k≥0, returns correctionAt(A,D,b,iterate(A,D,b,x₀,k))=D^(-1)(b-Ay_k). This is the correction added in the transition from y_k to y_(k+1)."
+    },
+    {
+      "name": "Research.BlockJacobi.error",
+      "description": "For implicit n≥0, A,D in R^(I×I), b,x,x₀ in R^I, and natural number k≥0, returns iterate(A,D,b,x₀,k)-x=y_k-x. The reference x is subtracted from the iterate. Its definition allows any x; the target theorem additionally assumes Ax=b."
+    }
+  ],
+  "assumptions": [
+    "n is an arbitrary natural number, including 0. All matrices and vectors share the index set I=Fin n.",
+    "For the theorem, B is an arbitrary type/set and block:I→B is any function; no further condition on either is present.",
+    "For the theorem, A=D+N, D_ij=0 whenever block(i)≠block(j), and N_ij=0 whenever block(i)=block(j), for every i,j in I.",
+    "For the theorem, det D is a unit in R, equivalently det D≠0.",
+    "For the theorem, b,x are specified real vectors satisfying Ax=b.",
+    "All initial vectors x₀ and all natural iteration indices k in the error identities and bounds are universally quantified. The convergence assertion quantifies over every initial vector, with the same specified solution x.",
+    "The final sufficient convergence and Lipschitz conclusions require the additional antecedent ||-D^(-1)N||∞<1. The separate equivalence has rho(-D^(-1)N)<1 as its right-hand side.",
+    "The construction definitions require only their stated argument domains; they do not assume the theorem hypotheses."
+  ],
+  "missing_context": []
+}

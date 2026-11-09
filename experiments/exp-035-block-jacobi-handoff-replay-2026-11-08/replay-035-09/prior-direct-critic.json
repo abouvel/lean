@@ -1,0 +1,50 @@
+{
+  "overall_verdict": "pass",
+  "phase": "final",
+  "target_evidence": "Research/Submission.lean:462-501 proves Cholesky.cholesky_factorization for every n, real symmetric positive definite A, and successful rounded Cholesky factor R without overflow or underflow, under 0 <= u and (n+1)*u < 1. Lines 469-473 state exactly the symmetric perturbation identity and gamma(n+1) componentwise bound using entryAbs R.transpose * entryAbs R. Independent compilation succeeds and axiom inspection finds only standard Lean axioms.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "Research/Submission.lean:462-501 proves Cholesky.cholesky_factorization. Its conclusion at lines 469-473 contains existence, symmetry, the perturbation identity, and the full componentwise bound from /spec/source.txt:8-27. Independent lake env lean Research/Submission.lean exited 0.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the upper-triangular computed Cholesky factor and its successful-completion semantics, including the rounded square root.",
+      "evidence": "Research/Submission.lean:51-86 defines sequential rounded products and sums, increasing-index prefix pairs, and the rounded numerator. SuccessfulRun at lines 92-99 specifies upper triangularity, nonnegative radicands, rounded real square roots, nonzero division pivots, and rounded off-diagonal divisions. These are the zero-based recurrences in /spec/source.txt:31-35. NoOverflowUnderflow at lines 103-110 checks each executed operation.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the symmetric perturbation identity and gamma(n+1) bound using the product of the entrywise absolute factors.",
+      "evidence": "Research/Submission.lean:38-43 defines the exact gamma constant and entrywise absolute value. Lines 346-390 derive the diagonal and off-diagonal recovery coefficients from primitive rounding; lines 392-417 prove the local error bound. Lines 438-452 identify the exact and absolute Gram products. Lines 475-501 prove symmetry and extend the bound to every entry for DeltaA = R.transpose * R - A.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "Research/Submission.lean:463-468 quantifies over the original real matrix A, computed factor R, dimension n, unit roundoff u, and rounding model fp, with symmetric positive definite A and the requested smallness condition. SuccessfulRun and NoOverflowUnderflow use those same A, R, and fp. Lines 492-494 apply the scalar analysis to this run and identify its matrix residual.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "Research/Submission.lean:32-35 supplies only the primitive relative rounding guarantee on in-range exact results, including square roots. Lines 92-110 supply execution equations and range conditions, with no residual estimate or target conclusion. Lines 465-468 preserve the source hypotheses; 0 <= u makes the inherent unit-roundoff sign explicit. Positive definiteness is unused because the conditional backward-error proof works more generally, which does not restrict the requested result. Independent axiom inspection reports only propext, Classical.choice, and Quot.sound. /evaluation/verification.json and verification.log report successful offline build and scans.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

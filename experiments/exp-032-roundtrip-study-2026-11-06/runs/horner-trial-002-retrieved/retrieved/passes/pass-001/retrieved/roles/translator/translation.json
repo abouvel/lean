@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "ab9d142a99dd10de93cc5670de33da2f2aa2540140972d47fd91be827bae986d",
+  "status": "complete",
+  "statement": "For every model consisting of a real number u ≥ 0 and a function r: ℝ → ℝ such that for every z ∈ ℝ there exists δ ∈ ℝ with |δ| ≤ u and r(z) = z(1 + δ), every finite list c of real coefficients, and every x ∈ ℝ, the recursively rounded evaluation Q(model,c,x) differs from the exact evaluation P(c,x) by at most E(c,x,u): |Q(model,c,x) − P(c,x)| ≤ E(c,x,u). The construction P evaluates coefficients in increasing order of powers; Q applies r separately to each multiplication and subsequent addition, including those at the final coefficient; E is the explicit recursive real-valued bound described below.",
+  "targets": [
+    {
+      "name": "Research.FloatingPoint.Horner.forward_error",
+      "statement": "For every model m ∈ Research.FloatingPoint.Model, every finite list c ∈ List(ℝ), and every real x, |Q(m,c,x) − P(c,x)| ≤ E(c,x,u_m), where u_m = Research.FloatingPoint.Model.u(m) and r_m = Research.FloatingPoint.Model.round(m). Such a model contains u_m ∈ ℝ with 0 ≤ u_m and a function r_m: ℝ → ℝ satisfying ∀z ∈ ℝ, ∃δ ∈ ℝ, |δ| ≤ u_m and r_m(z) = z(1+δ). Here P([],x)=0 and P(a::t,x)=a+xP(t,x); Q(m,[],x)=0 and Q(m,a::t,x)=r_m(a+r_m(xQ(m,t,x))); E([],x,u)=0 and E(a::t,x,u)=u|a+xP(t,x)|+(1+u)(u|xP(t,x)|+(1+u)|x|E(t,x,u)). Thus the theorem bounds the absolute error of precisely this twice-rounded-per-list-entry recursion against its exact polynomial evaluation, for every list length including zero."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.FloatingPoint.Horner.P",
+      "description": "A function List(ℝ) → ℝ → ℝ defined for every finite real list c and real x by P([],x)=0 and P(a::t,x)=a+xP(t,x), where a::t means a list with head a and tail t. For c=[a₀,…,aₙ₋₁], P(c,x)=Σ_{i=0}^{n−1} aᵢxⁱ, with the empty sum equal to zero. All operations are exact real operations."
+    },
+    {
+      "name": "Research.FloatingPoint.Horner.Q",
+      "description": "A function Research.FloatingPoint.Model → List(ℝ) → ℝ → ℝ. For any model m with rounding function r_m: ℝ → ℝ, any real x, and any finite real list, Q(m,[],x)=0 and Q(m,a::t,x)=r_m(a+r_m(xQ(m,t,x))). It recursively evaluates the tail, multiplies its value by x and applies r_m, adds the head coefficient and applies r_m again. The empty-list zero is returned directly. Every nonempty list entry undergoes both applications, including the last entry, whose inner product is x·0. Coefficients and x are supplied as reals without preliminary rounding. This is an abstract real function specified by the model, with no concrete machine format supplied."
+    },
+    {
+      "name": "Research.FloatingPoint.Horner.E",
+      "description": "A function List(ℝ) → ℝ → ℝ → ℝ defined for every finite real list c and real x,u by E([],x,u)=0 and E(a::t,x,u)=u|a+xP(t,x)|+(1+u)(u|xP(t,x)|+(1+u)|x|E(t,x,u)). Its inputs include an arbitrary real parameter u; its definition itself does not require u ≥ 0. It uses exact tail values P(t,x), absolute values, and the recursively computed tail bound. The target theorem specializes this parameter to the nonnegative model value u_m and asserts that the resulting value bounds |Q(m,c,x)−P(c,x)|."
+    }
+  ],
+  "assumptions": [
+    "Each model contains a real u with 0 ≤ u, a function round: ℝ → ℝ, and the property ∀z ∈ ℝ, ∃δ ∈ ℝ, |δ| ≤ u ∧ round(z)=z(1+δ). The witness δ may depend on z; no single common δ is required.",
+    "The coefficients form an arbitrary finite list of real numbers, including the empty list, and x is an arbitrary real number. There are no coefficient sign, magnitude, or representability restrictions.",
+    "There is no supplied upper bound on u, no restriction involving the list length and u, and no additional hypothesis on x. The model does not specify a finite floating-point format, a particular rounding rule, or operation-dependent rounding functions."
+  ],
+  "missing_context": []
+}

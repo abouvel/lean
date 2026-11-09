@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "4b7b69d0999087608c59bf55234737a68bd6ccf6fe9d885cb18a9b7111f9dec5",
+  "status": "complete",
+  "statement": "The target gives a componentwise backward-error bound for any output admitted by a specified relational rounded upper-triangular computation from the zero matrix. For symmetric positive definite real A and real u with 0<=u and (n+1)u<1, a successful output Rhat satisfies Rhat^T Rhat=A+DeltaA for the symmetric perturbation DeltaA=Rhat^T Rhat-A, with |DeltaA[i,j]|<=((n+1)u/(1-(n+1)u))*sum_k |Rhat[k,i]|*|Rhat[k,j]| for every index pair. The computation allows existential relative rounding errors at each operation, skips subtraction in row zero, and initializes each nonempty dot product directly from its rounded first product. The theorem assumes successful execution rather than proving its existence.",
+  "targets": [
+    {
+      "name": "Cholesky.cholesky_factorization",
+      "statement": "For every natural n (including zero), every A,Rhat in R^{n x n}, and every real u, assume A^T=A, A is positive definite (x^T A x>0 for every nonzero real vector x indexed by I_n={0,...,n-1}), 0<=u, (n+1)u<1, and SuccessfulCholesky(u,A,Rhat). The last assumption means Execute(u,A,entryOrder(n),0,Rhat), with the zero matrix as initial state and the relations described in the constructions. Then there exists a real n by n matrix DeltaA such that DeltaA=backwardPerturbation(A,Rhat)=Rhat^T Rhat-A, DeltaA^T=DeltaA, Rhat^T Rhat=A+DeltaA, and for every i,j in I_n, |DeltaA[i,j]|<=gamma(n+1,u)*(entrywiseAbs(Rhat^T)*entrywiseAbs(Rhat))[i,j] = ((n+1)u/(1-(n+1)u))*sum_{k in I_n}|Rhat[k,i]|*|Rhat[k,j]|. Matrix products use ordinary finite summation, and natural numbers in real arithmetic are coerced to real numbers. Successful execution is assumed; the theorem does not assert that an output or execution exists for every A and u. No positive lower bound on n or additional hypothesis on Rhat is present."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Cholesky.Rounded",
+      "description": "A predicate on real u,x,y: Rounded(u,x,y) means that there exists a real delta with |delta|<=u and y=x(1+delta). It selects neither a rounding error nor a result and has no separate restriction on u. Exact zero can yield only zero."
+    },
+    {
+      "name": "Cholesky.DotTail",
+      "description": "An inductively generated proposition DotTail(u,acc,xs,out), where u,acc,out are real and xs is a finite list of real pairs. Constructor nil: for every real u and acc, DotTail(u,acc,[],acc). Constructor cons: for every real u,acc,p,next,out,a,b and list xs, Rounded(u,a*b,p), Rounded(u,acc+p,next), and DotTail(u,next,xs,out) imply DotTail(u,acc,(a,b)::xs,out). This relation represents left-to-right accumulation starting at acc, with each multiplication and each addition separately rounded. It is not a function choosing the intermediate values."
+    },
+    {
+      "name": "Cholesky.SequentialDot",
+      "description": "An inductively generated proposition SequentialDot(u,xs,out), for real u,out and a finite list xs of real pairs. Constructor nil: for every real u, SequentialDot(u,[],0). Constructor cons: for all real u,a,b,p,out and lists xs, Rounded(u,a*b,p) and DotTail(u,p,xs,out) imply SequentialDot(u,(a,b)::xs,out). Thus the first product is rounded and used directly as the accumulator without adding it to zero; the remaining pairs are processed by DotTail. These constructors specify a relation, not a deterministic algorithm."
+    },
+    {
+      "name": "Cholesky.Residual",
+      "description": "A predicate Residual(u,row,a,dot,out), for real u,a,dot,out and natural row. If row=0, it requires out=a exactly and ignores dot. Otherwise it requires Rounded(u,a-dot,out). Thus row zero skips the rounded subtraction."
+    },
+    {
+      "name": "Cholesky.dotInputs",
+      "description": "For every natural n, real n by n matrix R and indices i,j in I_n={0,...,n-1}, dotInputs(R,i,j) is the list of pairs (R[k,i],R[k,j]) for k=0,...,i-1, in increasing order. It filters the increasing list of all indices by k<i and then maps to pairs. It does not require i<=j."
+    },
+    {
+      "name": "Cholesky.writeEntry",
+      "description": "For every natural n, real n by n matrix R, indices i,j in I_n, and real value, writeEntry(R,i,j,value) returns the matrix whose entry at each p,q in I_n is value when p=i and q=j, and R[p,q] otherwise. Only one entry is updated; no reflected entry is written."
+    },
+    {
+      "name": "Cholesky.EntryComputation",
+      "description": "For every natural n, real u,value, real n by n matrices A,R, and i,j in I_n, EntryComputation(u,A,R,i,j,value) means i<=j and there exist real dot,residual such that SequentialDot(u,dotInputs(R,i,j),dot) and Residual(u,i,A[i,j],dot,residual), using the natural value of i as the row argument. If i=j, it additionally requires residual>=0 and Rounded(u,sqrt(residual),value). If i differs from j (thus i<j), it instead requires R[i,i]!=0 and Rounded(u,residual/R[i,i],value). The square root is the nonnegative real square root. This predicate describes permitted values from the current matrix R; it does not choose one or ensure existence."
+    },
+    {
+      "name": "Cholesky.entryOrder",
+      "description": "For every natural n, entryOrder(n) lists all pairs (i,j) with 0<=i<=j<n, first in increasing column j, and within each column in increasing row i. It begins (0,0),(0,1),(1,1),(0,2),(1,2),(2,2) when those indices exist. Every upper-triangular entry occurs once, no lower-triangular entry occurs, and the list is empty when n=0."
+    },
+    {
+      "name": "Cholesky.Execute",
+      "description": "For every natural n, Execute(u,A,xs,R,out) is an inductively generated proposition, with real u, real n by n matrices A,R,out, and a list xs of pairs from I_n x I_n. Constructor nil: for every such n,u,A and matrix R, Execute(u,A,[],R,R). Constructor cons: for every such n,u,A, indices i,j, list xs, matrices R,out, and real value, EntryComputation(u,A,R,i,j,value) and Execute(u,A,xs,writeEntry(R,i,j,value),out) imply Execute(u,A,(i,j)::xs,R,out). Thus it relates initial and final matrices through a finite sequence of admissible entry computations and updates in the supplied list order. It is a relation with existential intermediate values, not a function choosing an output. Its type permits arbitrary index lists, subject to its constructor premises."
+    },
+    {
+      "name": "Cholesky.SuccessfulCholesky",
+      "description": "For every natural n, real u and real n by n matrices A,Rhat, SuccessfulCholesky(u,A,Rhat) is defined to mean Execute(u,A,entryOrder(n),0,Rhat), starting from the zero matrix. It asserts a derivation of the execution relation that visits upper-triangular entries column by column, forms the rounded dot products and residuals using the current state, rounds a square root on the diagonal or a division off the diagonal under the stated local side conditions, and writes each value. Lower-triangular entries remain zero because none is written. The predicate itself assumes neither symmetry nor positive definiteness of A and has no independent bound on u. It is the successful-run hypothesis of the theorem, not a total algorithm or an assertion that every input has a successful run."
+    },
+    {
+      "name": "Cholesky.gamma",
+      "description": "For every natural m and real u, gamma(m,u)=(m*u)/(1-m*u), with m coerced to the reals. The definition imposes no bound or denominator-nonzero condition; it uses total real-field division (division by zero is zero). In the target m=n+1 and (n+1)u<1, so its denominator is strictly positive."
+    },
+    {
+      "name": "Cholesky.entrywiseAbs",
+      "description": "For every natural n and real n by n matrix M, entrywiseAbs(M) is the real n by n matrix whose (i,j) entry is |M[i,j]| for every i,j in I_n. It takes scalar absolute values entry by entry."
+    },
+    {
+      "name": "Cholesky.backwardPerturbation",
+      "description": "For every natural n and real n by n matrices A,Rhat, backwardPerturbation(A,Rhat)=Rhat^T Rhat-A. Its (i,j) entry is sum over k in I_n of Rhat[k,i]*Rhat[k,j], minus A[i,j]. It is defined without symmetry, definiteness, or execution assumptions. The theorem identifies its existential perturbation with this precise matrix and bounds its entries under the target hypotheses."
+    }
+  ],
+  "assumptions": [
+    "All matrices are square real matrices indexed by Fin n, identified with I_n={0,...,n-1}; n ranges over all natural numbers including zero. All list orders and index comparisons use this natural order.",
+    "The target universally quantifies A,Rhat and u and assumes A is symmetric positive definite, 0<=u, (n+1)u<1, and SuccessfulCholesky(u,A,Rhat).",
+    "SuccessfulCholesky asserts existence of a derivation in the supplied execution relation starting at the zero matrix with entryOrder(n). Each Rounded premise may use its own existential real error with absolute value at most u. There is no specified floating-point set, fixed rounding rule, shared error, or probabilistic independence assumption.",
+    "The component definitions have the domains and local premises stated in their descriptions; the theorem hypotheses are not global restrictions on those definitions."
+  ],
+  "missing_context": []
+}

@@ -1,0 +1,1 @@
+Saved [translation.json](/output/translation.json) atomically with status `complete`, covering all 3 targets and 4 constructions. `missing_context` is empty.

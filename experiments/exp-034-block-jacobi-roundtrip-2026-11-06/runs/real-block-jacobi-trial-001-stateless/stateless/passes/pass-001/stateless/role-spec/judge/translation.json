@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "af08893cd92cae308e358dbbc230fb46b67d04f3351c0eec61fb7f8cee90f4e6",
+  "status": "complete",
+  "statement": "The sole target theorem concerns the iteration y_0=x0, y_{k+1}=y_k+D^{-1}(b-Ay_k) on finite real coordinate vectors. Given a split A=D+N by equality of coordinate block labels, nonzero det(D), and a specified solution Ax=b, it identifies the split matrices, asserts recurrence and uniqueness for the constructed corrections and iterates, gives error propagation and bounds with P=-D^{-1}N, characterizes convergence from every initial vector by the complex spectral radius rho(P)<1, and supplies a sufficient supremum-norm contraction condition. No positive dimension or prescribed geometry of the blocks is assumed.",
+  "targets": [
+    {
+      "name": "Research.BlockJacobi.block_jacobi_real",
+      "statement": "For every natural n,m (including zero), every block:I_n -> I_m with I_r={0,...,r-1}, every A,D,N in R^{I_n x I_n}, and every b,x in R^{I_n}, assume A=D+N; for all i,j, block(i)!=block(j) implies D_ij=0; for all i,j, block(i)=block(j) implies N_ij=0; det(D) is a unit in R, equivalently det(D)!=0; and Ax=b. Put P=-D^{-1}N and L=matrixInfNorm(P). For each initial vector x0, let y_k=iterate(A,D,b,x0,k), c_k=correctionSequence(A,D,b,x0,k), and e_k=y_k-x. Put T(u)=update(A,D,b,u)=u+D^{-1}(b-Au). All the following conclusions hold simultaneously. (1) D=diagonalBlocks(block,A) and N=offDiagonalBlocks(block,A). (2) For every x0 in R^{I_n}, y_0=x0, and for every k in N, D c_{k+1}=b-A y_k and y_{k+1}=y_k+c_{k+1}. (3) For every x0 in R^{I_n} and every X,C:N -> R^{I_n}, if X_0=x0 and for every k in N, D C_{k+1}=b-A X_k and X_{k+1}=X_k+C_{k+1}, then X_k=y_k for every k in N and C_{k+1}=c_{k+1} for every k in N. This imposes no condition on C_0. (4) For every x0 in R^{I_n} and every k in N, e_{k+1}=P e_k, e_k=P^k e_0, |e_k| <= |P|^k |e_0| componentwise, and ||e_k||_infinity <= L^k ||e_0||_infinity. Bars mean entrywise absolute values; |P|^k is the matrix power of the entrywise absolute-value matrix. Matrix zeroth powers are the identity and scalar zeroth powers are 1. (5) rho(P)=rho(D^{-1}N). (6) ConvergesForEveryInitialGuess(A,D,b,x) if and only if rho(P)<1. That is, the actual sequence y_k tends to the specified solution x for every initial vector x0 exactly when this complex spectral radius is less than 1. The radius is valued in the extended nonnegative reals. (7) For every u,v in R^{I_n}, ||T(u)-T(v)||_infinity <= L ||u-v||_infinity. (8) If L<1, then ConvergesForEveryInitialGuess(A,D,b,x), and there exists q in the nonnegative reals such that its real value is L, q<1, and T is Lipschitz with constant q: for every u,v, d(T(u),T(v)) <= q d(u,v), where d is the supremum metric. Here ||v||_infinity=max_i |v_i| and L=max_i sum_j |P_ij|, with empty maxima zero. Convergence uses the finite product topology, equivalently this norm. Conclusions (2)-(4) and (6) concern precisely the recursively constructed iterates and corrections, and the sign of error is iterate minus x. The additional condition L<1 is required only for conclusion (8)."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BlockJacobi.Vector",
+      "description": "For every natural n, Vector(n) is I_n -> R, where I_n={0,...,n-1}. It includes the single empty vector for n=0."
+    },
+    {
+      "name": "Research.BlockJacobi.RealMatrix",
+      "description": "For every natural n, RealMatrix(n) is the space I_n x I_n -> R of real square matrices. Products use finite sums: (Mv)_i=sum_j M_ij v_j and (MN)_ij=sum_l M_il N_lj."
+    },
+    {
+      "name": "Research.BlockJacobi.IsBlockSplitting",
+      "description": "For natural n,m, block:I_n -> I_m, and A,D,N real n by n matrices: A=D+N, and for every i,j in I_n, block(i)!=block(j) implies D_ij=0, while block(i)=block(j) implies N_ij=0. There is no invertibility condition in this definition."
+    },
+    {
+      "name": "Research.BlockJacobi.diagonalBlocks",
+      "description": "For natural n,m, block:I_n -> I_m and A a real n by n matrix, this returns the n by n matrix with entry A_ij when block(i)=block(j), and zero otherwise. It masks entries by equality of labels; it does not return a list of smaller matrices."
+    },
+    {
+      "name": "Research.BlockJacobi.offDiagonalBlocks",
+      "description": "For natural n,m, block:I_n -> I_m and A a real n by n matrix, this is A-diagonalBlocks(block,A): its entries are zero for equal labels and A_ij for unequal labels."
+    },
+    {
+      "name": "Research.BlockJacobi.residual",
+      "description": "For natural n, real n by n A and b,u in R^{I_n}, residual(A,b,u)=b-Au."
+    },
+    {
+      "name": "Research.BlockJacobi.correction",
+      "description": "For natural n, real n by n A,D and b,u in R^{I_n}, correction(A,D,b,u)=D^{-1}(b-Au). This uses the full matrix inverse operation. The definition imposes no invertibility hypothesis; Matrix.inv is totalized, giving the ordinary inverse if det(D) is nonzero and the zero matrix if det(D)=0. The theorem assumes invertibility."
+    },
+    {
+      "name": "Research.BlockJacobi.update",
+      "description": "For natural n, real n by n A,D and b,u in R^{I_n}, update(A,D,b,u)=u+correction(A,D,b,u)=u+D^{-1}(b-Au). No block map or N is an argument of this affine update."
+    },
+    {
+      "name": "Research.BlockJacobi.iterate",
+      "description": "For natural n, real n by n A,D and b,x0 in R^{I_n}, iterate(A,D,b,x0) is the sequence y:N -> R^{I_n} defined by y_0=x0 and y_{k+1}=update(A,D,b,y_k) for every k in N."
+    },
+    {
+      "name": "Research.BlockJacobi.correctionSequence",
+      "description": "For natural n, real n by n A,D and b,x0 in R^{I_n}, this is the sequence c:N -> R^{I_n} with c_0=0 and c_{k+1}=correction(A,D,b,iterate(A,D,b,x0,k)) for every k in N."
+    },
+    {
+      "name": "Research.BlockJacobi.error",
+      "description": "For natural n, real n by n A,D, b,x0,x in R^{I_n} and k in N, error(A,D,b,x0,x,k)=iterate(A,D,b,x0,k)-x. The definition does not require Ax=b."
+    },
+    {
+      "name": "Research.BlockJacobi.iterationMatrix",
+      "description": "For natural n and real n by n D,N, iterationMatrix(D,N)=-(D^{-1}N). Under the theorem hypotheses this matrix propagates errors of the constructed iteration because A=D+N."
+    },
+    {
+      "name": "Research.BlockJacobi.matrixAbs",
+      "description": "For natural n and real n by n M, matrixAbs(M)_ij=|M_ij| for every i,j in I_n: entrywise absolute value."
+    },
+    {
+      "name": "Research.BlockJacobi.vectorAbs",
+      "description": "For natural n and v in R^{I_n}, vectorAbs(v)_i=|v_i| for every i in I_n."
+    },
+    {
+      "name": "Research.BlockJacobi.matrixInfNorm",
+      "description": "For natural n and real n by n M, form r_i=sum_{j in I_n}|M_ij| and take the function-space supremum norm of r. Thus matrixInfNorm(M)=max_{i in I_n} sum_{j in I_n}|M_ij|, with empty maximum zero for n=0. Its value is a nonnegative real."
+    },
+    {
+      "name": "Research.BlockJacobi.complexify",
+      "description": "For natural n and real n by n M, complexify(M) is the complex n by n matrix with entries M_ij+0i."
+    },
+    {
+      "name": "Research.BlockJacobi.rho",
+      "description": "For natural n and real n by n M, rho(M)=spectralRadius over C of complexify(M), valued in the extended nonnegative reals [0,infinity]. This is the supremum of the moduli of complex spectral values, equivalently the maximum eigenvalue modulus in positive finite dimension; the empty supremum is zero, including n=0."
+    },
+    {
+      "name": "Research.BlockJacobi.ConvergesForEveryInitialGuess",
+      "description": "For natural n, real n by n A,D and b,x in R^{I_n}, this means that for every x0 in R^{I_n}, k -> iterate(A,D,b,x0,k) tends to x as k tends to infinity through N in the product of the usual real topologies. Equivalently, for every x0 and every real epsilon>0, there exists K in N such that every k>=K satisfies ||iterate(A,D,b,x0,k)-x||_infinity<epsilon. Neither invertibility nor Ax=b is assumed in this definition."
+    }
+  ],
+  "assumptions": [
+    "All dimensions n,m are arbitrary natural numbers including zero. I_r=Fin r={0,...,r-1}. Each construction has implicit n; IsBlockSplitting, diagonalBlocks and offDiagonalBlocks also have implicit m.",
+    "The theorem universally quantifies block:I_n -> I_m, real n by n matrices A,D,N, and real coordinate vectors b,x. Its hypotheses are exactly the specified splitting, det(D) a unit in R (equivalently nonzero), and Ax=b.",
+    "The block map need not be surjective and its fibers need not be contiguous. No positivity, symmetry, definiteness, diagonal dominance, or invertibility of A is assumed. A solution is supplied as x with Ax=b.",
+    "Vector norms and distances are the supremum norm and metric; vector order is coordinatewise. Empty-vector norms and empty maximum row sums are zero. All time indices k and uniqueness-sequence domains are N including zero.",
+    "The definitions impose only their argument types; splitting, invertibility and being a solution are theorem hypotheses. The final conditional conclusion additionally assumes matrixInfNorm(P)<1. Spectral-radius comparisons occur in the extended nonnegative reals, the norm bound is real, and the Lipschitz constant q is a nonnegative real."
+  ],
+  "missing_context": []
+}

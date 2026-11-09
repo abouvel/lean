@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "f727cc9db97b3e8d68856aaca573b6f668d972af5ab14f0467cd7511d42b97ef",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "Cholesky.cholesky_factorization explicitly states every requested conclusion for the same fp,A,R satisfying the rounded recurrence and operation range predicates. Its bound is the source gamma(n+1) bound on the product of entrywise absolute factors. The relational recurrence includes the rounded square root and specifies a supplied successfully computed factor, which suffices for this conditional backward-error theorem.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "The final target Cholesky.cholesky_factorization explicitly asserts existence of symmetric Delta A, R^T R=A+Delta A, and the full componentwise gamma(n+1) bound together. No composition of supporting lemmas is needed to obtain a missing final conclusion.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the upper-triangular computed Cholesky factor and its successful-completion semantics, including the rounded square root.",
+      "evidence": "roundedDot rounds the first product and sequentially rounds subsequent products and additions. updateNumerator rounds subtraction of that prefix dot product, with an empty first-row prefix using A directly. SuccessfulRun requires lower entries zero, R_jj=round(sqrt(N_jj)) with N_jj>=0, and R_ij=round(N_ij/R_ii) for i<j with nonzero divisor. These dependency-ordered equations specify the actual computation relationally. The source is conditional on successful computation and does not require existence of successful runs for every SPD input or an executable factor-producing function. A zero last diagonal prevents no later division.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the symmetric perturbation identity and gamma(n+1) bound using the product of the entrywise absolute factors.",
+      "evidence": "The target explicitly gives symmetric Delta A and R^T R=A+Delta A. Its entry bound is ((n+1)u/(1-(n+1)u)) sum_k |R_ki||R_kj|, exactly gamma(n+1) times the entry of entryAbs(R^T) entryAbs(R). The denominator is positive under the stated hypothesis.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "The same universally quantified fp,A,R occur in the run relation, range relation, and final identity and bound. prefixPairs uses R_ki,R_kj for k<i in increasing order, and updateNumerator uses the original A_ij. The identity forces Delta A to equal the defined residual R^T R-A.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "The target assumes symmetry and quadratic-form positive definiteness of A, nonnegative unit roundoff, and (n+1)u<1. FloatingPoint supplies bounded relative rounding error on in-range arguments. NoOverflowUnderflow records those arguments, including sqrt(N_jj). SuccessfulRun supplies only the recurrence and operation validity conditions, not the desired residual bound. The recurrence dependencies are triangular. All finite dimensions are quantified; the empty dimension is harmless. These are faithful encodings of the original model and successful-completion assumptions.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": [
+    "Semantic review uses only the supplied source, contract, and translated statements; Lean code and proof checking were not inspected."
+  ]
+}

@@ -1,0 +1,450 @@
+{
+  "builder": {
+    "condition": "stateless",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 240.892,
+    "compiler_command_events": 10,
+    "token_usage": {
+      "input_tokens": 513775,
+      "cached_input_tokens": 489472,
+      "output_tokens": 5977,
+      "reasoning_output_tokens": 286
+    },
+    "roles": {
+      "planner": {
+        "condition": "stateless",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793983441.0621307,
+        "time_limit_seconds": 90,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 45.644,
+        "token_usage": {
+          "input_tokens": 65370,
+          "cached_input_tokens": 61312,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1616,
+          "reasoning_output_tokens": 69
+        },
+        "compiler_command_events": 1,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "stateless",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793983487.5705042,
+        "time_limit_seconds": 150,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 67.705,
+        "token_usage": {
+          "input_tokens": 117845,
+          "cached_input_tokens": 112000,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1741,
+          "reasoning_output_tokens": 35
+        },
+        "compiler_command_events": 3,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "stateless",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793983572.5702102,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 127.543,
+        "token_usage": {
+          "input_tokens": 330560,
+          "cached_input_tokens": 316160,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2620,
+          "reasoning_output_tokens": 182
+        },
+        "compiler_command_events": 6,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "Research.FloatingPoint.Horner.forward_error"
+      ],
+      "construction_names": [
+        "Research.FloatingPoint.Horner.P",
+        "Research.FloatingPoint.Horner.Q",
+        "Research.FloatingPoint.Horner.E"
+      ],
+      "source_mapping": "/spec/source.txt is formalized in /workspace/Research/Submission.lean: P is exact increasing-degree Horner evaluation; Q uses exactly two nested model.round calls per cons step; E is the specified exact-data recurrence; forward_error states the bound for every Model, List \u211d, and real x, using only the assumptions already contained in Model. The supporting /spec/support/Research/Common/FloatingPoint/Model.lean is copied unchanged to /workspace/Research/Common/FloatingPoint/Model.lean. Statement revision record: /spec/feedback.json was absent; this is the initial statement, with no deviations or additional assumptions. Only the final theorem proof is temporary sorry scaffolding for the next role."
+    }
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 28.153,
+    "source_files": [
+      "Research/Submission.lean",
+      "Research/Common/FloatingPoint/Model.lean"
+    ],
+    "source_lines": 145,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "4904d1ad214eddd10dc3354e4a9e0cd2b164105a37c8ec4d470e03a27410e1d0",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "critic": {
+    "condition": "stateless",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1793983747.0491154,
+    "time_limit_seconds": 240,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 84.861,
+    "token_usage": {
+      "input_tokens": 240439,
+      "cached_input_tokens": 223744,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2112,
+      "reasoning_output_tokens": 111
+    },
+    "compiler_command_events": 3,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "status": "accepted",
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793983441.0621307,
+      "time_limit_seconds": 90,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 45.644,
+      "token_usage": {
+        "input_tokens": 65370,
+        "cached_input_tokens": 61312,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1616,
+        "reasoning_output_tokens": 69
+      },
+      "compiler_command_events": 1,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793983487.5705042,
+      "time_limit_seconds": 150,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 67.705,
+      "token_usage": {
+        "input_tokens": 117845,
+        "cached_input_tokens": 112000,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1741,
+        "reasoning_output_tokens": 35
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793983572.5702102,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 127.543,
+      "token_usage": {
+        "input_tokens": 330560,
+        "cached_input_tokens": 316160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2620,
+        "reasoning_output_tokens": 182
+      },
+      "compiler_command_events": 6,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "translator": {
+      "condition": "blind",
+      "kind": "translator",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793983833.272844,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 65.365,
+      "token_usage": {
+        "input_tokens": 62511,
+        "cached_input_tokens": 56192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2776,
+        "reasoning_output_tokens": 109
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "judge": {
+      "condition": "blind",
+      "kind": "judge",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793983899.453265,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 56.803,
+      "token_usage": {
+        "input_tokens": 59498,
+        "cached_input_tokens": 54144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2250,
+        "reasoning_output_tokens": 68
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "report": {
+    "schema_version": 2,
+    "candidate_hash": "4904d1ad214eddd10dc3354e4a9e0cd2b164105a37c8ec4d470e03a27410e1d0",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "Research.FloatingPoint.Horner.forward_error directly asserts the requested universal forward-error bound about the three explicitly defined recursions. Both directions preserve the model assumptions, input domains, exact recurrence, two-rounding algorithm, and prescribed envelope. No additional conclusion or formal bridge is needed.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full forward-error theorem for every model, coefficient list, and real evaluation point.",
+        "evidence": "The explicit target Research.FloatingPoint.Horner.forward_error asserts the full inequality for every model m, every finite real list c including [], and every real x. It is the final theorem itself, with no missing composition of supporting lemmas.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "exact-horner",
+        "requirement": "Use the exact Horner recursion with zero for the empty list and coefficients in increasing degree order.",
+        "evidence": "Construction P defines P([],x)=0 and P(a::t,x)=a+x P(t,x) using exact real operations. It explicitly identifies the head as the constant coefficient and the list as coefficients in increasing degree order.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "rounded-horner",
+        "requirement": "Evaluate each cons step using a rounded multiplication of x and the rounded tail, then a rounded addition of the coefficient.",
+        "evidence": "Construction Q defines Q(m,[],x)=0 and Q(m,a::t,x)=r(a+r(x Q(m,t,x))), with r=round(m). This rounds the product with the rounded tail and then the addition, twice per element including the last.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "error-envelope",
+        "requirement": "Define the stated error envelope using exact values and u, with the requested recurrence and base case.",
+        "evidence": "Construction E defines E([],x,u)=0 and E(a::t,x,u)=u|a+x v|+(1+u)(u|x v|+(1+u)|x|e), where v=P(t,x) and e=E(t,x,u). This is exactly the requested recurrence, using only exact tail values and the listed inputs.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "conclusion-linkage",
+        "requirement": "Bound the absolute difference of the supplied rounded and exact evaluators by the supplied envelope.",
+        "evidence": "The target explicitly identifies P, Q, E with the supplied recursions and asserts |Q(m,c,x)-P(c,x)|<=E(c,x,u(m)). The list, argument, rounding model, and its parameter are linked exactly as requested.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use the supplied relative-error model without additional smallness, sign, nonzero, or exact-arithmetic premises.",
+        "evidence": "The model supplies only u>=0 and, for every real z, a delta with |delta|<=u and round(z)=z(1+delta). The target imposes no extra hypotheses or upper bound on u; all real coefficients and arguments are covered. Exact real reference operations do not assume that rounding is exact.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "direct_report": {
+    "overall_verdict": "pass",
+    "phase": "final",
+    "target_evidence": "Research/Submission.lean:81-114 proves Research.FloatingPoint.Horner.forward_error (model : Model) (coefficients : List \u211d) (x : \u211d) : |Q model coefficients x - P coefficients x| \u2264 E coefficients x model.u. Its only model assumptions are Research/Common/FloatingPoint/Model.lean:15-19. The exact requested recurrences appear at Submission.lean:18-35. Offline /evaluation/verification.json and verification.log report successful compilation and formal audit; independent Lean compilation succeeds and axiom inspection finds only standard Lean axioms.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full forward-error theorem for every model, coefficient list, and real evaluation point.",
+        "evidence": "Research/Submission.lean:81-114 proves forward_error for arbitrary model : Model, coefficients : List \u211d, and x : \u211d. The conclusion at line 82 is exactly the requested absolute forward-error bound; lines 84-114 supply a list-induction proof, not merely a proposition definition. Independent lake env lean Research/Submission.lean completed with exit code 0.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "exact-horner",
+        "requirement": "Use the exact Horner recursion with zero for the empty list and coefficients in increasing degree order.",
+        "evidence": "Research/Submission.lean:18-20 defines P [] x = 0 and P (a :: tail) x = a + x * P tail x, giving increasing-degree coefficient order. Lines 37-40 prove the defining equations by reflexivity.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "rounded-horner",
+        "requirement": "Evaluate each cons step using a rounded multiplication of x and the rounded tail, then a rounded addition of the coefficient.",
+        "evidence": "Research/Submission.lean:24-26 defines Q model [] x = 0 and Q model (a :: tail) x = model.round (a + model.round (x * Q model tail x)). This performs exactly the prescribed rounded product followed by rounded addition at each cons step; lines 42-45 expose the same equations.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "error-envelope",
+        "requirement": "Define the stated error envelope using exact values and u, with the requested recurrence and base case.",
+        "evidence": "Research/Submission.lean:30-35 defines E with empty value 0 and cons value u * |a + x * v| + (1 + u) * (u * |x * v| + (1 + u) * |x| * e), where v = P tail x and e = E tail x u. It uses only exact P, coefficients, x, and u; lines 47-52 confirm the recurrence.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "conclusion-linkage",
+        "requirement": "Bound the absolute difference of the supplied rounded and exact evaluators by the supplied envelope.",
+        "evidence": "Research/Submission.lean:82 directly bounds |Q model coefficients x - P coefficients x| by E coefficients x model.u. Lines 87-102 bound the rounded product using the induction hypothesis; lines 103-114 unfold the supplied P, Q, and E and apply the rounded-addition estimate to obtain that exact envelope.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use the supplied relative-error model without additional smallness, sign, nonzero, or exact-arithmetic premises.",
+        "evidence": "Research/Common/FloatingPoint/Model.lean:15-19 supplies only u, u_nonneg, round, and the universal relative rounding law. Research/Submission.lean:81-82 adds no hypotheses beyond model, list, and real x. Lines 54-76 derive rounding estimates from round_spec and u_nonneg; line 83 derives nonnegativity of 1 + u. No circular conclusion or input restriction is assumed. The model is nonvacuous (identity rounding with u = 0 satisfies its fields). /evaluation/verification.json reports no unapproved axioms or protected-source failures; independent recompilation and #print axioms show only propext, Classical.choice, and Quot.sound.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "roundtrip": {
+    "schema_version": 2,
+    "candidate_hash": "4904d1ad214eddd10dc3354e4a9e0cd2b164105a37c8ec4d470e03a27410e1d0",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "Research.FloatingPoint.Horner.forward_error directly asserts the requested universal forward-error bound about the three explicitly defined recursions. Both directions preserve the model assumptions, input domains, exact recurrence, two-rounding algorithm, and prescribed envelope. No additional conclusion or formal bridge is needed.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Prove the full forward-error theorem for every model, coefficient list, and real evaluation point.",
+        "evidence": "The explicit target Research.FloatingPoint.Horner.forward_error asserts the full inequality for every model m, every finite real list c including [], and every real x. It is the final theorem itself, with no missing composition of supporting lemmas.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "exact-horner",
+        "requirement": "Use the exact Horner recursion with zero for the empty list and coefficients in increasing degree order.",
+        "evidence": "Construction P defines P([],x)=0 and P(a::t,x)=a+x P(t,x) using exact real operations. It explicitly identifies the head as the constant coefficient and the list as coefficients in increasing degree order.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "rounded-horner",
+        "requirement": "Evaluate each cons step using a rounded multiplication of x and the rounded tail, then a rounded addition of the coefficient.",
+        "evidence": "Construction Q defines Q(m,[],x)=0 and Q(m,a::t,x)=r(a+r(x Q(m,t,x))), with r=round(m). This rounds the product with the rounded tail and then the addition, twice per element including the last.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "error-envelope",
+        "requirement": "Define the stated error envelope using exact values and u, with the requested recurrence and base case.",
+        "evidence": "Construction E defines E([],x,u)=0 and E(a::t,x,u)=u|a+x v|+(1+u)(u|x v|+(1+u)|x|e), where v=P(t,x) and e=E(t,x,u). This is exactly the requested recurrence, using only exact tail values and the listed inputs.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "conclusion-linkage",
+        "requirement": "Bound the absolute difference of the supplied rounded and exact evaluators by the supplied envelope.",
+        "evidence": "The target explicitly identifies P, Q, E with the supplied recursions and asserts |Q(m,c,x)-P(c,x)|<=E(c,x,u(m)). The list, argument, rounding model, and its parameter are linked exactly as requested.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Use the supplied relative-error model without additional smallness, sign, nonzero, or exact-arithmetic premises.",
+        "evidence": "The model supplies only u>=0 and, for every real z, a delta with |delta|<=u and round(z)=z(1+delta). The target imposes no extra hypotheses or upper bound on u; all real coefficients and arguments are covered. Exact real reference operations do not assume that rounding is exact.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "number": 1,
+  "wall_time_seconds": 516.240810304007,
+  "evidence": "stateless/passes/pass-001"
+}

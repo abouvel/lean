@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/runner/role_agent.py", line 8, in <module>
+    run_agent(Path("/spec/ROLE.txt").read_text(), kind=role)
+  File "/runner/agent.py", line 86, in run_agent
+    export_permissions(output)
+  File "/runner/agent.py", line 15, in export_permissions
+    path.chmod(0o777 if path.is_dir() else 0o666)
+  File "/usr/lib/python3.11/pathlib.py", line 1133, in chmod
+    os.chmod(self, mode, follow_symlinks=follow_symlinks)
+PermissionError: [Errno 1] Operation not permitted: '/output'

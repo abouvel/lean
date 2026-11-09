@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "177af1f448317c5c1a855f16fc191e5e0e4ca978daa201e736eb145d0defcf6d",
+  "status": "complete",
+  "statement": "For real-valued functions f and D on the real line, the construction is the quotient (f(x+h)-f(x))/h. The target theorem states that, for h>0 and L≥0, continuity of f on [x,x+h], derivative f'(t)=D(t) at every interior point, and the anchored bound |D(t)-D(x)|≤L|t-x| at every interior point imply |(f(x+h)-f(x))/h-D(x)|≤Lh. D(x) is a reference value; the hypotheses do not explicitly require f to have derivative D(x) at x.",
+  "targets": [
+    {
+      "name": "Research.forwardDifference_error_bound",
+      "statement": "For every pair of functions f,D: ℝ→ℝ and every x,h,L∈ℝ, if (1) h>0, (2) L≥0, (3) f is continuous on the closed interval [x,x+h], (4) for every t∈ℝ with x<t<x+h, f has its ordinary real derivative at t equal to D(t), and (5) for every t∈ℝ with x<t<x+h, |D(t)-D(x)|≤L|t-x|, then |Research.forwardDifference(f,x,h)-D(x)|≤Lh. By the supplied definition, this conclusion is exactly |(f(x+h)-f(x))/h-D(x)|≤Lh. The derivative hypothesis is at interior points only; there is no explicit derivative hypothesis at either endpoint, nor an assumption of continuity of D or a bound on |D(s)-D(t)| for arbitrary pairs s,t."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.forwardDifference",
+      "description": "A function (ℝ→ℝ)→ℝ→ℝ→ℝ sending f,x,h to (f(x+h)-f(x))/h: evaluate f at x+h and x, subtract the latter value from the former, and divide by h. Its definition imposes no continuity, differentiability, sign, or nonzero-step hypothesis. Real division in this formal setting is total, so at h=0 the value is 0. The target theorem uses this construction only with h>0 and compares its value with the supplied reference value D(x)."
+    }
+  ],
+  "assumptions": [
+    "The target universally quantifies over arbitrary functions f,D: ℝ→ℝ and real parameters x,h,L; there are no additional implicit mathematical parameters in the supplied type.",
+    "The step h is strictly positive and the constant L is nonnegative.",
+    "The function f is continuous on [x,x+h].",
+    "For every real t in (x,x+h), f has ordinary real derivative D(t) at t.",
+    "For every real t in (x,x+h), |D(t)-D(x)|≤L|t-x|. This is an estimate relative to x, not a stated pairwise Lipschitz condition on D."
+  ],
+  "missing_context": []
+}

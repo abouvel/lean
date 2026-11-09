@@ -1,0 +1,15 @@
+{
+  "search_queries": [],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for the absolute-value triangle inequality and established positive denominators explicitly before applying division inequalities."
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "24a0e646799958ca1b5c0ff8511eeec518c62c7ea4ac7dccad7e7d806eab158c",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "TriangularSolve.solution_of_a_triangular_system quantifies over every dimension, both triangular directions, nonsingular real T, b, and nonnegative unit roundoff with n*u<1. For the actual value of the explicitly defined substitution execution, it already asserts the complete perturbed equation, gamma(n,u) componentwise bound, and triangular preservation. Arbitrary arithmetic functions constrained by the standard relative-error model on actual calls encode the source floating-point computation; existential perturbations are permitted for this backward-error theorem.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "The sole target solution_of_a_triangular_system explicitly asserts existence of Delta with the system identity, entrywise bound, and matching triangular structure together, for both directions and all dimensions. These are final target conclusions, not conclusions requiring composition of helper lemmas.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the rounded forward or backward substitution corresponding to lower or upper triangular inputs.",
+      "evidence": "forwardSubstitution folds forwardStep over indices 0 through n-1 from the zero vector. forwardRow performs direct division for row zero and otherwise a sequential dot product, subtraction from b_i, and division by T_ii. backwardSubstitution reverses matrix indices and b, runs forward substitution, then reverses the result; thus original rows and their already computed terms are visited in descending order. These are explicit arithmetic constructions with call logs.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the perturbed system identity, gamma(n) componentwise bound, and preservation of the triangular structure.",
+      "evidence": "The target explicitly asserts (T+Delta)x=b, all-entry inequalities |Delta_ij|<=gamma(n,u)*|T_ij|, and IsTriangular(direction,Delta). gamma(n,u) is exactly n*u/(1-n*u). IsTriangular forces zeros above the diagonal for lower and below it for upper.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "The target sets run=substitution(direction,ar,T,b) and x=run.value. The same T and b occur in the perturbed identity and bound. Execution.SatisfiesModel applies to the actual run.calls, which the construction accumulates from the operations producing its returned vector. No independently chosen solution replaces the computed vector.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "The target assumes 0<=u, n*u<1, det(T)!=0, the specified triangular direction, and the relative-error model for actual calls. Nonnegative u is inherent in unit roundoff. Local call constraints encode the source arithmetic model in the no-overflow/no-underflow setting without assuming the requested error bound. Although the model exempts division by zero, each algorithm division is by a nonzero diagonal entry of nonsingular triangular T. Both directions and all dimensions are covered, including the harmless empty case.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

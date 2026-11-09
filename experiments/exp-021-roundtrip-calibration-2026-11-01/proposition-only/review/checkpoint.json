@@ -1,0 +1,24 @@
+{
+  "overall_verdict": "fail",
+  "phase": "completeness",
+  "target_evidence": "Research/Submission.lean:48-53 defines DotProductBackwardErrorClaim for every Model and Tree (\u211d \u00d7 \u211d), with (depth+1)*u < 1 and perturbations relative to exactProductTree bounded by gamma(depth+1,u), but no declaration proves it. The only dot-product supporting theorem, roundedProductTree_isPerturbation at lines 28-44, proves only the multiplication-stage bound.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "Research/Submission.lean:48-53 is a Prop definition, not a proof. Research/Submission.lean:28-44 proves IsPerturbation model.u (exactProductTree tree) (roundedProductTree model tree), with no reduction-result equality. Research/Projects/BinaryTreeReduction/Reduction.lean:174-180 proves only roundedSum perturbations relative to its input tree with gamma(depth,u), assuming depth*u < 1; it does not combine multiplication and addition errors relative to exact products. No theorem in the candidate proves the defined full claim. Model.lean:15-19 supplies only nonnegative u and the relative rounding specification; no conclusion assumption rescues the missing proof.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Prove for every Model and Tree (\u211d \u00d7 \u211d), under only (tree.depth+1)*model.u < 1 and the Model fields, existence of a tree perturbed from exactProductTree tree by gamma(tree.depth+1,model.u) whose exactSum equals roundedDotProduct model tree, combining multiplication and reduction rounding."
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "The full dot-product theorem combining one multiplication error with at most tree.depth addition errors per leaf and establishing gamma(tree.depth+1,model.u) relative to exact products is not proved."
+  ],
+  "limitations": [
+    "Stopped after the definite completeness failure, as required; offline verification evidence and independent compilation were not needed."
+  ]
+}

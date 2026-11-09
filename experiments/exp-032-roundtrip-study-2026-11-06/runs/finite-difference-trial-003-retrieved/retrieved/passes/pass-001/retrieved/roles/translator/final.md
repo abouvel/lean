@@ -1,0 +1,1 @@
+Atomically saved [translation.json](/output/translation.json) with status `"complete"`, covering the listed theorem and construction.

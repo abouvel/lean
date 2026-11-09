@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "7c841c41a621b919921874ac68765dcba1c66de51b86fc103e9374f38488697d",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": false,
+  "source_implies_lean": true,
+  "relation": "mismatch",
+  "delivery_complete": false,
+  "construction_complete": false,
+  "target_evidence": "The sole target Research.root_exists asserts \u2203 x \u2208 \u211d, x \u00b7 x = 0 without hypotheses. The constructions array is empty, and the statement explicitly says no constructed objects are listed. The original explicit answer and its verification imply this existence assertion. Existence alone does not fulfill the original construction task or verify a submitted answer; supplying a concrete witness ourselves would add missing deliverables.",
+  "missing_formal_steps": [
+    "Define a standalone real answer by a concrete numeric or algebraic expression, such as 0.",
+    "Prove answer \u00b7 answer = 0 for that actual definition."
+  ],
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full requested mathematical property.",
+      "evidence": "Research.root_exists establishes the existential square-zero property, but no target asserts square zero for a standalone submitted answer as requested.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Provide a final correctness theorem asserting answer \u00b7 answer = 0 for the explicitly defined real answer."
+    },
+    {
+      "requirement_id": "explicit-construction",
+      "requirement": "Provide a standalone explicit numeric/algebraic answer; existence or abstract selection alone is insufficient.",
+      "evidence": "The constructions array is empty. The only target is existential and provides no standalone numeric or algebraic answer definition.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-explicit-construction"
+      ],
+      "correction": "Define the real answer by a concrete expression, such as 0, without abstract selection."
+    },
+    {
+      "requirement_id": "construction-linkage",
+      "requirement": "The correctness theorem must refer to the actual submitted answer.",
+      "evidence": "No actual answer definition is submitted. Research.root_exists refers only to an existentially bound x; no target states correctness of a defined answer.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Prove the square-zero equation explicitly referring to the submitted answer definition."
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "Standalone explicit numeric or algebraic definition of a real root.",
+    "Correctness theorem establishing square zero for that specific answer."
+  ],
+  "limitations": []
+}

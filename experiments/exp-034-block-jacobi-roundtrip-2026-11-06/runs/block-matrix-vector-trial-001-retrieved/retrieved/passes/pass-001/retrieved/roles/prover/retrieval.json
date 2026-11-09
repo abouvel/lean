@@ -1,0 +1,15 @@
+{
+  "search_queries": [],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for the rounding-product induction and established positive denominators before applying division inequalities in the gamma lemmas."
+    }
+  ]
+}

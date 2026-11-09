@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "strategy": "Construct exact and rounded product trees by leafwise mapping, then define roundedDotProduct by rounded tree summation of rounded products. Prove the multiplication-only perturbation with bound u; obtain the existential addition-perturbation witness from the supplied rounded-sum theorem; compose via IsPerturbation.trans and enlarge via IsPerturbation.mono. The composition bound u + gamma d u * (1+u) equals gamma d u + u*(1+gamma d u), so gamma_step yields precisely gamma (d+1) u. This uses the provided construction and bounds directly without a new summation induction or gamma monotonicity. This plan contains no completed target proof.",
+  "obligations": [
+    {
+      "id": "preserve_prerequisites",
+      "description": "Formalizer: copy the five approved /spec/support/Research modules unchanged into /workspace/Research, preserve protected configuration, and add a separate module importing Research.Projects.BinaryTreeReduction.Reduction. Planner must not edit /workspace. No /spec/feedback.json was present."
+    },
+    {
+      "id": "define_constructions",
+      "description": "For tree : Tree (\u211d \u00d7 \u211d), define exactProductTree tree = tree.map (fun p => p.1 * p.2), roundedProductTree model tree = tree.map (fun p => model.mul p.1 p.2), and roundedDotProduct model tree = roundedSum model (roundedProductTree model tree). These definitions must use the supplied arbitrary Model to round each multiplication and every internal addition."
+    },
+    {
+      "id": "shape_and_depth",
+      "description": "Use Tree.depth_map to establish that both product trees have depth d = tree.depth and preserve the original leaf positions, including separate occurrences of equal products."
+    },
+    {
+      "id": "multiplication_error",
+      "description": "Prove IsPerturbation model.u (exactProductTree tree) (roundedProductTree model tree) by structural induction. For a leaf (a,b), use Model.round_spec on a*b to obtain \u03b4 with |\u03b4| \u2264 model.u and round (a*b) = (a*b)*(1+\u03b4). Rewrite the difference as (a*b)*\u03b4, then use abs_mul and multiplication by nonnegative |a*b|. Combine children with IsPerturbation.node. Include zero and negative products without division."
+    },
+    {
+      "id": "smallness",
+      "description": "From hsmall : ((tree.depth + 1 : \u2115) : \u211d) * model.u < 1 and model.u_nonneg derive (tree.depth : \u211d) * model.u < 1, handling casts explicitly. Retain hsmall for gamma_step."
+    },
+    {
+      "id": "construct_witness",
+      "description": "Apply roundedSum_exists_perturbation to roundedProductTree model tree using its depth identity. Obtain perturbed : Tree \u211d, IsPerturbation (gamma tree.depth model.u) (roundedProductTree model tree) perturbed, and perturbed.exactSum = roundedSum model (roundedProductTree model tree). The latter is the required roundedDotProduct equality. This supplied theorem constructs the existential witness for addition rounding."
+    },
+    {
+      "id": "compose_bounds",
+      "description": "Apply gamma_nonneg at d = tree.depth to obtain the nonnegative second bound required by IsPerturbation.trans. Compose the multiplication and summation relations, yielding bound model.u + gamma d model.u * (1 + model.u) relative to exactProductTree tree. By ring algebra this equals gamma d model.u + model.u * (1 + gamma d model.u). Use gamma_step d model.u model.u_nonneg hsmall and IsPerturbation.mono to enlarge to gamma (d+1) model.u."
+    },
+    {
+      "id": "target_theorem",
+      "description": "For every model : Model and tree : Tree (\u211d \u00d7 \u211d), under only ((tree.depth + 1 : \u2115) : \u211d) * model.u < 1, conclude existence of perturbed : Tree \u211d with IsPerturbation (gamma (tree.depth + 1) model.u) (exactProductTree tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. This is the full leafwise componentwise backward-error claim, accounting for one multiplication and at most tree.depth additions per leaf. Do not replace it with a forward-error estimate or a relation only to rounded products; do not assume the conclusion or restrict to exact arithmetic."
+    },
+    {
+      "id": "validation",
+      "description": "Formalizer: compile with local Lean, Mathlib, approved prerequisites and any approved memory snapshot; final candidate must contain no sorry, placeholders or custom axioms. Do not alter protected modules or configuration or use Aristotle. Candidate text and feedback cannot weaken the original task."
+    }
+  ]
+}

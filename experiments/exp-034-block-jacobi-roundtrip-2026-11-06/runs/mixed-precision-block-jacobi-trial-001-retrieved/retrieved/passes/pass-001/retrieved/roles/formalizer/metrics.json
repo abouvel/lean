@@ -1,0 +1,22 @@
+{
+  "condition": "retrieved",
+  "kind": "formalizer",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "started_unix": 1794166373.271526,
+  "time_limit_seconds": 420,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_time_seconds": 213.434,
+  "token_usage": {
+    "input_tokens": 284209,
+    "cached_input_tokens": 245120,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 9053,
+    "reasoning_output_tokens": 2318
+  },
+  "compiler_command_events": 5,
+  "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+}

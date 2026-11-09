@@ -1,0 +1,22 @@
+{
+  "condition": "stateless",
+  "kind": "prover",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "started_unix": 1793996732.6388886,
+  "time_limit_seconds": 900,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_time_seconds": 343.051,
+  "token_usage": {
+    "input_tokens": 1969234,
+    "cached_input_tokens": 1899776,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 10103,
+    "reasoning_output_tokens": 1610
+  },
+  "compiler_command_events": 20,
+  "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+}

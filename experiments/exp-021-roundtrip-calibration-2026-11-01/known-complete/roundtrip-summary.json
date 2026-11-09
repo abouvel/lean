@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "8c576ed9c33c3a9db7650976ea8d05ee6dbe429f41cde3edfe37223230b5b74f",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "target_evidence": "The translated principal theorem is the full requested backward-error statement for the explicitly defined rounded dot product. Its existential same-shape tree P encodes leafwise perturbations of exact products, and its exact sum equals the computation with rounded multiplication at every leaf and rounded addition at every internal node. The additional defining equations and leaf-product error theorem follow from the supplied constructions and relative-error model.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The first target quantifies over every model M and every real-pair tree T and, under (depth(T)+1)M.u < 1, supplies a tree P with IsPerturbation(gamma(depth(T)+1,M.u), exactProductTree(T), P) and exactSum(P)=roundedDotProduct(M,T).",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "The reference exactProductTree maps leaf(x,y) to leaf(xy) with exact real multiplication. IsPerturbation preserves the ordered shape and bounds each corresponding leaf by |p-xy| <= gamma(depth(T)+1,M.u)|xy|.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "roundedProductTerm(M,x,y)=M.mul(x,y)=M.round(xy); roundedProductTree applies it to every leaf. The stated roundedProductTree perturbation theorem bounds each such error by M.u|xy|, and the final theorem includes that error in the depth+1 bound.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "The constructed computation satisfies F_M(leaf(x,y))=r(xy) and F_M(node(L,R))=r(F_M(L)+F_M(R)). The final equality uses this actual roundedDotProduct, so every internal-node addition is included in the claimed perturbation representation.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The first target uses gamma(depth(T)+1,M.u)=((depth(T)+1)M.u)/(1-(depth(T)+1)M.u) at every corresponding leaf. Depth is zero for a leaf and one plus the maximum child depth for a node, accounting for one multiplication and at most depth(T) additions.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "The model has u >= 0 and, for each real z, a relative rounding error delta with |delta| <= u and round(z)=z(1+delta). The final target adds only (depth(T)+1)u < 1. Trees and real operands are unrestricted; no exact-arithmetic restriction or perturbation conclusion is assumed.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

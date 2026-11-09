@@ -1,0 +1,251 @@
+{
+  "job_id": "sequential-block-dot-trial-001-stateless",
+  "condition": "stateless",
+  "outcome": "accepted",
+  "success": true,
+  "record": {
+    "task_id": "sequential-block-dot",
+    "passes": [
+      {
+        "number": 1,
+        "verification": {
+          "verification_command": "bash pipeline/verify.sh",
+          "build_and_scans_exit_code": 0,
+          "nontrivial_submission": true,
+          "formal_gate_passed": true,
+          "semantic_review": "pending",
+          "wall_time_seconds": 15.056,
+          "source_files": [
+            "Research/Submission.lean"
+          ],
+          "source_lines": 370,
+          "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+          "formal_audit": {
+            "schema_version": 1,
+            "unapproved_axioms": [],
+            "protected_source_failures": [],
+            "candidate_hash": "bd2b6e92a989f362b70b5b35511f822a2744e67fedf05003a3c50988dbde9c05",
+            "passed": true,
+            "changed_declarations": []
+          }
+        },
+        "direct_report": {
+          "overall_verdict": "pass",
+          "phase": "final",
+          "target_evidence": "Research/Submission.lean:354-366 proves block_dot_product_sequential, using constructed_backward_errors at lines 314-349. For arbitrary original real vectors and admissible operation errors it gives both existential componentwise backward-error representations for computedDot. Its assumptions are T > 0, nonnegative unit roundoff, the standard operation-error bounds, inherited tree smallness, and sequential smallness; none assumes the desired result.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "Research/Submission.lean:354-366 proves both representations and all componentwise bounds together. The constructive proof at lines 314-349 supplies the actual perturbations. Independent compilation succeeded; independent #print axioms reports only propext, Classical.choice, and Quot.sound. /evaluation/verification.json also reports a passing build and formal audit with no unapproved axioms.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define sequential combination of the size-T block partial dot products.",
+              "evidence": "Research/Submission.lean:28 defines ceiling division for positive T; lines 40-41 zero-pad beyond n. Lines 60-63 define sequential summation starting from the first term and rounding each subsequent addition. Lines 66-73 compute T rounded products per block and sum sequentially; lines 76-77 sequentially reduce those partials. Thus the construction uses the specified block partition and sequential outer reduction.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the stated two backward-error representations with gamma(T + ceil(n/T) - 1).",
+              "evidence": "Research/Submission.lean:28,34,37 define blockCount, errorIndex = T + blockCount - 1, and gamma k u = k*u/(1-k*u). Lines 193-227 prove the coefficient error bound by counting at most one product error, T-1 block additions, and blockCount-1 reduction additions. Lines 320-349 establish both identities and relative componentwise bounds; lines 360-366 package them existentially. Smallness is explicitly assumed at line 359.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Research/Submission.lean:266-309 proves computed_expansion for the actual computedDot and original x,y : Fin n \u2192 \u211d, flattening block indices and removing padded zero terms. Lines 87-95 define coefficients and perturbations from the executed operation trace. Lines 328-349 use this expansion to prove the identities for the original vector entries, including zero components without division.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "Research/Submission.lean:53-56 constrains only the absolute relative errors of executed multiplications and additions, matching the source standard rounding model without an algorithmic bound. Lines 355-359 quantify arbitrary real input vectors and admissible traces, require positive block size and nonnegative unit roundoff, and retain both the inherited tree smallness and requested sequential smallness. The inherited tree condition is present in the source via \u201cUnder the assumptions\u201d and is unused in the constructive proof. No circular or vacuous premise was found; allowing n=0 and u=0 extends the ordinary case.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "roundtrip": {
+          "schema_version": 2,
+          "candidate_hash": "bd2b6e92a989f362b70b5b35511f822a2744e67fedf05003a3c50988dbde9c05",
+          "overall_verdict": "pass",
+          "phase": "final",
+          "lean_implies_source": true,
+          "source_implies_lean": true,
+          "relation": "faithful",
+          "delivery_complete": true,
+          "construction_complete": true,
+          "missing_formal_steps": [],
+          "target_evidence": "Research.BlockDotProduct.block_dot_product_sequential already states all four requested final conjuncts about the defined two-stage sequential computation and original inputs. Its supplied-error recurrence is the standard relative-error model. Both perturbations have the required gamma(T+ceil(n/T)-1,u) bound. Existential perturbations are sufficient for this backward-error theorem; an explicit compatible backwardPerturbation is also defined.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "The sole final target explicitly states both exact backward-error representations of computedDot and both coordinatewise bounds, with existential Delta x and Delta y simultaneously. No supporting-lemma composition is needed.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define sequential combination of the size-T block partial dot products.",
+              "evidence": "padded zero-extends the original inputs; roundedProduct applies one multiplication error to each product. blockPartial sequentially accumulates exactly T padded products. computedDot sequentially accumulates B=ceil(n/T) such partials. sequentialSum takes the first entry directly and applies an addition error at each subsequent entry. This is the specified algorithm under the standard relative-error model; a hardware rounding implementation is not required.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the stated two backward-error representations with gamma(T + ceil(n/T) - 1).",
+              "evidence": "The final target explicitly gives computedDot=sum (x+Delta x)*y and computedDot=sum x*(y+Delta y), together with both bounds for every i:Fin n. For nonempty inputs K=errorIndex(n,T)=T+ceil(n/T)-1, and gamma(K,u)=K*u/(1-K*u). One multiplication, at most T-1 block additions and B-1 reduction additions affect each term. Empty inputs give empty sums and vacuous coordinate bounds.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Both left-hand sides in the target are computedDot(T,x,y,e), and both right-hand sides use the same original x,y. The recurrence operates on their padded entries. termCoefficient locates each original coordinate using j=i div T and t=i mod T and includes its multiplication and sequential addition factors. backwardPerturbation(T,e,x,i)=(termCoefficient(n,T,e,i)-1)*x(i) is an explicit perturbation formula compatible with these representations.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "The target covers all real x,y and all admissible elementary-error traces, with T>0, u>=0, (T+treeDepth(n,T))*u<1 and K*u<1. The tree-depth smallness condition is inherited from the earlier theorem through the selected source statement. Admissible imposes only the standard bounds on individual elementary errors, not a coefficient bound or the desired conclusion. Arbitrary bounded traces encode the stated rounding model; actual floating-point computations without overflow or underflow supply such traces. No sign, magnitude or nonzero-coordinate restriction is added. Including n=0 introduces only the trivial empty case.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": [
+            "Semantic review is based on the supplied translated mathematics; Lean code and proof verification were not inspected."
+          ]
+        },
+        "report": {
+          "schema_version": 2,
+          "candidate_hash": "bd2b6e92a989f362b70b5b35511f822a2744e67fedf05003a3c50988dbde9c05",
+          "overall_verdict": "pass",
+          "phase": "final",
+          "lean_implies_source": true,
+          "source_implies_lean": true,
+          "relation": "faithful",
+          "delivery_complete": true,
+          "construction_complete": true,
+          "missing_formal_steps": [],
+          "target_evidence": "Research.BlockDotProduct.block_dot_product_sequential already states all four requested final conjuncts about the defined two-stage sequential computation and original inputs. Its supplied-error recurrence is the standard relative-error model. Both perturbations have the required gamma(T+ceil(n/T)-1,u) bound. Existential perturbations are sufficient for this backward-error theorem; an explicit compatible backwardPerturbation is also defined.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "The sole final target explicitly states both exact backward-error representations of computedDot and both coordinatewise bounds, with existential Delta x and Delta y simultaneously. No supporting-lemma composition is needed.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define sequential combination of the size-T block partial dot products.",
+              "evidence": "padded zero-extends the original inputs; roundedProduct applies one multiplication error to each product. blockPartial sequentially accumulates exactly T padded products. computedDot sequentially accumulates B=ceil(n/T) such partials. sequentialSum takes the first entry directly and applies an addition error at each subsequent entry. This is the specified algorithm under the standard relative-error model; a hardware rounding implementation is not required.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the stated two backward-error representations with gamma(T + ceil(n/T) - 1).",
+              "evidence": "The final target explicitly gives computedDot=sum (x+Delta x)*y and computedDot=sum x*(y+Delta y), together with both bounds for every i:Fin n. For nonempty inputs K=errorIndex(n,T)=T+ceil(n/T)-1, and gamma(K,u)=K*u/(1-K*u). One multiplication, at most T-1 block additions and B-1 reduction additions affect each term. Empty inputs give empty sums and vacuous coordinate bounds.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Both left-hand sides in the target are computedDot(T,x,y,e), and both right-hand sides use the same original x,y. The recurrence operates on their padded entries. termCoefficient locates each original coordinate using j=i div T and t=i mod T and includes its multiplication and sequential addition factors. backwardPerturbation(T,e,x,i)=(termCoefficient(n,T,e,i)-1)*x(i) is an explicit perturbation formula compatible with these representations.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "The target covers all real x,y and all admissible elementary-error traces, with T>0, u>=0, (T+treeDepth(n,T))*u<1 and K*u<1. The tree-depth smallness condition is inherited from the earlier theorem through the selected source statement. Admissible imposes only the standard bounds on individual elementary errors, not a coefficient bound or the desired conclusion. Arbitrary bounded traces encode the stated rounding model; actual floating-point computations without overflow or underflow supply such traces. No sign, magnitude or nonzero-coordinate restriction is added. Including n=0 introduces only the trivial empty case.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": [
+            "Semantic review is based on the supplied translated mathematics; Lean code and proof verification were not inspected."
+          ]
+        },
+        "roles": {
+          "translator": {
+            "condition": "blind",
+            "kind": "translator",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794178997.809976,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 66.166,
+            "token_usage": {
+              "input_tokens": 51586,
+              "cached_input_tokens": 31616,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2930,
+              "reasoning_output_tokens": 105
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "judge": {
+            "condition": "blind",
+            "kind": "judge",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794179064.451546,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 60.438,
+            "token_usage": {
+              "input_tokens": 69680,
+              "cached_input_tokens": 49024,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2541,
+              "reasoning_output_tokens": 216
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          }
+        }
+      }
+    ]
+  }
+}

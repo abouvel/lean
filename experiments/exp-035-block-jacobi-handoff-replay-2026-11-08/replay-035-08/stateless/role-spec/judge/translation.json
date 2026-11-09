@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "433d6e961453bec14dc195deb1736b443c42b87a53565797877263772d9a2554",
+  "status": "complete",
+  "statement": "For every natural number n (including zero), every direction d\u2208{lower,upper}, every ops:Arithmetic, every real matrix T:I_n\u00d7I_n\u2192R, every vector b:I_n\u2192R and every u\u2208R, assume 0\u2264u, Triangular(d,T), det(T)\u22600, n u<1, and ExecutionValid(u,d,ops,T,b). Here I_n={0,...,n-1} is Fin n and n u uses the real cast of n. Set x\u0302=computedSolution(d,ops,T,b), the actual sweep from the zero vector with the supplied four operation fields and specified traversal and dot-product orders. There exists a real matrix \u0394T:I_n\u00d7I_n\u2192R such that (T+\u0394T)x\u0302=b, Triangular(d,\u0394T), and \u2200i,j\u2208I_n, |\u0394T_ij|\u2264gamma(n,u)|T_ij|=[n u/(1-n u)]|T_ij|. The vector equality means \u2200i\u2208I_n, sum over all j\u2208I_n of (T_ij+\u0394T_ij)x\u0302_j equals b_i. The existential perturbation may depend on all quantified inputs and their execution. Thus the constructed vector is an exact solution for a componentwise bounded perturbation with the same triangular zero pattern; the conclusion does not assert exact solution of the unperturbed system. The construction descriptions use R for the real numbers, I_n for Fin n, T_i for the function j\u21a6T_ij, and j::J for a list with head j and tail J. All operations outside the supplied ops fields are ordinary real operations.",
+  "targets": [
+    {
+      "name": "Research.TriangularSolve.solution_of_a_triangular_system",
+      "statement": "For every natural number n (including zero), every direction d\u2208{lower,upper}, every ops:Arithmetic, every real matrix T:I_n\u00d7I_n\u2192R, every vector b:I_n\u2192R and every u\u2208R, assume 0\u2264u, Triangular(d,T), det(T)\u22600, n u<1, and ExecutionValid(u,d,ops,T,b). Here I_n={0,...,n-1} is Fin n and n u uses the real cast of n. Set x\u0302=computedSolution(d,ops,T,b), the actual sweep from the zero vector with the supplied four operation fields and specified traversal and dot-product orders. There exists a real matrix \u0394T:I_n\u00d7I_n\u2192R such that (T+\u0394T)x\u0302=b, Triangular(d,\u0394T), and \u2200i,j\u2208I_n, |\u0394T_ij|\u2264gamma(n,u)|T_ij|=[n u/(1-n u)]|T_ij|. The vector equality means \u2200i\u2208I_n, sum over all j\u2208I_n of (T_ij+\u0394T_ij)x\u0302_j equals b_i. The existential perturbation may depend on all quantified inputs and their execution. Thus the constructed vector is an exact solution for a componentwise bounded perturbation with the same triangular zero pattern; the conclusion does not assert exact solution of the unperturbed system."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.TriangularSolve.Direction",
+      "description": "An inductive type with exactly two nullary constructors lower and upper, and no fields. It selects the zero pattern and orders below."
+    },
+    {
+      "name": "Research.TriangularSolve.Arithmetic",
+      "description": "A structure with one constructor Arithmetic.mk taking four arbitrary functions R\u00d7R\u2192R, in order mul, add, sub, div. These are its four fields. The structure contains no accuracy laws, algebraic laws, format, or rounding procedure; it is supplied function data."
+    },
+    {
+      "name": "Research.TriangularSolve.RelativeRound",
+      "description": "For real u,e,c, RelativeRound(u,e,c) means there exists \u03b4\u2208R with |\u03b4|\u2264u and c=e(1+\u03b4). Each occurrence has its own existential witness. In particular an exact argument zero forces a computed value zero whenever the relation holds."
+    },
+    {
+      "name": "Research.TriangularSolve.gamma",
+      "description": "For every n\u2208N and u\u2208R, gamma(n,u)=n u/(1-n u), with n cast to R. The definition has no restrictions on n or u and uses the formal real division operation, which is total (division by zero is zero). The theorem supplies n u<1."
+    },
+    {
+      "name": "Research.TriangularSolve.Triangular",
+      "description": "For any n\u2208N, direction d and T:I_n\u00d7I_n\u2192R, Triangular(lower,T) means \u2200i,j\u2208I_n, i<j implies T_ij=0. Triangular(upper,T) means \u2200i,j\u2208I_n, j<i implies T_ij=0. No condition on diagonal entries is included."
+    },
+    {
+      "name": "Research.TriangularSolve.rowOrder",
+      "description": "For d:Direction and n\u2208N, rowOrder(lower,n)=[0,1,...,n-1] as a list in I_n, and rowOrder(upper,n) is its reverse [n-1,...,0]. For n=0 both lists are empty."
+    },
+    {
+      "name": "Research.TriangularSolve.previousColumns",
+      "description": "For n\u2208N, d:Direction and i\u2208I_n, filter rowOrder(d,n), retaining j<i for lower and i<j for upper. Thus previousColumns(lower,i)=[0,...,i-1] and previousColumns(upper,i)=[n-1,...,i+1], in those orders."
+    },
+    {
+      "name": "Research.TriangularSolve.dotAcc",
+      "description": "For n\u2208N, ops:Arithmetic, a,x:I_n\u2192R, list L over I_n and c\u2208R, define A([],c)=c and A(j::J,c)=A(J,ops.add(c,ops.mul(a_j,x_j))). dotAcc(ops,a,x,L,c)=A(L,c). It accumulates computed products from left to right. Arbitrary finite lists, including repetitions, are accepted."
+    },
+    {
+      "name": "Research.TriangularSolve.roundedDot",
+      "description": "For n\u2208N, ops:Arithmetic, a,x:I_n\u2192R and list L over I_n, roundedDot(ops,a,x,[])=0; roundedDot(ops,a,x,j::J)=dotAcc(ops,a,x,J,ops.mul(a_j,x_j)). A nonempty dot product starts with the first computed product and adds the remaining computed products in list order, without an initial addition to zero. Its name does not impose a rounding law."
+    },
+    {
+      "name": "Research.TriangularSolve.DotAccValid",
+      "description": "A recursively defined proposition, not a numerical algorithm. For n\u2208N, u\u2208R, ops:Arithmetic, a,x:I_n\u2192R, list L over I_n and c\u2208R, write V(L,c)=DotAccValid(u,ops,a,x,L,c). V([],c)=true. For j::J let q=ops.mul(a_j,x_j) and r=ops.add(c,q). Then V(j::J,c) is the conjunction RelativeRound(u,a_j x_j,q), RelativeRound(u,c+q,r), and V(J,r). The exact products and sums here use ordinary real operations. This checks the operations along the actual accumulator trajectory."
+    },
+    {
+      "name": "Research.TriangularSolve.DotValid",
+      "description": "For n\u2208N, u\u2208R, ops:Arithmetic, a,x:I_n\u2192R and list L over I_n, DotValid(u,ops,a,x,[])=true. For L=j::J it is RelativeRound(u,a_j x_j,q) \u2227 DotAccValid(u,ops,a,x,J,q), where q=ops.mul(a_j,x_j). This proposition checks exactly the multiplications and additions used by roundedDot, including the absence of an initial addition to zero."
+    },
+    {
+      "name": "Research.TriangularSolve.rowNumerator",
+      "description": "For n\u2208N, d:Direction, ops:Arithmetic, T:I_n\u00d7I_n\u2192R, b,x:I_n\u2192R and i\u2208I_n, let L=previousColumns(d,i) and T_i(j)=T_ij. If L is empty, rowNumerator(d,ops,T,b,x,i)=b_i. Otherwise it is ops.sub(b_i,roundedDot(ops,T_i,x,L)). No subtraction is performed for an empty L."
+    },
+    {
+      "name": "Research.TriangularSolve.solveRow",
+      "description": "For n\u2208N, d:Direction, ops:Arithmetic, T:I_n\u00d7I_n\u2192R, b,x:I_n\u2192R and i\u2208I_n, solveRow(d,ops,T,b,x,i) returns y:I_n\u2192R with y_i=ops.div(rowNumerator(d,ops,T,b,x,i),T_ii) and y_k=x_k for every k\u2208I_n with k\u2260i. It updates a single coordinate. Its definition imposes no triangularity or nonzero-diagonal hypothesis."
+    },
+    {
+      "name": "Research.TriangularSolve.RowValid",
+      "description": "For n\u2208N, u\u2208R, d:Direction, ops:Arithmetic, T:I_n\u00d7I_n\u2192R, b,x:I_n\u2192R and i\u2208I_n, put L=previousColumns(d,i), s=roundedDot(ops,T_i,x,L), and r=rowNumerator(d,ops,T,b,x,i). RowValid(u,d,ops,T,b,x,i) is the conjunction of DotValid(u,ops,T_i,x,L); the condition RelativeRound(u,b_i-s,ops.sub(b_i,s)) if L is nonempty (true if L is empty); and RelativeRound(u,r/T_ii,ops.div(r,T_ii)). The exact subtraction and division are ordinary real operations. It is a proposition on the operations at the current vector x, not a global accuracy law for the fields."
+    },
+    {
+      "name": "Research.TriangularSolve.solveRows",
+      "description": "For n\u2208N, d:Direction, ops:Arithmetic, T:I_n\u00d7I_n\u2192R, b:I_n\u2192R, list L over I_n and starting vector x:I_n\u2192R, let S([],x)=x and S(i::J,x)=S(J,solveRow(d,ops,T,b,x,i)). solveRows(d,ops,T,b,L,x)=S(L,x). It processes rows in the supplied list order, passing each updated vector onward. The list may repeat or omit rows."
+    },
+    {
+      "name": "Research.TriangularSolve.RowsValid",
+      "description": "A recursively defined proposition. For n\u2208N, u\u2208R, d:Direction, ops:Arithmetic, T:I_n\u00d7I_n\u2192R, b:I_n\u2192R, list L over I_n and x:I_n\u2192R, let W([],x)=true and W(i::J,x)=RowValid(u,d,ops,T,b,x,i) \u2227 W(J,solveRow(d,ops,T,b,x,i)). RowsValid(u,d,ops,T,b,L,x)=W(L,x). These conditions follow the same intermediate vectors as solveRows; this is not a separate numerical algorithm."
+    },
+    {
+      "name": "Research.TriangularSolve.computedSolution",
+      "description": "For n\u2208N, d:Direction, ops:Arithmetic, T:I_n\u00d7I_n\u2192R and b:I_n\u2192R, computedSolution(d,ops,T,b)=solveRows(d,ops,T,b,rowOrder(d,n),0), where 0 is the identically zero vector. It performs one increasing sweep for lower or decreasing sweep for upper, using the specified ordered dot products and single-coordinate updates. It does not itself enforce rounding accuracy or solve by forming an inverse."
+    },
+    {
+      "name": "Research.TriangularSolve.ExecutionValid",
+      "description": "For n\u2208N, u\u2208R, d:Direction, ops:Arithmetic, T:I_n\u00d7I_n\u2192R and b:I_n\u2192R, ExecutionValid(u,d,ops,T,b)=RowsValid(u,d,ops,T,b,rowOrder(d,n),0), with the identically zero initial vector. This proposition requires the local relative-error conditions on the actual sweep defining computedSolution. It is not an additional numerical algorithm or a requirement of accuracy on all possible field inputs."
+    }
+  ],
+  "assumptions": [
+    "All vectors and matrices are functions on the finite index sets stated above; all scalars are real. Every n in a construction is an implicit natural-number parameter except the explicit n of rowOrder and gamma. Lists are finite ordered lists, with no distinctness assumption unless generated by rowOrder or previousColumns.",
+    "The target universally quantifies the implicit parameter n\u2208N and explicit parameters d:Direction, ops:Arithmetic, T:I_n\u00d7I_n\u2192R, b:I_n\u2192R, u\u2208R.",
+    "Target hypothesis: 0\u2264u.",
+    "Target hypothesis: Triangular(d,T), namely \u2200i,j\u2208I_n, T_ij=0 if i<j for lower, or if j<i for upper.",
+    "Target hypothesis: det(T)\u22600.",
+    "Target hypothesis: n u<1. Together with 0\u2264u this makes 1-n u positive and gamma(n,u) nonnegative.",
+    "Target hypothesis: ExecutionValid(u,d,ops,T,b), expanded by the recursive validity predicates in the constructions. Every local witness \u03b4 is real with |\u03b4|\u2264u and computed=exact(1+\u03b4). Only the operations used by this execution are constrained.",
+    "Arithmetic has no built-in accuracy or algebraic assumptions. The construction definitions have no nonsingularity, triangularity, or sign requirements beyond what their explicit validity predicates state. There is no supplied hypothesis on a machine format, representability, or global rounding behavior."
+  ],
+  "missing_context": []
+}

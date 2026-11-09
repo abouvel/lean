@@ -1,0 +1,17 @@
+{
+  "search_queries": [
+    "mixed_precision_update|mat.g|delta|urd_c"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Require explicit positivity of 1-eta and 1-alpha and of gamma denominators before clearing denominators or applying rational-inequality tactics."
+    }
+  ]
+}

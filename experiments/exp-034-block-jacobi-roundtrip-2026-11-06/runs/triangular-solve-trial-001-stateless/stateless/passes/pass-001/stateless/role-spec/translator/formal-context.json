@@ -1,0 +1,930 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "24a0e646799958ca1b5c0ff8511eeec518c62c7ea4ac7dccad7e7d806eab158c",
+  "targets": [
+    "TriangularSolve.solution_of_a_triangular_system"
+  ],
+  "construction_names": [
+    "TriangularSolve.gamma",
+    "TriangularSolve.perform",
+    "TriangularSolve.dotTail",
+    "TriangularSolve.sequentialDot",
+    "TriangularSolve.forwardRow",
+    "TriangularSolve.forwardStep",
+    "TriangularSolve.forwardSubstitution",
+    "TriangularSolve.reverseMatrix",
+    "TriangularSolve.reverseVector",
+    "TriangularSolve.backwardSubstitution",
+    "TriangularSolve.IsTriangular",
+    "TriangularSolve.substitution",
+    "TriangularSolve.Call.SatisfiesModel",
+    "TriangularSolve.Execution.SatisfiesModel"
+  ],
+  "declarations": [
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Arithmetic.mk"
+      ],
+      "kind": "inductive",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Arithmetic",
+      "type": "Type"
+    },
+    {
+      "body": "fun self => self.1",
+      "dependencies": [
+        "TriangularSolve.Arithmetic",
+        "Real",
+        "TriangularSolve.Arithmetic"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Arithmetic.add",
+      "type": "TriangularSolve.Arithmetic \u2192 Real \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun self => self.4",
+      "dependencies": [
+        "TriangularSolve.Arithmetic",
+        "Real",
+        "TriangularSolve.Arithmetic"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Arithmetic.div",
+      "type": "TriangularSolve.Arithmetic \u2192 Real \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "TriangularSolve.Arithmetic"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Arithmetic.mk",
+      "type": "(Real \u2192 Real \u2192 Real) \u2192 (Real \u2192 Real \u2192 Real) \u2192 (Real \u2192 Real \u2192 Real) \u2192 (Real \u2192 Real \u2192 Real) \u2192 TriangularSolve.Arithmetic"
+    },
+    {
+      "body": "fun self => self.3",
+      "dependencies": [
+        "TriangularSolve.Arithmetic",
+        "Real",
+        "TriangularSolve.Arithmetic"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Arithmetic.mul",
+      "type": "TriangularSolve.Arithmetic \u2192 Real \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun self => self.2",
+      "dependencies": [
+        "TriangularSolve.Arithmetic",
+        "Real",
+        "TriangularSolve.Arithmetic"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Arithmetic.sub",
+      "type": "TriangularSolve.Arithmetic \u2192 Real \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Call.mk"
+      ],
+      "kind": "inductive",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Call",
+      "type": "Type"
+    },
+    {
+      "body": "fun c ar u =>\n  (Eq.{1} (TriangularSolve.Call.operation c) TriangularSolve.Operation.div \u2192 Ne.{1} (TriangularSolve.Call.right c) 0) \u2192\n    \u2203 \u03b4,\n      And (LE.le.{0} (abs.{0} \u03b4) u)\n        (Eq.{1} (TriangularSolve.Call.computed c ar)\n          (HMul.hMul.{0, 0, 0} (TriangularSolve.Call.exact c) (HAdd.hAdd.{0, 0, 0} 1 \u03b4)))",
+      "dependencies": [
+        "TriangularSolve.Call",
+        "TriangularSolve.Arithmetic",
+        "Real",
+        "TriangularSolve.Call",
+        "TriangularSolve.Arithmetic",
+        "Real",
+        "Eq",
+        "TriangularSolve.Operation",
+        "TriangularSolve.Call.operation",
+        "TriangularSolve.Operation.div",
+        "Ne",
+        "TriangularSolve.Call.right",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "Exists",
+        "And",
+        "LE.le",
+        "Real.instLE",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "TriangularSolve.Call.computed",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "TriangularSolve.Call.exact",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "One.toOfNat1",
+        "Real.instOne"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Call.SatisfiesModel",
+      "type": "TriangularSolve.Call \u2192 TriangularSolve.Arithmetic \u2192 Real \u2192 Prop"
+    },
+    {
+      "body": "fun c ar =>\n  match TriangularSolve.Call.operation c with\n  | TriangularSolve.Operation.add =>\n    TriangularSolve.Arithmetic.add ar (TriangularSolve.Call.left c) (TriangularSolve.Call.right c)\n  | TriangularSolve.Operation.sub =>\n    TriangularSolve.Arithmetic.sub ar (TriangularSolve.Call.left c) (TriangularSolve.Call.right c)\n  | TriangularSolve.Operation.mul =>\n    TriangularSolve.Arithmetic.mul ar (TriangularSolve.Call.left c) (TriangularSolve.Call.right c)\n  | TriangularSolve.Operation.div =>\n    TriangularSolve.Arithmetic.div ar (TriangularSolve.Call.left c) (TriangularSolve.Call.right c)",
+      "dependencies": [
+        "TriangularSolve.Call",
+        "TriangularSolve.Arithmetic",
+        "Real",
+        "TriangularSolve.Call",
+        "TriangularSolve.Arithmetic",
+        "TriangularSolve.Call.exact.match_1",
+        "TriangularSolve.Operation",
+        "Real",
+        "TriangularSolve.Call.operation",
+        "Unit",
+        "TriangularSolve.Arithmetic.add",
+        "TriangularSolve.Call.left",
+        "TriangularSolve.Call.right",
+        "TriangularSolve.Arithmetic.sub",
+        "TriangularSolve.Arithmetic.mul",
+        "TriangularSolve.Arithmetic.div"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Call.computed",
+      "type": "TriangularSolve.Call \u2192 TriangularSolve.Arithmetic \u2192 Real"
+    },
+    {
+      "body": "fun c =>\n  match TriangularSolve.Call.operation c with\n  | TriangularSolve.Operation.add => HAdd.hAdd.{0, 0, 0} (TriangularSolve.Call.left c) (TriangularSolve.Call.right c)\n  | TriangularSolve.Operation.sub => HSub.hSub.{0, 0, 0} (TriangularSolve.Call.left c) (TriangularSolve.Call.right c)\n  | TriangularSolve.Operation.mul => HMul.hMul.{0, 0, 0} (TriangularSolve.Call.left c) (TriangularSolve.Call.right c)\n  | TriangularSolve.Operation.div => HDiv.hDiv.{0, 0, 0} (TriangularSolve.Call.left c) (TriangularSolve.Call.right c)",
+      "dependencies": [
+        "TriangularSolve.Call",
+        "Real",
+        "TriangularSolve.Call",
+        "TriangularSolve.Call.exact.match_1",
+        "TriangularSolve.Operation",
+        "Real",
+        "TriangularSolve.Call.operation",
+        "Unit",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "TriangularSolve.Call.left",
+        "TriangularSolve.Call.right",
+        "HSub.hSub",
+        "instHSub",
+        "Real.instSub",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "HDiv.hDiv",
+        "instHDiv",
+        "DivInvMonoid.toDiv",
+        "Real.instDivInvMonoid"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Call.exact",
+      "type": "TriangularSolve.Call \u2192 Real"
+    },
+    {
+      "body": "fun motive x h_1 h_2 h_3 h_4 =>\n  TriangularSolve.Operation.casesOn.{u_1} x (h_1 Unit.unit) (h_2 Unit.unit) (h_3 Unit.unit) (h_4 Unit.unit)",
+      "dependencies": [
+        "TriangularSolve.Operation",
+        "Unit",
+        "TriangularSolve.Operation.add",
+        "TriangularSolve.Operation.sub",
+        "TriangularSolve.Operation.mul",
+        "TriangularSolve.Operation.div",
+        "TriangularSolve.Operation",
+        "Unit",
+        "TriangularSolve.Operation.add",
+        "TriangularSolve.Operation.sub",
+        "TriangularSolve.Operation.mul",
+        "TriangularSolve.Operation.div",
+        "TriangularSolve.Operation.casesOn",
+        "Unit.unit"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Call.exact.match_1",
+      "type": "(motive : TriangularSolve.Operation \u2192 Sort u_1) \u2192\n  (x : TriangularSolve.Operation) \u2192\n    (Unit \u2192 motive TriangularSolve.Operation.add) \u2192\n      (Unit \u2192 motive TriangularSolve.Operation.sub) \u2192\n        (Unit \u2192 motive TriangularSolve.Operation.mul) \u2192 (Unit \u2192 motive TriangularSolve.Operation.div) \u2192 motive x"
+    },
+    {
+      "body": "fun self => self.2",
+      "dependencies": [
+        "TriangularSolve.Call",
+        "Real",
+        "TriangularSolve.Call"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Call.left",
+      "type": "TriangularSolve.Call \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Operation",
+        "Real",
+        "TriangularSolve.Call"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Call.mk",
+      "type": "TriangularSolve.Operation \u2192 Real \u2192 Real \u2192 TriangularSolve.Call"
+    },
+    {
+      "body": "fun self => self.1",
+      "dependencies": [
+        "TriangularSolve.Call",
+        "TriangularSolve.Operation",
+        "TriangularSolve.Call"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Call.operation",
+      "type": "TriangularSolve.Call \u2192 TriangularSolve.Operation"
+    },
+    {
+      "body": "fun self => self.3",
+      "dependencies": [
+        "TriangularSolve.Call",
+        "Real",
+        "TriangularSolve.Call"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Call.right",
+      "type": "TriangularSolve.Call \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Direction.lower",
+        "TriangularSolve.Direction.upper"
+      ],
+      "kind": "inductive",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Direction",
+      "type": "Type"
+    },
+    {
+      "body": "fun {motive} t lower upper => TriangularSolve.Direction.rec.{u} lower upper t",
+      "dependencies": [
+        "TriangularSolve.Direction",
+        "TriangularSolve.Direction.lower",
+        "TriangularSolve.Direction.upper",
+        "TriangularSolve.Direction",
+        "TriangularSolve.Direction.lower",
+        "TriangularSolve.Direction.upper",
+        "TriangularSolve.Direction.rec"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Direction.casesOn",
+      "type": "{motive : TriangularSolve.Direction \u2192 Sort u} \u2192\n  (t : TriangularSolve.Direction) \u2192\n    motive TriangularSolve.Direction.lower \u2192 motive TriangularSolve.Direction.upper \u2192 motive t"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Direction"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Direction.lower",
+      "type": "TriangularSolve.Direction"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Direction"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Direction.upper",
+      "type": "TriangularSolve.Direction"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Execution.mk"
+      ],
+      "kind": "inductive",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Execution",
+      "type": "Type \u2192 Type"
+    },
+    {
+      "body": "fun {\u03b1} run ar u =>\n  \u2200 (c : TriangularSolve.Call),\n    Membership.mem.{0, 0} (TriangularSolve.Execution.calls run) c \u2192 TriangularSolve.Call.SatisfiesModel c ar u",
+      "dependencies": [
+        "TriangularSolve.Execution",
+        "TriangularSolve.Arithmetic",
+        "Real",
+        "TriangularSolve.Execution",
+        "TriangularSolve.Arithmetic",
+        "Real",
+        "TriangularSolve.Call",
+        "Membership.mem",
+        "List",
+        "List.instMembership",
+        "TriangularSolve.Execution.calls",
+        "TriangularSolve.Call.SatisfiesModel"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Execution.SatisfiesModel",
+      "type": "{\u03b1 : Type} \u2192 TriangularSolve.Execution \u03b1 \u2192 TriangularSolve.Arithmetic \u2192 Real \u2192 Prop"
+    },
+    {
+      "body": "fun \u03b1 self => self.2",
+      "dependencies": [
+        "TriangularSolve.Execution",
+        "List",
+        "TriangularSolve.Call",
+        "TriangularSolve.Execution"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Execution.calls",
+      "type": "{\u03b1 : Type} \u2192 TriangularSolve.Execution \u03b1 \u2192 List.{0} TriangularSolve.Call"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "List",
+        "TriangularSolve.Call",
+        "TriangularSolve.Execution"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Execution.mk",
+      "type": "{\u03b1 : Type} \u2192 \u03b1 \u2192 List.{0} TriangularSolve.Call \u2192 TriangularSolve.Execution \u03b1"
+    },
+    {
+      "body": "fun \u03b1 self => self.1",
+      "dependencies": [
+        "TriangularSolve.Execution",
+        "TriangularSolve.Execution"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Execution.value",
+      "type": "{\u03b1 : Type} \u2192 TriangularSolve.Execution \u03b1 \u2192 \u03b1"
+    },
+    {
+      "body": "fun {n} direction T =>\n  match direction with\n  | TriangularSolve.Direction.lower => \u2200 (i j : Fin n), LT.lt.{0} i j \u2192 Eq.{1} (T i j) 0\n  | TriangularSolve.Direction.upper => \u2200 (i j : Fin n), LT.lt.{0} j i \u2192 Eq.{1} (T i j) 0",
+      "dependencies": [
+        "Nat",
+        "TriangularSolve.Direction",
+        "Matrix",
+        "Fin",
+        "Real",
+        "Nat",
+        "TriangularSolve.Direction",
+        "Matrix",
+        "Fin",
+        "Real",
+        "TriangularSolve.IsTriangular.match_1",
+        "Unit",
+        "LT.lt",
+        "instLTFin",
+        "Eq",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.IsTriangular",
+      "type": "{n : Nat} \u2192 TriangularSolve.Direction \u2192 Matrix.{0, 0, 0} (Fin n) (Fin n) Real \u2192 Prop"
+    },
+    {
+      "body": "fun motive direction h_1 h_2 => TriangularSolve.Direction.casesOn.{u_1} direction (h_1 Unit.unit) (h_2 Unit.unit)",
+      "dependencies": [
+        "TriangularSolve.Direction",
+        "Unit",
+        "TriangularSolve.Direction.lower",
+        "TriangularSolve.Direction.upper",
+        "TriangularSolve.Direction",
+        "Unit",
+        "TriangularSolve.Direction.lower",
+        "TriangularSolve.Direction.upper",
+        "TriangularSolve.Direction.casesOn",
+        "Unit.unit"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.IsTriangular.match_1",
+      "type": "(motive : TriangularSolve.Direction \u2192 Sort u_1) \u2192\n  (direction : TriangularSolve.Direction) \u2192\n    (Unit \u2192 motive TriangularSolve.Direction.lower) \u2192 (Unit \u2192 motive TriangularSolve.Direction.upper) \u2192 motive direction"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Operation.add",
+        "TriangularSolve.Operation.sub",
+        "TriangularSolve.Operation.mul",
+        "TriangularSolve.Operation.div"
+      ],
+      "kind": "inductive",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Operation",
+      "type": "Type"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Operation"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Operation.add",
+      "type": "TriangularSolve.Operation"
+    },
+    {
+      "body": "fun {motive} t add sub mul div => TriangularSolve.Operation.rec.{u} add sub mul div t",
+      "dependencies": [
+        "TriangularSolve.Operation",
+        "TriangularSolve.Operation.add",
+        "TriangularSolve.Operation.sub",
+        "TriangularSolve.Operation.mul",
+        "TriangularSolve.Operation.div",
+        "TriangularSolve.Operation",
+        "TriangularSolve.Operation.add",
+        "TriangularSolve.Operation.sub",
+        "TriangularSolve.Operation.mul",
+        "TriangularSolve.Operation.div",
+        "TriangularSolve.Operation.rec"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Operation.casesOn",
+      "type": "{motive : TriangularSolve.Operation \u2192 Sort u} \u2192\n  (t : TriangularSolve.Operation) \u2192\n    motive TriangularSolve.Operation.add \u2192\n      motive TriangularSolve.Operation.sub \u2192\n        motive TriangularSolve.Operation.mul \u2192 motive TriangularSolve.Operation.div \u2192 motive t"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Operation"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Operation.div",
+      "type": "TriangularSolve.Operation"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Operation"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Operation.mul",
+      "type": "TriangularSolve.Operation"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "TriangularSolve.Operation"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.Operation.sub",
+      "type": "TriangularSolve.Operation"
+    },
+    {
+      "body": "fun {n} ar T b =>\n  have run :=\n    TriangularSolve.forwardSubstitution ar (TriangularSolve.reverseMatrix T) (TriangularSolve.reverseVector b);\n  { value := TriangularSolve.reverseVector (TriangularSolve.Execution.value run),\n    calls := TriangularSolve.Execution.calls run }",
+      "dependencies": [
+        "Nat",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "TriangularSolve.Execution",
+        "Nat",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "TriangularSolve.Execution",
+        "TriangularSolve.forwardSubstitution",
+        "TriangularSolve.reverseMatrix",
+        "TriangularSolve.reverseVector",
+        "TriangularSolve.Execution.mk",
+        "TriangularSolve.Execution.value",
+        "TriangularSolve.Execution.calls"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.backwardSubstitution",
+      "type": "{n : Nat} \u2192\n  TriangularSolve.Arithmetic \u2192\n    Matrix.{0, 0, 0} (Fin n) (Fin n) Real \u2192 (Fin n \u2192 Real) \u2192 TriangularSolve.Execution (Fin n \u2192 Real)"
+    },
+    {
+      "body": "fun ar x x_1 =>\n  List.brecOn.{1, 0} (motive := fun x => TriangularSolve.Execution Real \u2192 TriangularSolve.Execution Real) x_1\n    (fun x f x_2 =>\n      (match (motive :=\n          TriangularSolve.Execution Real \u2192\n            (x : List.{0} (Prod.{0, 0} Real Real)) \u2192\n              List.below.{1, 0} (motive := fun x => TriangularSolve.Execution Real \u2192 TriangularSolve.Execution Real) x \u2192\n                TriangularSolve.Execution Real)\n          x_2, x with\n        | acc, List.nil.{0} => fun x => acc\n        | acc, List.cons.{0} (Prod.mk.{0, 0} a b) rest => fun x =>\n          let p := TriangularSolve.perform ar TriangularSolve.Operation.mul a b;\n          let s :=\n            TriangularSolve.perform ar TriangularSolve.Operation.add (TriangularSolve.Execution.value acc)\n              (TriangularSolve.Execution.value p);\n          x.1\n            { value := TriangularSolve.Execution.value s,\n              calls :=\n                HAppend.hAppend.{0, 0, 0}\n                  (HAppend.hAppend.{0, 0, 0} (TriangularSolve.Execution.calls acc) (TriangularSolve.Execution.calls p))\n                  (TriangularSolve.Execution.calls s) })\n        f)\n    x",
+      "dependencies": [
+        "TriangularSolve.Arithmetic",
+        "TriangularSolve.Execution",
+        "Real",
+        "List",
+        "Prod",
+        "TriangularSolve.Arithmetic",
+        "TriangularSolve.Execution",
+        "Real",
+        "List",
+        "Prod",
+        "List.brecOn",
+        "List.below",
+        "TriangularSolve.dotTail.match_1",
+        "List.nil",
+        "List.cons",
+        "Prod.mk",
+        "TriangularSolve.perform",
+        "TriangularSolve.Operation.mul",
+        "TriangularSolve.Operation.add",
+        "TriangularSolve.Execution.value",
+        "TriangularSolve.Execution.mk",
+        "HAppend.hAppend",
+        "TriangularSolve.Call",
+        "instHAppendOfAppend",
+        "List.instAppend",
+        "TriangularSolve.Execution.calls"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.dotTail",
+      "type": "TriangularSolve.Arithmetic \u2192\n  TriangularSolve.Execution Real \u2192 List.{0} (Prod.{0, 0} Real Real) \u2192 TriangularSolve.Execution Real"
+    },
+    {
+      "body": "fun motive x x_1 h_1 h_2 =>\n  List.casesOn.{u_1, 0} x_1 (h_1 x) fun head tail => Prod.casesOn.{u_1, 0, 0} head fun fst snd => h_2 x fst snd tail",
+      "dependencies": [
+        "TriangularSolve.Execution",
+        "Real",
+        "List",
+        "Prod",
+        "List.nil",
+        "List.cons",
+        "Prod.mk",
+        "TriangularSolve.Execution",
+        "Real",
+        "List",
+        "Prod",
+        "List.nil",
+        "List.cons",
+        "Prod.mk",
+        "List.casesOn",
+        "Prod.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.dotTail.match_1",
+      "type": "(motive : TriangularSolve.Execution Real \u2192 List.{0} (Prod.{0, 0} Real Real) \u2192 Sort u_1) \u2192\n  (x : TriangularSolve.Execution Real) \u2192\n    (x_1 : List.{0} (Prod.{0, 0} Real Real)) \u2192\n      ((acc : TriangularSolve.Execution Real) \u2192 motive acc List.nil.{0}) \u2192\n        ((acc : TriangularSolve.Execution Real) \u2192\n            (a b : Real) \u2192\n              (rest : List.{0} (Prod.{0, 0} Real Real)) \u2192 motive acc (List.cons.{0} (Prod.mk.{0, 0} a b) rest)) \u2192\n          motive x x_1"
+    },
+    {
+      "body": "fun {n} ar T b x i =>\n  ite.{1} (Eq.{1} (\u2191i) 0) (TriangularSolve.perform ar TriangularSolve.Operation.div (b i) (T i i))\n    (have terms :=\n      List.map.{0, 0} (fun j => Prod.mk.{0, 0} (T i j) (x j))\n        (List.filter.{0} (fun j => Decidable.decide (LT.lt.{0} j i)) (List.finRange n));\n    have p := TriangularSolve.sequentialDot ar terms;\n    have s := TriangularSolve.perform ar TriangularSolve.Operation.sub (b i) (TriangularSolve.Execution.value p);\n    have q := TriangularSolve.perform ar TriangularSolve.Operation.div (TriangularSolve.Execution.value s) (T i i);\n    { value := TriangularSolve.Execution.value q,\n      calls :=\n        HAppend.hAppend.{0, 0, 0}\n          (HAppend.hAppend.{0, 0, 0} (TriangularSolve.Execution.calls p) (TriangularSolve.Execution.calls s))\n          (TriangularSolve.Execution.calls q) })",
+      "dependencies": [
+        "Nat",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "TriangularSolve.Execution",
+        "Nat",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "ite",
+        "TriangularSolve.Execution",
+        "Eq",
+        "Fin.val",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "instDecidableEqNat",
+        "TriangularSolve.perform",
+        "TriangularSolve.Operation.div",
+        "List",
+        "Prod",
+        "List.map",
+        "Prod.mk",
+        "List.filter",
+        "Decidable.decide",
+        "LT.lt",
+        "instLTFin",
+        "Fin.decLt",
+        "List.finRange",
+        "TriangularSolve.sequentialDot",
+        "TriangularSolve.Operation.sub",
+        "TriangularSolve.Execution.value",
+        "TriangularSolve.Execution.mk",
+        "HAppend.hAppend",
+        "TriangularSolve.Call",
+        "instHAppendOfAppend",
+        "List.instAppend",
+        "TriangularSolve.Execution.calls"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.forwardRow",
+      "type": "{n : Nat} \u2192\n  TriangularSolve.Arithmetic \u2192\n    Matrix.{0, 0, 0} (Fin n) (Fin n) Real \u2192 (Fin n \u2192 Real) \u2192 (Fin n \u2192 Real) \u2192 Fin n \u2192 TriangularSolve.Execution Real"
+    },
+    {
+      "body": "fun {n} ar T b state i =>\n  have row := TriangularSolve.forwardRow ar T b (TriangularSolve.Execution.value state) i;\n  { value := Function.update.{1, 1} (TriangularSolve.Execution.value state) i (TriangularSolve.Execution.value row),\n    calls := HAppend.hAppend.{0, 0, 0} (TriangularSolve.Execution.calls state) (TriangularSolve.Execution.calls row) }",
+      "dependencies": [
+        "Nat",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "TriangularSolve.Execution",
+        "Nat",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "TriangularSolve.Execution",
+        "TriangularSolve.forwardRow",
+        "TriangularSolve.Execution.value",
+        "TriangularSolve.Execution.mk",
+        "Function.update",
+        "instDecidableEqFin",
+        "HAppend.hAppend",
+        "List",
+        "TriangularSolve.Call",
+        "instHAppendOfAppend",
+        "List.instAppend",
+        "TriangularSolve.Execution.calls"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.forwardStep",
+      "type": "{n : Nat} \u2192\n  TriangularSolve.Arithmetic \u2192\n    Matrix.{0, 0, 0} (Fin n) (Fin n) Real \u2192\n      (Fin n \u2192 Real) \u2192 TriangularSolve.Execution (Fin n \u2192 Real) \u2192 Fin n \u2192 TriangularSolve.Execution (Fin n \u2192 Real)"
+    },
+    {
+      "body": "fun {n} ar T b =>\n  List.foldl.{0, 0} (TriangularSolve.forwardStep ar T b) { value := fun x => 0, calls := List.nil.{0} }\n    (List.finRange n)",
+      "dependencies": [
+        "Nat",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "TriangularSolve.Execution",
+        "Nat",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "List.foldl",
+        "TriangularSolve.Execution",
+        "TriangularSolve.forwardStep",
+        "TriangularSolve.Execution.mk",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "List.nil",
+        "TriangularSolve.Call",
+        "List.finRange"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.forwardSubstitution",
+      "type": "{n : Nat} \u2192\n  TriangularSolve.Arithmetic \u2192\n    Matrix.{0, 0, 0} (Fin n) (Fin n) Real \u2192 (Fin n \u2192 Real) \u2192 TriangularSolve.Execution (Fin n \u2192 Real)"
+    },
+    {
+      "body": "fun n u => HDiv.hDiv.{0, 0, 0} (HMul.hMul.{0, 0, 0} (\u2191n) u) (HSub.hSub.{0, 0, 0} 1 (HMul.hMul.{0, 0, 0} (\u2191n) u))",
+      "dependencies": [
+        "Nat",
+        "Real",
+        "Nat",
+        "Real",
+        "HDiv.hDiv",
+        "instHDiv",
+        "DivInvMonoid.toDiv",
+        "Real.instDivInvMonoid",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Nat.cast",
+        "Real.instNatCast",
+        "HSub.hSub",
+        "instHSub",
+        "Real.instSub",
+        "OfNat.ofNat",
+        "One.toOfNat1",
+        "Real.instOne"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.gamma",
+      "type": "Nat \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun ar op a b =>\n  have c := { operation := op, left := a, right := b };\n  { value := TriangularSolve.Call.computed c ar, calls := List.cons.{0} c List.nil.{0} }",
+      "dependencies": [
+        "TriangularSolve.Arithmetic",
+        "TriangularSolve.Operation",
+        "Real",
+        "TriangularSolve.Execution",
+        "TriangularSolve.Arithmetic",
+        "TriangularSolve.Operation",
+        "Real",
+        "TriangularSolve.Call",
+        "TriangularSolve.Call.mk",
+        "TriangularSolve.Execution.mk",
+        "TriangularSolve.Call.computed",
+        "List.cons",
+        "List.nil"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.perform",
+      "type": "TriangularSolve.Arithmetic \u2192 TriangularSolve.Operation \u2192 Real \u2192 Real \u2192 TriangularSolve.Execution Real"
+    },
+    {
+      "body": "fun {n} T i j => T (Fin.rev i) (Fin.rev j)",
+      "dependencies": [
+        "Nat",
+        "Matrix",
+        "Fin",
+        "Real",
+        "Nat",
+        "Matrix",
+        "Fin",
+        "Real",
+        "Fin.rev"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.reverseMatrix",
+      "type": "{n : Nat} \u2192 Matrix.{0, 0, 0} (Fin n) (Fin n) Real \u2192 Matrix.{0, 0, 0} (Fin n) (Fin n) Real"
+    },
+    {
+      "body": "fun {n} b i => b (Fin.rev i)",
+      "dependencies": [
+        "Nat",
+        "Fin",
+        "Real",
+        "Nat",
+        "Fin",
+        "Real",
+        "Fin.rev"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.reverseVector",
+      "type": "{n : Nat} \u2192 (Fin n \u2192 Real) \u2192 Fin n \u2192 Real"
+    },
+    {
+      "body": "fun ar x =>\n  match x with\n  | List.nil.{0} => { value := 0, calls := List.nil.{0} }\n  | List.cons.{0} (Prod.mk.{0, 0} a b) rest =>\n    TriangularSolve.dotTail ar (TriangularSolve.perform ar TriangularSolve.Operation.mul a b) rest",
+      "dependencies": [
+        "TriangularSolve.Arithmetic",
+        "List",
+        "Prod",
+        "Real",
+        "TriangularSolve.Execution",
+        "TriangularSolve.Arithmetic",
+        "List",
+        "Prod",
+        "Real",
+        "TriangularSolve.sequentialDot.match_1",
+        "TriangularSolve.Execution",
+        "Unit",
+        "TriangularSolve.Execution.mk",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "List.nil",
+        "TriangularSolve.Call",
+        "TriangularSolve.dotTail",
+        "TriangularSolve.perform",
+        "TriangularSolve.Operation.mul"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.sequentialDot",
+      "type": "TriangularSolve.Arithmetic \u2192 List.{0} (Prod.{0, 0} Real Real) \u2192 TriangularSolve.Execution Real"
+    },
+    {
+      "body": "fun motive x h_1 h_2 =>\n  List.casesOn.{u_1, 0} x (h_1 Unit.unit) fun head tail => Prod.casesOn.{u_1, 0, 0} head fun fst snd => h_2 fst snd tail",
+      "dependencies": [
+        "List",
+        "Prod",
+        "Real",
+        "Unit",
+        "List.nil",
+        "List.cons",
+        "Prod.mk",
+        "List",
+        "Prod",
+        "Real",
+        "Unit",
+        "List.nil",
+        "List.cons",
+        "Prod.mk",
+        "List.casesOn",
+        "Unit.unit",
+        "Prod.casesOn"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.sequentialDot.match_1",
+      "type": "(motive : List.{0} (Prod.{0, 0} Real Real) \u2192 Sort u_1) \u2192\n  (x : List.{0} (Prod.{0, 0} Real Real)) \u2192\n    (Unit \u2192 motive List.nil.{0}) \u2192\n      ((a b : Real) \u2192 (rest : List.{0} (Prod.{0, 0} Real Real)) \u2192 motive (List.cons.{0} (Prod.mk.{0, 0} a b) rest)) \u2192\n        motive x"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Nat",
+        "TriangularSolve.Direction",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "LE.le",
+        "Real.instLE",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "LT.lt",
+        "Real.instLT",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Nat.cast",
+        "Real.instNatCast",
+        "One.toOfNat1",
+        "Real.instOne",
+        "Ne",
+        "Matrix.det",
+        "instDecidableEqFin",
+        "Fin.fintype",
+        "Real.commRing",
+        "TriangularSolve.IsTriangular",
+        "TriangularSolve.Execution.SatisfiesModel",
+        "TriangularSolve.substitution",
+        "Exists",
+        "And",
+        "Eq",
+        "Matrix.mulVec",
+        "NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring",
+        "NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing",
+        "NonUnitalCommRing.toNonUnitalNonAssocCommRing",
+        "NonUnitalNormedCommRing.toNonUnitalCommRing",
+        "NormedCommRing.toNonUnitalNormedCommRing",
+        "Real.normedCommRing",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Matrix.add",
+        "Real.instAdd",
+        "TriangularSolve.Execution.value",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "TriangularSolve.gamma"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.solution_of_a_triangular_system",
+      "type": "\u2200 (n : Nat) (direction : TriangularSolve.Direction) (ar : TriangularSolve.Arithmetic)\n  (T : Matrix.{0, 0, 0} (Fin n) (Fin n) Real) (b : Fin n \u2192 Real) (u : Real),\n  LE.le.{0} 0 u \u2192\n    LT.lt.{0} (HMul.hMul.{0, 0, 0} (\u2191n) u) 1 \u2192\n      Ne.{1} (Matrix.det.{0, 0} T) 0 \u2192\n        TriangularSolve.IsTriangular direction T \u2192\n          TriangularSolve.Execution.SatisfiesModel (TriangularSolve.substitution direction ar T b) ar u \u2192\n            \u2203 \u0394,\n              And\n                (Eq.{1}\n                  (Matrix.mulVec.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} T \u0394)\n                    (TriangularSolve.Execution.value (TriangularSolve.substitution direction ar T b)))\n                  b)\n                (And\n                  (\u2200 (i j : Fin n),\n                    LE.le.{0} (abs.{0} (\u0394 i j)) (HMul.hMul.{0, 0, 0} (TriangularSolve.gamma n u) (abs.{0} (T i j))))\n                  (TriangularSolve.IsTriangular direction \u0394))"
+    },
+    {
+      "body": "fun {n} direction ar T b =>\n  match direction with\n  | TriangularSolve.Direction.lower => TriangularSolve.forwardSubstitution ar T b\n  | TriangularSolve.Direction.upper => TriangularSolve.backwardSubstitution ar T b",
+      "dependencies": [
+        "Nat",
+        "TriangularSolve.Direction",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "TriangularSolve.Execution",
+        "Nat",
+        "TriangularSolve.Direction",
+        "TriangularSolve.Arithmetic",
+        "Matrix",
+        "Fin",
+        "Real",
+        "TriangularSolve.IsTriangular.match_1",
+        "TriangularSolve.Execution",
+        "Unit",
+        "TriangularSolve.forwardSubstitution",
+        "TriangularSolve.backwardSubstitution"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "TriangularSolve.substitution",
+      "type": "{n : Nat} \u2192\n  TriangularSolve.Direction \u2192\n    TriangularSolve.Arithmetic \u2192\n      Matrix.{0, 0, 0} (Fin n) (Fin n) Real \u2192 (Fin n \u2192 Real) \u2192 TriangularSolve.Execution (Fin n \u2192 Real)"
+    }
+  ],
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.28.0",
+    "manifest_sha256": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+  }
+}

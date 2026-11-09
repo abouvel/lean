@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "00318c35f142d86ba7ef9111a93dbd4617b819cba1387f1befdd4d82bc03acf0",
+  "overall_verdict": "fail",
+  "phase": "final",
+  "lean_implies_source": false,
+  "source_implies_lean": true,
+  "relation": "mismatch",
+  "delivery_complete": false,
+  "construction_complete": true,
+  "target_evidence": "The only substantive perturbation target is IsPerturbation(u,exactProductTree(t),roundedProductTree(m,t)), proving |r(ab)-ab| <= u|ab| before reduction. The two equality targets identify rounded multiplication. None asserts a backward-error equality for roundedDotProduct or a gamma(depth+1,u) bound. The algorithm itself is fully defined: one rounded multiplication per leaf and one rounded addition per internal node. These constructions satisfy the requested algorithm policy, and existential perturbations need no executable construction. The translated product-stage assertions follow from the relative-error model already present in the source setting, but do not establish the full requested result without additional proofs.",
+  "missing_formal_steps": [
+    "Prove that the actual roundedSum reduction of roundedProductTree admits leafwise perturbations accounting for every internal-node rounding on each leaf-to-root path.",
+    "Combine multiplication and addition errors into perturbations of exactProductTree bounded componentwise by gamma(tree.depth + 1, model.u), under (tree.depth + 1) * model.u < 1.",
+    "Assert the final universally quantified equality between roundedDotProduct(model, tree) and the exact sum of those perturbed exact products, together with the required bound."
+  ],
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The three targets give two multiplication-operation equalities and a perturbation bound for the product tree before reduction. None asserts the required final scalar equality with bounded perturbations.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-final-theorem"
+      ],
+      "correction": "Prove the final theorem for every model and pair tree under (depth+1)*u < 1, asserting both the exact-sum equality and the required bound."
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "roundedProductTree_isPerturbation relates exactProductTree(t), with leaves ab, to roundedProductTree(m,t), with leaves r(ab), proving |r(ab)-ab| <= u|ab|. The exact-product linkage is correct for this product-stage result; extending it to the final scalar remains a missing final obligation.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "roundedProductTerm.eq_1 and Model.mul.eq_1 identify each leaf operation as r(ab). roundedProductTree_isPerturbation proves its error is at most u|ab| for arbitrary models and leaves.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "roundedDotProduct is defined using rounding at every internal sum, but no target proves any error assertion for roundedSum or the resulting scalar. The perturbation target concerns the product tree before additions.",
+      "verdict": "fail",
+      "defect_categories": [
+        "addition-rounding-omitted"
+      ],
+      "correction": "Prove a reduction error theorem accounting for every internal-node rounding and connect it to the defined roundedDotProduct."
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "The only proved perturbation bound is u for the multiplication stage. No target supplies gamma(depth+1,u), a depth-dependent error count, or a combined multiplication-and-addition bound.",
+      "verdict": "fail",
+      "defect_categories": [
+        "wrong-error-count"
+      ],
+      "correction": "Under (depth+1)*u < 1, prove the gamma(depth+1,u) bound counting one multiplication and at most depth additions per leaf."
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "The targets quantify over all displayed relative-error models and finite ordered binary pair trees with arbitrary real leaves. They assume neither exact arithmetic nor the desired conclusion. The product-stage lemmas validly require no smallness hypothesis.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "Backward-error equality for the actual roundedDotProduct output relative to exactProductTree.",
+    "Control of every rounded addition along each leaf-to-root path.",
+    "Combined gamma(tree.depth + 1, model.u) componentwise bound under the specified smallness condition."
+  ],
+  "limitations": [
+    "Review uses only the authoritative source, contract, and translated mathematics; no Lean code or external evaluator material was inspected."
+  ]
+}

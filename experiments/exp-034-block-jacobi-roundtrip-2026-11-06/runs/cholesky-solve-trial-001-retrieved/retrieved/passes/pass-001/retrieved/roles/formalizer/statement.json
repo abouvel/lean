@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "CholeskySolve.cholesky_solve"
+  ],
+  "construction_names": [
+    "CholeskySolve.gamma",
+    "CholeskySolve.absMatrix",
+    "CholeskySolve.RoundOK",
+    "CholeskySolve.dotAux",
+    "CholeskySolve.dot",
+    "CholeskySolve.dotAuxValid",
+    "CholeskySolve.dotValid",
+    "CholeskySolve.subDot",
+    "CholeskySolve.subDotValid",
+    "CholeskySolve.update",
+    "CholeskySolve.updateValid",
+    "CholeskySolve.choleskyTerms",
+    "CholeskySolve.forwardTerms",
+    "CholeskySolve.backwardTerms",
+    "CholeskySolve.CholeskyRun",
+    "CholeskySolve.ForwardRun",
+    "CholeskySolve.BackwardRun",
+    "CholeskySolve.SolveRun",
+    "CholeskySolve.factorResidual",
+    "CholeskySolve.solvePerturbation"
+  ],
+  "source_mapping": "Research/Submission.lean: CholeskySolve.cholesky_solve formalizes the full selected theorem:cholesky_solve in /spec/source.txt (paper.tex lines 550-610). A and b are the original inputs; R, y, x are linked by local rounded-operation certificates for the Cholesky, forward-substitution, and backward-substitution recurrences. A is explicitly symmetric and positive definite; u is nonnegative and (n+1)u<1. Both exact componentwise bounds and the perturbed-system equation are retained. No factorization or triangular backward-error bound is a hypothesis. RoundOK certificates encode the standard relative-error/no-overflow/no-underflow abstraction only at the executed operations. IMPORTANT MODEL GAP: the supplied four-operation model does not specify sqrt rounding. CholeskyRun.sqrt_valid explicitly requires the same standard relative-error property at each executed positive square root; deriving this property from a concrete floating-point format is not claimed. The theorem therefore states this necessary primitive semantics transparently, rather than assuming a diagonal residual bound or using exact sqrt. Empty dot products skip subtraction from zero; one-entry substitution is one rounded division. All definitions have bodies; only the final theorem proof is temporary sorry scaffolding for the next role. No feedback.json was present and no earlier candidate statement was supplied; the new statement makes the square-root specification explicit as required by the plan audit. Supporting source directory /spec/support/Research was empty, so there were no supporting source files to copy."
+}

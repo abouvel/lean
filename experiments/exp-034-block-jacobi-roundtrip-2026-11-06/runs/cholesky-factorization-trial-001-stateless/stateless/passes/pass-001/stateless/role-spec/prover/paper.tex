@@ -1,0 +1,1275 @@
+\documentclass[11pt,draft]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{cleveref}
+\usepackage{comment}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\newcommand{\urd}{\ensuremath{\mathrm{u}}}
+\newcommand{\define}{\ensuremath{\triangleq}}
+\newcommand{\vect}[1]{\mathbf{\MakeLowercase{#1}}}
+\newcommand{\mat}[1]{\mathbf{\MakeUppercase{#1}}}
+\newcommand{\ireal}[1]{\in\mathbb{R}^{#1}}
+\newcommand{\norm}[2][]{\left\|#2\right\|_{#1}}
+\usepackage[most]{tcolorbox}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\tcolorboxenvironment{theorem}{
+  colback=blue!5,
+  colframe=blue!60!black,
+  arc=2mm,
+  boxrule=0.8pt,
+  left=1.5mm,
+  right=1.5mm,
+  top=1mm,
+  bottom=1mm,
+  before skip=10pt,
+  after skip=10pt,
+  breakable
+}
+\tcolorboxenvironment{corollary}{
+  colback=blue!5,
+  colframe=blue!60!black,
+  arc=2mm,
+  boxrule=0.8pt,
+  left=1.5mm,
+  right=1.5mm,
+  top=1mm,
+  bottom=1mm,
+  before skip=10pt,
+  after skip=10pt,
+  breakable
+}
+\tcolorboxenvironment{lemma}{
+  colback=blue!5,
+  colframe=blue!60!black,
+  arc=2mm,
+  boxrule=0.8pt,
+  left=1.5mm,
+  right=1.5mm,
+  top=1mm,
+  bottom=1mm,
+  before skip=10pt,
+  after skip=10pt,
+  breakable
+}
+
+% Operators and notation
+\DeclareMathOperator{\fl}{fl}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\widehatgamma}[1]{\widehat{\gamma}_{#1}}
+
+\title{Self-contained Proof for a Mixed-precision Block Jacobi Algorithm}
+\author{Sahil Bhola\thanks{University of Michigan, Ann Arbor}}
+\date{Last Edited: \today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Abstract}
+We present a self-contained rounding-error analysis of an update-form
+block Jacobi method implemented in mixed-precision floating-point
+arithmetic. The analysis first develops backward-error bounds for the
+computational kernels used by the iteration, including parallel binary-tree
+reduction, block dot products, block matrix--vector products, triangular
+solves, Cholesky factorization, and Cholesky-based linear solves. These
+kernel-level results are then combined to derive a componentwise
+forward-error bound and the scalar recurrence
+\begin{align*}
+    \norm[\infty]{\vect{e}^{k+1}}
+    \leq
+    \alpha\norm[\infty]{\vect{e}^{k}}+\beta
+\end{align*}
+for the mixed-precision block Jacobi iteration. Under explicit conditions
+ensuring stability of the computed block solves and $\alpha<1$, the
+forward error is asymptotically bounded by $\beta/(1-\alpha)$. In the
+exact-arithmetic limit, the result reduces to the standard sufficient
+convergence condition
+$\norm[\infty]{\mat{d}^{-1}\mat{n}}<1$. The analysis also illustrates how
+the reduction strategy and block size determine the accumulation of
+rounding errors in the underlying parallel kernels.
+
+\section{Floating-Point Model}
+We assume the standard floating-point model~\cite{higham2002accuracy}: for every elementary
+operation $\circ \in \{+,-,\times,/\}$,
+\begin{equation}
+    \fl(a \circ b) = (a \circ b)(1+\delta),
+    \qquad
+    \abs{\delta} \le \urd,
+    \label{eq:fp-model}
+\end{equation}
+where $\urd$ is the unit roundoff and $\delta$ is the relative roundoff error.
+Using~\cref{eq:fp-model} for numerical analysis we typicall obtain the product
+\begin{align}
+    \prod_{i=1}^n (1 + \delta_i)^{\rho_i} \define 1 + \theta_n, \qquad \rho = \pm 1,
+    \label{eq:theta_n}
+\end{align}
+where $n$ denotes the number of accumulated roundoff error terms.
+For numerical analysis, we seek reliable and sharp bounds for $\theta_n$.
+
+
+\section{Deterministic Rounding Error Analysis}
+The deterministic rounding error analysis proposes the following problem-size dependent constant
+\begin{align}
+\gamma_{n} \define \frac{n\urd}{1 - n\urd}, 
+\label{eq:drea}
+\end{align}
+for $n\urd < 1$.
+Here, $n$ is the number of accumulated error terms~\cite{higham2002accuracy}.
+The problem-size dependent constant is monotonic, that is, $\gamma_{n+1} > \gamma_{n}$ for $\urd > 0$.
+Performing backward/forward error analysis using~\cref{eq:drea} we obtain
+\begin{align}
+    \abs{\theta_n} \leq \gamma_n.
+\end{align}
+
+\section{Parallel Binary Tree Reduction}\label{sec:parallel_binary_tree_reduction}
+In parallel computing, the parallel reduction kernel is routinely observed.
+Mathematically, the kerenel computes $y = \sum_{i=1}^n \vect{x}_i$ as
+\begin{align}
+S_{k}^{\ell+1} = S_{k}^{\ell} + S_{k + \lceil\frac{n}{2^{\ell+1}}\rceil}^\ell, \qquad k = 1, \cdots, \lceil \frac{n}{2^{\ell+1}}\rceil,
+\end{align}
+such that $y = S_1^{\ell^\dagger}$.
+Here, $\ell^\dagger \define \lceil\log_2 n\rceil$ and $S_i^0 = \vect{x}_i$ for all $i$.
+Note that, for some values of $\ell$ and $n$, if $S_{k + \lceil\frac{n}{2^{\ell+1}}\rceil}^\ell$ is unavailable, it is considered as zero.
+Here, we perform the rounding error analysis of the parallel binary tree reduction, re-deriving the problem-size dependent constant $\gamma_{\lceil\log_2 n\rceil}$ as proposed by~\cite[p. 64]{higham2002accuracy}.
+
+
+\begin{algorithm}
+\caption{Parallel Binary-Tree Reduction}
+\label{alg:binary_tree_reduction}
+\begin{algorithmic}[1]
+\Require Input vector $\mathbf{x} = (x_1,\ldots,x_n)$
+\Ensure $y = \sum_{i=1}^{n} x_i$
+
+\State $S_k^0 \gets x_k$, \quad $k=1,\ldots,n$
+\State $\ell_t \gets \lceil \log_2 n \rceil$
+
+\For{$\ell = 0,\ldots,\ell_t-1$}
+    \ForAll{$k=1,\ldots,
+        \left\lceil n/2^{\ell+1}\right\rceil$ \textbf{in parallel}}
+        \State $j \gets k + \left\lceil n/2^{\ell+1}\right\rceil$
+        \If{$S_j^\ell$ is available}
+            \State $S_k^{\ell+1} \gets S_k^\ell + S_j^\ell$
+        \Else
+            \State $S_k^{\ell+1} \gets S_k^\ell$
+        \EndIf
+    \EndFor
+\EndFor
+
+\State $y \gets S_1^{\ell_t}$
+\State \Return $y$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}
+\label{theorem:parallel_binary_tree_reduction}
+Let
+\begin{align}
+    y=\sum_{i=1}^{n}\vect{x}_i
+\end{align}
+be evaluated componentwise using a binary-tree reduction of depth
+$\ell^\dagger=\ceil{\log_2 n}$ in floating-point arithmetic with unit
+roundoff $\urd$. Assume that no overflow or underflow occurs and that
+$\ell^\dagger\urd<1$. Then the computed result $\hat{y}$ satisfies
+\begin{align}
+    \hat{y}
+    =\sum_{i=1}^{n}\left(\vect{x}_i+\Delta\vect{x}_i\right),
+    \qquad
+    \abs{\Delta\vect{x}_i}
+    \leq \gamma_{\ell^\dagger}\abs{\vect{x}_i},
+    \quad i=1,\ldots,n,
+\end{align}
+where the inequalities are interpreted componentwise and
+$\gamma_{\ell^\dagger}=\ell^\dagger\urd/(1-\ell^\dagger\urd)$.
+    \begin{proof}
+        Using~\cref{eq:drea}, the computed floating-point approximation $\widehat{S}_k^{\ell+1}$ of $S_k^{\ell+1}$ is given by
+        \begin{align}
+            \widehat{S}_k^{\ell+1} = \left(\widehat{S}_k^{\ell}  + \widehat{S}_{k + \lceil\frac{n}{2^{\ell+1}}\rceil}^\ell\right )(1 + \delta_k^{\ell+1}), \qquad \abs{\delta_k^{\ell+1}} \leq \urd.
+        \end{align}
+    Since, at most we will have $\ell^\dagger$ addition operations, the computed approximation $\hat{y}$ of $y$ is given by
+    \begin{align}
+        \hat{y} = \sum_{i=1}^n \vect{x}_i \prod_{\ell=1}^{\ell^\dagger} (1 + \delta_{k_i(\ell)}^\ell), \qquad \abs{\delta_{k_i(\ell)}^\ell} \leq \urd,
+    \end{align}
+    where $k_i(\ell)$ denotes the index of the node at level $\ell$ corresponding to the path from the leaf containing $\vect{x}_i$ to the root.
+    Now, usign~\cref{eq:theta_n,eq:drea} we obtain
+    \begin{align}
+        \hat{y} = \sum_{i=1}^n \vect{x}_i + \Delta \vect{x}_i, \qquad \Delta \vect{x}_i \define \theta_{\ell^\dagger}\vect{x}_i,
+    \end{align}
+    such that $\abs{\Delta \vect{x}_i} \leq \gamma_{\ell^\dagger} \abs{\vect{x}_i}$.
+    \end{proof}
+\end{theorem}
+
+Note, compared to the sequential dot-product, where the problem-size dependent constant is $\gamma_n$~\cite{higham2002accuracy}, we get logarithmic scaling.
+This shows that the binary tree reduciton algorithm has better backward stability compared to the sequential computations.
+\section{Block Dot Product}
+\label{sec:block_dot_product}
+Another widely used kernel is computing the dot product kernel
+\begin{align}
+    y = \sum_{i=1}^n \vect{x}_i \vect{y}_i,
+\end{align}
+in a block-wise manner given by
+\begin{align}
+    y = \sum_{j = 1}^{n^\dagger}\sum_{t=1}^{T} \vect{x}_{(j-1)T + t} \vect{y}_{(j-1)T + t} = \sum_{j=1}^{n^\dagger} p_j, \quad p_j \define \sum_{t=1}^{T} \vect{x}_{(j-1)T + t} \vect{y}_{(j-1)T + t},
+\end{align}
+where $n^\dagger \define \lceil n / T \rceil$ denotes the number of blocks of size $T$.
+Typically, in parallel computing architecture like SIMT, the partial dot-product computation $p_j$ is computed by independent threads and is computed sequentially.
+Followed by, to reduce the partials $p_j$, we can perform computations such as sequential summation or parallel binary tree reduction of depth $\log_2 n^\dagger$.
+We first perform backward error analysis where the paritals $p_j$ are reduced using parallel binary tree reduction.
+Followed by, we also consider the case of sequential accumulation.
+\begin{theorem}[Block Dot Product]\label{theorem:block_dot_product}
+Let
+\begin{align}
+    y=\sum_{i=1}^{n}\vect{x}_i\vect{y}_i
+\end{align}
+be evaluated by partitioning the terms into
+$n^\dagger=\ceil{n/T}$ blocks of size $T$, computing each block dot
+product sequentially, and combining the resulting partial sums using a
+binary-tree reduction of depth
+$\ell^\dagger=\ceil{\log_2 n^\dagger}$. Any entries beyond $n$ in the
+final block are taken to be zero. Assume that no overflow or underflow
+occurs and that $(T+\ell^\dagger)\urd<1$. Then the computed result
+$\hat{y}$ admits either of the backward-error representations
+\begin{align}
+    \hat{y}
+    &=\sum_{i=1}^{n}
+      \left(\vect{x}_i+\Delta\vect{x}_i\right)\vect{y}_i,
+    &
+    \abs{\Delta\vect{x}_i}
+    &\leq \gamma_{T+\ell^\dagger}\abs{\vect{x}_i},
+    \\
+    \hat{y}
+    &=\sum_{i=1}^{n}
+      \vect{x}_i\left(\vect{y}_i+\Delta\vect{y}_i\right),
+    &
+    \abs{\Delta\vect{y}_i}
+    &\leq \gamma_{T+\ell^\dagger}\abs{\vect{y}_i},
+\end{align}
+for all $i=1,\cdots,n$, where
+$\gamma_{T+\ell^\dagger}
+=(T+\ell^\dagger)\urd/(1-(T+\ell^\dagger)\urd)$.
+    \begin{proof}
+    Assuming sequential dot-product is performed to obtain $p_j$, the computed approximation $\hat{p}_j$ is given as
+    \begin{align}
+        \hat{p}_j &= \sum_{t=1}^{T} \vect{x}_{(j-1)T + t} \vect{y}_{(j-1)T + t} (1 + \eta_{t,j}) \prod_{\ell=\max(2, t)}^{T} (1 + \delta_{\ell, j}); \qquad \abs{\delta_{\ell, j}}, \abs{\eta_{t,j}} \leq \urd.
+    \end{align}
+    Note, we have $\{p_j\}_{j=1}^{n^\dagger}$ terms that are needed to be reduced via the binary tree reduction.
+    Thus, we can now invoke~\cref{theorem:parallel_binary_tree_reduction} to obtain the computed approximation $\hat{y}$ as 
+    \begin{align}
+        \hat{y} &= \sum_{j=1}^{n^\dagger} \hat{p}_j \prod_{\ell=1}^{\ell^\dagger} (1 + \zeta_{k_j(\ell)}), \qquad \abs{\zeta_{k_j(\ell)}} \leq \urd,\\
+        &\define \sum_{j=1}^{n^\dagger} \hat{q}_j,
+    \end{align}
+    where $k_j(\ell)$ denotes the index of the node at level $\ell$ corresponding to the path from the leaf containing $p_j$ to the root, $\ell^\dagger = \lceil \log_2 n^\dagger \rceil$, and $\hat{q}_j\define \hat{p}_j \prod_{\ell=1}^{\ell^\dagger} (1 + \zeta_{k_j(\ell)})$.
+    Now using,~\cref{eq:theta_n} we obtain
+    \begin{align}
+       \hat{q}_j &= \sum_{t=1}^T \vect{x}_{(j-1)T + t}\vect{y}_{(j-1)T + t} (1 + \theta_{T - \max(2, t) + 2 + \ell^\dagger}^{(j,t)}),\\
+       &= \sum_{t=1}^T \left(\vect{x}_{(j-1)T + t} + \Delta \vect{x}_{(j-1)T + t}\right)\vect{y}_{(j-1)T + t} =  \sum_{t=1}^T\vect{x}_{(j-1)T + t}\left(\vect{y}_{(j-1)T + t} + \Delta \vect{y}_{(j-1)T + t}\right),
+    \end{align}
+    where $\Delta \vect{x}_{(j-1)T + t} \define \theta_{T - \max(2, t) + 2 + \ell^\dagger}^{(j,t)} \vect{x}_{(j-1)T + t}$ and $\Delta \vect{y}_{(j-1)T + t} \define \theta_{T - \max(2, t) + 2 + \ell^\dagger}^{(j,t)} \vect{y}_{(j-1)T + t}$.
+    Using~\cref{eq:drea} we obtain 
+    \begin{align}
+        \abs{\Delta \vect{x}_{(j-1)T + t}} \leq \gamma_{T - \max(2, t) + 2 + \ell^\dagger} \abs{\vect{x}_{(j-1)T + t}} \leq \gamma_{T + \ell^\dagger}\abs{\vect{x}_{(j-1)T + t}},\\
+        \abs{\Delta \vect{y}_{(j-1)T + t}} \leq \gamma_{T - \max(2, t) + 2 + \ell^\dagger} \abs{\vect{y}_{(j-1)T + t}}\leq \gamma_{T + \ell^\dagger}\abs{\vect{y}_{(j-1)T + t}}.
+    \end{align}
+    Substituting $\hat{q}_j$ in $\hat{y}$ then completes the proof.
+    \end{proof}
+\end{theorem}
+
+Compared to the sequential dot product that results in a problem size dependent constant $\gamma_{n}$~\cite{higham2002accuracy}, the improvement due to block-wise computations is given by
+\begin{align}
+    \kappa_{\mathrm{BDP}} \define \frac{\gamma_n}{\gamma_{T + \lceil \log_2 \lceil n / T \rceil \rceil}},
+\end{align}
+which can be maximized to find the optimal block size by solving the optimization problem
+\begin{align}
+    T^\star = \arg\max_T \kappa_{\mathrm{BDP}}.
+\end{align}
+Since $\gamma_{n}$ is monotonic for $\urd > 0$, we can find the optimal block size by solving a simpler optimization problem given by
+\begin{align}
+    T^\star = \arg\max_T \frac{n}{T + \lceil \log_2 \lceil n / T \rceil \rceil}.
+\end{align}
+For a given $n$, ignoring the integer effects, and treating T as continuous, $\kappa_{\mathrm{BDP}}$ is then maximized for $T^\star = \frac{1}{\ln 2}$.
+This in practice translates to choosing $T \in \{1, 2\}$.
+Since the depth of the binary tree only grows logarithmically, choosing smaller values of the block size $T$ introduces the smaller error accumulation during the sequential computations to obtain $p_j$.
+However, in practice, while choosing smaller $T$ is better for backward stability improvements, it is typically not justified from an algorithmic efficiency standpoint.
+Interestingly, for $T=1$, we recover the pair-wise dot-product proposed in~\cite[p. 64]{higham2002accuracy}.
+
+
+\begin{corollary}[Sequential Reduction of the Partial Dot Products]
+\label{corollary:block_dot_product_sequential}
+Under the assumptions of~\cref{theorem:block_dot_product}, suppose that
+the $n^\dagger=\ceil{n/T}$ partial dot products are combined by sequential
+summation rather than binary-tree reduction. If
+$(T+n^\dagger-1)\urd<1$, then the computed result $\hat{y}$ admits either
+of the backward-error representations
+\begin{align}
+    \hat{y}
+    &=\sum_{i=1}^{n}
+      \left(\vect{x}_i+\Delta\vect{x}_i\right)\vect{y}_i,
+    &
+    \abs{\Delta\vect{x}_i}
+    &\leq \gamma_{T+n^\dagger-1}\abs{\vect{x}_i},
+    \\
+    \hat{y}
+    &=\sum_{i=1}^{n}
+      \vect{x}_i\left(\vect{y}_i+\Delta\vect{y}_i\right),
+    &
+    \abs{\Delta\vect{y}_i}
+    &\leq \gamma_{T+n^\dagger-1}\abs{\vect{y}_i},
+\end{align}
+for all $i=1,\ldots,n$.
+\begin{proof}
+Each term accumulates at most $T$ rounding errors while its block dot
+product is computed and at most $n^\dagger-1$ additional rounding errors
+during the sequential reduction of the partial sums. Hence each term is
+multiplied by a factor $1+\theta_m$ with
+$m\leq T+n^\dagger-1$. Applying~\cref{eq:drea} and using the monotonicity
+of $\gamma_m$ gives the stated bounds.
+\end{proof}
+\end{corollary}
+
+Following similar optimization arguments, we can obtain the optimal tile size $T^\star = \sqrt{n}$, as shown by~\cite[p. 64]{higham2002accuracy}
+
+\section{Block Matrix-vector Product}
+A widely used kernel is computing the matrix-vector product $\vect{y} = \mat{a}\vect{x}$ in a block-wise manner, where $\mat{a}\ireal{m\times n}$.
+In such a kernel, the computation $\vect{y}_i = \sum_{j=1}^n \mat{a}_{i,j} \vect{x}_j$ is performed using the block dot product outlined in~\cref{sec:block_dot_product}.
+In a typical SIMT archectecture, this would mean that $\vect{y}_i$ are computed parallelly for all $i$ using independent thread.
+Since each thread is operating individually, partial dot-products in computing $\vect{y}_i$ are typically accumulated sequentially, for which the bounds are presented in~\cref{corollary:block_dot_product_sequential}.
+
+\begin{theorem}[Block Matrix-vector Product]
+\label{theorem:block_matrix_vector_product}
+Let $\mat{a}\ireal{m\times n}$ and $\vect{x}\ireal{n}$, and suppose that
+each component of $\vect{y}=\mat{a}\vect{x}$ is evaluated using block dot
+products of size $T$. Within each block, the products are accumulated
+sequentially, and the resulting
+$n^\dagger=\ceil{n/T}$ partial sums are also reduced sequentially. Entries
+beyond $n$ in the final block are taken to be zero. Assume that no
+overflow or underflow occurs and that
+$(T+n^\dagger-1)\urd<1$. Then the computed result $\hat{\vect{y}}$
+satisfies
+\begin{align}
+    \hat{\vect{y}}
+    &=(\mat{a}+\Delta\mat{a})\vect{x},
+    &
+    \abs{\Delta\mat{a}}
+    &\leq \gamma_{T+n^\dagger-1}\abs{\mat{a}},
+\end{align}
+where the inequality is interpreted componentwise and
+\begin{align}
+    \gamma_{T+n^\dagger-1}
+    \define
+    \frac{(T+n^\dagger-1)\urd}
+         {1-(T+n^\dagger-1)\urd}.
+\end{align}
+    \begin{proof}
+        Using~\cref{corollary:block_dot_product_sequential}, the computed approximation $\hat{\vect{y}}_i$ is given as
+        \begin{align}
+            \hat{\vect{y}}_i = \sum_{j=1}^n (\mat{a}_{i,j} + \Delta \mat{a}_{i,j})\vect{x}_j, \qquad \abs{\Delta \mat{a}_{i,j}} \leq \gamma_{T + n^\dagger - 1}\abs{\mat{a}_{i,j}},
+        \end{align}
+        where $n^\dagger = \lceil n / T \rceil$ and $T$ is the block size.
+        Since we have $m$ such dot products, these componentwise relations
+        can be assembled as
+        \begin{align}
+            \hat{\vect{y}} = (\mat{a} + \Delta \mat{a}) \vect{x},
+            \qquad
+            \abs{\Delta \mat{a}}
+            \leq \gamma_{T + n^\dagger -1}\abs{\mat{a}}.
+        \end{align}
+    \end{proof}
+\end{theorem}
+
+\section{Solving a Symmetric Positive Definite Linear System using Cholesky Decomposition}
+\subsection{Triangular Solve}
+For solving triangular systems, a key computational kernel that arises is 
+\begin{align}\label{eq:traingular_kernel}
+    y = \frac{c - \sum_{i=1}^{k-1}\vect{a}_i\vect{b}_i}{\vect{b}_k},
+\end{align}
+where $\vect{a},\vect{b}\ireal{k}$.
+In the following lemma, we first perform a backward error analysis for~\cref{eq:traingular_kernel}.
+\begin{lemma}[Traingular Update]\label{lemma:traingular_update}
+Let $k\geq2$, $c\in\R$, and $\vect{a},\vect{b}\ireal{k}$ with
+$\vect{b}_k\neq0$. Suppose that
+\begin{align}
+    y=\frac{c-\sum_{i=1}^{k-1}\vect{a}_i\vect{b}_i}{\vect{b}_k}
+\end{align}
+is evaluated in floating-point arithmetic by computing the inner product
+sequentially, followed by the subtraction and division. Assume that no
+overflow or underflow occurs and that $k\urd<1$. Then the computed result
+$\hat{y}$ satisfies the perturbed equation
+\begin{align}
+    \sum_{i=1}^{k-1}
+        \vect{a}_i\left(\vect{b}_i+\Delta\vect{b}_i\right)
+    +\hat{y}\left(\vect{b}_k+\Delta\vect{b}_k\right)
+    =c,
+\end{align}
+where
+\begin{align}
+    \abs{\Delta\vect{b}_i}
+    \leq \gamma_k\abs{\vect{b}_i},
+    \qquad i=1,\ldots,k,
+\end{align}
+and $\gamma_k=k\urd/(1-k\urd)$.
+\begin{proof}
+   Assume that we first perform the computation $p_k = \sum_{i=1}^{k-1} \vect{a}_i\vect{b}_i$.
+   Then, using~\cref{eq:fp-model}, computed approximation $\hat{p}_k$ is given by
+   \begin{align}
+    \hat{p}_k &= \sum_{i=1}^{k-1}\vect{a}_i\vect{b}_i (1+\xi_i) \prod_{j=\max(2,i)}^{k-1} (1+\delta_j), \qquad \abs{\delta_j},\abs{\xi_i} \leq \urd,\\
+     &= \sum_{i=1}^{k-1} \vect{a}_i (\vect{b}_i + \Delta \vect{b}_i),
+   \end{align}
+   where $\Delta \vect{b}_i \define \theta_{k-1 - \max(2, i) + 2}\vect{b}_i$ for $i=1,\cdots, k-1$.
+   As a result, the computed approximation $\hat{y}$ to $y$ is given as
+   \begin{align}
+    \hat{y} &= \frac{(c - \hat{p}_k)(1+\eta)(1 + \zeta)}{\vect{b}_k}, \qquad \abs{\eta},\abs{\zeta} \leq \urd,\\
+    &=\frac{(c - \hat{p}_k)}{\vect{b}_k (1 + \theta_2)},
+   \end{align}
+   where the last equality follows from using~\cref{eq:theta_n}.
+   Thus, we can obtain
+   \begin{align}
+    \hat{y}(\vect{b}_k + \Delta \vect{b}_k) = c - \hat{p}_k,
+   \end{align}
+   where $\Delta \vect{b}_k\define \theta_2 \vect{b}_k$.
+   Lastly, using~\cref{eq:drea} we can obtain the following inequalities
+   \begin{align}
+    \abs{\Delta \vect{b}_k}  &\leq \gamma_2 \abs{\vect{b}_k} \leq \gamma_k\abs{\vect{b}_k}\\
+    \abs{\Delta \vect{b}_i} &\leq \gamma_{k-1-\max(2,i)+2}\abs{\vect{b}_i} \leq \gamma_{k} \abs{\vect{b}_i}, \qquad  i=1,\cdots, k-1,
+   \end{align}
+   which completes the proof.
+\end{proof}    
+\end{lemma}
+
+Now, using~\cref{lemma:traingular_update} we can perform a backward error analysis for solving a traingular system $\mat{t}\vect{x}=\vect{b}$ for $\mat{t}\ireal{n\times n}$ in floating-point arithmetic, as stated below.
+
+
+\begin{theorem}[Solution of a Triangular System]\label{theorem:solution_of_a_traingular_system}
+Let $\mat{t}\ireal{n\times n}$ be a nonsingular triangular matrix and let
+$\vect{b}\ireal{n}$. Suppose that $\mat{t}\vect{x}=\vect{b}$ is solved by
+forward substitution when $\mat{t}$ is lower triangular, or by backward
+substitution when $\mat{t}$ is upper triangular. Assume that no overflow
+or underflow occurs and that $n\urd<1$. Then the computed solution
+$\hat{\vect{x}}$ satisfies
+\begin{align}
+    (\mat{t}+\Delta\mat{t})\hat{\vect{x}}=\vect{b},
+    \qquad
+    \abs{\Delta\mat{t}}\leq\gamma_n\abs{\mat{t}},
+\end{align}
+where the inequality is interpreted componentwise,
+$\Delta\mat{t}$ has the same triangular structure as $\mat{t}$, and
+$\gamma_n=n\urd/(1-n\urd)$.
+\begin{proof}
+    Assume without loss of generality that $\mat{t}$ is lower triangular.
+    The triangular system can then be solved by forward substitution, which gives
+    \begin{align}
+        \vect{x}_i = \frac{\vect{b}_i - \sum_{j=1}^{i-1}\mat{t}_{i,j}\vect{x}_j}{\mat{t}_{i,i}}, \qquad i=1,\cdots, n.
+    \end{align}
+    Now, using~\cref{lemma:traingular_update}, we can obtain that the computed approximation $\hat{\vect{x}}_i$ satisfies
+    \begin{align}
+        \hat{\vect{x}}_i(\mat{t}_{i,i} + \Delta \mat{t}_{i,i}) = \vect{b}_i - \sum_{j=1}^{i-1}\hat{\vect{x}}_j (\mat{t}_{i,j} + \Delta \mat{t}_{i,j}),
+    \end{align}
+    where $\abs{\Delta \mat{t}_{i,j}} \leq \gamma_{i} \abs{\mat{t}_{i,j}} \leq \gamma_n \abs{\mat{t}_{i,j}}$ for $j=1,\cdots,i$ and for all $i$.
+    As a result, we can obtain a perturbed system of equations given by 
+    \begin{align}
+        \sum_{j=1}^{i}(\mat{t}_{i,j} + \Delta \mat{t}_{i,j})\hat{\vect{x}}_j = \vect{b}_i,
+    \end{align}
+    which gives us the required result.
+\end{proof}
+    
+\end{theorem}
+
+\subsection{Cholesky Factorization}\label{sec:cholesky_factorization}
+To solve a linear system of equations via Cholesky factorization, we need to compute the Cholesky factors given by the recurrance relation
+\begin{align}
+    \mat{r}_{i,j} = \left(\mat{a}_{i,j} - \sum_{k=1}^{i-1} \mat{r}_{k,i}\mat{r}_{k,j}\right) / \mat{r}_{i,i}, \qquad i = 1,\cdots, j - 1 \\
+   \mat{r}_{j,j} =  \left(\mat{a}_{j,j} - \sum_{k=1}^{j-1} \mat{r}_{k,j}^2 \right)^{1/2}, \qquad j = 1,\dots,n. 
+\end{align}
+In the follwing result, we present the backward error analysis for performing Cholesky factorization, re-deriving~\cite[Theorem 10.4]{higham2002accuracy}.
+
+\begin{theorem}[Cholesky Factorization]\label{theorem:cholesky_factorization}
+Let $\mat{a}\ireal{n\times n}$ be symmetric positive definite, and suppose
+that the Cholesky algorithm applied to $\mat{a}$ completes successfully in
+floating-point arithmetic, producing an upper-triangular factor
+$\widehat{\mat{r}}$. Assume that no overflow or underflow occurs and that
+$(n+1)\urd<1$. Then there exists a symmetric perturbation $\Delta\mat{a}$
+such that
+\begin{align}
+    \widehat{\mat{r}}^{T}\widehat{\mat{r}}
+    &=\mat{a}+\Delta\mat{a},
+    &
+    \abs{\Delta\mat{a}}
+    &\leq
+    \gamma_{n+1}
+    \abs{\widehat{\mat{r}}^{T}}
+    \abs{\widehat{\mat{r}}},
+\end{align}
+where the inequality is interpreted componentwise and
+$\gamma_{n+1}=(n+1)\urd/(1-(n+1)\urd)$.
+\begin{proof}
+    Using~\cref{lemma:traingular_update}, the computed Cholesky factorization $\widehat{\mat{r}}$ satisfies, for all $j=1,\cdots n$,
+    \begin{align}
+        \mat{a}_{i,j} &= \sum_{k=1}^{i} \widehat{\mat{r}}_{k,i} \left(\widehat{\mat{r}}_{k,j} + \Delta \widehat{\mat{r}}_{k,j}\right), \qquad i = 1, \cdots, j - 1,\\ 
+        \mat{a}_{j,j} &=  \sum_{k=1}^{j}  \widehat{\mat{r}}_{k,j}\left(\widehat{\mat{r}}_{k,j} + \Delta \widehat{\mat{r}}_{k,j}^{\prime}\right),
+    \end{align}
+    where $\abs{\Delta \widehat{\mat{r}}_{k,j}} \leq \gamma_{i}\abs{\widehat{\mat{r}}_{k,j}} \leq \gamma_{n+1}\abs{\widehat{\mat{r}}_{k,j}}$ and $\abs{\Delta \widehat{\mat{r}}_{k,j}^{\prime}} \leq \gamma_{j+1} \abs{\widehat{\mat{r}}_{k,j}}\leq \gamma_{n+1}\abs{\widehat{\mat{r}}_{k,j}}$.
+    Note, for the diagonal terms $\mat{a}_{j,j}$, we obtain $\gamma_{j+1}$ instead of $\gamma_{j}$, since the division in~\cref{lemma:traingular_update} is replaced by a square root, whose analogue introduces one additional rounding perturbation~\cite[cf. Problem 10.3]{higham2002accuracy}.
+    We can now define, for all $j=1,\cdots,n$,
+    \begin{align}
+        \Delta \mat{a}_{i,j} &\define - \sum_{k=1}^{i} \widehat{\mat{r}}_{k,i} \Delta \widehat{\mat{r}}_{k,j}, \qquad i = 1, \cdots, j - 1,\\
+        \Delta \mat{a}_{j,j} &\define  - \sum_{k=1}^{j}  \widehat{\mat{r}}_{k,j} \Delta \widehat{\mat{r}}_{k,j}^{\prime},
+    \end{align}
+    such that following inequalities hold true 
+    \begin{align}
+        \abs{\Delta \mat{a}_{i,j}} &\leq \gamma_{n+1} \sum_{k=1}^{i} \abs{\widehat{\mat{r}}_{k,i}} \abs{\widehat{\mat{r}}_{k,j}}, \qquad i = 1, \cdots, j - 1,\\
+        \abs{\Delta \mat{a}_{j,j}} &\leq \gamma_{n+1}\sum_{k=1}^{j}  \abs{\widehat{\mat{r}}_{k,j}} \abs{\widehat{\mat{r}}_{k,j}^{\prime}}.
+    \end{align}
+    As a result, for all $j=1,\cdots, n$ we can obtain
+    \begin{align}
+        \mat{a}_{i,j} + \Delta \mat{a}_{i,j} &= \sum_{k=1}^{i} \widehat{\mat{r}}_{k,i} \widehat{\mat{r}}_{k,j}, \qquad i = 1, \cdots, j - 1,\\ 
+        \mat{a}_{j,j} + \Delta \mat{a}_{j,j} &=  \sum_{k=1}^{j}  \widehat{\mat{r}}_{k,j}\widehat{\mat{r}}_{k,j},
+    \end{align}
+    which gives us the required result.
+\end{proof}
+    
+\end{theorem}
+
+
+Now, using~\cref{theorem:solution_of_a_traingular_system,theorem:cholesky_factorization} we can obtain the backward error bounds for solving a linear system of equations via Cholesky factorization.
+
+\begin{theorem}[Cholesky Solve]\label{theorem:cholesky_solve}
+Let $\mat{a}\ireal{n\times n}$ be symmetric positive definite and let
+$\vect{b}\ireal{n}$. Suppose that $\mat{a}\vect{x}=\vect{b}$ is solved in
+floating-point arithmetic by computing an upper-triangular Cholesky factor
+$\widehat{\mat{r}}$, followed by forward and backward substitution. Assume
+that the factorization completes successfully, no overflow or underflow
+occurs, and $(n+1)\urd<1$. Then the computed solution
+$\hat{\vect{x}}$ satisfies
+\begin{align}
+    (\mat{a}+\Delta\mat{a})\hat{\vect{x}}=\vect{b},
+\end{align}
+where
+\begin{align}
+    \abs{\Delta\mat{a}}
+    &\leq
+    \left(\gamma_{n+1}+2\gamma_n+\gamma_n^2\right)
+    \abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}}
+    \\
+    &\leq
+    \left(3\gamma_{n+1}+\gamma_n^2\right)
+    \abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}}.
+\end{align}
+The inequalities are interpreted componentwise.
+\begin{proof}
+    Let $\widehat{\mat{r}}$ be the computed Cholesky factor of $\mat{a}$.
+    Then, using~\cref{theorem:cholesky_factorization}, the computed Cholesky factors satisfy
+    \begin{align}
+        \mat{a} + \Delta \mat{a}_f = \widehat{\mat{r}}^T \widehat{\mat{r}}, \qquad \abs{\Delta \mat{a}_f} \leq \gamma_{n+1} \abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}}.
+    \end{align}
+    Once we have the computed Cholesky factors, we can solve the lower-traingular system $\widehat{\mat{r}}^T\vect{y} = \vect{b}$ via forward substituion, for which the computed floating-point approximation $\hat{\vect{y}}$ satisfies
+    \begin{align}
+        \left(\widehat{\mat{r}}^T + \Delta \mat{r}_b\right)\hat{\vect{y}} = \vect{b}, \qquad \abs{\Delta \mat{r}_b} \leq \gamma_n \abs{\widehat{\mat{r}}^T},
+    \end{align}
+    using~\cref{theorem:solution_of_a_traingular_system}.
+    Now, we can obtain the computed approximation $\hat{\vect{x}}$ of $\vect{x}$ by solving the upper-triangular system $\widehat{\mat{r}}\vect{x} = \hat{\vect{y}}$.
+    Using~\cref{theorem:solution_of_a_traingular_system} the computed floating-point approximation $\hat{\vect{x}}$ satisfies 
+    \begin{align}
+        \left(\widehat{\mat{r}} + \Delta \mat{r}_f\right)\hat{\vect{x}} = \hat{\vect{y}}, \qquad \abs{\Delta \mat{r}_f} \leq \gamma_n \abs{\widehat{\mat{r}}}.
+    \end{align}
+    Thus, we can obtain
+    \begin{align}
+        \left(\widehat{\mat{r}}^T + \Delta \mat{r}_b\right)\left(\widehat{\mat{r}} + \Delta \mat{r}_f\right)\hat{\vect{x}} = \vect{b},\\
+        \left(\widehat{\mat{r}}^T\widehat{\mat{r}} + \widehat{\mat{r}}^T\Delta \mat{r}_f + \Delta \mat{r}_b\widehat{\mat{r}} + \Delta \mat{r}_b \Delta \mat{r}_f\right) \hat{\vect{x}} = \vect{b},\\
+        \left(\mat{a} + \Delta \mat{a}_f + \Delta \mat{a}_p\right)\hat{\vect{x}} = \vect{b},
+    \end{align}
+    where $\Delta \mat{a}_p \define \widehat{\mat{r}}^T\Delta \mat{r}_f + \Delta \mat{r}_b\widehat{\mat{r}} + \Delta \mat{r}_b \Delta \mat{r}_f$, such that 
+    \begin{align}
+        \abs{\Delta \mat{a}_p} \leq \left(2\gamma_n + \gamma_n^2\right) \abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}}.
+    \end{align}
+    Thus, the computed approximation $\hat{\vect{x}}$ satisifies the perturbed system of equations
+    \begin{align}
+    \left(\mat{a} + \Delta \mat{a}\right) \hat{\vect{x}} = \vect{b},
+    \end{align}
+    where $\Delta \mat{a} \define \Delta \mat{a}_f + \Delta \mat{a}_p$, with
+    \begin{align}
+       \abs{\Delta\mat{a}}  &\leq \left(2\gamma_n + \gamma_n^2 + \gamma_{n+1}\right) \abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}},\\
+       &\leq \left(3\gamma_{n+1} + \gamma_n^2 \right)\abs{\widehat{\mat{r}}^T}\abs{\widehat{\mat{r}}}.
+    \end{align}
+
+\end{proof}
+\end{theorem}
+
+\section{Block Jacobi Error Analysis in Reals}
+\begin{theorem}[Update-form Block Jacobi in Real Arithmetic]
+\label{theorem:block_jacobi_real}
+Let $\mat{a}\ireal{n\times n}$ be decomposed as
+$\mat{a}=\mat{d}+\mat{n}$, where $\mat{d}$ is a nonsingular block-diagonal
+matrix and $\mat{n}$ contains the off-diagonal blocks. Let
+$\vect{x}$ satisfy $\mat{a}\vect{x}=\vect{b}$, and consider the exact
+block-Jacobi iteration
+\begin{align}
+    \mat{d}\vect{c}^{k+1}
+    &=\vect{b}-\mat{a}\vect{x}^k,
+    &
+    \vect{x}^{k+1}
+    &=\vect{x}^k+\vect{c}^{k+1}.
+\end{align}
+Define the forward error $\vect{e}^k\define\vect{x}^k-\vect{x}$ and the
+iteration matrix $\mat{p}\define-\mat{d}^{-1}\mat{n}$. Then
+\begin{align}
+    \vect{e}^{k+1}=\mat{p}\vect{e}^k,
+    \qquad
+    \vect{e}^k=\mat{p}^k\vect{e}^0,
+\end{align}
+and hence
+\begin{align}
+    \abs{\vect{e}^k}
+    &\leq \abs{\mat{p}}^k\abs{\vect{e}^0},
+    &
+    \norm[\infty]{\vect{e}^k}
+    &\leq
+    \norm[\infty]{\mat{p}}^k
+    \norm[\infty]{\vect{e}^0}.
+\end{align}
+The iteration converges to $\vect{x}$ for every initial guess if and only
+if
+\begin{align}
+    \rho(\mat{p})
+    =\rho(\mat{d}^{-1}\mat{n})<1.
+\end{align}
+In particular, $\norm[\infty]{\mat{p}}<1$ is a sufficient condition for
+convergence and makes the iteration a contraction in the infinity norm.
+  \begin{proof}
+      Define the residual at step $k$ as $\vect{r}^k\define \vect{b} - \vect{z}^k$ where $\vect{z}^k \define \mat{a} \vect{x}^k$.
+      Thus, $\vect{r}^k = - \mat{a}\vect{e}^k$ where $\vect{e}^k\define \vect{x}^k - \vect{x}$ with $\mat{a}\vect{x} = \vect{b}$.
+      Now, we can obtain the correction term by solving the linear system
+      \begin{align}
+          \mat{d}\vect{c}^{k + 1} = \vect{r}^{k} = -\mat{a}\vect{e}^{k},
+      \end{align}
+      where $\mat{d}$ is the block diagonal matrix of $\mat{a}$ such that $\mat{d}_{ii}\ireal{T\times T}$ is the $i$-th diagonal block of $\mat{a}$ for $i=1,\cdots n / T$, where $T$ is the block size.
+      Thus, we can obtain
+      \begin{align}
+          \vect{c}^{k+1} &= -\mat{D}^{-1}\mat{a}\vect{e}^{k},\\
+          &= - \mat{D}^{-1}(\mat{d} + \mat{n})\vect{e}^{k} = - \vect{e}^k- \mat{d}^{-1}\mat{n}\vect{e}^k,
+      \end{align}
+      where $\mat{d}^{-1}$ is a block diagonal matrix with $(\mat{d}^{-1})_{ii} = \mat{d}_{ii}^{-1}$ and $\mat{n}\define \mat{a} - \mat{d}$ is the matrix constructed using the off-diagonal blocks.
+      Thus, the solution update 
+      \begin{align}
+          \vect{x}^{k+1} &= \vect{x}^{k} + \vect{c}^{k+1},\\
+          &= \vect{x}^k - \vect{e}^k -\mat{d}^{-1}\mat{n}\vect{e}^k,
+      \end{align}
+      which gives
+      \begin{align}
+      \vect{e}^{k+1} &= \vect{e}^k -  \vect{e}^k - \mat{d}^{-1}\mat{n}\vect{e}^k,\\
+      &= -\mat{d}^{-1}\mat{n}\vect{e}^k,\\
+      &= \mat{p}\vect{e}^k,
+      \end{align}
+      where $\mat{p}\define -\mat{d}^{-1}\mat{n}$.
+      Thus, we have the recursion
+      \begin{align}
+          \vect{e}^{k} = \mat{p}^k \vect{e}^0.
+      \end{align}
+      Convergence for every initial error holds if and only if $\rho(\mat{p}) < 1$, that is, $\rho(-\mat{d}^{-1}\mat{n}) = \rho(\mat{d}^{-1}\mat{n}) < 1$.
+      The sufficient condition is $\norm[\infty]{\mat{p}} < 1$.
+      The component-wise bounds are then given by
+      \begin{align}
+          |\vect{e}^k| \leq |\mat{p}|^k |\vect{e}^0|,
+      \end{align}
+      and similarly, the norm-wise bound is given by 
+      \begin{align}
+          \|\vect{e}^k\|_\infty \leq \|\mat{p}\|_\infty^k \|\vect{e}^0\|_\infty.
+      \end{align}
+  \end{proof}  
+\end{theorem}
+Some key takeaways from the analysis presented in~\cref{theorem:block_jacobi_real} are as follows
+\begin{enumerate}
+    \item Expressing the residual in terms of $\vect{e}^k$ is important for the cancellation to take place when computing the correction term $\vect{c}^{k+1}$.
+    \item Do not take the norm early when forming the recursion of the error; we need to preserve the sign for cancellation. 
+\end{enumerate}
+
+\section{Block Jacobi Error Analysis in Floating-point Arithmetic (Mixed-precision)}
+A key observation is that the correction term $\vect{c}^{k+1}\to 0$ (In Floating) as the solution improves.
+Thus, for large $k$, we do not even need to be very accurate in computing the correction term, and therefore, we can use low-precision arithmetic ($\urd_c$) compared to the precision in which the solution is computed $\urd_s < \urd_c$.
+\begin{theorem}[Mixed-precision Update-form Block Jacobi in Floating-point Arithmetic]\label{theorem:mixed_precision_update_form_block_jacobi_in_floating_point_arithmetic}
+Let $\mat{a}\ireal{n\times n}$ be decomposed as
+$\mat{a}=\mat{d}+\mat{n}$, where $\mat{d}$ is block diagonal with
+symmetric positive-definite blocks of size $T\times T$, and let
+$\vect{x}$ satisfy $\mat{a}\vect{x}=\vect{b}$. Consider the update-form
+block-Jacobi iteration in which the matrix--vector product, residual, and
+solution update are computed in precision $\urd_s$, while each correction
+system is solved by Cholesky factorization in precision $\urd_c$, with
+$\urd_s<\urd_c$. Assume that $S$ divides $n$, that all relevant
+$\gamma$-constants are defined, and that no overflow or underflow occurs.
+
+Define
+\begin{align}
+    \gamma_{m;s}
+    &\define \frac{m\urd_s}{1-m\urd_s},
+    &
+    \gamma_{m;c}
+    &\define \frac{m\urd_c}{1-m\urd_c},
+    \\
+    c_1
+    &\define
+    \gamma_{S+n/S-1;s}
+    +\urd_s
+    +\urd_s\gamma_{S+n/S-1;s},
+    &
+    c_2
+    &\define \gamma_{T;c}^2+3\gamma_{T+1;c}.
+\end{align}
+Let $\widehat{\mat{r}}$ be block diagonal, with each diagonal block equal
+to the computed Cholesky factor of the corresponding block of $\mat{d}$,
+and define
+\begin{align}
+    \mat{g}
+    &\define
+    c_2\abs{\mat{d}^{-1}}
+    \abs{\widehat{\mat{r}}^T}
+    \abs{\widehat{\mat{r}}},
+    &
+    \eta
+    &\define \norm[\infty]{\mat{g}},
+    \\
+    q
+    &\define \norm[\infty]{\mat{d}^{-1}\mat{n}},
+    &
+    p
+    &\define
+    \norm[\infty]{\abs{\mat{d}^{-1}}\abs{\mat{a}}}.
+\end{align}
+If $\eta<1$, then the computed iterates
+$\hat{\vect{x}}^k$ and errors
+$\vect{e}^k\define\hat{\vect{x}}^k-\vect{x}$ satisfy
+\begin{align}
+    \norm[\infty]{\vect{e}^{k+1}}
+    \leq
+    \alpha\norm[\infty]{\vect{e}^k}+\beta,
+\end{align}
+where
+\begin{align}
+    \alpha
+    &\define
+    \frac{
+        \eta+\urd_s+(1+\urd_s)(q+\urd_c p)
+    }{1-\eta}
+    +\urd_s
+    +\frac{(1+\urd_s)(1+\urd_c)c_1p}{1-\eta},
+    \\
+    \beta
+    &\define
+    \left[
+        \urd_s
+        +\frac{(1+\urd_s)(1+\urd_c)c_1p}{1-\eta}
+    \right]
+    \norm[\infty]{\vect{x}}
+    \\
+    &\qquad
+    +\frac{(1+\urd_s)(1+\urd_c)\urd_s}{1-\eta}
+     \norm[\infty]{\mat{d}^{-1}}
+     \norm[\infty]{\vect{b}}.
+\end{align}
+Consequently, if $\alpha<1$, then for every $k\geq0$,
+\begin{align}
+    \norm[\infty]{\vect{e}^{k}}
+    \leq
+    \alpha^k\norm[\infty]{\vect{e}^{0}}
+    +\frac{1-\alpha^k}{1-\alpha}\beta,
+\end{align}
+and
+\begin{align}
+    \limsup_{k\to\infty}
+    \norm[\infty]{\vect{e}^{k}}
+    \leq \frac{\beta}{1-\alpha}.
+\end{align}
+    \begin{proof}
+       Let the $\vect{z}^k$ be computed using the tiled matrix-vector product kernel outlined in~\cref{theorem:block_matrix_vector_product}, such that the computed floating-point approximation $\hat{\vect{z}}^k$ satisfies $\hat{\vect{z}}^k = (\mat{a}+\Delta \mat{a})\hat{\vect{x}}^k$, where $\abs{\Delta \mat{a}} \leq \gamma_{S + \frac{n}{S} - 1;s} \abs{\mat{a}}$.
+       Now, using~\cref{eq:fp-model} can obtain the computed floating-point residual computation $\hat{\vect{r}}^k$ as
+       \begin{align}
+        \hat{\vect{r}}^k &= \vect{b} (1 + \delta_1) - (\mat{a} + \Delta \mat{a})\hat{\vect{x}}^k ( 1 + \delta_1), \qquad \abs{\delta_1} \leq \urd_s,\\
+                         &= \vect{b} + \Delta \vect{b} - \mat{a}\hat{\vect{x}}^k + \Delta \vect{z}^k = - \mat{a}\vect{e}^k + \Delta \vect{b} + \Delta \vect{z}^k,
+       \end{align}
+       where $\Delta \vect{b} \define \delta_1 \vect{b}$, $\Delta \vect{z}^k\define -\Delta \mat{a}\hat{\vect{x}}^k - \delta_1 \mat{a}\hat{\vect{x}}^k - \delta_1 \Delta \mat{a}\hat{\vect{x}}^k$, $\vect{e}^k\define \hat{\vect{x}}^k - \vect{x}$, such that 
+       \begin{align}
+        \abs{\Delta \vect{b}} \leq \urd_s \abs{\vect{b}},\\
+        \abs{\Delta \vect{z}^k} \leq (\gamma_{S + \frac{n}{S}-1;s} + \urd_s + \urd_s\gamma_{S + \frac{n}{S} - 1;s})\abs{\mat{a}}\abs{\hat{\vect{x}}^k} = c_1 \abs{\mat{a}}\abs{\hat{\vect{x}}^k},
+       \end{align}
+       where $c_1\define (\gamma_{S + \frac{n}{S} - 1;s} + \urd_s + \urd_s\gamma_{S + \frac{n}{S}-1;s})$.
+       Here, $\vect{x}$ is the true solution of the sytem of equations $\mat{a}\vect{x} = \vect{b}$.
+    Now, we can obtain the bounds on the computed residual as
+    \begin{align}
+        \abs{\hat{\vect{r}}^k} &\leq \abs{\mat{a}}\abs{\vect{e}^k} + \abs{\Delta \vect{b}} +  \abs{\Delta \vect{z}^k},\\
+        &\leq \abs{\mat{a}}\abs{\vect{e}^k} + \urd_s \abs{\vect{b}} + c_1 \abs{\mat{a}}\abs{\hat{\vect{x}}^k}.
+    \end{align}
+    Now, using~\cref{theorem:cholesky_solve} we can obtain the floating-point correction $\hat{\vect{c}}^{k+1}$ that satisfies the system of equations
+    \begin{align}
+    (\mat{d} + \Delta \mat{d}) \hat{\vect{c}}^{k+1} = \hat{\vect{r}}^k + \Delta \hat{\vect{r}}^k; \qquad  \Delta \hat{\vect{r}}^k \define \delta_2 \hat{\vect{r}}^k,\quad \abs{\delta_2} \leq \urd_c,
+    \end{align}
+    where $\mat{d}$ is a block-diagonal matrix of $\mat{a}$ such that $\mat{d}_{ii}\ireal{T\times T}$ is the $i$-th block, and $\Delta \mat{d}$ is the perturbation to the block-diagonal matrix.
+    The perturbation $\Delta \mat{d}$ satisfies
+    $\abs{\Delta \mat{d}} \leq c_2
+    \abs{\hat{\mat{r}}^T}\abs{\hat{\mat{r}}}$, where
+    $\hat{\mat{r}}$ is block diagonal and each diagonal block
+    $\hat{\mat{r}}_{ii}$ is the computed Cholesky factor of
+    $\mat{d}_{ii}$, and $c_2\define \gamma_{T;c}^2 + 3\gamma_{T+1;c}$.
+    Now, substituting the computed residual $\hat{\vect{r}}^k$ we can get
+    \begin{align}
+    (\mat{d} + \Delta \mat{d}) \hat{\vect{c}}^{k+1} = - \mat{a}\vect{e}^k + \Delta \vect{b} + \Delta \vect{z}^k + \Delta \hat{\vect{r}}^k,\\
+    \mat{d}\hat{\vect{c}}^{k+1} = - \mat{a}\vect{e}^k + \Delta \vect{b} + \Delta \vect{z}^k + \Delta \hat{\vect{r}}^k - \Delta \mat{d} \hat{\vect{c}}^{k+1},\\
+    \hat{\vect{c}}^{k+1} = - \mat{d}^{-1}\mat{a}\vect{e}^k + \mat{d}^{-1}\Delta \vect{b} + \mat{d}^{-1}\Delta \vect{z}^k + \mat{d}^{-1}\Delta \hat{\vect{r}}^k - \mat{d}^{-1}\Delta \mat{d} \hat{\vect{c}}^{k+1},\\
+    \hat{\vect{c}}^{k+1} = - \mat{d}^{-1}(\mat{d} + \mat{n})\vect{e}^k + \mat{d}^{-1}\Delta \vect{b} + \mat{d}^{-1}\Delta \vect{z}^k + \mat{d}^{-1}\Delta \hat{\vect{r}}^k - \mat{d}^{-1}\Delta \mat{d} \hat{\vect{c}}^{k+1},\\
+    \hat{\vect{c}}^{k+1} = - \vect{e}^k -\mat{d}^{-1}\mat{n}\vect{e}^k + \mat{d}^{-1}\Delta \vect{b} + \mat{d}^{-1}\Delta \vect{z}^k + \mat{d}^{-1}\Delta \hat{\vect{r}}^k - \mat{d}^{-1}\Delta \mat{d} \hat{\vect{c}}^{k+1},
+    \end{align}
+    where the last two equalities follow form $\mat{a}=\mat{d} + \mat{n}$ and $\mat{d}^{-1}\mat{d}=\mathbb{I}_n$.
+    We can now bound the computed correction $\hat{\vect{c}}^k$ as
+    \begin{align}
+        \abs{\hat{\vect{c}}^{k+1}} &\leq (\mathbb{I}_n + \abs{\mat{d}^{-1}\mat{n}})\abs{\vect{e}^k} + \abs{\mat{d}^{-1}\Delta \vect{b}} + \abs{\mat{d}^{-1}\Delta \vect{z}^k} + \abs{\mat{d}^{-1}\Delta \hat{\vect{r}}^k} + \abs{\mat{d}^{-1}\Delta \mat{d}} \abs{\hat{\vect{c}}^{k+1}},\\
+         &\leq (\mathbb{I}_n + \abs{\mat{d}^{-1}\mat{n}})\abs{\vect{e}^k} + \abs{\mat{d}^{-1}\Delta \vect{b}} + \abs{\mat{d}^{-1}\Delta \vect{z}^k} + \abs{\mat{d}^{-1}\Delta \hat{\vect{r}}^k} + \mat{g} \abs{\hat{\vect{c}}^{k+1}},
+    \end{align}
+    where $\mat{g}\define c_2\abs{\mat{d}^{-1}}\abs{\hat{\mat{r}}^T}\abs{\hat{\mat{r}}}$.
+    For compactness, define $\mat{h}\define (\mathbb{I}_n - \mat{G})^{-1}$.
+    Provided that $\rho(\mat{g})<1$, the matrix $\mat{h}$ exists and is entrywise nonnegative.
+    Using the bounds on $\Delta\hat{\vect{r}}^k$ and $\Delta \hat{\vect{z}}^k$, we obtain
+\begin{align}
+    \abs{\hat{\vect{c}}^{k+1}}
+    &\leq
+    \mat{h}
+    \Big[
+        (\mathbb{I}_n+\abs{\mat{d}^{-1}\mat{n}})
+        \abs{\vect{e}^k}
+        +\abs{\mat{d}^{-1}\Delta\vect{b}}
+        +\abs{\mat{d}^{-1}\Delta\vect{z}^k}
+        +\abs{\mat{d}^{-1}\Delta\hat{\vect{r}}^k}
+    \Big]
+    \\
+    &\leq
+    \mat{h}
+    \Big[
+        \left(
+            \mathbb{I}_n
+            +\abs{\mat{d}^{-1}\mat{n}}
+            +\urd_c\abs{\mat{d}^{-1}}\abs{\mat{a}}
+        \right)
+        \abs{\vect{e}^k}
+        \nonumber\\
+    &\hspace{2.5cm}
+        +(1+\urd_c)
+        \left(
+            \urd_s\abs{\mat{d}^{-1}}\abs{\vect{b}}
+            +c_1\abs{\mat{d}^{-1}}\abs{\mat{a}}
+             \abs{\hat{\vect{x}}^k}
+        \right)
+    \Big].
+    \label{eq:correction_bound}
+\end{align}
+    Now, using~\cref{eq:fp-model} we can obtain the floating-point update as $\hat{\vect{x}}^{k+1}$ as
+    \begin{align}
+        \hat{\vect{x}}^{k+1} &= \hat{\vect{x}}^{k} ( 1 + \delta_3) + \hat{\vect{c}}^{k+1}(1 + \delta_3), \qquad \abs{\delta_3} \leq \urd_s,\\
+         &= \hat{\vect{x}}^{k} + \hat{\vect{c}}^{k+1} +\Delta \hat{\vect{x}}^{k} + \Delta \hat{\vect{c}}^{k+1},
+    \end{align}
+    where $\Delta \hat{\vect{x}}^{k}\define \delta_3 \hat{\vect{x}}^{k}$ and $\Delta \hat{\vect{c}}^{k+1}\define \delta_3 \hat{\vect{c}}^{k+1}$, such that $\abs{\Delta \hat{\vect{x}}^{k}} \leq \urd_s \abs{\hat{\vect{x}}^{k}}$ and $\abs{\Delta \hat{\vect{c}}^{k+1}} \leq \urd_s \abs{ \hat{\vect{c}}^{k+1}}$.
+    Subracting the extact solution $\vect{x}$ gives
+    \begin{align}
+        \vect{e}^{k+1} &= \vect{e}^{k} + \hat{\vect{c}}^{k+1} +\Delta \hat{\vect{x}}^{k} + \Delta \hat{\vect{c}}^{k+1},\\
+        &=  -\mat{d}^{-1}\mat{n}\vect{e}^k + \mat{d}^{-1}\Delta \vect{b} + \mat{d}^{-1}\Delta \vect{z}^k + \mat{d}^{-1}\Delta \hat{\vect{r}}^k - \mat{d}^{-1}\Delta \mat{d} \hat{\vect{c}}^{k+1} + \Delta \hat{\vect{x}}^{k} + \Delta \hat{\vect{c}}^{k+1}.
+    \end{align}
+    Hence, 
+\begin{align}
+    \abs{\vect{e}^{k+1}}
+    &\leq
+    \left(
+        \abs{\mat{d}^{-1}\mat{n}}
+        +\urd_c\abs{\mat{d}^{-1}}\abs{\mat{a}}
+    \right)\abs{\vect{e}^k}
+    \nonumber\\
+    &\quad
+    +(1+\urd_c)
+    \left(
+        \urd_s\abs{\mat{d}^{-1}}\abs{\vect{b}}
+        +c_1\abs{\mat{d}^{-1}}\abs{\mat{a}}
+         \abs{\hat{\vect{x}}^k}
+    \right)
+    +\urd_s\abs{\hat{\vect{x}}^k}
+    \nonumber\\
+    &\quad
+    +(\mat{g}+\urd_s\mathbb{I}_n)
+      \abs{\hat{\vect{c}}^{k+1}}.
+    \label{eq:error_componentwise}
+\end{align}
+Substituting~\cref{eq:correction_bound} into~\cref{eq:error_componentwise} yeilds the componentwise forward-error bounds.
+To obtain a scalar recurrance, define
+\begin{align}
+    q \define \norm[\infty]{\mat{d}^{-1}\mat{n}},\\
+    p \define \norm[\infty]{\abs{\mat{d}^{-1}}\abs{\mat{a}}},\\
+    \eta \define \norm[\infty]{\mat{g}} = \norm[\infty]{c_2\abs{\mat{d}^{-1}}\abs{\hat{\mat{r}}^T}\abs{\hat{\mat{r}}}}.
+\end{align}
+Note, to ensure the existance of $\mat{h}$, we require $\rho(\mat{g}) < 1$, for which the sufficient condition is $\eta < 1$.
+Given $\eta < 1$, using the Neumann series, we have 
+\begin{align}
+\norm[\infty]{\mat{h}} \leq \frac{1}{1 - \eta}.
+\end{align}
+Taking infinity norms in~\cref{eq:error_componentwise} using~\cref{eq:correction_bound} therefore gives
+\begin{align}
+    \norm[\infty]{\vect{e}^{k+1}}
+    &\leq
+    \frac{
+        \eta+\urd_s
+        +(1+\urd_s)(q+\urd_c p)
+    }{1-\eta}
+    \norm[\infty]{\vect{e}^k}
+    \nonumber\\
+    &\quad
+    +\left[
+        \urd_s
+        +
+        \frac{(1+\urd_s)(1+\urd_c)c_1p}
+             {1-\eta}
+    \right]
+    \norm[\infty]{\hat{\vect{x}}^k}
+    \nonumber\\
+    &\quad
+    +
+    \frac{
+        (1+\urd_s)(1+\urd_c)\urd_s
+    }{1-\eta}
+    \norm[\infty]{\mat{d}^{-1}}
+    \norm[\infty]{\vect{b}}.
+    \label{eq:error_before_xbound}
+\end{align}
+Since 
+\begin{align}
+    \norm[\infty]{\hat{\vect{x}}^k} \leq \norm[\infty]{\vect{x}} +\norm[\infty]{\vect{e}^k},
+\end{align}
+we finally obtain
+\begin{align}
+    \norm[\infty]{\vect{e}^{k+1}} \leq \alpha \norm[\infty]{\vect{e}^k} +\beta,
+    \label{eq:error_recurrence}
+\end{align}
+\begin{align}
+    \alpha &\define \frac{ \eta+\urd_s +(1+\urd_s)(q+\urd_c p) }{1-\eta} +\urd_s + \frac{ (1+\urd_s)(1+\urd_c)c_1p }{1-\eta}, \label{eq:alpha} \\
+    \beta &\define \left[ \urd_s + \frac{ (1+\urd_s)(1+\urd_c)c_1p }{1-\eta} \right] \norm[\infty]{\vect{x}} \nonumber\\ &\qquad + \frac{ (1+\urd_s)(1+\urd_c)\urd_s }{1-\eta} \norm[\infty]{\mat{d}^{-1}} \norm[\infty]{\vect{b}}, \label{eq:beta}
+\end{align}
+where the bound on the exact solution $\vect{x}$ is given by
+\begin{align}
+    \norm[\infty]{\vect{x}} \leq \frac{\norm[\infty]{\mat{d}^{-1}\vect{b}}}{1 - \norm[\infty]{\mat{d}^{-1}\mat{n}}},
+\end{align}
+given $q < 1$.
+Recursively applying \eqref{eq:error_recurrence} gives
+\begin{align}
+    \norm[\infty]{\vect{e}^{k}} &\leq \alpha^k\norm[\infty]{\vect{e}^{0}} + \beta\sum_{j=0}^{k-1}\alpha^j.
+\end{align}
+Thus, if $\alpha<1$,
+\begin{align}
+    \norm[\infty]{\vect{e}^{k}} &\leq \alpha^k\norm[\infty]{\vect{e}^{0}} + \frac{1-\alpha^k}{1-\alpha}\beta,
+\end{align}
+and consequently as $k\rightarrow\infty$, we have $\alpha^k\rightarrow 0$, which gives
+\begin{align}
+    \limsup_{k\rightarrow\infty} \norm[\infty]{\vect{e}^{k}} \leq \frac{\beta}{1-\alpha}.
+\end{align}
+Therefore, under the conditions $\eta<1$ and $\alpha<1$, the finite-precision block-Jacobi iteration converges to a neighborhood of the exact solution whose radius is bounded by $\beta/(1-\alpha)$. In the exact-arithmetic limit $\urd_s,\urd_c\rightarrow0$, we have $c_1,c_2,\eta,\beta\rightarrow0$ and $\alpha\rightarrow\norm[\infty]{\mat{d}^{-1}\mat{n}}$, recovering the standard sufficient convergence condition
+\begin{align}
+    \norm[\infty]{\mat{d}^{-1}\mat{n}}<1.
+\end{align}
+
+\begin{comment}
+
+    Using the definition of the perturbations, the following inequalities hold true
+    \begin{align}
+        \abs{\mat{d}^{-1}\Delta \vect{b}} \leq \urd_s\abs{\mat{d}^{-1}}\abs{\vect{b}},\\
+        \abs{\mat{d}^{-1}\Delta \vect{z}^k} \leq c_1 \abs{\mat{d}^{-1}} \abs{\mat{a}}\abs{\vect{x}^k},
+    \end{align}
+    \begin{subequations}
+    \begin{align}
+        \abs{\mat{d}^{-1}\Delta \hat{\vect{r}}^k} \leq \urd_c \abs{\mat{d}^{-1}} \abs{\hat{\vect{r}}^k} \leq \urd_c \abs{\mat{d}^{-1}}  \left(\abs{\mat{a}}\abs{\vect{e}^k} + \urd_s \abs{\vect{b}} + c_1 \abs{\mat{a}}\abs{\vect{x}^k}\right),\\
+         = \urd_c \abs{\mat{d}^{-1}}\abs{\mat{a}}\abs{\vect{e}^k} + \urd_c\urd_s \abs{\mat{d}^{-1}}\abs{\vect{b}} + \urd_c c_1 \abs{\mat{d}^{-1}} \abs{\mat{a}}\abs{\vect{x}^k},
+    \end{align}
+    \end{subequations}
+    \begin{subequations}
+    \begin{align}
+        \abs{\mat{d}^{-1}\Delta \mat{d} \hat{\vect{c}}^{k+1}} &\leq c_2  \abs{\mat{d}^{-1}} \abs{\hat{\mat{r}}^T}\abs{\hat{\mat{r}}}\abs{\hat{\vect{c}}^{k+1}},\\
+        &\leq c_2  \abs{\mat{d}^{-1}} \abs{\hat{\mat{r}}^T}\abs{\hat{\mat{r}}}\left(\mathbb{I}_n - c_2\abs{\mat{d}^{-1}}\abs{\hat{\mat{r}}^T}\abs{\hat{\mat{r}}}\right)^{-1} \left[(\mathbb{I}_n + \abs{\mat{d}^{-1}\mat{n}})\abs{\vect{e}^k} + \abs{\mat{d}^{-1}\Delta \vect{b}} + \abs{\mat{d}^{-1}\Delta \vect{z}^k}\right]
+    \end{align}
+    \end{subequations}
+    \end{proof}
+\end{theorem}
+
+
+\textcolor{red}{reference below}
+For compactness, define
+\begin{align}
+    \mat{g}
+    &\define
+    c_2\abs{\mat{d}^{-1}}
+    \abs{\hat{\mat{r}}^T}
+    \abs{\hat{\mat{r}}},
+    \qquad
+    \mat{h}
+    \define
+    (\mathbb{I}_n-\mat{g})^{-1}.
+\end{align}
+Provided that $\rho(\mat{g})<1$, the matrix $\mat{h}$ exists and is
+entrywise nonnegative. Using the bound on
+$\Delta\hat{\vect{r}}^k$, we obtain
+\begin{align}
+    \abs{\hat{\vect{c}}^{k+1}}
+    &\leq
+    \mat{h}
+    \Big[
+        (\mathbb{I}_n+\abs{\mat{d}^{-1}\mat{n}})
+        \abs{\vect{e}^k}
+        +\abs{\mat{d}^{-1}\Delta\vect{b}}
+        +\abs{\mat{d}^{-1}\Delta\vect{z}^k}
+        +\abs{\mat{d}^{-1}\Delta\hat{\vect{r}}^k}
+    \Big]
+    \\
+    &\leq
+    \mat{h}
+    \Big[
+        \left(
+            \mathbb{I}_n
+            +\abs{\mat{d}^{-1}\mat{n}}
+            +\urd_c\abs{\mat{d}^{-1}}\abs{\mat{a}}
+        \right)
+        \abs{\vect{e}^k}
+        \nonumber\\
+    &\hspace{2.5cm}
+        +(1+\urd_c)
+        \left(
+            \urd_s\abs{\mat{d}^{-1}}\abs{\vect{b}}
+            +c_1\abs{\mat{d}^{-1}}\abs{\mat{a}}
+             \abs{\hat{\vect{x}}^k}
+        \right)
+    \Big].
+    \label{eq:correction_bound}
+\end{align}
+
+Now, the floating-point update satisfies
+\begin{align}
+    \hat{\vect{x}}^{k+1}
+    &=
+    \hat{\vect{x}}^k(1+\delta_3)
+    +\hat{\vect{c}}^{k+1}(1+\delta_3),
+    \qquad
+    \abs{\delta_3}\leq\urd_s,
+    \\
+    &=
+    \hat{\vect{x}}^k+\hat{\vect{c}}^{k+1}
+    +\Delta\hat{\vect{x}}^k
+    +\Delta\hat{\vect{c}}^{k+1},
+\end{align}
+where
+\begin{align}
+    \abs{\Delta\hat{\vect{x}}^k}
+    &\leq
+    \urd_s\abs{\hat{\vect{x}}^k},
+    &
+    \abs{\Delta\hat{\vect{c}}^{k+1}}
+    &\leq
+    \urd_s\abs{\hat{\vect{c}}^{k+1}}.
+\end{align}
+Subtracting the exact solution $\vect{x}$ gives
+\begin{align}
+    \vect{e}^{k+1}
+    &=
+    -\mat{d}^{-1}\mat{n}\vect{e}^k
+    +\mat{d}^{-1}\Delta\vect{b}
+    +\mat{d}^{-1}\Delta\vect{z}^k
+    +\mat{d}^{-1}\Delta\hat{\vect{r}}^k
+    -\mat{d}^{-1}\Delta\mat{d}\hat{\vect{c}}^{k+1}
+    \nonumber\\
+    &\qquad
+    +\Delta\hat{\vect{x}}^k
+    +\Delta\hat{\vect{c}}^{k+1}.
+\end{align}
+Hence,
+\begin{align}
+    \abs{\vect{e}^{k+1}}
+    &\leq
+    \left(
+        \abs{\mat{d}^{-1}\mat{n}}
+        +\urd_c\abs{\mat{d}^{-1}}\abs{\mat{a}}
+    \right)\abs{\vect{e}^k}
+    \nonumber\\
+    &\quad
+    +(1+\urd_c)
+    \left(
+        \urd_s\abs{\mat{d}^{-1}}\abs{\vect{b}}
+        +c_1\abs{\mat{d}^{-1}}\abs{\mat{a}}
+         \abs{\hat{\vect{x}}^k}
+    \right)
+    +\urd_s\abs{\hat{\vect{x}}^k}
+    \nonumber\\
+    &\quad
+    +(\mat{g}+\urd_s\mathbb{I}_n)
+      \abs{\hat{\vect{c}}^{k+1}}.
+    \label{eq:error_componentwise}
+\end{align}
+Substituting \eqref{eq:correction_bound} into
+\eqref{eq:error_componentwise} yields a componentwise forward-error
+bound.
+
+To obtain a scalar recurrence, define
+\begin{align}
+    q &\define
+    \norm[\infty]{\mat{d}^{-1}\mat{n}},\\
+    p &\define
+    \norm[\infty]{
+        \abs{\mat{d}^{-1}}\abs{\mat{a}}
+    },\\
+    \eta &\define
+    \norm[\infty]{\mat{g}}
+    =
+    c_2
+    \norm[\infty]{
+        \abs{\mat{d}^{-1}}
+        \abs{\hat{\mat{r}}^T}
+        \abs{\hat{\mat{r}}}
+    }.
+\end{align}
+A sufficient condition for $\rho(\mat{g})<1$ is $\eta<1$. In
+particular, the more readily computable sufficient condition
+\begin{align}
+    c_2
+    \norm[\infty]{\mat{d}^{-1}}
+    \norm[\infty]{\hat{\mat{r}}^T}
+    \norm[\infty]{\hat{\mat{r}}}
+    <1
+\end{align}
+guarantees $\eta<1$. Furthermore,
+\begin{align}
+    \norm[\infty]{\mat{h}}
+    \leq
+    \frac{1}{1-\eta}.
+\end{align}
+Taking infinity norms in \eqref{eq:error_componentwise} and using
+\eqref{eq:correction_bound} therefore gives
+\begin{align}
+    \norm[\infty]{\vect{e}^{k+1}}
+    &\leq
+    \frac{
+        \eta+\urd_s
+        +(1+\urd_s)(q+\urd_c p)
+    }{1-\eta}
+    \norm[\infty]{\vect{e}^k}
+    \nonumber\\
+    &\quad
+    +\left[
+        \urd_s
+        +
+        \frac{(1+\urd_s)(1+\urd_c)c_1p}
+             {1-\eta}
+    \right]
+    \norm[\infty]{\hat{\vect{x}}^k}
+    \nonumber\\
+    &\quad
+    +
+    \frac{
+        (1+\urd_s)(1+\urd_c)\urd_s
+    }{1-\eta}
+    \norm[\infty]{\mat{d}^{-1}}
+    \norm[\infty]{\vect{b}}.
+    \label{eq:error_before_xbound}
+\end{align}
+Since
+\begin{align}
+    \norm[\infty]{\hat{\vect{x}}^k}
+    \leq
+    \norm[\infty]{\vect{x}}
+    +\norm[\infty]{\vect{e}^k},
+\end{align}
+we finally obtain
+\begin{align}
+    \norm[\infty]{\vect{e}^{k+1}}
+    \leq
+    \alpha
+    \norm[\infty]{\vect{e}^k}
+    +\beta,
+    \label{eq:error_recurrence}
+\end{align}
+where
+\begin{align}
+    \alpha
+    &\define
+    \frac{
+        \eta+\urd_s
+        +(1+\urd_s)(q+\urd_c p)
+    }{1-\eta}
+    +\urd_s
+    +
+    \frac{
+        (1+\urd_s)(1+\urd_c)c_1p
+    }{1-\eta},
+    \label{eq:alpha}
+    \\
+    \beta
+    &\define
+    \left[
+        \urd_s
+        +
+        \frac{
+            (1+\urd_s)(1+\urd_c)c_1p
+        }{1-\eta}
+    \right]
+    \norm[\infty]{\vect{x}}
+    \nonumber\\
+    &\qquad
+    +
+    \frac{
+        (1+\urd_s)(1+\urd_c)\urd_s
+    }{1-\eta}
+    \norm[\infty]{\mat{d}^{-1}}
+    \norm[\infty]{\vect{b}}.
+    \label{eq:beta}
+\end{align}
+Recursively applying \eqref{eq:error_recurrence} gives
+\begin{align}
+    \norm[\infty]{\vect{e}^{k}}
+    &\leq
+    \alpha^k\norm[\infty]{\vect{e}^{0}}
+    +
+    \beta\sum_{j=0}^{k-1}\alpha^j.
+\end{align}
+Thus, if $\alpha<1$,
+\begin{align}
+    \norm[\infty]{\vect{e}^{k}}
+    &\leq
+    \alpha^k\norm[\infty]{\vect{e}^{0}}
+    +
+    \frac{1-\alpha^k}{1-\alpha}\beta,
+\end{align}
+and consequently
+\begin{align}
+    \limsup_{k\rightarrow\infty}
+    \norm[\infty]{\vect{e}^{k}}
+    \leq
+    \frac{\beta}{1-\alpha}.
+\end{align}
+Therefore, under the conditions $\eta<1$ and $\alpha<1$, the
+finite-precision block-Jacobi iteration converges to a neighborhood
+of the exact solution whose radius is bounded by
+$\beta/(1-\alpha)$. In the exact-arithmetic limit
+$\urd_s,\urd_c\rightarrow0$, we have
+$c_1,c_2,\eta,\beta\rightarrow0$ and
+$\alpha\rightarrow\norm[\infty]{\mat{d}^{-1}\mat{n}}$, recovering
+the standard sufficient convergence condition
+\begin{align}
+    \norm[\infty]{\mat{d}^{-1}\mat{n}}<1.
+\end{align}
+\end{comment}
+\end{proof}
+\end{theorem}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

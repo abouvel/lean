@@ -1,0 +1,38 @@
+{
+  "overall_verdict": "fail",
+  "phase": "final",
+  "target_evidence": "Research/Submission.lean:3 defines Research.answer by Classical.choose; lines 4–5 prove Research.answer_correct : answer * answer = 0 with no hypotheses. The correctness theorem is complete and linked to the answer, but the answer violates the required explicit-expression contract.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full requested mathematical property.",
+      "evidence": "Research/Submission.lean:4–5 proves answer * answer = 0 over the reals using Classical.choose_spec. There are no added hypotheses, circular assumptions, or proof placeholders. Independent lake env lean Research/Submission.lean exited 0; the offline Submission.trace also records compilation without error diagnostics.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "explicit-construction",
+      "requirement": "Provide a standalone explicit numeric/algebraic answer; existence or abstract selection alone is insufficient.",
+      "evidence": "Research/Submission.lean:3 defines answer as Classical.choose of an existence proof. Although that existence proof uses witness 0, the submitted standalone definition is abstract selection, explicitly excluded by /spec/source.txt.",
+      "verdict": "fail",
+      "defect_categories": [
+        "missing-explicit-construction"
+      ],
+      "correction": "Define answer directly by a concrete expression such as (0 : ℝ), then prove answer * answer = 0 for that definition."
+    },
+    {
+      "requirement_id": "construction-linkage",
+      "requirement": "The correctness theorem must refer to the actual submitted answer.",
+      "evidence": "Research/Submission.lean:4 states answer_correct directly about the answer defined at line 3; line 5 obtains the property of precisely that chosen witness.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [
+    "A standalone concrete numeric/algebraic definition of the answer is missing."
+  ],
+  "limitations": []
+}

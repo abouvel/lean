@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.FloatingPoint.Horner.forward_error"
+  ],
+  "construction_names": [
+    "Research.FloatingPoint.Horner.P",
+    "Research.FloatingPoint.Horner.Q",
+    "Research.FloatingPoint.Horner.E"
+  ],
+  "source_mapping": "/spec/source.txt is formalized in /workspace/Research/Submission.lean: P is exact increasing-degree Horner evaluation, Q performs one rounded multiplication and one rounded addition per cons, E is exactly the prescribed recursive envelope, and forward_error quantifies over every Model, coefficient list, and real x with no extra assumptions. The supplied /spec/support/Research/Common/FloatingPoint/Model.lean was copied unchanged to /workspace/Research/Common/FloatingPoint/Model.lean. Statement revision record: initial statement; /spec/feedback.json was absent, so no feedback-driven revision was made. The theorem proof is temporary sorry scaffolding for the next proof role; all construction definitions have actual bodies."
+}

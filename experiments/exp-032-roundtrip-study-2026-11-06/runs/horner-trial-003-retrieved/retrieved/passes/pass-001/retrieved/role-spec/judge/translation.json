@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "e2760682edeef69becb5089f7225dc112f041969b90666d1ea8ed89195914455",
+  "status": "complete",
+  "statement": "A model consists of u \u2208 \u211d with u \u2265 0 and a function r: \u211d \u2192 \u211d such that \u2200z \u2208 \u211d, \u2203\u03b4 \u2208 \u211d, |\u03b4| \u2264 u and r(z)=z(1+\u03b4). For every such model, every finite real coefficient list c, and every real x, the absolute error between the recursively rounded evaluation Q(model,c,x) and the exact evaluation P(c,x) is at most E(c,x,u). The constructions below specify the actual evaluation and bound; coefficients are ordered from constant coefficient to higher powers.",
+  "targets": [
+    {
+      "name": "Research.Horner.forward_error_bound",
+      "statement": "For every model \u2208 Research.FloatingPoint.Model, every coefficients \u2208 List(\u211d), and every x \u2208 \u211d, |Research.Horner.Q(model,coefficients,x) \u2212 Research.Horner.P(coefficients,x)| \u2264 Research.Horner.E(coefficients,x,model.u). A model consists of u \u2208 \u211d with u \u2265 0 and a function r: \u211d \u2192 \u211d such that \u2200z \u2208 \u211d, \u2203\u03b4 \u2208 \u211d, |\u03b4| \u2264 u and r(z)=z(1+\u03b4). Here r=model.round and u=model.u. The bound uses the constructed E at the same coefficient list and evaluation point as Q and P, and at precisely the model parameter u. There are no further hypotheses."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.Horner.P",
+      "description": "A function List(\u211d) \u2192 \u211d \u2192 \u211d defined for every finite real list and real x by P([],x)=0 and P(a::t,x)=a+x\u00b7P(t,x), where a::t is a list with head a and tail t. Thus for c=[a\u2080,\u2026,a\u2099\u208b\u2081], P(c,x)=\u03a3_{i=0}^{n\u22121} a\u1d62x\u2071, with empty sum zero. The first list entry is the constant coefficient. All arithmetic is exact real arithmetic."
+    },
+    {
+      "name": "Research.Horner.Q",
+      "description": "A function Research.FloatingPoint.Model \u2192 List(\u211d) \u2192 \u211d \u2192 \u211d. For every model with r=model.round, every real x, and every finite real list, Q(model,[],x)=0 and Q(model,a::t,x)=r(a+r(x\u00b7Q(model,t,x))). It recursively evaluates the tail, rounds its product with x, adds the head coefficient, and rounds that sum. There are two calls to r per list entry, including the last entry, where the tail value is zero. The empty-list value is exact zero, and there is no separate rounding of input coefficients or x. The model law implies r(0)=0; no particular floating-point format or representable subset is specified."
+    },
+    {
+      "name": "Research.Horner.E",
+      "description": "A function List(\u211d) \u2192 \u211d \u2192 \u211d \u2192 \u211d, defined for every finite real list and all real x,u by E([],x,u)=0 and E(a::t,x,u)=u\u00b7|a+x\u00b7v|+(1+u)\u00b7(u\u00b7|x\u00b7v|+(1+u)\u00b7|x|\u00b7e), where v=P(t,x) and e=E(t,x,u). This expression uses the exact evaluation of the tail, exact real arithmetic, and absolute values; it does not call Q or a rounding function. Its definition allows any real u. The theorem uses it at the nonnegative u of the model and asserts that it bounds |Q(model,c,x)\u2212P(c,x)|."
+    }
+  ],
+  "assumptions": [
+    "A model consists of u \u2208 \u211d with u \u2265 0 and a function r: \u211d \u2192 \u211d such that \u2200z \u2208 \u211d, \u2203\u03b4 \u2208 \u211d, |\u03b4| \u2264 u and r(z)=z(1+\u03b4). The existential \u03b4 may depend on z; no single common \u03b4 for all z is assumed.",
+    "The coefficient list is an arbitrary finite list of real numbers, including the empty list; x is any real number.",
+    "No upper bound on u, constraint relating u to list length, or sign, magnitude, or nonzero condition on coefficients or x is stated.",
+    "All operations outside explicit calls to the model rounding function are real arithmetic. No additional rounding format, representability, or numerical range assumptions are supplied."
+  ],
+  "missing_context": []
+}

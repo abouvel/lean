@@ -1,0 +1,36 @@
+{
+  "name": "exp-022-construction-roundtrip-calibration-2026-11-01",
+  "task_id": "multi-agent-dot-product-roundtrip-pilot",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "conditions": [
+    "known-complete",
+    "existence-only",
+    "choice-answer"
+  ],
+  "max_passes": 2,
+  "builder_seconds": 180,
+  "critic_seconds": 150,
+  "image": "research-proof-pilot-ready:2026-10-19",
+  "inputs": "inputs",
+  "memory": "memory",
+  "evaluator": "evaluator",
+  "aristotle_enabled": false,
+  "resources": {
+    "memory": "8g",
+    "cpus": 2,
+    "pids": 256
+  },
+  "revision": {
+    "schema_version": 1,
+    "mode": "calibration",
+    "seconds": {
+      "planner": 150,
+      "formalizer": 150,
+      "prover": 150,
+      "translator": 150,
+      "judge": 150
+    },
+    "construction_policy": "The standalone answer must be an explicit numeric/algebraic expression, not abstract selection. Classical reasoning in proof is allowed."
+  }
+}

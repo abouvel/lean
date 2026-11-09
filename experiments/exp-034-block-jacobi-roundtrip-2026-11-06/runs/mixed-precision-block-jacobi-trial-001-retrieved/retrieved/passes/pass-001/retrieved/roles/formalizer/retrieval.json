@@ -1,0 +1,15 @@
+{
+  "search_queries": [],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Flag positivity of 1-eta and, under alpha<1, 1-alpha as explicit proof obligations in the handoff; the source hypotheses provide the strict inequalities needed before clearing divisions."
+    }
+  ]
+}

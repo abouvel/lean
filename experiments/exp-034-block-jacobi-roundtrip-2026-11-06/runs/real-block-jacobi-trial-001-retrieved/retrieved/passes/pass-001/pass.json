@@ -1,0 +1,435 @@
+{
+  "builder": {
+    "condition": "retrieved",
+    "kind": "production-pipeline",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "exit_code": 0,
+    "timed_out": false,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "wall_time_seconds": 468.335,
+    "compiler_command_events": 22,
+    "token_usage": {
+      "input_tokens": 1697864,
+      "cached_input_tokens": 1617280,
+      "output_tokens": 15911,
+      "reasoning_output_tokens": 2495
+    },
+    "roles": {
+      "planner": {
+        "condition": "retrieved",
+        "kind": "planner",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794165482.0904002,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 59.215,
+        "token_usage": {
+          "input_tokens": 90840,
+          "cached_input_tokens": 83072,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1982,
+          "reasoning_output_tokens": 75
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "formalizer": {
+        "condition": "retrieved",
+        "kind": "formalizer",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794165542.2811804,
+        "time_limit_seconds": 420,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 111.822,
+        "token_usage": {
+          "input_tokens": 179581,
+          "cached_input_tokens": 165632,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3831,
+          "reasoning_output_tokens": 637
+        },
+        "compiler_command_events": 4,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "prover": {
+        "condition": "retrieved",
+        "kind": "prover",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1794165670.6552975,
+        "time_limit_seconds": 900,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 297.298,
+        "token_usage": {
+          "input_tokens": 1427443,
+          "cached_input_tokens": 1368576,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 10098,
+          "reasoning_output_tokens": 1783
+        },
+        "compiler_command_events": 18,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "statement": {
+      "schema_version": 1,
+      "targets": [
+        "Research.BlockJacobi.block_jacobi_real"
+      ],
+      "construction_names": [
+        "Research.BlockJacobi.IsBlockDecomposition",
+        "Research.BlockJacobi.vectorInfNorm",
+        "Research.BlockJacobi.matrixInfNorm",
+        "Research.BlockJacobi.vectorAbs",
+        "Research.BlockJacobi.matrixAbs",
+        "Research.BlockJacobi.complexification",
+        "Research.BlockJacobi.rho",
+        "Research.BlockJacobi.iterationMatrix",
+        "Research.BlockJacobi.correctionAt",
+        "Research.BlockJacobi.update",
+        "Research.BlockJacobi.iterate",
+        "Research.BlockJacobi.correction",
+        "Research.BlockJacobi.error"
+      ],
+      "source_mapping": "Research/Submission.lean: Research.BlockJacobi.block_jacobi_real formalizes the complete authoritative theorem:block_jacobi_real from /spec/source.txt (paper.tex, selected result), with explicit A = D + N block support, IsUnit D.det, and A * x = b assumptions. The correction and iterate are constructed from the residual, for all initial guesses and all natural dimensions. The conclusions include the update equations, signed error recurrence, power identity, componentwise bound, maximum-row-sum infinity-norm bound, equality of the complex spectral radii under negation, convergence for every initial guess iff rho(P) < 1, and norm-based sufficiency with the contraction inequality. Complex spectral radius is Mathlib spectralRadius of the complexified matrix converted to real; finite matrix spectra are bounded and the empty-dimensional convention is zero. Only the final theorem proof uses sorry as authorized scaffolding. No feedback.json was present; no statement revision was requested or made. /spec/support contains no files, so there are no supplied supporting sources to copy. The fallible plan was used as a checklist without adding assumptions."
+    }
+  },
+  "verification": {
+    "verification_command": "bash pipeline/verify.sh",
+    "build_and_scans_exit_code": 0,
+    "nontrivial_submission": true,
+    "formal_gate_passed": true,
+    "semantic_review": "pending",
+    "wall_time_seconds": 20.157,
+    "source_files": [
+      "Research/Submission.lean"
+    ],
+    "source_lines": 306,
+    "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+    "formal_audit": {
+      "schema_version": 1,
+      "unapproved_axioms": [],
+      "protected_source_failures": [],
+      "candidate_hash": "e7fdc27fc7008789161c8ea575e8e4b7c75fdd7eb1f1a0223873fed68fc939ac",
+      "passed": true,
+      "changed_declarations": []
+    }
+  },
+  "critic": {
+    "condition": "retrieved",
+    "kind": "reviewer",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "started_unix": 1794166008.3069808,
+    "time_limit_seconds": 300,
+    "api_cost": "unknown",
+    "aristotle_calls": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "wall_time_seconds": 77.651,
+    "token_usage": {
+      "input_tokens": 294171,
+      "cached_input_tokens": 273536,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2504,
+      "reasoning_output_tokens": 216
+    },
+    "compiler_command_events": 3,
+    "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+  },
+  "status": "accepted",
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794165482.0904002,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 59.215,
+      "token_usage": {
+        "input_tokens": 90840,
+        "cached_input_tokens": 83072,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1982,
+        "reasoning_output_tokens": 75
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794165542.2811804,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 111.822,
+      "token_usage": {
+        "input_tokens": 179581,
+        "cached_input_tokens": 165632,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3831,
+        "reasoning_output_tokens": 637
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794165670.6552975,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 297.298,
+      "token_usage": {
+        "input_tokens": 1427443,
+        "cached_input_tokens": 1368576,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10098,
+        "reasoning_output_tokens": 1783
+      },
+      "compiler_command_events": 18,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "translator": {
+      "condition": "blind",
+      "kind": "translator",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794166086.7043886,
+      "time_limit_seconds": 240,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 111.115,
+      "token_usage": {
+        "input_tokens": 97484,
+        "cached_input_tokens": 87680,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4977,
+        "reasoning_output_tokens": 210
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "judge": {
+      "condition": "blind",
+      "kind": "judge",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1794166198.670191,
+      "time_limit_seconds": 240,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 56.587,
+      "token_usage": {
+        "input_tokens": 65990,
+        "cached_input_tokens": 49664,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2492,
+        "reasoning_output_tokens": 90
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "report": {
+    "schema_version": 2,
+    "candidate_hash": "e7fdc27fc7008789161c8ea575e8e4b7c75fdd7eb1f1a0223873fed68fc939ac",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "Research.BlockJacobi.block_jacobi_real explicitly includes every selected final conclusion. Its concrete residual-correction recursion and specified solution recover the original exact block-Jacobi algorithm; the correction index shift is harmless. Spectral radius is taken over the complexification, as required for arbitrary real matrices.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+        "evidence": "The sole target block_jacobi_real explicitly asserts all requested conclusions in four conjuncts: the update equations, error identities and bounds, spectral-radius equality, convergence equivalence for every initial guess, and sufficient convergence and contraction. These are final target assertions, not supporting lemmas requiring further composition.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "construction-correctness",
+        "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+        "evidence": "correctionAt(A,D,b,y)=D^(-1)(b-Ay); update(y)=y+correctionAt(y); iterate starts at x\u2080 and recursively applies this update. Target (1) explicitly asserts D c_k=b-Ay_k and y_(k+1)=y_k+c_k. Its c_k denotes the source correction c^{k+1}, an equivalent index convention. Under nonsingularity, applying the inverse of block-diagonal D is exactly the prescribed block solve.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "target-bound",
+        "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+        "evidence": "Target (1) asserts e_(k+1)=T e_k, e_k=T^k e_0, the coordinatewise inequality |(e_k)_i|\u2264((|T|)^k |e_0|)_i, and ||e_k||\u221e\u2264||T||\u221e^k ||e_0||\u221e for every x\u2080,k,i. Targets (2)-(3) assert rho(T)=rho(D^(-1)N) and convergence for every initial vector iff rho(T)<1. Target (4) explicitly supplies convergence and ||U(u)-U(v)||\u221e\u2264||T||\u221e ||u-v||\u221e when 0\u2264||T||\u221e<1. The norms have the required maximum-coordinate and maximum-row-sum definitions. The complexified finite matrix has finite spectral radius, so the real conversion preserves it.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "original-input-link",
+        "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+        "evidence": "The theorem uses the specified A,D,N,b,x with A=D+N and Ax=b; T=-D^(-1)N and e_k=iterate(A,D,b,x\u2080,k)-x. All initial guesses are universal and convergence is to that same specified x. The final Lipschitz bound concerns the actual update U(y)=y+D^(-1)(b-Ay). Block labels encode the original within-block D and off-block N support.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+        "evidence": "The base hypotheses are precisely the decomposition and block support, nonsingularity expressed as det D a unit over R, and Ax=b. There is no additional convergence or spectral premise. The norm condition is only the antecedent of the sufficient-condition conclusion. Arbitrary block labels impose no size or label restrictions. All natural indices and initial vectors are covered. Including dimension zero is consistent: the unique vector sequence converges, both norms and the spectral radius are zero, and the identities hold. Product-topology convergence equals infinity-norm convergence in finite dimensions.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "direct_report": {
+    "overall_verdict": "pass",
+    "phase": "final",
+    "target_evidence": "Research/Submission.lean:263-304 proves Research.BlockJacobi.block_jacobi_real, including the update equations, error recurrence and power identity, both bounds, rho(-D\u207b\u00b9N)=rho(D\u207b\u00b9N), convergence for every initial guess iff rho<1, and the infinity-norm sufficient condition and contraction. Its only mathematical hypotheses (lines 264-267) are a block decomposition, IsUnit D.det, and A *\u1d65 x = b. Independent source compilation succeeded; #check confirmed the complete signature and #print axioms reported only propext, Classical.choice, Quot.sound. Offline /evaluation/verification.json and verification.log report successful build and formal audit.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+        "evidence": "Research/Submission.lean:263-287 states every conclusion in the selected theorem; lines 288-304 provide its proof. This is an actual proved theorem, not merely a proposition definition. Direct lake env lean Research/Submission.lean exited successfully.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "construction-correctness",
+        "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+        "evidence": "Research/Submission.lean:20-24 specifies A=D+N, zero cross-block entries of D, and zero within-block entries of N. Lines 47-72 define P=-D\u207b\u00b9N, c=D\u207b\u00b9(b-Ay), the update y+c, recursive iterates starting at arbitrary x\u2080, and error iterate-x. Lines 269-270 and 291-293 prove D c=b-A x\u1d4f and the update equation using nonsingularity.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "target-bound",
+        "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+        "evidence": "Research/Submission.lean:271-278 gives both error identities and precisely |e\u1d4f|\u2264|P|\u1d4f|e\u2070| and ||e\u1d4f||\u221e\u2264||P||\u221e\u1d4f||e\u2070||\u221e, proved at 291-298 using lemmas at 89-134. Lines 27-32 use maximum absolute coordinate and maximum absolute row sum. Lines 39-45 define the usual complex spectral radius; 136-146 prove sign invariance, and 148-245 derive the power/convergence equivalence without assuming it. Lines 279-287 and 299-304 include the spectral-radius equality, iff criterion, norm sufficient condition, and Lipschitz estimate with nonnegative constant strictly below one.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "original-input-link",
+        "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+        "evidence": "Research/Submission.lean:264-287 quantifies the original A,D,N,b,x and block partition, and states every algorithmic conclusion directly about correction, iterate, error, update and iterationMatrix constructed from those inputs. Lines 288-304 instantiate the supporting lemmas using hblocks.1, hD and hx; convergence quantifies every initial guess for these same inputs.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+        "evidence": "Research/Submission.lean:264-267 assumes only an arbitrary natural dimension and block partition, IsBlockDecomposition, IsUnit D.det (equivalent to nonsingularity over \u211d), and A x=b. No invertibility of A or convergence/bound premise is added. Definitions at 20-72 are direct mathematical constructions; the spectral criterion is proved from complex spectral theory at 148-245, including dimension zero at 189-198. Independent #print axioms of block_jacobi_real reports only the standard Lean axioms propext, Classical.choice, Quot.sound; offline verification reports no unapproved axioms or protected-source failures.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "roundtrip": {
+    "schema_version": 2,
+    "candidate_hash": "e7fdc27fc7008789161c8ea575e8e4b7c75fdd7eb1f1a0223873fed68fc939ac",
+    "overall_verdict": "pass",
+    "phase": "final",
+    "lean_implies_source": true,
+    "source_implies_lean": true,
+    "relation": "faithful",
+    "delivery_complete": true,
+    "construction_complete": true,
+    "missing_formal_steps": [],
+    "target_evidence": "Research.BlockJacobi.block_jacobi_real explicitly includes every selected final conclusion. Its concrete residual-correction recursion and specified solution recover the original exact block-Jacobi algorithm; the correction index shift is harmless. Spectral radius is taken over the complexification, as required for arbitrary real matrices.",
+    "requirements": [
+      {
+        "requirement_id": "target-completeness",
+        "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+        "evidence": "The sole target block_jacobi_real explicitly asserts all requested conclusions in four conjuncts: the update equations, error identities and bounds, spectral-radius equality, convergence equivalence for every initial guess, and sufficient convergence and contraction. These are final target assertions, not supporting lemmas requiring further composition.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "construction-correctness",
+        "requirement": "Define the exact update-form block Jacobi iterates for the stated decomposition.",
+        "evidence": "correctionAt(A,D,b,y)=D^(-1)(b-Ay); update(y)=y+correctionAt(y); iterate starts at x\u2080 and recursively applies this update. Target (1) explicitly asserts D c_k=b-Ay_k and y_(k+1)=y_k+c_k. Its c_k denotes the source correction c^{k+1}, an equivalent index convention. Under nonsingularity, applying the inverse of block-diagonal D is exactly the prescribed block solve.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "target-bound",
+        "requirement": "Prove the error identities, componentwise and infinity-norm bounds, and the spectral-radius convergence equivalence.",
+        "evidence": "Target (1) asserts e_(k+1)=T e_k, e_k=T^k e_0, the coordinatewise inequality |(e_k)_i|\u2264((|T|)^k |e_0|)_i, and ||e_k||\u221e\u2264||T||\u221e^k ||e_0||\u221e for every x\u2080,k,i. Targets (2)-(3) assert rho(T)=rho(D^(-1)N) and convergence for every initial vector iff rho(T)<1. Target (4) explicitly supplies convergence and ||U(u)-U(v)||\u221e\u2264||T||\u221e ||u-v||\u221e when 0\u2264||T||\u221e<1. The norms have the required maximum-coordinate and maximum-row-sum definitions. The complexified finite matrix has finite spectral radius, so the real conversion preserves it.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "original-input-link",
+        "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+        "evidence": "The theorem uses the specified A,D,N,b,x with A=D+N and Ax=b; T=-D^(-1)N and e_k=iterate(A,D,b,x\u2080,k)-x. All initial guesses are universal and convergence is to that same specified x. The final Lipschitz bound concerns the actual update U(y)=y+D^(-1)(b-Ay). Block labels encode the original within-block D and off-block N support.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      },
+      {
+        "requirement_id": "assumption-integrity",
+        "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+        "evidence": "The base hypotheses are precisely the decomposition and block support, nonsingularity expressed as det D a unit over R, and Ax=b. There is no additional convergence or spectral premise. The norm condition is only the antecedent of the sufficient-condition conclusion. Arbitrary block labels impose no size or label restrictions. All natural indices and initial vectors are covered. Including dimension zero is consistent: the unique vector sequence converges, both norms and the spectral radius are zero, and the identities hold. Product-topology convergence equals infinity-norm convergence in finite dimensions.",
+        "verdict": "pass",
+        "defect_categories": [],
+        "correction": ""
+      }
+    ],
+    "assumptions_added": [],
+    "missing_obligations": [],
+    "limitations": []
+  },
+  "number": 1,
+  "wall_time_seconds": 774.2220262190094,
+  "evidence": "retrieved/passes/pass-001"
+}

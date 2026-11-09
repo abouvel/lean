@@ -1,0 +1,111 @@
+{
+  "condition": "retrieved",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 411.808,
+  "compiler_command_events": 12,
+  "token_usage": {
+    "input_tokens": 626426,
+    "cached_input_tokens": 546304,
+    "output_tokens": 13363,
+    "reasoning_output_tokens": 1997
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793999727.791331,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 78.61,
+      "token_usage": {
+        "input_tokens": 106438,
+        "cached_input_tokens": 96384,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3230,
+        "reasoning_output_tokens": 183
+      },
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793999807.2069495,
+      "time_limit_seconds": 420,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 138.268,
+      "token_usage": {
+        "input_tokens": 230240,
+        "cached_input_tokens": 206848,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4598,
+        "reasoning_output_tokens": 1011
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793999961.460908,
+      "time_limit_seconds": 900,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 194.93,
+      "token_usage": {
+        "input_tokens": 289748,
+        "cached_input_tokens": 243072,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5535,
+        "reasoning_output_tokens": 803
+      },
+      "compiler_command_events": 8,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "ParallelBinaryTree.parallel_binary_tree_reduction_constructed",
+      "ParallelBinaryTree.parallel_binary_tree_reduction"
+    ],
+    "construction_names": [
+      "ParallelBinaryTree.Vector",
+      "ParallelBinaryTree.Addition",
+      "ParallelBinaryTree.depth",
+      "ParallelBinaryTree.width",
+      "ParallelBinaryTree.gamma",
+      "ParallelBinaryTree.states",
+      "ParallelBinaryTree.computedResult",
+      "ParallelBinaryTree.exactSum",
+      "ParallelBinaryTree.RoundingModel",
+      "ParallelBinaryTree.localError",
+      "ParallelBinaryTree.nodeError",
+      "ParallelBinaryTree.parent",
+      "ParallelBinaryTree.ancestor",
+      "ParallelBinaryTree.pathFactor",
+      "ParallelBinaryTree.perturbation"
+    ],
+    "source_mapping": "Research/Submission.lean formalizes the complete selected theorem theorem:parallel_binary_tree_reduction from /spec/source.txt and /spec/paper.tex. Source n is positive, vector dimension d is arbitrary, inputs are Fin n -> Fin d -> Real, unit roundoff u is nonnegative, depth is literally Nat.ceil (Real.logb 2 n), and gamma is L*u/(1-L*u). width n l is ceil(n/2^l); states implements the source split-half pairing with exact odd-width carries and zero padding. computedResult is the level-depth root, not a backward-error definition. RoundingModel states only the standard relative-error model for actual additions, encoding the no-overflow/no-underflow assumption; it permits independent errors at each level, node, and component. perturbation is explicitly input times (product of local path factors minus one). The constructed theorem establishes the equality and componentwise bound for those perturbations; the final existential theorem reproduces the selected result. All definitions have bodies. The constructed theorem proof alone is temporary sorry scaffolding for the next role. No desired algorithmic bound or paper lemma is an assumption. Supplied source.txt, source.pdf, paper.tex, and references.bib were copied unchanged into Research. Statement revision record: initial statement; /spec/feedback.json was absent, so there was no feedback-driven revision. The handoff plan requirement to complete proofs is superseded by the user-requested formalizer skeleton workflow."
+  }
+}

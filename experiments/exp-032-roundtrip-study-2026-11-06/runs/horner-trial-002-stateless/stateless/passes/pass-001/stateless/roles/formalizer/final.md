@@ -1,0 +1,3 @@
+Created the recursive definitions `P`, `Q`, and `E` and the full theorem `Research.Horner.forward_error` in [Submission.lean](/workspace/Research/Submission.lean).
+
+`lake build` passed. Only the theorem proof contains temporary `sorry` scaffolding. Supporting sources were copied unchanged. No feedback file was present; this is recorded in the source and [statement.json](/output/statement.json), which was saved atomically.

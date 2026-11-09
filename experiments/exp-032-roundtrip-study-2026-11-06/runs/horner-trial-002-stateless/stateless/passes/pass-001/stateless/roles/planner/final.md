@@ -1,0 +1,1 @@
+Saved and validated [plan.json](/output/plan.json) atomically. It identifies the required constructions and their connection to the error-bound theorem. No completed proof was written, and `/workspace` was unchanged.

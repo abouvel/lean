@@ -1,0 +1,98 @@
+{
+  "condition": "stateless",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 280.906,
+  "compiler_command_events": 11,
+  "token_usage": {
+    "input_tokens": 621673,
+    "cached_input_tokens": 556160,
+    "output_tokens": 6277,
+    "reasoning_output_tokens": 444
+  },
+  "roles": {
+    "planner": {
+      "condition": "stateless",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793984664.3085787,
+      "time_limit_seconds": 90,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 51.59,
+      "token_usage": {
+        "input_tokens": 65263,
+        "cached_input_tokens": 49536,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1838,
+        "reasoning_output_tokens": 49
+      },
+      "compiler_command_events": 1,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "stateless",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793984717.603648,
+      "time_limit_seconds": 150,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 93.422,
+      "token_usage": {
+        "input_tokens": 202986,
+        "cached_input_tokens": 191488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1674,
+        "reasoning_output_tokens": 93
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "stateless",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793984838.906103,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 135.894,
+      "token_usage": {
+        "input_tokens": 353424,
+        "cached_input_tokens": 315136,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2765,
+        "reasoning_output_tokens": 302
+      },
+      "compiler_command_events": 7,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "Research.Horner.forward_error"
+    ],
+    "construction_names": [
+      "Research.Horner.P",
+      "Research.Horner.Q",
+      "Research.Horner.E"
+    ],
+    "source_mapping": "/spec/source.txt: exact evaluator P, rounded evaluator Q, and prescribed envelope E are defined by list recursion in /workspace/Research/Submission.lean. Research.Horner.forward_error states the requested bound for every Research.FloatingPoint.Model, List \u211d, and x : \u211d; model.u_nonneg and model.round_spec supply all assumptions. The supporting /spec/support/Research/Common/FloatingPoint/Model.lean is copied unchanged to /workspace/Research/Common/FloatingPoint/Model.lean. No /spec/feedback.json was present; no statement revision was made. The theorem proof is temporary sorry scaffolding for the next role."
+  }
+}

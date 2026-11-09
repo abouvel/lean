@@ -1,0 +1,25 @@
+RUN block-dot-product-trial-001-stateless
+RESULT block-dot-product-trial-001-stateless pass pass accepted
+RUN block-dot-product-trial-001-retrieved
+RESULT block-dot-product-trial-001-retrieved pass uncertain needs_human
+RUN sequential-block-dot-trial-001-stateless
+RESULT sequential-block-dot-trial-001-stateless pass pass accepted
+RUN sequential-block-dot-trial-001-retrieved
+RESULT sequential-block-dot-trial-001-retrieved pass uncertain needs_human
+RUN block-matrix-vector-trial-001-stateless
+RESULT block-matrix-vector-trial-001-stateless pass pass accepted
+RUN block-matrix-vector-trial-001-retrieved
+RESULT block-matrix-vector-trial-001-retrieved pass pass accepted
+RUN triangular-update-trial-001-stateless
+RESULT triangular-update-trial-001-stateless pass pass accepted
+RUN triangular-solve-trial-001-retrieved
+RESULT triangular-solve-trial-001-retrieved pass pass accepted
+RUN cholesky-factorization-trial-001-stateless
+RESULT cholesky-factorization-trial-001-stateless pass pass accepted
+RUN cholesky-factorization-trial-001-retrieved
+RESULT cholesky-factorization-trial-001-retrieved pass pass accepted
+RUN cholesky-solve-trial-001-stateless
+RESULT cholesky-solve-trial-001-stateless pass pass accepted
+RUN cholesky-solve-trial-001-retrieved
+RESULT cholesky-solve-trial-001-retrieved pass pass accepted
+FINISHED 12 replay cases

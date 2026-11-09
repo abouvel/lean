@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "strategy": "Define the exact and rounded product trees by shape-preserving maps on Tree (\u211d \u00d7 \u211d), and define roundedDotProduct as roundedSum of the rounded product tree. Construct a multiplication perturbation with bound model.u by structural induction using Model.round_spec at each product. Apply the supplied roundedSum_exists_perturbation to the rounded product tree to obtain the existential final tree witnessing addition error with bound gamma tree.depth model.u. Compose these two same-shape perturbations with IsPerturbation.trans. Its coefficient u + gamma d u * (1 + u) equals gamma d u + u * (1 + gamma d u), so gamma_step and IsPerturbation.mono yield gamma (d + 1) u. The final witness is precisely the tree returned by the rounded-sum theorem, now related to exactProductTree tree; its exactSum equals roundedDotProduct model tree. This accounts for one multiplication and at most d additions on every path without assuming exact arithmetic. This is a proof plan, not the completed target proof.",
+  "obligations": [
+    {
+      "id": "preserve-prerequisites",
+      "description": "In the implementation phase, copy the five approved prerequisite modules unchanged from /spec/support/Research into matching project paths; preserve protected configuration and use their actual Model, Tree, gamma, roundedSum, and IsPerturbation definitions. The planner makes no changes to /workspace."
+    },
+    {
+      "id": "define-product-constructions",
+      "description": "Define exactProductTree (tree : Tree (\u211d \u00d7 \u211d)) as tree.map (fun p => p.1 * p.2), roundedProductTree model tree as tree.map (fun p => model.mul p.1 p.2), and roundedDotProduct model tree as roundedSum model (roundedProductTree model tree). Preserve the input shape and establish roundedProductTree depth = tree.depth using Tree.depth_map."
+    },
+    {
+      "id": "multiplication-perturbation",
+      "description": "Establish IsPerturbation model.u (exactProductTree tree) (roundedProductTree model tree) by tree induction. At each leaf x = a*b, use round_spec x to obtain \u03b4 with |\u03b4| \u2264 u and rounded x = x*(1+\u03b4). Reduce the absolute error to |x|*|\u03b4| and bound it by u*|x|; join node witnesses with IsPerturbation.node. This must also cover zero products without division."
+    },
+    {
+      "id": "derive-smallness",
+      "description": "From ((tree.depth + 1 : \u2115) : \u211d) * model.u < 1 and model.u_nonneg, derive (tree.depth : \u211d) * model.u < 1. Handle natural-to-real casts explicitly as needed, and use depth preservation to discharge the rounded-product-tree depth hypothesis. Establish nonnegativity of gamma tree.depth model.u with gamma_nonneg."
+    },
+    {
+      "id": "construct-final-witness",
+      "description": "Apply roundedSum_exists_perturbation model (roundedProductTree model tree) under derived smallness. Obtain an actual existential tree perturbed, the relation IsPerturbation (gamma tree.depth model.u) (roundedProductTree model tree) perturbed, and perturbed.exactSum = roundedDotProduct model tree after unfolding definitions and rewriting depth. Do not replace the required existential witness by a conditional or an assumed conclusion."
+    },
+    {
+      "id": "compose-and-tighten",
+      "description": "Use multiplication-perturbation.trans addition-perturbation with nonnegative addition bound to relate exactProductTree tree directly to perturbed with coefficient model.u + gamma tree.depth model.u * (1 + model.u). Prove the algebraic equality of this coefficient with gamma tree.depth model.u + model.u * (1 + gamma tree.depth model.u), then apply supplied gamma_step at k = tree.depth and IsPerturbation.mono to obtain exactly gamma (tree.depth + 1) model.u."
+    },
+    {
+      "id": "state-and-validate-target",
+      "description": "Conclude universally for every supplied Model and Tree (\u211d \u00d7 \u211d), under only the specified smallness condition, that there exists perturbed : Tree \u211d with IsPerturbation (gamma (tree.depth + 1) model.u) (exactProductTree tree) perturbed and perturbed.exactSum = roundedDotProduct model tree. The single-leaf case must retain multiplication error and bound gamma 1 u. Compile the finished implementation with local Lean and ensure no placeholders, custom axioms, altered prerequisites, or restriction to exact rounding. No logarithmic-depth or IEEE execution theorem is needed."
+    }
+  ]
+}

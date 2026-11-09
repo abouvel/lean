@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "f5361628b5e8660806e2e29d119d88f459d487cff01c7f0a7b592861511df4c3",
+  "status": "complete",
+  "statement": "For arbitrary functions f,D: R -> R and real x,h,L, if h > 0, L >= 0, f is continuous on [x,x+h], f has derivative D(t) at every t in (x,x+h), and |D(t)-D(x)| <= L|t-x| for every t in that open interval, then |(f(x+h)-f(x))/h-D(x)| <= Lh. The quotient is the actual construction Research.forwardDifference. The assumptions do not require D(x) to be the derivative of f at x.",
+  "targets": [
+    {
+      "name": "Research.forwardDifference_error_bound",
+      "statement": "For every pair of functions f,D: R -> R and every x,h,L in R, assume: (1) 0 < h; (2) 0 <= L; (3) f is continuous on the closed interval [x,x+h]; (4) for every real t satisfying x < t < x+h, f is differentiable at t as a function on R and its derivative there equals D(t); (5) for every real t satisfying x < t < x+h, |D(t)-D(x)| <= L|t-x|. Then |Research.forwardDifference(f,x,h)-D(x)| <= Lh, equivalently |(f(x+h)-f(x))/h-D(x)| <= Lh. Here D(x) is the value of the supplied function D at x; no derivative of f at either endpoint is assumed, and no continuity of D or bound between arbitrary pairs of points is assumed."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.forwardDifference",
+      "description": "A function (R -> R) -> R -> R -> R. For every function f: R -> R and every real x,h, it returns (f(x+h)-f(x))/h, using real addition, subtraction, and division. It samples f at x+h and x and divides their difference by h; it does not take a limit. It is defined for all real h, with no continuity or differentiability requirement on f. Under the total real division used here, its value at h=0 is 0. The target theorem uses this construction only when h>0 and bounds its distance from the supplied value D(x) by Lh."
+    }
+  ],
+  "assumptions": [
+    "All function domains and codomains are R with its usual real arithmetic, order, absolute value, and topology; f and D are arbitrary functions R -> R, and x,h,L are universally quantified real numbers.",
+    "The theorem assumes 0<h and 0<=L.",
+    "The theorem assumes f is continuous on [x,x+h].",
+    "For every t in (x,x+h), the theorem assumes that the ordinary derivative of f at t exists and equals D(t).",
+    "For every t in (x,x+h), the theorem assumes |D(t)-D(x)|<=L|t-x|. This is a bound relative to x only.",
+    "There is no assumption that f has derivative D(x) at x, nor any differentiability assumption at x+h. The construction itself has no hypotheses on f, x, or h."
+  ],
+  "missing_context": []
+}

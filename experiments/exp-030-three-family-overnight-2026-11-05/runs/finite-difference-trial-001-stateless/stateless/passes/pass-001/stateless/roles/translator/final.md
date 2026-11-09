@@ -1,0 +1,1 @@
+Atomically saved [translation.json](/output/translation.json) with status `complete`, including the single target, construction, and all hypotheses.

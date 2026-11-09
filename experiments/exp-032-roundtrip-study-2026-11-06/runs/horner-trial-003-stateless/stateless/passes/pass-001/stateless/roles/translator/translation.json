@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "761d95eb5a1d5fafc4e965998178aab8d00d61ff895e298d2832f488a84cd051",
+  "status": "complete",
+  "statement": "For every real rounding model with parameter u >= 0 and rounding function r satisfying the relative-error condition stated below, every finite list c of real coefficients, and every real x, |Q(model,c,x) - P(c,x)| <= E(c,x,u). P evaluates the exact polynomial in ascending coefficient order; Q recursively rounds both each multiplication and each addition; E is the explicit recurrence below, using exact tail polynomial values.",
+  "targets": [
+    {
+      "name": "Research.Horner.forward_error",
+      "statement": "For every model in Research.FloatingPoint.Model, every coefficients in List(R), and every x in R, |Q(model,coefficients,x) - P(coefficients,x)| <= E(coefficients,x,u(model)). A model consists of u(model) in R with 0 <= u(model) and r = round(model): R -> R such that for every z in R there exists delta in R with |delta| <= u(model) and r(z) = z(1 + delta). P, Q, and E are exactly the recursions described below. This theorem bounds the absolute error of the constructed rounded evaluation Q relative to the constructed exact evaluation P by the constructed E, evaluated at the same coefficient list and evaluation point and at the model parameter. It includes empty lists and every real x, and places no upper bound on u(model)."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.Horner.P",
+      "description": "P: List(R) x R -> R is defined for every finite real list and every real x by P([],x) = 0 and P(a::tail,x) = a + x P(tail,x), where a::tail has head a and remaining list tail. For c = [a_0,...,a_(n-1)] of length n >= 0, this is the sum of a_i x^i over integers i with 0 <= i < n; the empty sum is 0. Coefficients are ordered from the constant coefficient upward. All operations are exact real operations. P is the reference quantity in the theorem and provides the exact tail values used by E."
+    },
+    {
+      "name": "Research.Horner.Q",
+      "description": "Q: Research.FloatingPoint.Model x List(R) x R -> R is defined for every model, every finite real list, and every real x by Q(model,[],x) = 0 and Q(model,a::tail,x) = r(a + r(x Q(model,tail,x))), where r = round(model). It evaluates the tail recursively, rounds the product of x with that result, adds a, and rounds the sum. Thus each list element produces two rounding calls, including the last element, whose tail value is 0. The model condition implies r(0) = 0. The real coefficients and x have no separate input-rounding step. The theorem compares this actual recursively rounded value to P and bounds the absolute difference by E at u(model)."
+    },
+    {
+      "name": "Research.Horner.E",
+      "description": "E: List(R) x R x R -> R is defined for all finite real lists and all real x,u by E([],x,u) = 0. For every real a and finite real tail, let v = P(tail,x) and e = E(tail,x,u); then E(a::tail,x,u) = u |a + x v| + (1 + u)(u |x v| + (1 + u)|x| e). This is an exact real recursion using the exact tail polynomial v. It does not compute a rounded tail value or the actual difference Q - P. Its definition allows arbitrary real u; the theorem instantiates it only with the nonnegative u(model) and asserts it is an upper bound on |Q - P|."
+    }
+  ],
+  "assumptions": [
+    "The universally quantified model supplies u in R with 0 <= u and a total rounding function r: R -> R.",
+    "For every z in R there exists delta in R such that |delta| <= u and r(z) = z(1 + delta). The witness may depend on z. This property applies to every call of r in Q.",
+    "The coefficient list is any finite list of real numbers, including the empty list; x is any real number. No sign, nonzero, representability, or degree restrictions are imposed on these inputs.",
+    "There is no hypothesis u > 0 or u < 1 and no bound relating list length to u. The supplied model specifies no additional floating-point format, rounding direction, or overflow/underflow regime; its global relative-error property is the rounding assumption.",
+    "P and E use exact real arithmetic. Q rounds only at the explicit multiplication and addition calls in each nonempty recursion step. E is defined for every real u, while the theorem uses the nonnegative model parameter."
+  ],
+  "missing_context": []
+}

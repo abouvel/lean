@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.forwardDifference_error_bound"
+  ],
+  "construction_names": [
+    "Research.forwardDifference"
+  ],
+  "source_mapping": "/spec/source.txt is formalized in /workspace/Research/Submission.lean. Research.forwardDifference is exactly (f (x + h) - f x) / h. Research.forwardDifference_error_bound quantifies all f, D, x, h, L and assumes h > 0, L >= 0, continuity on the closed interval, HasDerivAt with value D t only on the open interval, and the stated local variation bound only on that open interval. It concludes the requested absolute error bound L * h. No endpoint derivative is required. Statement revisions: none; no /spec/feedback.json was present. No supporting source files were supplied. The theorem proof is temporary sorry scaffolding for the next role; the construction has an actual body."
+}

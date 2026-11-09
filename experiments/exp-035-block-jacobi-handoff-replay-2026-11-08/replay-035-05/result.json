@@ -1,0 +1,247 @@
+{
+  "job_id": "block-matrix-vector-trial-001-stateless",
+  "condition": "stateless",
+  "outcome": "accepted",
+  "success": true,
+  "record": {
+    "task_id": "block-matrix-vector",
+    "passes": [
+      {
+        "number": 1,
+        "verification": {
+          "verification_command": "bash pipeline/verify.sh",
+          "build_and_scans_exit_code": 0,
+          "nontrivial_submission": true,
+          "formal_gate_passed": true,
+          "semantic_review": "pending",
+          "wall_time_seconds": 14.685,
+          "source_files": [
+            "Research/Submission.lean"
+          ],
+          "source_lines": 315,
+          "limitation": "Compilation alone does not establish the original theorem or algorithm. Semantic review is required.",
+          "formal_audit": {
+            "schema_version": 1,
+            "unapproved_axioms": [],
+            "protected_source_failures": [],
+            "candidate_hash": "555d97febc7d6250aea7f65623259f50439177ca2a0f9d4af54e342e75ad0311",
+            "passed": true,
+            "changed_declarations": []
+          }
+        },
+        "direct_report": {
+          "overall_verdict": "pass",
+          "phase": "final",
+          "target_evidence": "/workspace/Research/Submission.lean:303-313 proves block_matrix_vector_product under hT: 0<T, hu: 0<=u, hmodel: E.Valid n T u, and hsmall: errorCount n T*u<1. It concludes existence of DeltaA with computed A x T E = (A+DeltaA).mulVec x and entrywise |DeltaA_ij| <= gamma(errorCount n T,u)*|A_ij|. Lines 278-298 prove both conclusions for an explicit constructed perturbation.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "/workspace/Research/Submission.lean:303-313 proves block_matrix_vector_product: existence of a perturbation matrix, the computed-vector identity, and the componentwise bound. The explicit witness and both conclusions are proved at lines 278-298.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define the rowwise size-T block matrix-vector product with sequential reduction and zero padding.",
+              "evidence": "/workspace/Research/Submission.lean:20 defines (n+T-1)/T, equal to ceil(n/T) for positive T. Lines 29-37 define zero padding and sequential summation by copying the first term. Lines 57-74 implement rounded products, size-T block sums, and sequential reduction of all block sums independently in each row.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the perturbation matrix identity and the entrywise gamma(T + ceil(n/T) - 1) bound.",
+              "evidence": "/workspace/Research/Submission.lean:23-26 defines errorCount = T + blockCount n T - 1 and gamma k u = k*u/(1-k*u). Lines 112-164 prove the rounding-product estimate, lines 199-234 bound each path coefficient using at most T+blockCount-1 factors, and lines 278-298 prove the identity and entrywise bound for the explicit perturbation.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "/workspace/Research/Submission.lean:236-273 proves computed_expansion directly from the sequential blocked construction and padding. Lines 88-90 construct the perturbation from the original A and the same rounding trace. Lines 283-285 and 308-311 state the result for computed A x T E and (A + perturbation).mulVec x, preserving the original x.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "/workspace/Research/Submission.lean:304-307 quantifies arbitrary m,n,A,x,T and rounding trace E with positive T, nonnegative u, local rounding validity, and precisely errorCount*u<1. Valid at lines 48-54 contains only per-operation absolute relative-error bounds, implementing the source floating-point model under no overflow/underflow. Positive block size and nonnegative unit roundoff express implicit domains. No algorithmic error conclusion is assumed. Independent Lean axiom inspection reports only propext, Classical.choice, and Quot.sound.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "roundtrip": {
+          "schema_version": 2,
+          "candidate_hash": "555d97febc7d6250aea7f65623259f50439177ca2a0f9d4af54e342e75ad0311",
+          "overall_verdict": "pass",
+          "phase": "final",
+          "lean_implies_source": true,
+          "source_implies_lean": true,
+          "relation": "faithful",
+          "delivery_complete": true,
+          "construction_complete": true,
+          "missing_formal_steps": [],
+          "target_evidence": "The two explicit final targets each state the entire matrix backward-error conclusion for the constructed nested sequential summation. The supplied multiplicative error traces encode the source elementary-operation rounding model. The explicit coefficient perturbation is the expansion of that same computation, and the constructed target already asserts both its identity and full bound. The existential target independently delivers the selected theorem.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "Both block_matrix_vector_product_constructed and block_matrix_vector_product explicitly assert computed(A,x,T,E)=(A+DeltaA)x and the componentwise perturbation bound. The former specifies the witness; the latter states the entire existential conclusion. No final theorem is left to composition of helpers.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define the rowwise size-T block matrix-vector product with sequential reduction and zero padding.",
+              "evidence": "padded returns zero beyond n. roundedProduct uses padded(A(i))(b*T+t)*padded(x)(b*T+t)*(1+E.mulError(i,b,t)). blockPartial sequentially sums T products, and computed sequentially sums B block partials for each row. sequentialSum starts with its first term and rounds all subsequent additions. blockCount=((n+T) dotminus 1) div T equals ceil(n/T) for T>0. Padded trailing additions still multiply prior accumulated contributions.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the perturbation matrix identity and the entrywise gamma(T + ceil(n/T) - 1) bound.",
+              "evidence": "Both targets explicitly assert the identity and |DeltaA(i,j)|<=gamma(k,u)*|A(i,j)| for every i,j. Here k=errorCount(n,T)=T+ceil(n/T)-1 and gamma(k,u)=k*u/(1-k*u). The constructed target proves these for DeltaA(i,j)=A(i,j)*(pathCoefficient(T,E,i,j)-1). pathCoefficient includes the product error and all inner and outer addition factors affecting the term: max(1,t)<=s<T and max(1,b)<=s<B, respectively.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Both targets use the defined computed(A,x,T,E) on the left and the same original A and x on the right. Each original column j is linked to block j div T and position j mod T in pathCoefficient, using the same trace E as the computation. Thus the perturbation identity concerns the actual nested summation of the original inputs.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "The hypotheses T>0 and u>=0 express positive block size and nonnegative unit roundoff implicit in the source. Valid imposes only absolute bounds on the relative errors of the elementary operations; these are the source standard rounding-model assumptions, not a desired algorithmic bound. Universal arbitrary valid traces cover executions under that model with no overflow or underflow. The remaining hypothesis is precisely (T+ceil(n/T)-1)*u<1. There are no divisibility, nonzero-entry, or positive-dimension restrictions. The computation and perturbation are independently defined.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "report": {
+          "schema_version": 2,
+          "candidate_hash": "555d97febc7d6250aea7f65623259f50439177ca2a0f9d4af54e342e75ad0311",
+          "overall_verdict": "pass",
+          "phase": "final",
+          "lean_implies_source": true,
+          "source_implies_lean": true,
+          "relation": "faithful",
+          "delivery_complete": true,
+          "construction_complete": true,
+          "missing_formal_steps": [],
+          "target_evidence": "The two explicit final targets each state the entire matrix backward-error conclusion for the constructed nested sequential summation. The supplied multiplicative error traces encode the source elementary-operation rounding model. The explicit coefficient perturbation is the expansion of that same computation, and the constructed target already asserts both its identity and full bound. The existential target independently delivers the selected theorem.",
+          "requirements": [
+            {
+              "requirement_id": "target-completeness",
+              "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+              "evidence": "Both block_matrix_vector_product_constructed and block_matrix_vector_product explicitly assert computed(A,x,T,E)=(A+DeltaA)x and the componentwise perturbation bound. The former specifies the witness; the latter states the entire existential conclusion. No final theorem is left to composition of helpers.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "construction-correctness",
+              "requirement": "Define the rowwise size-T block matrix-vector product with sequential reduction and zero padding.",
+              "evidence": "padded returns zero beyond n. roundedProduct uses padded(A(i))(b*T+t)*padded(x)(b*T+t)*(1+E.mulError(i,b,t)). blockPartial sequentially sums T products, and computed sequentially sums B block partials for each row. sequentialSum starts with its first term and rounds all subsequent additions. blockCount=((n+T) dotminus 1) div T equals ceil(n/T) for T>0. Padded trailing additions still multiply prior accumulated contributions.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "target-bound",
+              "requirement": "Prove the perturbation matrix identity and the entrywise gamma(T + ceil(n/T) - 1) bound.",
+              "evidence": "Both targets explicitly assert the identity and |DeltaA(i,j)|<=gamma(k,u)*|A(i,j)| for every i,j. Here k=errorCount(n,T)=T+ceil(n/T)-1 and gamma(k,u)=k*u/(1-k*u). The constructed target proves these for DeltaA(i,j)=A(i,j)*(pathCoefficient(T,E,i,j)-1). pathCoefficient includes the product error and all inner and outer addition factors affecting the term: max(1,t)<=s<T and max(1,b)<=s<B, respectively.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "original-input-link",
+              "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+              "evidence": "Both targets use the defined computed(A,x,T,E) on the left and the same original A and x on the right. Each original column j is linked to block j div T and position j mod T in pathCoefficient, using the same trace E as the computation. Thus the perturbation identity concerns the actual nested summation of the original inputs.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            },
+            {
+              "requirement_id": "assumption-integrity",
+              "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+              "evidence": "The hypotheses T>0 and u>=0 express positive block size and nonnegative unit roundoff implicit in the source. Valid imposes only absolute bounds on the relative errors of the elementary operations; these are the source standard rounding-model assumptions, not a desired algorithmic bound. Universal arbitrary valid traces cover executions under that model with no overflow or underflow. The remaining hypothesis is precisely (T+ceil(n/T)-1)*u<1. There are no divisibility, nonzero-entry, or positive-dimension restrictions. The computation and perturbation are independently defined.",
+              "verdict": "pass",
+              "defect_categories": [],
+              "correction": ""
+            }
+          ],
+          "assumptions_added": [],
+          "missing_obligations": [],
+          "limitations": []
+        },
+        "roles": {
+          "translator": {
+            "condition": "blind",
+            "kind": "translator",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794179313.523831,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 131.798,
+            "token_usage": {
+              "input_tokens": 77574,
+              "cached_input_tokens": 33536,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 6088,
+              "reasoning_output_tokens": 147
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          },
+          "judge": {
+            "condition": "blind",
+            "kind": "judge",
+            "model": "gpt-6.1-sol",
+            "reasoning_effort": "medium",
+            "started_unix": 1794179445.9827738,
+            "time_limit_seconds": 240,
+            "api_cost": "unknown",
+            "aristotle_calls": 0,
+            "exit_code": 0,
+            "timed_out": false,
+            "wall_time_seconds": 62.142,
+            "token_usage": {
+              "input_tokens": 71709,
+              "cached_input_tokens": 52864,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 2652,
+              "reasoning_output_tokens": 286
+            },
+            "compiler_command_events": 0,
+            "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+          }
+        }
+      }
+    ]
+  }
+}

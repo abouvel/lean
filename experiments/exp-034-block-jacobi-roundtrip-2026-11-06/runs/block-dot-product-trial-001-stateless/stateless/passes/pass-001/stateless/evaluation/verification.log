@@ -1,0 +1,26 @@
+⚠ [8026/8028] Built Research.Submission (8.1s)
+warning: Research/Submission.lean:123:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: Research/Submission.lean:118:32: This simp argument is unused:
+  ReductionTree.leaves
+
+Hint: Omit it from the simp argument list.
+  simp [balancedTree,̵ ̵R̵e̵d̵u̵c̵t̵i̵o̵n̵T̵r̵e̵e̵.̵l̵e̵a̵v̵e̵s̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Research/Submission.lean:151:5: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Research/Submission.lean:418:39: unused variable `hn`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Research/Submission.lean:418:52: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: Research/Submission.lean:426:15: unused variable `hn`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [8027/8028] Built Research (3.8s)
+Build completed successfully (8028 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

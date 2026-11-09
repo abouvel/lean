@@ -1,0 +1,432 @@
+{
+  "known-complete": {
+    "expected": "pass",
+    "roundtrip": "pass",
+    "direct": "pass",
+    "correct": true,
+    "route": "accepted",
+    "role_metrics": {
+      "translator": {
+        "condition": "blind",
+        "kind": "translator",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793572901.2313619,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 73.658,
+        "token_usage": {
+          "input_tokens": 81181,
+          "cached_input_tokens": 69376,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 4022,
+          "reasoning_output_tokens": 123
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "judge": {
+        "condition": "blind",
+        "kind": "judge",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793572975.4435642,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 22.44,
+        "token_usage": {
+          "input_tokens": 42913,
+          "cached_input_tokens": 36480,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1125,
+          "reasoning_output_tokens": 69
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "critic_metrics": {
+      "condition": "stateless",
+      "kind": "reviewer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793572998.4544222,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 53.483,
+      "token_usage": {
+        "input_tokens": 253547,
+        "cached_input_tokens": 227840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2237,
+        "reasoning_output_tokens": 93
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "renamed-complete": {
+    "expected": "pass",
+    "roundtrip": "pass",
+    "direct": "pass",
+    "correct": true,
+    "route": "accepted",
+    "role_metrics": {
+      "translator": {
+        "condition": "blind",
+        "kind": "translator",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573052.5585847,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 86.442,
+        "token_usage": {
+          "input_tokens": 81757,
+          "cached_input_tokens": 69888,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 4502,
+          "reasoning_output_tokens": 111
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "judge": {
+        "condition": "blind",
+        "kind": "judge",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573139.589494,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 34.929,
+        "token_usage": {
+          "input_tokens": 60606,
+          "cached_input_tokens": 54784,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2172,
+          "reasoning_output_tokens": 72
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "critic_metrics": {
+      "condition": "stateless",
+      "kind": "reviewer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793573175.0195706,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 53.891,
+      "token_usage": {
+        "input_tokens": 254562,
+        "cached_input_tokens": 231552,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2219,
+        "reasoning_output_tokens": 56
+      },
+      "compiler_command_events": 3,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "proposition-only": {
+    "expected": "fail",
+    "roundtrip": "fail",
+    "direct": "fail",
+    "correct": true,
+    "route": "critic_failed",
+    "role_metrics": {
+      "translator": {
+        "condition": "blind",
+        "kind": "translator",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573229.435992,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 64.784,
+        "token_usage": {
+          "input_tokens": 73538,
+          "cached_input_tokens": 56832,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3313,
+          "reasoning_output_tokens": 21
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "judge": {
+        "condition": "blind",
+        "kind": "judge",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573294.7844977,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 50.174,
+        "token_usage": {
+          "input_tokens": 60499,
+          "cached_input_tokens": 52352,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2747,
+          "reasoning_output_tokens": 142
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "critic_metrics": {
+      "condition": "stateless",
+      "kind": "reviewer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793573345.570906,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "stopped_for_checkpoint": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 20.039,
+      "token_usage": "unknown",
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "additions-only": {
+    "expected": "fail",
+    "roundtrip": "pass",
+    "direct": "fail",
+    "correct": false,
+    "route": "needs_human",
+    "role_metrics": {
+      "translator": {
+        "condition": "blind",
+        "kind": "translator",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573366.1900072,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 47.711,
+        "token_usage": {
+          "input_tokens": 56460,
+          "cached_input_tokens": 44800,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2258,
+          "reasoning_output_tokens": 60
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "judge": {
+        "condition": "blind",
+        "kind": "judge",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573414.574382,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 146.618,
+        "token_usage": {
+          "input_tokens": 62299,
+          "cached_input_tokens": 48384,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3137,
+          "reasoning_output_tokens": 377
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "critic_metrics": {
+      "condition": "stateless",
+      "kind": "reviewer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793573561.8408062,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "stopped_for_checkpoint": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 22.022,
+      "token_usage": "unknown",
+      "compiler_command_events": 1,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "zero-u-only": {
+    "expected": "fail",
+    "roundtrip": "fail",
+    "direct": "fail",
+    "correct": true,
+    "route": "critic_failed",
+    "role_metrics": {
+      "translator": {
+        "condition": "blind",
+        "kind": "translator",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573584.5091913,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 88.813,
+        "token_usage": {
+          "input_tokens": 81610,
+          "cached_input_tokens": 69760,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 4223,
+          "reasoning_output_tokens": 89
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "judge": {
+        "condition": "blind",
+        "kind": "judge",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573673.8272026,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 41.001,
+        "token_usage": {
+          "input_tokens": 61011,
+          "cached_input_tokens": 55296,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2596,
+          "reasoning_output_tokens": 163
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "critic_metrics": {
+      "condition": "stateless",
+      "kind": "reviewer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793573715.4234846,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "stopped_for_checkpoint": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 20.038,
+      "token_usage": "unknown",
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "conclusion-assumed": {
+    "expected": "fail",
+    "roundtrip": "fail",
+    "direct": "fail",
+    "correct": true,
+    "route": "critic_failed",
+    "role_metrics": {
+      "translator": {
+        "condition": "blind",
+        "kind": "translator",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573736.101292,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 72.756,
+        "token_usage": {
+          "input_tokens": 80957,
+          "cached_input_tokens": 69376,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 4152,
+          "reasoning_output_tokens": 70
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      },
+      "judge": {
+        "condition": "blind",
+        "kind": "judge",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "medium",
+        "started_unix": 1793573809.3847892,
+        "time_limit_seconds": 180,
+        "api_cost": "unknown",
+        "aristotle_calls": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_time_seconds": 51.188,
+        "token_usage": {
+          "input_tokens": 60928,
+          "cached_input_tokens": 55424,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2730,
+          "reasoning_output_tokens": 94
+        },
+        "compiler_command_events": 0,
+        "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+      }
+    },
+    "critic_metrics": {
+      "condition": "stateless",
+      "kind": "reviewer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793573861.3776824,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "stopped_for_checkpoint": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 18.022,
+      "token_usage": "unknown",
+      "compiler_command_events": 0,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  }
+}

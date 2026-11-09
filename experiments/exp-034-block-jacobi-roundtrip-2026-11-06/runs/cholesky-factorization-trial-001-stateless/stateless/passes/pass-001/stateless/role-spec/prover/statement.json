@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Cholesky.cholesky_factorization"
+  ],
+  "construction_names": [
+    "Cholesky.FloatingPoint",
+    "Cholesky.gamma",
+    "Cholesky.entryAbs",
+    "Cholesky.perturbation",
+    "Cholesky.dotTail",
+    "Cholesky.roundedDot",
+    "Cholesky.dotTailInRange",
+    "Cholesky.dotInRange",
+    "Cholesky.prefixPairs",
+    "Cholesky.updateNumerator",
+    "Cholesky.SuccessfulRun",
+    "Cholesky.NoOverflowUnderflow"
+  ],
+  "source_mapping": "Research/Submission.lean: Cholesky.cholesky_factorization formalizes the full selected theorem theorem:cholesky_factorization in /spec/source.txt (paper.tex lines 500-545), for arbitrary n and a primitive sequential rounded upper Cholesky run. gamma, entryAbs, and perturbation encode the source constant, componentwise absolute values, and canonical residual. SuccessfulRun records only primitive recurrences and successful operations; NoOverflowUnderflow records in-range exact intermediates. Standard rounded sqrt is explicitly implemented by the same FloatingPoint.round map as arithmetic. Research/STATEMENT_NOTES.md records the source sqrt-model omission, exact empty-prefix handling, and statement revision audit. No feedback.json was present; no pre-existing formal statement was revised. The supplied support directory has no source files."
+}

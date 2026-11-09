@@ -1,0 +1,357 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "89ea5e9e971371faf2c6fc9415bf73b37b20c91250d788d72c550a382e93948f",
+  "targets": [
+    "BlockDotProduct.block_dot_product_sequential"
+  ],
+  "construction_names": [
+    "BlockDotProduct.blockCount",
+    "BlockDotProduct.treeDepth",
+    "BlockDotProduct.gamma",
+    "BlockDotProduct.zeroExtend",
+    "BlockDotProduct.RoundingTrace",
+    "BlockDotProduct.sequentialSum",
+    "BlockDotProduct.roundedProduct",
+    "BlockDotProduct.blockPartial",
+    "BlockDotProduct.sequentialBlockDotProduct"
+  ],
+  "declarations": [
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "BlockDotProduct.RoundingTrace.mk"
+      ],
+      "kind": "inductive",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.RoundingTrace",
+      "type": "Real \u2192 Type"
+    },
+    {
+      "body": "fun u self => self.2",
+      "dependencies": [
+        "Real",
+        "BlockDotProduct.RoundingTrace",
+        "Nat",
+        "Real",
+        "BlockDotProduct.RoundingTrace"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.RoundingTrace.blockAddError",
+      "type": "{u : Real} \u2192 BlockDotProduct.RoundingTrace u \u2192 Nat \u2192 Nat \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Real",
+        "Nat",
+        "LE.le",
+        "Real.instLE",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "BlockDotProduct.RoundingTrace"
+      ],
+      "kind": "constructor",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.RoundingTrace.mk",
+      "type": "{u : Real} \u2192\n  (productError blockAddError : Nat \u2192 Nat \u2192 Real) \u2192\n    (reductionError : Nat \u2192 Real) \u2192\n      (\u2200 (b t : Nat), LE.le.{0} (abs.{0} (productError b t)) u) \u2192\n        (\u2200 (b t : Nat), LE.le.{0} (abs.{0} (blockAddError b t)) u) \u2192\n          (\u2200 (b : Nat), LE.le.{0} (abs.{0} (reductionError b)) u) \u2192 BlockDotProduct.RoundingTrace u"
+    },
+    {
+      "body": "fun u self => self.1",
+      "dependencies": [
+        "Real",
+        "BlockDotProduct.RoundingTrace",
+        "Nat",
+        "Real",
+        "BlockDotProduct.RoundingTrace"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.RoundingTrace.productError",
+      "type": "{u : Real} \u2192 BlockDotProduct.RoundingTrace u \u2192 Nat \u2192 Nat \u2192 Real"
+    },
+    {
+      "body": "fun u self => self.3",
+      "dependencies": [
+        "Real",
+        "BlockDotProduct.RoundingTrace",
+        "Nat",
+        "Real",
+        "BlockDotProduct.RoundingTrace"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.RoundingTrace.reductionError",
+      "type": "{u : Real} \u2192 BlockDotProduct.RoundingTrace u \u2192 Nat \u2192 Real"
+    },
+    {
+      "body": "fun n T => HDiv.hDiv.{0, 0, 0} (HSub.hSub.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} n T) 1) T",
+      "dependencies": [
+        "Nat",
+        "Nat",
+        "HDiv.hDiv",
+        "instHDiv",
+        "Nat.instDiv",
+        "HSub.hSub",
+        "instHSub",
+        "instSubNat",
+        "HAdd.hAdd",
+        "instHAdd",
+        "instAddNat",
+        "OfNat.ofNat",
+        "instOfNatNat"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.blockCount",
+      "type": "Nat \u2192 Nat \u2192 Nat"
+    },
+    {
+      "body": "fun {n} {u} x y T trace b =>\n  BlockDotProduct.sequentialSum (BlockDotProduct.roundedProduct x y trace T b)\n    (BlockDotProduct.RoundingTrace.blockAddError trace b) T",
+      "dependencies": [
+        "Nat",
+        "Real",
+        "Fin",
+        "BlockDotProduct.RoundingTrace",
+        "Nat",
+        "Real",
+        "Fin",
+        "BlockDotProduct.RoundingTrace",
+        "BlockDotProduct.sequentialSum",
+        "BlockDotProduct.roundedProduct",
+        "BlockDotProduct.RoundingTrace.blockAddError"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.blockPartial",
+      "type": "{n : Nat} \u2192 {u : Real} \u2192 (Fin n \u2192 Real) \u2192 (Fin n \u2192 Real) \u2192 Nat \u2192 BlockDotProduct.RoundingTrace u \u2192 Nat \u2192 Real"
+    },
+    {
+      "body": "",
+      "dependencies": [
+        "Nat",
+        "LT.lt",
+        "instLTNat",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Real",
+        "LE.le",
+        "Real.instLE",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "Fin",
+        "BlockDotProduct.RoundingTrace",
+        "Real.instLT",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Nat.cast",
+        "Real.instNatCast",
+        "HAdd.hAdd",
+        "instHAdd",
+        "instAddNat",
+        "BlockDotProduct.treeDepth",
+        "BlockDotProduct.blockCount",
+        "One.toOfNat1",
+        "Real.instOne",
+        "HSub.hSub",
+        "instHSub",
+        "instSubNat",
+        "Exists",
+        "And",
+        "Eq",
+        "BlockDotProduct.sequentialBlockDotProduct",
+        "Finset.sum",
+        "Real.instAddCommMonoid",
+        "Finset.univ",
+        "Fin.fintype",
+        "Real.instAdd",
+        "abs",
+        "Real.lattice",
+        "Real.instAddGroup",
+        "BlockDotProduct.gamma"
+      ],
+      "kind": "theorem",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.block_dot_product_sequential",
+      "type": "\u2200 (n T : Nat),\n  LT.lt.{0} 0 n \u2192\n    LT.lt.{0} 0 T \u2192\n      \u2200 (u : Real),\n        LE.le.{0} 0 u \u2192\n          \u2200 (x y : Fin n \u2192 Real) (trace : BlockDotProduct.RoundingTrace u),\n            LT.lt.{0}\n                (HMul.hMul.{0, 0, 0}\n                  (\u2191(HAdd.hAdd.{0, 0, 0} T (BlockDotProduct.treeDepth (BlockDotProduct.blockCount n T)))) u)\n                1 \u2192\n              LT.lt.{0}\n                  (HMul.hMul.{0, 0, 0}\n                    (\u2191(HSub.hSub.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} T (BlockDotProduct.blockCount n T)) 1)) u)\n                  1 \u2192\n                \u2203 \u0394x \u0394y,\n                  And\n                    (Eq.{1} (BlockDotProduct.sequentialBlockDotProduct x y T trace)\n                      (\u2211 i, HMul.hMul.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} (x i) (\u0394x i)) (y i)))\n                    (And\n                      (\u2200 (i : Fin n),\n                        LE.le.{0} (abs.{0} (\u0394x i))\n                          (HMul.hMul.{0, 0, 0}\n                            (BlockDotProduct.gamma\n                              (HSub.hSub.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} T (BlockDotProduct.blockCount n T)) 1) u)\n                            (abs.{0} (x i))))\n                      (And\n                        (Eq.{1} (BlockDotProduct.sequentialBlockDotProduct x y T trace)\n                          (\u2211 i, HMul.hMul.{0, 0, 0} (x i) (HAdd.hAdd.{0, 0, 0} (y i) (\u0394y i))))\n                        (\u2200 (i : Fin n),\n                          LE.le.{0} (abs.{0} (\u0394y i))\n                            (HMul.hMul.{0, 0, 0}\n                              (BlockDotProduct.gamma\n                                (HSub.hSub.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} T (BlockDotProduct.blockCount n T)) 1) u)\n                              (abs.{0} (y i))))))"
+    },
+    {
+      "body": "fun m u => HDiv.hDiv.{0, 0, 0} (HMul.hMul.{0, 0, 0} (\u2191m) u) (HSub.hSub.{0, 0, 0} 1 (HMul.hMul.{0, 0, 0} (\u2191m) u))",
+      "dependencies": [
+        "Nat",
+        "Real",
+        "Nat",
+        "Real",
+        "HDiv.hDiv",
+        "instHDiv",
+        "DivInvMonoid.toDiv",
+        "Real.instDivInvMonoid",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "Nat.cast",
+        "Real.instNatCast",
+        "HSub.hSub",
+        "instHSub",
+        "Real.instSub",
+        "OfNat.ofNat",
+        "One.toOfNat1",
+        "Real.instOne"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.gamma",
+      "type": "Nat \u2192 Real \u2192 Real"
+    },
+    {
+      "body": "fun {n} {u} x y trace T b t =>\n  HMul.hMul.{0, 0, 0}\n    (HMul.hMul.{0, 0, 0} (BlockDotProduct.zeroExtend x (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} b T) t))\n      (BlockDotProduct.zeroExtend y (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} b T) t)))\n    (HAdd.hAdd.{0, 0, 0} 1 (BlockDotProduct.RoundingTrace.productError trace b t))",
+      "dependencies": [
+        "Nat",
+        "Real",
+        "Fin",
+        "BlockDotProduct.RoundingTrace",
+        "Nat",
+        "Real",
+        "Fin",
+        "BlockDotProduct.RoundingTrace",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "BlockDotProduct.zeroExtend",
+        "HAdd.hAdd",
+        "instHAdd",
+        "instAddNat",
+        "instMulNat",
+        "Real.instAdd",
+        "OfNat.ofNat",
+        "One.toOfNat1",
+        "Real.instOne",
+        "BlockDotProduct.RoundingTrace.productError"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.roundedProduct",
+      "type": "{n : Nat} \u2192 {u : Real} \u2192 (Fin n \u2192 Real) \u2192 (Fin n \u2192 Real) \u2192 BlockDotProduct.RoundingTrace u \u2192 Nat \u2192 Nat \u2192 Nat \u2192 Real"
+    },
+    {
+      "body": "fun {n} {u} x y T trace =>\n  BlockDotProduct.sequentialSum (BlockDotProduct.blockPartial x y T trace)\n    (BlockDotProduct.RoundingTrace.reductionError trace) (BlockDotProduct.blockCount n T)",
+      "dependencies": [
+        "Nat",
+        "Real",
+        "Fin",
+        "BlockDotProduct.RoundingTrace",
+        "Nat",
+        "Real",
+        "Fin",
+        "BlockDotProduct.RoundingTrace",
+        "BlockDotProduct.sequentialSum",
+        "BlockDotProduct.blockPartial",
+        "BlockDotProduct.RoundingTrace.reductionError",
+        "BlockDotProduct.blockCount"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.sequentialBlockDotProduct",
+      "type": "{n : Nat} \u2192 {u : Real} \u2192 (Fin n \u2192 Real) \u2192 (Fin n \u2192 Real) \u2192 Nat \u2192 BlockDotProduct.RoundingTrace u \u2192 Real"
+    },
+    {
+      "body": "fun entry error x =>\n  Nat.brecOn.{1} x fun x f =>\n    (match (motive := (x : Nat) \u2192 Nat.below.{1} x \u2192 Real) x with\n      | 0 => fun x => 0\n      | Nat.succ k => fun x =>\n        ite.{1} (Eq.{1} k 0) (entry 0)\n          (HMul.hMul.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} x.1 (entry k)) (HAdd.hAdd.{0, 0, 0} 1 (error k))))\n      f",
+      "dependencies": [
+        "Nat",
+        "Real",
+        "Nat",
+        "Real",
+        "Nat.brecOn",
+        "Nat.below",
+        "BlockDotProduct.sequentialSum.match_1",
+        "Unit",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Zero.toOfNat0",
+        "Real.instZero",
+        "Nat.succ",
+        "ite",
+        "Eq",
+        "instDecidableEqNat",
+        "HMul.hMul",
+        "instHMul",
+        "Real.instMul",
+        "HAdd.hAdd",
+        "instHAdd",
+        "Real.instAdd",
+        "One.toOfNat1",
+        "Real.instOne"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.sequentialSum",
+      "type": "(Nat \u2192 Real) \u2192 (Nat \u2192 Real) \u2192 Nat \u2192 Real"
+    },
+    {
+      "body": "fun motive x h_1 h_2 => Nat.casesOn.{u_1} x (h_1 Unit.unit) fun n => h_2 n",
+      "dependencies": [
+        "Nat",
+        "Unit",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Nat.succ",
+        "Nat",
+        "Unit",
+        "OfNat.ofNat",
+        "instOfNatNat",
+        "Nat.succ",
+        "Nat.casesOn",
+        "Unit.unit"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.sequentialSum.match_1",
+      "type": "(motive : Nat \u2192 Sort u_1) \u2192 (x : Nat) \u2192 (Unit \u2192 motive 0) \u2192 ((k : Nat) \u2192 motive (Nat.succ k)) \u2192 motive x"
+    },
+    {
+      "body": "fun B => Nat.clog 2 B",
+      "dependencies": [
+        "Nat",
+        "Nat",
+        "Nat.clog",
+        "OfNat.ofNat",
+        "instOfNatNat"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.treeDepth",
+      "type": "Nat \u2192 Nat"
+    },
+    {
+      "body": "fun {n} x i => if h : LT.lt.{0} i n then x \u27e8i, h\u27e9 else 0",
+      "dependencies": [
+        "Nat",
+        "Fin",
+        "Real",
+        "Nat",
+        "Fin",
+        "Real",
+        "dite",
+        "LT.lt",
+        "instLTNat",
+        "Nat.decLt",
+        "Fin.mk",
+        "Not",
+        "OfNat.ofNat",
+        "Zero.toOfNat0",
+        "Real.instZero"
+      ],
+      "kind": "definition",
+      "module": "Research.Submission",
+      "name": "BlockDotProduct.zeroExtend",
+      "type": "{n : Nat} \u2192 (Fin n \u2192 Real) \u2192 Nat \u2192 Real"
+    }
+  ],
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.28.0",
+    "manifest_sha256": "504c0a3c7e4f543bd5786d646e64d3549e5e8e8a226f0edca597bc684d5b5939"
+  }
+}

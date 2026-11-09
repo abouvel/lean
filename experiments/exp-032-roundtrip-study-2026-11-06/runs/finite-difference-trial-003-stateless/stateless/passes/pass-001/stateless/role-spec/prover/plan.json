@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "strategy": "Define the real forward-difference approximation explicitly, then apply the local Mathlib Lagrange mean value theorem to f on [x, x+h] with the supplied derivative function D. Its interior witness connects the required construction to the theorem: the constructed forward difference equals D(c) for some c in (x, x+h). Specialize the given local variation estimate at that witness and bound its distance from x by h, using L >= 0. Use Mathlib.Analysis.Calculus.Deriv.MeanValue (or import Mathlib); the verified prerequisite is exists_hasDerivAt_eq_slope in that file. Keep D(x) as an arbitrary reference value and impose no derivative assumption at either endpoint. This is a planning artifact only, not a completed target proof. No /spec/feedback.json or additional supporting source files were present.",
+  "obligations": [
+    {
+      "id": "forward_difference_definition",
+      "description": "Introduce an explicit definition forwardDifference (f : \u211d \u2192 \u211d) (x h : \u211d) : \u211d := (f (x + h) - f x) / h. The required construction is this approximation, and the theorem must bound its absolute error relative to D x."
+    },
+    {
+      "id": "faithful_theorem_statement",
+      "description": "Quantify over f D : \u211d \u2192 \u211d and x h L : \u211d. Assume 0 < h, 0 \u2264 L, ContinuousOn f (Set.Icc x (x+h)), \u2200 t \u2208 Set.Ioo x (x+h), HasDerivAt f (D t) t, and \u2200 t \u2208 Set.Ioo x (x+h), |D t - D x| \u2264 L * |t-x|. Conclude |forwardDifference f x h - D x| \u2264 L*h. Do not replace the local variation hypothesis by global regularity, continuity of D, or endpoint differentiability."
+    },
+    {
+      "id": "interval_and_denominator",
+      "description": "Derive x < x+h from h > 0 and record (x+h)-x = h. Positivity also implies h \u2260 0 if needed for algebra. These supply the mean value interval ordering and normalize its slope to the defined forward difference."
+    },
+    {
+      "id": "mean_value_witness",
+      "description": "Use exists_hasDerivAt_eq_slope f D with endpoints x and x+h, the interval ordering, the supplied ContinuousOn hypothesis, and precisely the supplied interior HasDerivAt hypothesis. Obtain c \u2208 Set.Ioo x (x+h) and D c = (f (x+h)-f x)/((x+h)-x). Normalize the denominator to identify D c with forwardDifference f x h. The witness is the link between the approximation construction and the error theorem; no custom calculus prerequisite or axiom is needed."
+    },
+    {
+      "id": "local_variation_and_distance",
+      "description": "Specialize the variation assumption at c using its open-interval membership. Use x < c and c < x+h to establish 0 \u2264 c-x and c-x \u2264 h, then rewrite |c-x| with abs_of_nonneg. Apply mul_le_mul_of_nonneg_left with 0 \u2264 L to obtain L*|c-x| \u2264 L*h. Linear arithmetic suffices for the interval inequalities."
+    },
+    {
+      "id": "assemble_and_validate",
+      "description": "Rewrite the target absolute error using the mean value witness and compose the two inequalities. Ensure the result is stated for the explicit forwardDifference definition with every original assumption represented. The eventual formalizer must check the complete Lean candidate using the installed Lean and Mathlib, with all definitions and proofs supplied, no sorry, placeholders, custom axioms, or Aristotle. No target proof is supplied by this plan."
+    }
+  ]
+}

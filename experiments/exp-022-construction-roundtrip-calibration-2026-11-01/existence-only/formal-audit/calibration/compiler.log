@@ -1,0 +1,3 @@
+Build completed successfully (8028 jobs).
+Auditing project axiom dependencies
+FORMAL_CONTEXT_JSON:{"axioms":["propext","Quot.sound","Classical.choice"],"declarations":[{"body":"","dependencies":["Exists","Real","Eq","HMul.hMul","instHMul","Real.instMul","OfNat.ofNat","Zero.toOfNat0","Real.instZero"],"kind":"theorem","module":"Research.Submission","name":"Research.root_exists","type":"∃ x, Eq.{1} (HMul.hMul.{0, 0, 0} x x) 0"}],"schema_version":1}

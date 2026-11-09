@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.forwardDifference_error_bound"
+  ],
+  "construction_names": [
+    "Research.forwardDifference"
+  ],
+  "source_mapping": "/spec/source.txt: the forward-difference definition is Research.forwardDifference in Research/Submission.lean; the complete requested error estimate is Research.forwardDifference_error_bound in the same file. The theorem explicitly assumes h > 0, L >= 0, continuity on the closed interval, the prescribed derivative only on the open interval, and the stated local variation bound relative to D(x). No endpoint derivative assumptions are added. No supporting source files were supplied. /spec/feedback.json is absent; no statement revision was made. The theorem proof is temporary sorry scaffolding for the next proof role."
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "targets": [
+    "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation"
+  ],
+  "construction_names": [
+    "Research.BinaryTreeReduction.exactProductTree",
+    "Research.BinaryTreeReduction.roundedProductTree",
+    "Research.BinaryTreeReduction.roundedDotProduct"
+  ],
+  "source_mapping": "Authoritative /spec/source.txt: Research/Projects/BinaryTreeReduction/DotProduct.lean defines exactProductTree as the shape-preserving map of exact pair products, roundedProductTree as the map of Model.mul, and roundedDotProduct as roundedSum of roundedProductTree. The target universally quantifies over every supplied Model and every Tree (Real \u00d7 Real); its only additional assumption is ((tree.depth + 1 : Nat) : Real) * model.u < 1. It concludes existence of a same-shape tree of perturbed exact products with leafwise relative error at most gamma (tree.depth + 1) model.u and exact sum equal to the rounded dot product, covering multiplication and addition rounding. All five supporting sources were copied byte-for-byte unchanged. Statement revision record: initial statement; /spec/feedback.json absent; no revision. The final theorem proof is temporary sorry scaffolding for the next proof role; all three construction definitions have actual bodies."
+}

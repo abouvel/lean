@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "candidate_hash": "4b7b69d0999087608c59bf55234737a68bd6ccf6fe9d885cb18a9b7111f9dec5",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "delivery_complete": true,
+  "construction_complete": true,
+  "missing_formal_steps": [],
+  "target_evidence": "Cholesky.cholesky_factorization explicitly asserts the entire selected conclusion for every dimension and every SPD input with a successful rounded execution: a symmetric DeltaA equal to Rhat^T Rhat-A, the factorization identity, and the componentwise gamma(n+1,u) bound using the product of the entrywise absolute factors. These are final target conclusions, not bridges inferred from supporting lemmas.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "The translated target already asserts existence of DeltaA, its symmetry, Rhat^T Rhat=A+DeltaA and the required bound for every index pair. No missing composition of helper results is needed.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the upper-triangular computed Cholesky factor and its successful-completion semantics, including the rounded square root.",
+      "evidence": "SuccessfulCholesky(u,A,Rhat) is Execute(u,A,entryOrder(n),0,Rhat). The order visits each upper-triangular entry once, column by column. EntryComputation uses SequentialDot over k<i, a residual, and either Rounded(u,sqrt(residual),value) with residual>=0 or rounded division by a nonzero diagonal entry. writeEntry changes only that entry, so the lower triangle stays zero. Rounded supplies a separate relative error bounded by u for each operation. Direct treatment of the empty sum and initialization from the first product are standard sequential evaluation conventions. This is an actual relational definition of successful runs; neither a deterministic rounding selector nor total successful execution is required by the source construction policy.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the symmetric perturbation identity and gamma(n+1) bound using the product of the entrywise absolute factors.",
+      "evidence": "The target explicitly asserts DeltaA^T=DeltaA, Rhat^T Rhat=A+DeltaA and |DeltaA[i,j]|<=gamma(n+1,u)*(entrywiseAbs(Rhat^T)*entrywiseAbs(Rhat))[i,j]. The product is sum_k |Rhat[k,i]|*|Rhat[k,j]|. gamma(m,u)=m*u/(1-m*u), with positive denominator in the target. This is the required componentwise bound, not a norm estimate or the absolute value of a matrix product.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "The successful execution uses exactly the A, u and Rhat in the final conclusion. It starts at zero; each entry computation reads A[i,j] and the current previously computed factor entries. backwardPerturbation(A,Rhat)=Rhat^T Rhat-A uses that same original input and actual final output.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "The target assumes symmetry and positive definiteness of A, nonnegative unit roundoff, (n+1)u<1 and successful execution. Nonnegative u is inherent in unit roundoff; finite real relative rounding encodes the source model excluding overflow and underflow. SuccessfulCholesky imposes local operational side conditions, not an error estimate. Defining DeltaA by subtraction assumes no bound. All natural dimensions and all real SPD inputs are covered conditionally on success, as in the source. The existential perturbation is legitimate for this backward-error theorem; no extra executable perturbation construction is required.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": [
+    "Review is of the supplied mathematical translation and target statements; Lean code and proof checking were not inspected."
+  ]
+}

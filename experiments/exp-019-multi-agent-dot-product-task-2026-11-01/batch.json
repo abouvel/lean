@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "limits": {
+    "jobs": 1,
+    "model_calls": 1,
+    "lean_builds": 1,
+    "ram_gib": 12,
+    "job_seconds": 3600
+  },
+  "tasks": [
+    {
+      "id": "dot-product",
+      "config": "experiments/exp-019-multi-agent-dot-product-task-2026-11-01/experiment.json",
+      "trials": 1,
+      "memory_review": {
+        "target_answer_excluded": true,
+        "note": "Frozen pilot-general-lean-001 only: generic absolute-value, denominator, and stale-import guidance. No dot-product solution, prior candidate, evaluator output, or other-condition evidence is provided."
+      }
+    }
+  ]
+}

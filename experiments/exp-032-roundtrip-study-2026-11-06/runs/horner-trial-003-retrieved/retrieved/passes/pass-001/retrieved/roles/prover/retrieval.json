@@ -1,0 +1,19 @@
+{
+  "search_queries": [
+    "rg --files /spec /workspace /memory /output",
+    "rg --files -g AGENTS.md /workspace /spec",
+    "rg -n 'sorry|admit|axiom' /workspace/Research --glob '*.lean'"
+  ],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for the triangle inequalities in the single-rounding perturbation proof."
+    }
+  ]
+}

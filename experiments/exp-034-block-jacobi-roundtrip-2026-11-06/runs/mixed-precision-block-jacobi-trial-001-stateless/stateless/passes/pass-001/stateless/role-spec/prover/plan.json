@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "strategy": "Formalize the full selected mixed-precision block-Jacobi theorem over finite real vectors and matrices, with actual rounded kernel executions linked to A, D, N, b, the exact solution, and the initial iterate. Use the standard local relative-error model to define admissible arithmetic executions, not an abstract recurrence assumed to satisfy the target bound. Derive the tiled matvec and Cholesky-solve backward-error helpers from their algorithms, assemble the blocks, then obtain the scalar error recurrence and its finite-time and limsup consequences. For the scalar theorem, absorbing eta times the correction norm directly avoids the optional Neumann-series construction without changing any conclusion. Preserve every displayed constant. Source: /spec/source.txt is authoritative; /spec/PROMPT.txt supplies formalization requirements; /spec/paper.tex supplies algorithm and helper proof context. /spec/support contains no files and /spec/feedback.json is absent. Do not use commented-out paper material to replace the selected statement. No completed target proof is supplied by this plan.",
+  "obligations": [
+    {
+      "id": "source_fidelity",
+      "description": "State the selected theorem with all original inputs and quantifiers: A=D+N, SPD diagonal blocks of size T, A*x=b, precisions u_s<u_c, S dividing n, valid gamma denominators, no overflow/underflow, computed factors Rhat, eta<1, all k, and the additional alpha<1 condition only for the final two conclusions. Do not add q<1, invertibility of A, exact factorization, a desired backward-error bound, or the desired recurrence as hypotheses. Interpret unit roundoffs as nonnegative and gamma validity as m*u<1, not merely a nonzero denominator."
+    },
+    {
+      "id": "dimensions_blocks_inverse",
+      "description": "Represent vectors and matrices using finite indices and a genuine partition into T-sized blocks, with a reindexing to Fin n if useful. Preserve S as the independent matvec tile size. Extract positive tile/block sizes and full block coverage from the algorithm specification, recording any ambiguity rather than silently imposing unrelated restrictions. Construct block-diagonal D and Rhat from their actual blocks, and derive nonsingularity of D and the inverse identities from block SPD; a supplied arbitrary matrix called Dinv is insufficient."
+    },
+    {
+      "id": "norms_order",
+      "description": "Define or correctly instantiate the vector infinity norm and induced matrix infinity norm (maximum absolute row sum). Check Mathlib matrix norm instances rather than assuming the default norm is the row-sum norm. Establish entrywise absolute-value inequalities, positivity of multiplication by nonnegative matrices, matrix-vector norm bounds, triangle inequalities, and the required nonnegativity of c1, c2, p, q, eta, alpha and beta."
+    },
+    {
+      "id": "rounded_execution_construction",
+      "description": "Define precision-indexed rounded elementary operations or their execution relation with a separate local error for each scalar operation. Build sequential inner products and the two-stage S-tiled matvec, componentwise residual subtraction, rounding/conversion of the residual to correction precision, block Cholesky and its two substitutions, and the componentwise solution addition. Define the sequence of computed iterates recursively from the initial iterate using these kernels; quantify over admissible executions. Fix or explicitly represent the source factorization schedule so Rhat in G is the factor actually used, not an unrelated matrix. A record containing only global backward-error conclusions does not complete this construction."
+    },
+    {
+      "id": "source_model_audit",
+      "description": "Audit successful Cholesky execution and square-root rounding before applying the helper. The earlier Cholesky results explicitly assume successful completion; the selected statement refers to computed Cholesky factors but does not independently guarantee success from SPD in finite precision. Represent an existing successful execution as the meaning of computed factors, and document this interpretation; do not assert that SPD alone proves success. The displayed elementary model lists +,-,*,/ while the algorithm also requires sqrt: use the intended standard correctly rounded sqrt semantics if justified as the meaning of floating-point Cholesky, or report the missing specification precisely. Likewise model any input conversion consistently with the source rather than silently adding matrix rounding perturbations not covered by c2. These are specification checks, not permission to weaken the theorem."
+    },
+    {
+      "id": "gamma_and_tiled_matvec",
+      "description": "Prove finite-product relative-error estimates with possible inverse factors, monotonicity of gamma, and the sequential accumulation bounds, including empty and one-term sums. Apply them to the actual two-stage S-tiled matvec to construct at each k a perturbation DeltaA_k satisfying zhat_k=(A+DeltaA_k)*xhat_k and |DeltaA_k|<=gamma_(S+n/S-1;s)|A|. Keep perturbations iteration-dependent. Explain why divisibility removes padding and prove every arithmetic denominator is positive."
+    },
+    {
+      "id": "residual_perturbations",
+      "description": "Construct residual perturbations from the scalar residual rounding errors (componentwise, not a single common scalar). Derive rhat_k=-A*e_k+Delta b_k+Delta z_k, with |Delta b_k|<=u_s|b| and |Delta z_k|<=c1|A||xhat_k|, using exactly c1=gamma_(S+n/S-1;s)+u_s+u_s*gamma_(S+n/S-1;s). Also derive the corresponding componentwise residual bound used for low-precision residual conversion."
+    },
+    {
+      "id": "cholesky_backward_error",
+      "description": "Prove the helper for the executed Cholesky recurrence and forward/backward substitutions, including first-row cases and rounded square roots. Derive the factorization perturbation bound gamma_(T+1;c)|Rhat^T||Rhat|, each triangular-solve bound gamma_(T;c), and their composition giving gamma_(T+1;c)+2*gamma_(T;c)+gamma_(T;c)^2 <= c2. Assemble these blockwise into DeltaD_k with |DeltaD_k|<=c2|Rhat^T||Rhat| and (D+DeltaD_k)*chat_(k+1)=rhat_k+Delta rhat_k. Derive |Delta rhat_k|<=u_c|rhat_k| from the actual residual conversion; if conversion is exact, zero is an admissible perturbation. Do not quote an unproved paper lemma as an assumption."
+    },
+    {
+      "id": "feedback_gain_and_correction",
+      "description": "Construct G=c2*|D inverse|*|Rhat transpose|*|Rhat| and identify eta with its induced infinity norm. Derive |D inverse*DeltaD_k|<=G. From the correction equation and A=D+N, obtain a scalar correction-norm inequality containing eta times that same norm; use eta<1 to absorb it. The required correction bound has coefficient (1+q+u_c*p)/(1-eta) on ||e_k|| and coefficient (1+u_c)/(1-eta) on [u_s*||D inverse||*||b||+c1*p*||xhat_k||]. Prove this estimate from the constructed perturbations, not as an execution field. If using H=(I-G) inverse instead, construct it and prove its positivity and norm bound rather than postulating these facts."
+    },
+    {
+      "id": "one_step_error_constants",
+      "description": "Use the actual rounded update and the correction identity to preserve cancellation of the exact -e_k term. Bound the remaining update rounding and perturbation terms, then substitute the correction bound. Collect coefficients to match the displayed alpha and beta exactly, using ||xhat_k||<=||x||+||e_k|| and 1-eta>0. In particular retain q=||D inverse*N|| rather than replacing it by an entrywise-majorant product. The final theorem must apply to the recursively constructed iterates, not to a newly quantified arbitrary sequence satisfying a norm recurrence."
+    },
+    {
+      "id": "finite_and_asymptotic_conclusions",
+      "description": "From the derived recurrence prove the bound for every natural k, including k=0, with alpha^k*||e_0||+((1-alpha^k)/(1-alpha))*beta when alpha<1. Derive the necessary 0<=alpha from source data, justify the geometric-sum identity and alpha^k tending to zero, and prove the real limsup statement with boundedness/eventual comparison sufficient for the selected limsup formalization. A convergence statement about the scalar comparison sequence alone is not the required conclusion about actual error norms."
+    },
+    {
+      "id": "integration_and_blockers",
+      "description": "Check a single exported theorem contains the construction linkage, one-step bound, finite-k bound, and limsup bound at the exact constants. Validate all dependencies in local Lean/Mathlib with no custom axioms, sorry, or placeholders. Under the builder time limit, implement foundational and algorithmic obligations before optional matrix spectral-radius machinery. If a source specification gap or unresolved helper prevents completion, record its exact statement and dependency; do not present a conditional scalar recurrence theorem as completion of the original task."
+    }
+  ]
+}

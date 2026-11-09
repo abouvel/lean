@@ -1,0 +1,1 @@
+Pass: the translation is faithful, and all six requirements pass. Saved atomically to [roundtrip.json](/output/roundtrip.json).

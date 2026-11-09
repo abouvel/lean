@@ -1,0 +1,1349 @@
+{
+  "schema_version": 1,
+  "jobs": [
+    {
+      "job_id": "block-dot-product-trial-001-stateless",
+      "task_id": "block-dot-product",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "Both listed targets explicitly state both exact backward-error representations and both pointwise bounds for the same computed result. The balanced target fixes canonicalTree without a schedule premise, so no missing composition is needed to obtain the final theorem.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums.",
+          "evidence": "padded returns the original entry below n and zero otherwise. blockPartial accumulates T rounded products at indices j*T+t using blockPrefix, initialized with the first product and adding subsequent products sequentially. canonicalTree recursively splits the block interval and removes empty branches. evaluateTree combines the resulting partials by rounded binary additions. These are explicit recursive constructions.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T)))).",
+          "evidence": "Each target explicitly asserts C=sum_i (x(i)+Delta_x(i))*y(i) and C=sum_i x(i)*(y(i)+Delta_y(i)), with both pointwise bounds g times the magnitude of the corresponding original entry. Here g=K*u/(1-K*u), K=T+Nat.clog(2,blockCount(n,T)), and blockCount=ceil(n/T) for positive T. The hypothesis K*u<1 is present.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "C is computedResult(x,y,T,e,tree), evaluating blockPartial of those same original x,y. Both perturbation equalities sum over Fin n, excluding padding. The general target requires each block label exactly once and height at most the specified depth; the balanced target directly selects the constructed canonical tree.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The targets quantify arbitrary real inputs, positive n,T, nonnegative unit roundoff, and arbitrary error fields bounded by u, with the required K*u<1. Positive sizes and nonnegative unit roundoff express the meaningful domain of the source algorithm. Supplied multiplicative error factors encode the stated standard rounding model under the no-overflow/no-underflow hypothesis. Bounds on unused error indices impose no restriction on actual executions, since unused fields can be zero. There is no T<=n restriction, independence requirement, or assumed backward-error bound.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "1da037325eb3b769654318351379dd168658add1d63e06ed9a5279d4783d238d",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 200.30336144400644,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 61.719,
+          "tokens": {
+            "input_tokens": 89686,
+            "cached_input_tokens": 80768,
+            "output_tokens": 2478,
+            "reasoning_output_tokens": 182
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 126.347,
+          "tokens": {
+            "input_tokens": 122557,
+            "cached_input_tokens": 97152,
+            "output_tokens": 5515,
+            "reasoning_output_tokens": 117
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 212243,
+        "cached_input_tokens": 177920,
+        "output_tokens": 7993,
+        "reasoning_output_tokens": 299
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-01",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "block-dot-product-trial-001-retrieved",
+      "task_id": "block-dot-product",
+      "condition": "retrieved",
+      "outcome": "needs_human",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "uncertain",
+      "reviewer_disagreement": true,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The target block_dot_product explicitly asserts both exact backward-error representations and both entrywise bounds for the same computed value. These are final conclusions, not merely helper lemmas. Full delivery remains uncertain because its depth parameter has no supplied mathematical specification.",
+          "verdict": "uncertain",
+          "defect_categories": [],
+          "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define sequential dot products in size-T blocks, zero padding, and the binary-tree reduction of partial sums.",
+          "evidence": "padded zero-extends each vector. roundedProduct uses index j*T+t; sequentialBlock starts with the first rounded product and rounds subsequent additions; blockLeaf uses T products and zero leaves beyond B. binaryReduction recursively combines adjacent children. B=((n+T)-1) div T equals ceil(n/T) for positive T. However computed uses exactly 2^d leaves with d=Nat.clog(2,B), whose meaning is explicitly unresolved in the translation. Required height and block coverage cannot be verified.",
+          "verdict": "uncertain",
+          "defect_categories": [],
+          "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the two stated backward-error representations with gamma(T + ceil(log2(ceil(n/T)))).",
+          "evidence": "The target asserts computed=sum (x+Delta_x)*y and computed=sum x*(y+Delta_y), and bounds each perturbation by gamma(u,K) times the magnitude of the corresponding original entry, for all Fin(n) indices. gamma(u,K)=K*u/(1-K*u), K=T+d, and K*u<1 is assumed. Without a specification of Nat.clog, K cannot be identified with T+ceil(log2(ceil(n/T))).",
+          "verdict": "uncertain",
+          "defect_categories": [],
+          "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "Both representations use the same computed(T,x,y,e), the original x,y, and the same error record. The described products use their zero extensions directly. This gives explicit input linkage, but full linkage to the specified algorithm remains uncertain: coverage of all B blocks by the 2^d reduced leaves depends on the unresolved depth.",
+          "verdict": "uncertain",
+          "defect_categories": [],
+          "correction": "Supply the missing mathematical specification of Nat.clog so the exact depth, block coverage and bound can be assessed."
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The target quantifies arbitrary natural n, positive T, nonnegative real u, arbitrary real vectors and arbitrary admissible error records. Admissible bounds the relative errors of the specified products and additions, consistent with the source rounding model under no overflow or underflow. It assumes neither perturbations nor their bounds. There is no divisibility restriction, sign restriction on entries, or independence assumption. Positive block size and nonnegative unit roundoff are implicit source domain conditions. The smallness premise has the source form, subject to resolving d.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "uncertain",
+      "delivery_complete": "uncertain",
+      "construction_complete": "uncertain",
+      "candidate_hash": "7f4fef968b46c3ef426e2e042f37748ab27ece5c3665be5664425a4f35305305",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 190.02105648699217,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 62.734,
+          "tokens": {
+            "input_tokens": 68012,
+            "cached_input_tokens": 50304,
+            "output_tokens": 2686,
+            "reasoning_output_tokens": 187
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 115.244,
+          "tokens": {
+            "input_tokens": 74187,
+            "cached_input_tokens": 53504,
+            "output_tokens": 5123,
+            "reasoning_output_tokens": 245
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 142199,
+        "cached_input_tokens": 103808,
+        "output_tokens": 7809,
+        "reasoning_output_tokens": 432
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-02",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "sequential-block-dot-trial-001-stateless",
+      "task_id": "sequential-block-dot",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The sole final target explicitly states both exact backward-error representations of computedDot and both coordinatewise bounds, with existential Delta x and Delta y simultaneously. No supporting-lemma composition is needed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define sequential combination of the size-T block partial dot products.",
+          "evidence": "padded zero-extends the original inputs; roundedProduct applies one multiplication error to each product. blockPartial sequentially accumulates exactly T padded products. computedDot sequentially accumulates B=ceil(n/T) such partials. sequentialSum takes the first entry directly and applies an addition error at each subsequent entry. This is the specified algorithm under the standard relative-error model; a hardware rounding implementation is not required.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the stated two backward-error representations with gamma(T + ceil(n/T) - 1).",
+          "evidence": "The final target explicitly gives computedDot=sum (x+Delta x)*y and computedDot=sum x*(y+Delta y), together with both bounds for every i:Fin n. For nonempty inputs K=errorIndex(n,T)=T+ceil(n/T)-1, and gamma(K,u)=K*u/(1-K*u). One multiplication, at most T-1 block additions and B-1 reduction additions affect each term. Empty inputs give empty sums and vacuous coordinate bounds.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "Both left-hand sides in the target are computedDot(T,x,y,e), and both right-hand sides use the same original x,y. The recurrence operates on their padded entries. termCoefficient locates each original coordinate using j=i div T and t=i mod T and includes its multiplication and sequential addition factors. backwardPerturbation(T,e,x,i)=(termCoefficient(n,T,e,i)-1)*x(i) is an explicit perturbation formula compatible with these representations.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The target covers all real x,y and all admissible elementary-error traces, with T>0, u>=0, (T+treeDepth(n,T))*u<1 and K*u<1. The tree-depth smallness condition is inherited from the earlier theorem through the selected source statement. Admissible imposes only the standard bounds on individual elementary errors, not a coefficient bound or the desired conclusion. Arbitrary bounded traces encode the stated rounding model; actual floating-point computations without overflow or underflow supply such traces. No sign, magnitude or nonzero-coordinate restriction is added. Including n=0 introduces only the trivial empty case.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "bd2b6e92a989f362b70b5b35511f822a2744e67fedf05003a3c50988dbde9c05",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 138.24371760201757,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 60.438,
+          "tokens": {
+            "input_tokens": 69680,
+            "cached_input_tokens": 49024,
+            "output_tokens": 2541,
+            "reasoning_output_tokens": 216
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 66.166,
+          "tokens": {
+            "input_tokens": 51586,
+            "cached_input_tokens": 31616,
+            "output_tokens": 2930,
+            "reasoning_output_tokens": 105
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 121266,
+        "cached_input_tokens": 80640,
+        "output_tokens": 5471,
+        "reasoning_output_tokens": 321
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-03",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "sequential-block-dot-trial-001-retrieved",
+      "task_id": "sequential-block-dot",
+      "condition": "retrieved",
+      "outcome": "needs_human",
+      "automated_success": false,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "uncertain",
+      "reviewer_disagreement": true,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The final target explicitly asserts both representations and both componentwise bounds for its computation. No helper composition is missing. Agreement of its full hypothesis scope remains unresolved because treeDepth is unspecified.",
+          "verdict": "uncertain",
+          "defect_categories": [],
+          "correction": "Supply the mathematical specification of Nat.clog 2 B to verify the final theorem domain."
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define sequential combination of the size-T block partial dot products.",
+          "evidence": "zeroExtend pads entries beyond n with zero. roundedProduct applies bounded relative errors to products at b*T+t; blockPartial sequentially sums T such products; sequentialBlockDotProduct sequentially sums B=ceil(n/T) partials. sequentialSum copies its first entry and rounds each later addition. These explicit recurrences implement the source computation.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the stated two backward-error representations with gamma(T + ceil(n/T) - 1).",
+          "evidence": "The final target asserts Q=sum (x+Delta_x)*y and Q=sum x*(y+Delta_y), and both bounds at every original index. Its constant is gamma(m,u)=m*u/(1-m*u), m=T+B-1, B=ceil(n/T), with m*u<1. Both representations use the same Q.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "Q is explicitly sequentialBlockDotProduct(x,y,T,trace). Both final sums perturb the same x,y:Fin n -> R from which the zero-padded products are computed. Arbitrary bounded traces encode the operationwise relative errors in the source model. No backward-error conclusion is assumed as input.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The target quantifies positive n,T, nonnegative u, arbitrary real vectors and arbitrary traces with operation errors bounded by u. It assumes m*u<1 and (T+treeDepth(B))*u<1. The latter should match the inherited ceil(log2 B) condition, but treeDepth(B)=Nat.clog 2 B has no supplied mathematical specification. Neither equivalence nor a definite added restriction can be established. No circular construction or assumed conclusion is reported.",
+          "verdict": "uncertain",
+          "defect_categories": [],
+          "correction": "Specify Nat.clog mathematically and verify treeDepth(B)=ceil(log2 B) for positive B, or provide a verified equivalent hypothesis."
+        }
+      ],
+      "roundtrip_relation": "uncertain",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "89ea5e9e971371faf2c6fc9415bf73b37b20c91250d788d72c550a382e93948f",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 177.0591814859945,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 62.835,
+          "tokens": {
+            "input_tokens": 68622,
+            "cached_input_tokens": 58240,
+            "output_tokens": 2641,
+            "reasoning_output_tokens": 305
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 102.419,
+          "tokens": {
+            "input_tokens": 69207,
+            "cached_input_tokens": 61824,
+            "output_tokens": 4667,
+            "reasoning_output_tokens": 316
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 137829,
+        "cached_input_tokens": 120064,
+        "output_tokens": 7308,
+        "reasoning_output_tokens": 621
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-04",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "block-matrix-vector-trial-001-stateless",
+      "task_id": "block-matrix-vector",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "Both block_matrix_vector_product_constructed and block_matrix_vector_product explicitly assert computed(A,x,T,E)=(A+DeltaA)x and the componentwise perturbation bound. The former specifies the witness; the latter states the entire existential conclusion. No final theorem is left to composition of helpers.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the rowwise size-T block matrix-vector product with sequential reduction and zero padding.",
+          "evidence": "padded returns zero beyond n. roundedProduct uses padded(A(i))(b*T+t)*padded(x)(b*T+t)*(1+E.mulError(i,b,t)). blockPartial sequentially sums T products, and computed sequentially sums B block partials for each row. sequentialSum starts with its first term and rounds all subsequent additions. blockCount=((n+T) dotminus 1) div T equals ceil(n/T) for T>0. Padded trailing additions still multiply prior accumulated contributions.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the perturbation matrix identity and the entrywise gamma(T + ceil(n/T) - 1) bound.",
+          "evidence": "Both targets explicitly assert the identity and |DeltaA(i,j)|<=gamma(k,u)*|A(i,j)| for every i,j. Here k=errorCount(n,T)=T+ceil(n/T)-1 and gamma(k,u)=k*u/(1-k*u). The constructed target proves these for DeltaA(i,j)=A(i,j)*(pathCoefficient(T,E,i,j)-1). pathCoefficient includes the product error and all inner and outer addition factors affecting the term: max(1,t)<=s<T and max(1,b)<=s<B, respectively.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "Both targets use the defined computed(A,x,T,E) on the left and the same original A and x on the right. Each original column j is linked to block j div T and position j mod T in pathCoefficient, using the same trace E as the computation. Thus the perturbation identity concerns the actual nested summation of the original inputs.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The hypotheses T>0 and u>=0 express positive block size and nonnegative unit roundoff implicit in the source. Valid imposes only absolute bounds on the relative errors of the elementary operations; these are the source standard rounding-model assumptions, not a desired algorithmic bound. Universal arbitrary valid traces cover executions under that model with no overflow or underflow. The remaining hypothesis is precisely (T+ceil(n/T)-1)*u<1. There are no divisibility, nonzero-entry, or positive-dimension restrictions. The computation and perturbation are independently defined.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "555d97febc7d6250aea7f65623259f50439177ca2a0f9d4af54e342e75ad0311",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 206.51370361601585,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 62.142,
+          "tokens": {
+            "input_tokens": 71709,
+            "cached_input_tokens": 52864,
+            "output_tokens": 2652,
+            "reasoning_output_tokens": 286
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 131.798,
+          "tokens": {
+            "input_tokens": 77574,
+            "cached_input_tokens": 33536,
+            "output_tokens": 6088,
+            "reasoning_output_tokens": 147
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 149283,
+        "cached_input_tokens": 86400,
+        "output_tokens": 8740,
+        "reasoning_output_tokens": 433
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-05",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "block-matrix-vector-trial-001-retrieved",
+      "task_id": "block-matrix-vector",
+      "condition": "retrieved",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The target block_matrix_vector_product explicitly asserts both computedVector(A,x,T,e)=(A+DeltaA)x and the bound for every matrix entry, under the required roundoff condition. These are final conclusions; no helper-theorem composition is needed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the rowwise size-T block matrix-vector product with sequential reduction and zero padding.",
+          "evidence": "zeroPad extends the row and vector by zeros. roundedProduct uses their entries at rT+t with a multiplication-error factor. blockPartial sequentially sums exactly T slots, including padded slots. computedVector sequentially sums exactly B(n,T) partial sums independently for each row. sequentialSum assigns the first term directly and applies an addition-error factor to each subsequent updated sum.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the perturbation matrix identity and the entrywise gamma(T + ceil(n/T) - 1) bound.",
+          "evidence": "The target asserts existence of an m-by-n real DeltaA with the required vector identity and |DeltaA(i,j)|<=gamma(K(n,T),u)|A(i,j)| for all i,j. For T>0, B=ceil(n/T) and K=T+B-1: truncation does not change this value. gamma(K,u)=Ku/(1-Ku), with positive denominator by Ku<1.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The target uses the same arbitrary A,x,T,e in the explicitly defined computedVector and in the perturbed matrix-vector equality. Each product reads the original entries through zeroPad at rT+t. The independently defined entryFactor and perturbation describe coefficient perturbations, but identifying the existential witness with that named matrix is not required by the source.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "Positive T and nonnegative u express block size and unit roundoff. Admissible bounds only individual operation errors, exactly as the source standard rounding model under no overflow or underflow. Supplying arbitrary bounded error arrays is a valid encoding of that model; a particular floating-point format is unnecessary. Ku<1 is the source condition. A and x are unrestricted, dimensions include empty cases, and no backward-error conclusion or unproved paper bound is assumed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "4164d580e5d83a4d6ccc2201c1deca9293cc123fa74a1fd0347b08295371f312",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 136.9103461850027,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 60.127,
+          "tokens": {
+            "input_tokens": 69900,
+            "cached_input_tokens": 61312,
+            "output_tokens": 2409,
+            "reasoning_output_tokens": 162
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 63.716,
+          "tokens": {
+            "input_tokens": 51266,
+            "cached_input_tokens": 42368,
+            "output_tokens": 2730,
+            "reasoning_output_tokens": 60
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 121166,
+        "cached_input_tokens": 103680,
+        "output_tokens": 5139,
+        "reasoning_output_tokens": 222
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-06",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "triangular-update-trial-001-stateless",
+      "task_id": "triangular-update",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The reported target triangular_update already asserts both the complete perturbed equation with right side c and the bound for every i in Fin k. Both conclusions hold simultaneously for every k>=2 and all admissible inputs; no missing final composition is needed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the sequential inner product followed by the rounded subtraction and division in the scalar update.",
+          "evidence": "roundedProduct gives p_i=a_i*b_i*(1+mu_i). sequentialAccumulator uses A_0=0, A_1=p_0, and A_(n+1)=(A_n+p_n)*(1+eta_n) for 0<n<k-1. computedUpdate is ((c-A_(k-1))*(1+sigma)/b_(k-1))*(1+delta). These definitions encode the required operation order under the source multiplicative rounding model. The unused eta_0 has no effect; an executable floating-point rounding operator is not required by this backward-error task.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the stated perturbed equation, including the pivot, and all componentwise gamma(k) bounds.",
+          "evidence": "triangular_update explicitly asserts sum_(i=0)^(k-2) a_i*(b_i+Delta b_i)+xhat*(b_(k-1)+Delta b_(k-1))=c and abs(Delta b_i)<=ku/(1-ku)*abs(b_i) for every i in Fin k. The pivot is included. Prefix perturbations use C_i=(1+mu_i)*product_(0<j and i<=j)(1+eta_j); the pivot uses L=1/((1+sigma)*(1+delta)). Their bounds are conclusions, not premises.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The target fixes xhat=computedUpdate(hk,a,b,c,e) and Delta b=perturbation(b,e) for the same quantified a,b,c,e. prefixIndex preserves indices and lastIndex is k-1. The coefficients C_i match precisely the product and addition errors affecting each prefix term. The pivot coefficient L cancels precisely the final subtraction and division factors.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The theorem assumes only k>=2, nonnegative unit roundoff u with ku<1, arbitrary real a,b,c with nonzero pivot, and Valid elementary-operation errors bounded by u. These traces encode the source standard rounding model under no overflow or underflow. Nonnegativity is inherent in unit roundoff. No nonpivot sign or nonzero restrictions, backward-error hypotheses, or desired coefficient bounds are assumed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "3d5fca98a7b9ef779991e8aed0ab32f36f2b060243177cb2912f43f90a207249",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 148.94529766598134,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 60.269,
+          "tokens": {
+            "input_tokens": 66146,
+            "cached_input_tokens": 36864,
+            "output_tokens": 2590,
+            "reasoning_output_tokens": 256
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 76.41,
+          "tokens": {
+            "input_tokens": 77445,
+            "cached_input_tokens": 49792,
+            "output_tokens": 3318,
+            "reasoning_output_tokens": 77
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 143591,
+        "cached_input_tokens": 86656,
+        "output_tokens": 5908,
+        "reasoning_output_tokens": 333
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-07",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "triangular-solve-trial-001-retrieved",
+      "task_id": "triangular-solve",
+      "condition": "retrieved",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The listed target solution_of_a_triangular_system itself asserts one DeltaT satisfying the perturbed system identity, triangular structure, and every componentwise gamma(n,u) bound for computedSolution, for both directions and every dimension. No helper-to-final-theorem composition is missing.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the rounded forward or backward substitution corresponding to lower or upper triangular inputs.",
+          "evidence": "computedSolution explicitly runs solveRows from zero in increasing row order for lower and decreasing order for upper. previousColumns selects the already solved coordinates in that order. roundedDot starts with the first computed product and sequentially adds remaining computed products. rowNumerator subtracts this dot product from b_i, and solveRow divides by T_ii and updates only coordinate i. An empty dot product uses b_i directly. This defines the requested substitution algorithm without abstract choice.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the perturbed system identity, gamma(n) componentwise bound, and preservation of the triangular structure.",
+          "evidence": "The target asserts a single real matrix DeltaT with, for every row i, sum_j (T_ij+DeltaT_ij)*computedSolution_j=b_i; Triangular(d,DeltaT); and for every i,j, |DeltaT_ij| <= [n*u/(1-n*u)]|T_ij|. The theorem uses the dimension-n constant and includes every required conjunct.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The final vector is computedSolution(d,ops,T,b) on the same quantified original T and b. ExecutionValid is RowsValid for the identical rowOrder and zero starting state. Its recursion follows actual solveRow updates; DotValid and DotAccValid follow the actual computed products and accumulator states. No unrelated solution or perturbation certificate is supplied as an input.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The target retains triangularity, det(T) != 0, and n*u < 1, for all real matrices and right-hand sides in both directions. Nonnegative u is implicit in unit roundoff. ExecutionValid requires only computed=exact*(1+delta), |delta| <= u on each executed elementary operation, precisely the source rounding model available under no overflow or underflow. Its predicates assume no perturbation or backward-error conclusion. Arbitrary operation fields abstract the rounding operations, and local validity suffices since only executed calls matter. Inclusion of the empty dimension and zero roundoff introduces no restriction.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "433d6e961453bec14dc195deb1736b443c42b87a53565797877263772d9a2554",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 197.51181244198233,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 59.443,
+          "tokens": {
+            "input_tokens": 71324,
+            "cached_input_tokens": 62336,
+            "output_tokens": 2485,
+            "reasoning_output_tokens": 188
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 125.746,
+          "tokens": {
+            "input_tokens": 114747,
+            "cached_input_tokens": 99072,
+            "output_tokens": 5733,
+            "reasoning_output_tokens": 88
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 186071,
+        "cached_input_tokens": 161408,
+        "output_tokens": 8218,
+        "reasoning_output_tokens": 276
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-08",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "cholesky-factorization-trial-001-stateless",
+      "task_id": "cholesky-factorization",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The final target Cholesky.cholesky_factorization explicitly asserts existence of symmetric Delta A, R^T R=A+Delta A, and the full componentwise gamma(n+1) bound together. No composition of supporting lemmas is needed to obtain a missing final conclusion.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the upper-triangular computed Cholesky factor and its successful-completion semantics, including the rounded square root.",
+          "evidence": "roundedDot rounds the first product and sequentially rounds subsequent products and additions. updateNumerator rounds subtraction of that prefix dot product, with an empty first-row prefix using A directly. SuccessfulRun requires lower entries zero, R_jj=round(sqrt(N_jj)) with N_jj>=0, and R_ij=round(N_ij/R_ii) for i<j with nonzero divisor. These dependency-ordered equations specify the actual computation relationally. The source is conditional on successful computation and does not require existence of successful runs for every SPD input or an executable factor-producing function. A zero last diagonal prevents no later division.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the symmetric perturbation identity and gamma(n+1) bound using the product of the entrywise absolute factors.",
+          "evidence": "The target explicitly gives symmetric Delta A and R^T R=A+Delta A. Its entry bound is ((n+1)u/(1-(n+1)u)) sum_k |R_ki||R_kj|, exactly gamma(n+1) times the entry of entryAbs(R^T) entryAbs(R). The denominator is positive under the stated hypothesis.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The same universally quantified fp,A,R occur in the run relation, range relation, and final identity and bound. prefixPairs uses R_ki,R_kj for k<i in increasing order, and updateNumerator uses the original A_ij. The identity forces Delta A to equal the defined residual R^T R-A.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The target assumes symmetry and quadratic-form positive definiteness of A, nonnegative unit roundoff, and (n+1)u<1. FloatingPoint supplies bounded relative rounding error on in-range arguments. NoOverflowUnderflow records those arguments, including sqrt(N_jj). SuccessfulRun supplies only the recurrence and operation validity conditions, not the desired residual bound. The recurrence dependencies are triangular. All finite dimensions are quantified; the empty dimension is harmless. These are faithful encodings of the original model and successful-completion assumptions.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "f727cc9db97b3e8d68856aaca573b6f668d972af5ab14f0467cd7511d42b97ef",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 206.4861693349958,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 70.592,
+          "tokens": {
+            "input_tokens": 69576,
+            "cached_input_tokens": 61312,
+            "output_tokens": 3027,
+            "reasoning_output_tokens": 415
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 123.479,
+          "tokens": {
+            "input_tokens": 100193,
+            "cached_input_tokens": 90112,
+            "output_tokens": 5602,
+            "reasoning_output_tokens": 95
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 169769,
+        "cached_input_tokens": 151424,
+        "output_tokens": 8629,
+        "reasoning_output_tokens": 510
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-09",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "cholesky-factorization-trial-001-retrieved",
+      "task_id": "cholesky-factorization",
+      "condition": "retrieved",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The translated target already asserts existence of DeltaA, its symmetry, Rhat^T Rhat=A+DeltaA and the required bound for every index pair. No missing composition of helper results is needed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the upper-triangular computed Cholesky factor and its successful-completion semantics, including the rounded square root.",
+          "evidence": "SuccessfulCholesky(u,A,Rhat) is Execute(u,A,entryOrder(n),0,Rhat). The order visits each upper-triangular entry once, column by column. EntryComputation uses SequentialDot over k<i, a residual, and either Rounded(u,sqrt(residual),value) with residual>=0 or rounded division by a nonzero diagonal entry. writeEntry changes only that entry, so the lower triangle stays zero. Rounded supplies a separate relative error bounded by u for each operation. Direct treatment of the empty sum and initialization from the first product are standard sequential evaluation conventions. This is an actual relational definition of successful runs; neither a deterministic rounding selector nor total successful execution is required by the source construction policy.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the symmetric perturbation identity and gamma(n+1) bound using the product of the entrywise absolute factors.",
+          "evidence": "The target explicitly asserts DeltaA^T=DeltaA, Rhat^T Rhat=A+DeltaA and |DeltaA[i,j]|<=gamma(n+1,u)*(entrywiseAbs(Rhat^T)*entrywiseAbs(Rhat))[i,j]. The product is sum_k |Rhat[k,i]|*|Rhat[k,j]|. gamma(m,u)=m*u/(1-m*u), with positive denominator in the target. This is the required componentwise bound, not a norm estimate or the absolute value of a matrix product.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The successful execution uses exactly the A, u and Rhat in the final conclusion. It starts at zero; each entry computation reads A[i,j] and the current previously computed factor entries. backwardPerturbation(A,Rhat)=Rhat^T Rhat-A uses that same original input and actual final output.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "The target assumes symmetry and positive definiteness of A, nonnegative unit roundoff, (n+1)u<1 and successful execution. Nonnegative u is inherent in unit roundoff; finite real relative rounding encodes the source model excluding overflow and underflow. SuccessfulCholesky imposes local operational side conditions, not an error estimate. Defining DeltaA by subtraction assumes no bound. All natural dimensions and all real SPD inputs are covered conditionally on success, as in the source. The existential perturbation is legitimate for this backward-error theorem; no extra executable perturbation construction is required.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "4b7b69d0999087608c59bf55234737a68bd6ccf6fe9d885cb18a9b7111f9dec5",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 197.94388268498005,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 69.603,
+          "tokens": {
+            "input_tokens": 68540,
+            "cached_input_tokens": 60544,
+            "output_tokens": 2768,
+            "reasoning_output_tokens": 223
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 116.111,
+          "tokens": {
+            "input_tokens": 73555,
+            "cached_input_tokens": 51840,
+            "output_tokens": 5241,
+            "reasoning_output_tokens": 135
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 142095,
+        "cached_input_tokens": 112384,
+        "output_tokens": 8009,
+        "reasoning_output_tokens": 358
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-10",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "cholesky-solve-trial-001-stateless",
+      "task_id": "cholesky-solve",
+      "condition": "stateless",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The target cholesky_solve already asserts the existence of DeltaA, the perturbed-system equation, and both componentwise bounds together. No missing composition or inequality is needed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the computed Cholesky factorization followed by the two triangular solves.",
+          "evidence": "FactorTrace specifies upper triangularity, positive rounded diagonal square roots, and rounded off-diagonal residual/division recurrences with precisely k<i. DotTrace specifies each rounded product and ordered sum. ForwardTrace uses k<i and BackwardTrace uses k>i. SolveTrace combines FactorTrace(u,A,R), ForwardTrace(u,R^T,b,y), and BackwardTrace(u,R,y,x). These acyclic recurrences constitute a relational definition of the computed algorithm. The source relative-error model and construction policy do not demand a deterministic rounding function or executable implementation; no abstract choice substitutes for the recurrences.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the original perturbed system and both stated componentwise bounds with their exact coefficients.",
+          "evidence": "The target explicitly asserts (A+DeltaA)x=b and |DeltaA_ij| <= C B_ij <= D B_ij for all i,j, where C=gamma(u,n+1)+2 gamma(u,n)+gamma(u,n)^2, D=3 gamma(u,n+1)+gamma(u,n)^2, gamma(u,k)=ku/(1-ku), and B_ij=sum_k |R_ki||R_kj|. These are exactly the original equation and two componentwise bounds.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "The same A,b,R,y,x occur in SolveTrace and the target. FactorTrace uses the entries of A and R, the forward trace uses R^T and the original b, and the backward trace uses R and that forward output y. The target bounds use that R and the equation uses that x and b. The backward-error perturbation may legitimately be existential; identifying it with the named solvePerturbation expression is not required.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "Arbitrary real SPD A, arbitrary b, and arbitrary n are covered under 0<=u and (n+1)u<1. Explicit symmetry repeats the source SPD requirement. Positive residuals and diagonal entries and nonzero divisors represent successful Cholesky computation. Rounded imposes only elementary relative errors bounded by u, rather than any desired backward-error estimate. Finite real operations with that model represent the no-overflow/no-underflow setting. Nonnegative unit roundoff is implicit in the source. The target denominator restrictions validate gamma at both required indices. No n>0 or b!=0 restriction is imposed.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "5f09f554b13196136023c37522200efa150094ef2471de6d916098a094bd8663",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 151.8034970180015,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 72.062,
+          "tokens": {
+            "input_tokens": 71383,
+            "cached_input_tokens": 62720,
+            "output_tokens": 3117,
+            "reasoning_output_tokens": 530
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 67.487,
+          "tokens": {
+            "input_tokens": 54764,
+            "cached_input_tokens": 44416,
+            "output_tokens": 2992,
+            "reasoning_output_tokens": 124
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 126147,
+        "cached_input_tokens": 107136,
+        "output_tokens": 6109,
+        "reasoning_output_tokens": 654
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-11",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    },
+    {
+      "job_id": "cholesky-solve-trial-001-retrieved",
+      "task_id": "cholesky-solve",
+      "condition": "retrieved",
+      "outcome": "accepted",
+      "automated_success": true,
+      "lean_verification": "pass",
+      "direct_critic": "pass",
+      "roundtrip": "pass",
+      "reviewer_disagreement": false,
+      "roundtrip_requirements": [
+        {
+          "requirement_id": "target-completeness",
+          "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+          "evidence": "The explicit target CholeskySolve.cholesky_solve already asserts existence of DeltaA, (A+DeltaA)x=b, and both componentwise inequalities for every i,j. No final composition or connection of separate helper results is missing.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "construction-correctness",
+          "requirement": "Define the computed Cholesky factorization followed by the two triangular solves.",
+          "evidence": "dot, subDot and update define rounded products, accumulated sums, subtraction and division. CholeskyRun sets lower entries to zero, upper entries to update(A_ij,R_ii,choleskyTerms(R,i,j)), and diagonal entries to rnd(sqrt(subDot(A_jj,choleskyTerms(R,j,j)))). ForwardRun determines y using R^T,b and earlier indices; BackwardRun determines x using R,y and later indices. These are actual defining recurrences expressed relationally, rather than residual assumptions. For fixed rnd and a successful run they determine the outputs in dependency order. The source assumes successful computation and does not require unconditional existence of a run or an executable implementation; a relational definition of its computed quantities suffices.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "target-bound",
+          "requirement": "Prove the original perturbed system and both stated componentwise bounds with their exact coefficients.",
+          "evidence": "The target states (A+DeltaA)x=b and, entrywise, |DeltaA_ij|<=C B_ij<=D B_ij, with C=gamma_(n+1)+2 gamma_n+gamma_n^2, D=3 gamma_(n+1)+gamma_n^2, B_ij=sum_k |R_ki||R_kj|, and gamma_m=m u/(1-m u). The selected source does not require the final DeltaA to be symmetric or give a particular witness. Existential perturbations are legitimate here.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "original-input-link",
+          "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+          "evidence": "SolveRun(u,rnd,A,b,R,y,x) explicitly packages CholeskyRun(u,rnd,A,R), ForwardRun(u,rnd,R^T,b,y), and BackwardRun(u,rnd,R,y,x). The same A,b occur in the perturbed equation; the same computed R occurs in its bound, and the same computed x occurs in its equation. Universal parameters constrained by these defining recurrences preserve exact input linkage.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        },
+        {
+          "requirement_id": "assumption-integrity",
+          "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+          "evidence": "SPD and (n+1)u<1 match the source. Nonnegative u expresses the meaning of unit roundoff. Local RoundOK predicates require the relative-error model at each executed operation, including the square root; positive radicands and nonzero divisors encode a successful run. No backward-error bound is assumed. The global model implies these local conditions; conversely, for a finite run a locally valid rnd can be extended to satisfy the model at unused arguments by setting them to exact rounding, without changing this run. No inputs are excluded by quantifying all natural dimensions, including the vacuous zero-dimensional case. Explicit symmetry is redundant with SPD.",
+          "verdict": "pass",
+          "defect_categories": [],
+          "correction": ""
+        }
+      ],
+      "roundtrip_relation": "faithful",
+      "delivery_complete": true,
+      "construction_complete": true,
+      "candidate_hash": "4cd60a945747fee615a6653ee410a0a6050f992b8e7375fc18219e6eefb762c7",
+      "first_success_pass": null,
+      "attempts": 1,
+      "repair_attempts": 0,
+      "timed_out": false,
+      "job_elapsed_seconds": 218.84541351802181,
+      "proof_loop_seconds": "unknown",
+      "roles": {
+        "judge": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 70.934,
+          "tokens": {
+            "input_tokens": 72796,
+            "cached_input_tokens": 65664,
+            "output_tokens": 2989,
+            "reasoning_output_tokens": 303
+          }
+        },
+        "translator": {
+          "sessions_with_metrics": 1,
+          "model_settings": [
+            {
+              "model": "gpt-6.1-sol",
+              "reasoning_effort": "medium"
+            }
+          ],
+          "wall_seconds": 135.495,
+          "tokens": {
+            "input_tokens": 89442,
+            "cached_input_tokens": 76032,
+            "output_tokens": 6217,
+            "reasoning_output_tokens": 192
+          }
+        }
+      },
+      "total_tokens": {
+        "input_tokens": 162238,
+        "cached_input_tokens": 141696,
+        "output_tokens": 9206,
+        "reasoning_output_tokens": 495
+      },
+      "artifacts_opened": "unknown",
+      "reported_artifact_decisions": [],
+      "expert_verdict": "pending",
+      "expert_confirmed_success": null,
+      "source_case": "replay-035-12",
+      "reused_lean_verification": true,
+      "reused_direct_critic": true,
+      "original_outcome": "infrastructure_error",
+      "error": null
+    }
+  ]
+}

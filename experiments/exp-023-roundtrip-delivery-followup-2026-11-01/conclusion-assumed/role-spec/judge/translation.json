@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "91c1296d092f22e77a459cb33e13944cc49bd3962c7c422d09dff1c32c2e770c",
+  "status": "complete",
+  "statement": "Let T(A) denote finite ordered full binary trees with leaves labelled in A; there is no empty-tree constructor. Write d(leaf(a))=0 and d(node(L,R))=1+max(d(L),d(R)). For real-labelled trees define S(leaf(z))=z and S(node(L,R))=S(L)+S(R). A model m contains a real u>=0 and r:R->R satisfying: for every real z there exists a real delta with |delta|<=u and r(z)=z(1+delta). Define mul_m(a,b)=r(ab) and add_m(a,b)=r(a+b). For t in T(R x R), E(t) maps each leaf (a,b) to ab, P_m(t) maps each leaf to r(ab), and D_m(t) sums P_m(t) using r at every internal addition according to the original tree. For B in R, I_B(X,Y) means X and Y have the same ordered shape and every corresponding pair of leaf values x,y satisfies |y-x|<=B|x|. Define gamma(k,u)=k*u/(1-k*u), with k in N coerced to R. The targets give two defining multiplication equalities and I_u(E(t),P_m(t)). The target concerning D_m says that if (d(t)+1)*u<1 and a perturbed tree q already exists with I_gamma(d(t)+1,u)(E(t),q) and S(q)=D_m(t), then such a tree exists. Its existential conclusion is itself a hypothesis; the target does not assert existence from the depth bound alone.",
+  "targets": [
+    {
+      "name": "Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation",
+      "statement": "For every model m and every t in T(R x R), let k=d(t)+1 in N and B=gamma(k,u)=k*u/(1-k*u). If k*u<1, then [there exists q in T(R) with I_B(E(t),q) and S(q)=D_m(t)] implies [there exists q in T(R) with I_B(E(t),q) and S(q)=D_m(t)]. Here E=exactProductTree, D_m=roundedDotProduct(m,-), and each corresponding exact product ab and perturbed leaf value y satisfies |y-ab|<=B|ab|. The entire existential assertion is an additional hypothesis repeated as the conclusion; no witness is specified. The model axiom u>=0 and the strict depth bound imply 1-k*u>0."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTerm.eq_1",
+      "statement": "For every model m and every real x,y, roundedProductTerm(m,x,y)=Model.mul(m,x,y). Both sides, by their supplied definitions, equal r(x*y). This is the leaf operation used by roundedProductTree and then by roundedDotProduct. There are no additional hypotheses."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree_isPerturbation",
+      "statement": "For every model m and every t in T(R x R), I_u(exactProductTree(t),roundedProductTree(m,t)). Thus the trees have the same shape as t, and for every leaf (a,b) of t, |r(ab)-ab|<=u|ab|. This concerns the leaf products before summation; it imposes no depth bound, no u<1 hypothesis, and no nonzero or sign hypotheses on the pair components."
+    },
+    {
+      "name": "Research.FloatingPoint.Model.mul.eq_1",
+      "statement": "For every model m and every real a,b, Model.mul(m,a,b)=Model.round(m,a*b)=r(a*b). This is the defining rounded multiplication to which roundedProductTerm reduces and which roundedProductTree applies at each pair-labelled leaf. There are no additional hypotheses."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.BinaryTreeReduction.exactProductTree",
+      "description": "E:T(R x R)->T(R) preserves tree shape and maps each pair-labelled leaf to its real product: E(leaf((a,b)))=leaf(ab), and E(node(L,R))=node(E(L),E(R)). It performs no rounding or summation and does not multiply different leaves together. It is the reference tree in the two perturbation targets."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedDotProduct",
+      "description": "For each model m, D_m:T(R x R)->R is roundedSum(m,P_m(t)), where P_m=roundedProductTree(m,-). With r=Model.round(m), roundedSum(m,leaf(z))=z and roundedSum(m,node(L,R))=r(roundedSum(m,L)+roundedSum(m,R)). Equivalently D_m(leaf((a,b)))=r(ab) and D_m(node(L,R))=r(D_m(L)+D_m(R)). It rounds every leaf product once and every internal sum once, using the given tree shape, with no further rounding merely at a leaf. Trees need not be balanced. The existential target compares D_m(t) to S(q), the exact sum of an already hypothesized perturbed copy of E(t)."
+    },
+    {
+      "name": "Research.BinaryTreeReduction.roundedProductTree",
+      "description": "For each model m, P_m:T(R x R)->T(R) preserves tree shape and replaces every leaf (a,b) by roundedProductTerm(m,a,b)=Model.mul(m,a,b)=r(ab). Thus P_m(leaf((a,b)))=leaf(r(ab)) and P_m(node(L,R))=node(P_m(L),P_m(R)). It performs no internal additions. The perturbation target bounds its leaf errors relative to E(t) by u, and roundedDotProduct supplies this resulting tree to roundedSum."
+    }
+  ],
+  "assumptions": [
+    "Every quantified model contains u in R with 0<=u and a total function r:R->R such that for every z in R there exists delta in R with |delta|<=u and r(z)=z(1+delta). The error delta may depend on z. No specific floating-point format or further rounding rule is supplied.",
+    "All input pair components and output leaf labels are real numbers. Every tree is an arbitrary finite ordered full binary tree. No balance, prescribed size, sign, or nonzero hypothesis is supplied.",
+    "I_B is inductively generated by the leaf condition |y-x|<=B|x| and the node rule combining the two child relations with the same bound B. Consequently it preserves ordered shape and constrains only corresponding leaf values, not internal sums. Its bound parameter has domain R without a nonnegativity premise in the definition.",
+    "In roundedDotProduct_exists_perturbation all models m and trees t in T(R x R) are universally quantified. The additional hypotheses are (d(t)+1)*u<1 and the entire existential conclusion itself. Each existential variable q has domain T(R). No other premise is present.",
+    "Gamma has domain N x R and is defined by gamma(k,u)=k*u/(1-k*u), with natural k coerced to R in arithmetic. The definition has no domain restriction (Lean real division is total, including division by zero). In the existential target k=d(t)+1 and k*u<1 ensures a positive denominator.",
+    "The other three targets impose no additional hypotheses beyond their universally quantified models, real arguments, and trees. In particular the rounded-product-tree perturbation assertion has no depth restriction."
+  ],
+  "missing_context": []
+}

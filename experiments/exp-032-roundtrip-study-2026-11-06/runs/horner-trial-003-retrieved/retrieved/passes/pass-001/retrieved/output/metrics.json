@@ -1,0 +1,98 @@
+{
+  "condition": "retrieved",
+  "kind": "production-pipeline",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "api_cost": "unknown",
+  "aristotle_calls": 0,
+  "wall_time_seconds": 192.161,
+  "compiler_command_events": 11,
+  "token_usage": {
+    "input_tokens": 303831,
+    "cached_input_tokens": 262912,
+    "output_tokens": 6761,
+    "reasoning_output_tokens": 248
+  },
+  "roles": {
+    "planner": {
+      "condition": "retrieved",
+      "kind": "planner",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793988653.1018877,
+      "time_limit_seconds": 90,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 67.529,
+      "token_usage": {
+        "input_tokens": 85145,
+        "cached_input_tokens": 80000,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2764,
+        "reasoning_output_tokens": 75
+      },
+      "compiler_command_events": 2,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "formalizer": {
+      "condition": "retrieved",
+      "kind": "formalizer",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793988721.1672404,
+      "time_limit_seconds": 150,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 54.341,
+      "token_usage": {
+        "input_tokens": 70771,
+        "cached_input_tokens": 61184,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1832,
+        "reasoning_output_tokens": 87
+      },
+      "compiler_command_events": 4,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    },
+    "prover": {
+      "condition": "retrieved",
+      "kind": "prover",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium",
+      "started_unix": 1793988784.87002,
+      "time_limit_seconds": 180,
+      "api_cost": "unknown",
+      "aristotle_calls": 0,
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_time_seconds": 70.291,
+      "token_usage": {
+        "input_tokens": 147915,
+        "cached_input_tokens": 121728,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2165,
+        "reasoning_output_tokens": 86
+      },
+      "compiler_command_events": 5,
+      "compiler_attempts_note": "Command events mentioning Lean/build, not individual lemma attempts."
+    }
+  },
+  "statement": {
+    "schema_version": 1,
+    "targets": [
+      "Research.Horner.forward_error_bound"
+    ],
+    "construction_names": [
+      "Research.Horner.P",
+      "Research.Horner.Q",
+      "Research.Horner.E"
+    ],
+    "source_mapping": "/spec/source.txt is formalized in /workspace/Research/Submission.lean: P is exact Horner evaluation in increasing degree order; Q performs the specified nested rounded multiplication and addition; E is exactly the prescribed recurrence and depends only on coefficients, x, u, and P. The nil and cons equations are exposed as proved lemmas. Research.Horner.forward_error_bound quantifies over every Research.FloatingPoint.Model, coefficient list, and real x, using only the assumptions carried by Model. The supporting Model.lean was copied unchanged from /spec/support/Research/Common/FloatingPoint/Model.lean. No /spec/feedback.json was present; there are no feedback-driven statement revisions. Only the final theorem proof is temporary sorry scaffolding."
+  }
+}

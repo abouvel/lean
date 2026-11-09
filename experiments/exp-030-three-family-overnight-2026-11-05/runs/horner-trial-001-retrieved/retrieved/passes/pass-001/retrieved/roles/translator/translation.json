@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "9ea171eab7bddbf0e866a9c0726361a56222182c7ba755370d8308e40f6d29de",
+  "status": "complete",
+  "statement": "For every real relative-error rounding model m with parameter u >= 0, every finite list c of real coefficients, and every real x, |Q(m,c,x) - P(c,x)| <= E(c,x,u). P evaluates the coefficients as a polynomial in ascending powers. Q recursively evaluates the tail and rounds the multiplication and then the addition at each entry. E is the exact recursive expression below, built using exact tail values P and the model parameter u. The model hypothesis is: for every real z there exists a real delta with |delta| <= u and r(z) = z(1 + delta), where r is the model rounding function.",
+  "targets": [
+    {
+      "name": "Research.Horner.forward_error",
+      "statement": "For every model m consisting of a real u >= 0 and a function r: R -> R satisfying (for every z in R there exists delta in R with |delta| <= u and r(z) = z(1 + delta)), for every finite list c of real numbers, and for every x in R, |Q(m,c,x) - P(c,x)| <= E(c,x,u), where u = m.u and P, Q, E are the constructions below. No further hypotheses are imposed."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.Horner.P",
+      "description": "P: List(R) x R -> R is defined by P([],x) = 0 and P(a::t,x) = a + x P(t,x), for every real a,x and finite real list t. For c = [a_0,...,a_(n-1)] of length n >= 0, P(c,x) = sum_{0 <= i < n} a_i x^i, with the empty sum equal to zero. The first coefficient is the constant term. All operations are exact real operations."
+    },
+    {
+      "name": "Research.Horner.Q",
+      "description": "Q: Model x List(R) x R -> R is defined, with r = m.round, by Q(m,[],x) = 0 and Q(m,a::t,x) = r(a + r(x Q(m,t,x))). It evaluates the tail recursively, rounds its product with x, adds the current coefficient, and rounds the sum. Both rounding calls occur for each entry, including the final entry with an empty tail. The empty-list base value is returned directly as zero. The real inputs a and x receive no separate input rounding. This is the quantity compared to the exact value P in the target theorem."
+    },
+    {
+      "name": "Research.Horner.E",
+      "description": "E: List(R) x R x R -> R is defined for arbitrary real x,u and finite real lists, with E([],x,u) = 0. For a real a and finite real list t, let v = P(t,x) and e = E(t,x,u). Then E(a::t,x,u) = u |a + x v| + (1 + u)(u |x v| + (1 + u)|x| e). All operations in E are exact real operations. The recurrence uses exact tail values P(t,x), not rounded tail values, and makes no calls to the rounding function. The definition itself permits negative u; the target theorem evaluates it only at a model parameter u >= 0 and states that it bounds the absolute error of Q relative to P."
+    }
+  ],
+  "assumptions": [
+    "All list entries, evaluation points x, parameters u, and relative-error witnesses delta are real. Lists have arbitrary finite length, including zero.",
+    "A model contains a real u, a proof that 0 <= u, and a total function r: R -> R such that for every real z there exists a real delta with |delta| <= u and r(z) = z(1 + delta). The witness may depend on z. In particular, this condition forces r(0) = 0.",
+    "No upper bound such as u < 1 is assumed. There are no sign, size, or nonzero restrictions on the coefficients or x. No discrete representable set, additional rounding rule, or other model property is specified."
+  ],
+  "missing_context": []
+}

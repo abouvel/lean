@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "89ea5e9e971371faf2c6fc9415bf73b37b20c91250d788d72c550a382e93948f",
+  "status": "insufficient_context",
+  "statement": "The target asserts two separate componentwise backward-error representations for a specified real-arithmetic computation: zero-pad vectors, perturb their entrywise products by prescribed relative errors, sum within each block sequentially, and sum block results sequentially. The perturbation bound is gamma(T+B-1,u). An additional hypothesis depends on treeDepth(B)=Nat.clog 2 B, whose underlying definition is absent, preventing a fully specified translation of that hypothesis. No tree reduction is defined.",
+  "targets": [
+    {
+      "name": "BlockDotProduct.block_dot_product_sequential",
+      "statement": "For every n,T in N with n>0 and T>0, every u in R with u>=0, every x,y:Fin n -> R, and every trace:RoundingTrace(u), put B=blockCount(n,T)=ceil(n/T), d=treeDepth(B)=Nat.clog 2 B, and m=T+B-1. Assume (T+d)*u<1 and m*u<1, embedding natural numbers into R for these products. The meaning of Nat.clog is not specified in the supplied declarations. There exist functions Delta_x,Delta_y:Fin n -> R for which all four assertions hold simultaneously, with Q=sequentialBlockDotProduct(x,y,T,trace): Q=sum_{i=0}^{n-1}(x(i)+Delta_x(i))*y(i); for every i in Fin n, |Delta_x(i)|<=gamma(m,u)*|x(i)|; Q=sum_{i=0}^{n-1}x(i)*(y(i)+Delta_y(i)); and for every i in Fin n, |Delta_y(i)|<=gamma(m,u)*|y(i)|. Here gamma(m,u)=m*u/(1-m*u), with positive denominator under the hypothesis. Q is exactly the two-level sequential recurrence in the construction descriptions. The two equalities perturb one input at a time; there is no asserted equality perturbing both inputs together. Natural-number subtraction in m is truncated in general, but positivity here makes it ordinary subtraction."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "BlockDotProduct.blockCount",
+      "description": "For arbitrary n,T in N, blockCount(n,T)=((n+T) dotminus 1) div T, using subtraction truncated at zero and natural-number division. For T>0 this is ceil(n/T); for T=0 it is zero by the natural-number division convention. The target uses this number B as the number of blocks."
+    },
+    {
+      "name": "BlockDotProduct.treeDepth",
+      "description": "For B in N, treeDepth(B)=Nat.clog 2 B. The definition of Nat.clog is not supplied, so its mathematical characterization and boundary values cannot be established from the input. This function enters a target hypothesis but is not used by the computation. No tree reduction is constructed."
+    },
+    {
+      "name": "BlockDotProduct.gamma",
+      "description": "For m in N and u in R, gamma(m,u)=(m*u)/(1-m*u), with m embedded into R. This definition has no domain restrictions; formal real division is total, with division by zero equal to zero. The target assumes m*u<1 for its chosen m, so its denominator is positive."
+    },
+    {
+      "name": "BlockDotProduct.zeroExtend",
+      "description": "For implicit n in N, x:Fin n -> R, and i in N, zeroExtend(x,i)=x(i) if i<n (using the corresponding Fin n index), and zero otherwise. Fin n consists of the natural indices 0,...,n-1."
+    },
+    {
+      "name": "BlockDotProduct.RoundingTrace",
+      "description": "A family of data types indexed by a real u, with the single supplied constructor RoundingTrace.mk. Its data fields are productError,blockAddError:N -> N -> R and reductionError:N -> R. Its proof fields assert |productError(b,t)|<=u and |blockAddError(b,t)|<=u for every b,t in N, and |reductionError(b)|<=u for every b in N. The supplied projections retrieve the three error functions. This is prescribed bounded-error data, not an algorithm or a concrete rounding rule. The bounds cover unused indices too. Any inhabitant implies u>=0."
+    },
+    {
+      "name": "BlockDotProduct.sequentialSum",
+      "description": "For arbitrary entry,error:N -> R, sequentialSum(entry,error,L) is S(L), defined on N by S(0)=0, S(1)=entry(0), and S(k+1)=(S(k)+entry(k))*(1+error(k)) for k>=1. It processes entries 0,...,L-1 in order. The first entry is copied without addition error. error(0) is unused; for L>=1 only error(1),...,error(L-1) are used. The definition itself assumes no error bounds."
+    },
+    {
+      "name": "BlockDotProduct.roundedProduct",
+      "description": "For implicit n in N and u in R, x,y:Fin n -> R, trace:RoundingTrace(u), and T,b,t in N, roundedProduct(x,y,trace,T,b,t)=zeroExtend(x,b*T+t)*zeroExtend(y,b*T+t)*(1+trace.productError(b,t)). These are exact real operations applying a prescribed relative error, not a machine rounding operation. The result is zero whenever b*T+t>=n."
+    },
+    {
+      "name": "BlockDotProduct.blockPartial",
+      "description": "For implicit n in N and u in R, x,y:Fin n -> R, T in N, trace:RoundingTrace(u), and b in N, blockPartial(x,y,T,trace,b)=sequentialSum(entry,error,T), where entry(t)=roundedProduct(x,y,trace,T,b,t) and error(t)=trace.blockAddError(b,t). It processes exactly T positions starting at b*T, including zero padding. For T=0 the result is zero. For T>=1 it copies the first rounded product, then adds each subsequent product and multiplies the entire new sum by 1+blockAddError(b,t), for t=1,...,T-1. Padded zeros still participate in these recurrence steps."
+    },
+    {
+      "name": "BlockDotProduct.sequentialBlockDotProduct",
+      "description": "For implicit n in N and u in R, x,y:Fin n -> R, T in N, and trace:RoundingTrace(u), let B=blockCount(n,T). sequentialBlockDotProduct(x,y,T,trace)=sequentialSum(entry,error,B), where entry(b)=blockPartial(x,y,T,trace,b) and error(b)=trace.reductionError(b). For B=0 it is zero. Otherwise it copies block 0 and for b=1,...,B-1 updates R to (R+blockPartial(x,y,T,trace,b))*(1+trace.reductionError(b)). Thus block results are combined sequentially, and reductionError(0) is unused. This is precisely the constructed quantity in both target equalities."
+    }
+  ],
+  "assumptions": [
+    "Natural numbers include zero. Fin n is the set of indices i with 0<=i<n. All vector entries, errors, sums, and perturbations are real; natural-number casts embed into R. Natural subtraction is truncated at zero.",
+    "The target universally quantifies n,T in N with n>0,T>0, u in R with u>=0, x,y:Fin n -> R, and trace:RoundingTrace(u).",
+    "The trace supplies |productError(b,t)|<=u and |blockAddError(b,t)|<=u for all b,t in N and |reductionError(b)|<=u for all b in N.",
+    "With B=blockCount(n,T), both (T+treeDepth(B))*u<1 and (T+B-1)*u<1 are explicit target hypotheses.",
+    "No concrete floating-point format or rounding rule, sign restriction on x or y, independence of errors, or divisibility of n by T is assumed."
+  ],
+  "missing_context": [
+    "The definition or mathematical specification of Nat.clog is not supplied. It is needed to interpret treeDepth(B)=Nat.clog 2 B and the target hypothesis (T+treeDepth(B))*u<1 without inferring semantics from the declaration name."
+  ]
+}

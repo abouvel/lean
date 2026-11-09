@@ -1,0 +1,4 @@
+⚠ [8026/8028] Built Research.Submission (60s)
+warning: Research/Submission.lean:942:8: declaration uses `sorry`
+✔ [8027/8028] Built Research (7.9s)
+Build completed successfully (8028 jobs).

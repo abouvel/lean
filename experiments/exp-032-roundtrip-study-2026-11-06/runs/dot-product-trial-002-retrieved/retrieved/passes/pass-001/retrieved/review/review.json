@@ -1,0 +1,58 @@
+{
+  "overall_verdict": "pass",
+  "phase": "final",
+  "target_evidence": "Research/Submission.lean:67-89 proves Research.BinaryTreeReduction.roundedDotProduct_exists_perturbation for all models and trees of real pairs under only ((tree.depth+1 : \u2115) : \u211d)*model.u < 1. Its conclusion is a gamma (tree.depth+1) model.u perturbation of exactProductTree tree whose exact sum equals the rounded multiplications followed by rounded tree additions. Model fields are at Research/Common/FloatingPoint/Model.lean:15-19. The declaration and standard-only axioms were independently checked with Lean; lake build succeeded. Offline verification evidence was read and agrees.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "Research/Submission.lean:67-89 proves roundedDotProduct_exists_perturbation for every Model and Tree (\u211d \u00d7 \u211d), with the required existential same-shape perturbation and exact-sum equality. Independent lake build passed (8033 jobs); Lean printed the actual declaration and its standard-only axiom dependencies.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "Research/Submission.lean:21-22 defines exactProductTree by mapping p.1 * p.2. Lines 71-73 state the final perturbation relative to this exact tree. Reduction.lean:17-23 enforces the same shape and the componentwise inequality |y-x| \u2264 bound * |x|.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "Research/Submission.lean:25-30 computes model.mul at each leaf before roundedSum. Model.lean:26-27 defines mul as round of the exact product. Submission.lean:41-57 proves the leafwise u perturbation using round_spec once per leaf, including zero products.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "Research/Projects/BinaryTreeReduction/Reduction.lean:11-13 rounds addition at every internal node. Lines 112-171 induct on a depth budget, apply round_spec at each node (150-151), and scale both child perturbations by its error factor (152-165). Lines 174-180 specialize to actual depth, counting at most depth addition errors on every path.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "Research/Common/FloatingPoint/Gamma.lean:8-9 defines gamma k u = k*u/(1-k*u); lines 33-54 prove its one-error recurrence. Submission.lean:77-89 composes multiplication bound u with addition bound gamma depth u using IsPerturbation.trans (Reduction.lean:41-71), then proves u + gamma depth u*(1+u) \u2264 gamma (depth+1) u. Depth-zero leaves are included.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "Research/Submission.lean:68-69 has only model, arbitrary tree, and (depth+1)*u < 1. Model.lean:15-19 contains only u, its nonnegativity, round, and the universal relative-error specification. Submission.lean:74-76 derives depth*u < 1 from the original hypothesis. No exact-arithmetic restriction, conclusion assumption, or tree restriction occurs. Independent #print axioms lists only propext, Classical.choice, Quot.sound; /evaluation/verification.json reports no unapproved axioms or protected-source failures.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

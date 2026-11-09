@@ -1,0 +1,19 @@
+{
+  "search_queries": [],
+  "opened_artifacts": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "path": "/memory/general-lean.md"
+    }
+  ],
+  "decisions_influenced": [
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Used abs_add_le for real absolute-value triangle inequalities in the norm and residual helper proofs."
+    },
+    {
+      "artifact_id": "pilot-general-lean-001",
+      "decision": "Established positive denominators from the gamma domain and alpha<1 before the division and geometric-recurrence arguments."
+    }
+  ]
+}

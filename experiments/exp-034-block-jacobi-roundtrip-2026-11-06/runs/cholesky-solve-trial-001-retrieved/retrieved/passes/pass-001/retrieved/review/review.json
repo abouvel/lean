@@ -1,0 +1,52 @@
+{
+  "overall_verdict": "pass",
+  "phase": "final",
+  "target_evidence": "Research/Submission.lean:642-701 proves CholeskySolve.cholesky_solve. Its signature at lines 643-657 universally quantifies n, u, rnd, A, b, R, y, x, assumes nonnegative roundoff, (n+1)u<1, symmetry, positive definiteness, and the operational SolveRun, and concludes existence of a perturbation satisfying the original system and both exact componentwise bounds.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Deliver the entire selected labeled result as one or more proved Lean theorems.",
+      "evidence": "Research/Submission.lean:642-701 is a proved theorem, not a proposition definition. Lines 648-657 state the perturbed system and the complete chain of inequalities. Independent compilation of the current source succeeded; an independent axiom print reports only propext, Classical.choice, and Quot.sound. /evaluation/verification.json and verification.log also report a successful build and formal audit.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "construction-correctness",
+      "requirement": "Define the computed Cholesky factorization followed by the two triangular solves.",
+      "evidence": "Research/Submission.lean:30-67 defines sequential rounded dot products, subtraction, and division. Lines 70-94 specify upper Cholesky updates using k<i and positive-pivot rounded square roots. Lines 97-109 specify forward and backward substitution using k<i and i<k respectively. SolveRun at lines 112-116 connects Cholesky(A,R), forward(R.transpose,b,y), and backward(R,y,x). These operational recurrence relations constrain the computed entries themselves.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "target-bound",
+      "requirement": "Prove the original perturbed system and both stated componentwise bounds with their exact coefficients.",
+      "evidence": "gamma at Research/Submission.lean:19 is m*u/(1-m*u), and absMatrix at line 22 is entrywise absolute value. Lines 648-657 give (A+DeltaA)x=b, |DeltaA_ij| <= (gamma_(n+1)+2*gamma_n+gamma_n^2)(|R.transpose||R|)_ij, and the comparison with (3*gamma_(n+1)+gamma_n^2). Lines 661-676 derive the two solve perturbations and factor residual bound; lines 680-701 prove the system and both inequalities.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "original-input-link",
+      "requirement": "Connect the result to the actual construction and the original mathematical inputs.",
+      "evidence": "Research/Submission.lean:643-647 uses the same A,b,R,y,x in the theorem and SolveRun. Lines 85-94 use the original entries of A; lines 115-116 use the original b and shared intermediate y. Lines 661-665 derive perturbations from these actual run stages. Lines 681-684 identify A+DeltaA with (R.transpose+L)*(R+U) and apply the linked solve equations to obtain the original b.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Preserve the stated hypotheses and generality. Do not assume the conclusion or introduce a circular definition.",
+      "evidence": "Research/Submission.lean:645-647 preserves the roundoff restriction and SPD hypotheses, for arbitrary dimension and inputs. RoundOK at lines 26-27 assumes only primitive relative rounding; the validity predicates and run relations at lines 39-116 add operation equations, successful positive pivots, nonzero divisors, and local rounding certificates, including the square root used by Cholesky. No run premise is a backward-error estimate. The factor bound is proved at lines 512-562, triangular residual bounds at lines 454-510, and perturbation existence at lines 566-616. The unused hpos warning reflects a stronger argument requiring only symmetry and a successful run, not a weakened target.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": [
+    "Floating-point execution is modeled by real-valued operational run relations with local relative-error certificates, including standard square-root rounding. This verifies the numerical-analysis abstraction, not a particular hardware implementation."
+  ]
+}

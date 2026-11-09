@@ -1,0 +1,7 @@
+⚠ [8026/8028] Built Research.Submission (18s)
+warning: Research/Submission.lean:646:31: unused variable `hpos`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [8027/8028] Built Research (4.7s)
+Build completed successfully (8028 jobs).
+Verification passed: build succeeds with no proof placeholders or custom axioms.

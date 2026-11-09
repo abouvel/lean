@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "1183e92f004b386c89cb4058b7bf02ff49c554781352bf93c8cc344a852e4aee",
+  "overall_verdict": "pass",
+  "phase": "final",
+  "lean_implies_source": true,
+  "source_implies_lean": true,
+  "relation": "faithful",
+  "target_evidence": "The separate translated product and addition perturbation theorems jointly recover the complete original backward-error theorem by composing their bounds on the same roundedProductTree. The resulting coefficient u+(1+u)gamma(d,u) is at most gamma(d+1,u). The absence of a single explicitly stated final theorem does not prevent this implication. Conversely the translated algorithm definitions and product estimate follow from the original model. Its additions-only auxiliary estimate follows under du<1 from the same model by tree induction: at a leaf choose its input unchanged; at a node choose the local rounding delta and multiply every leaf of the child witness trees by 1+delta. For d>=1 each child depth is at most d-1, and monotonicity of gamma gives child bound gamma(d-1,u). The new bound is at most u+(1+u)gamma(d-1,u) <= gamma(d,u). Exact sums then equal the rounded node output. Thus the translated intermediate statements do not demand an additional model restriction or independent mathematical assumption.",
+  "requirements": [
+    {
+      "requirement_id": "target-completeness",
+      "requirement": "Prove the full universally quantified dot-product backward-error theorem.",
+      "evidence": "The targets apply to all models and trees. Write d=depth(T), E=exactProductTree(T), Q=roundedProductTree(m,T). The premise (d+1)u<1 implies du<1. The product target relates E to Q, and additions_only supplies P with exactSum(P)=roundedDotProduct(m,T) and perturbation relative to that identical Q. Composing their bounds gives the full requested theorem.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "exact-product-linkage",
+      "requirement": "Relate perturbations to exact componentwise products x_i*y_i.",
+      "evidence": "E has leaves x=ab, Q has corresponding leaves q=R(ab), and additions_only supplies corresponding leaves p. Shape preservation in both perturbation relations identifies the actual same input leaf. The triangle inequality gives |p-x| <= |p-q|+|q-x| <= [gamma(d,u)(1+u)+u]|x|. Zero exact products also force q=p=0.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "multiplication-rounding",
+      "requirement": "Account for one rounded multiplication per leaf.",
+      "evidence": "The mul, roundedProductTerm, and roundedProductTree defining equalities identify each product leaf as R(ab). roundedProductTree_isPerturbation proves |R(ab)-ab|<=u|ab|. This contributes u and the factor (1+u) when composing with the addition bound.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "addition-reduction",
+      "requirement": "Account for every rounded tree addition in the reduction.",
+      "evidence": "S_m leaves summation inputs unchanged at leaves and rounds S_m(s)+S_m(t) at every internal node. roundedDotProduct.eq_1 identifies the algorithm with S_m(Q). additions_only gives exactSum(P)=S_m(Q) with leaf perturbations bounded by gamma(d,u) relative to Q.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "accumulated-bound",
+      "requirement": "Establish the gamma(depth+1,u) componentwise perturbation bound.",
+      "evidence": "Under u>=0 and (d+1)u<1, both relevant denominators are positive. The composed coefficient is u+(1+u)gamma(d,u)=(d+1)u/(1-du) <= (d+1)u/(1-(d+1)u)=gamma(d+1,u). Thus both rounding stages are included. At depth zero the addition bound is zero and u<=gamma(1,u).",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    },
+    {
+      "requirement_id": "assumption-integrity",
+      "requirement": "Use only the stated model and smallness assumptions without assuming or restricting the conclusion.",
+      "evidence": "The translation quantifies over arbitrary models satisfying the relative-error axiom and u>=0, and arbitrary finite nonempty ordered binary trees of real pairs. No sign, representability, balancing, or exact-arithmetic restriction occurs. The product bound needs no extra premise. The addition premise du<1 follows from the requested premise, and the final conclusion is derived by composition.",
+      "verdict": "pass",
+      "defect_categories": [],
+      "correction": ""
+    }
+  ],
+  "assumptions_added": [],
+  "missing_obligations": [],
+  "limitations": []
+}

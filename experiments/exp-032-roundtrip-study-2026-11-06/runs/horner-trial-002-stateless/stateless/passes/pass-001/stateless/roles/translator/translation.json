@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "8af33c7a487be6e15c8c7ea02a8ef1e198c2bb07a117db8316aeb51e6d10995d",
+  "status": "complete",
+  "statement": "For every real relative-error rounding model with parameter u >= 0 and rounding function r, every finite real coefficient list c, and every real x, |Q(model,c,x) - P(c,x)| <= E(c,x,u). P evaluates the polynomial with coefficients in ascending power order, Q performs the explicit two-rounding recursion below, and E recursively bounds its absolute error using exact tail evaluations. The model requires that for every real z there exists a real delta with |delta| <= u and r(z) = z(1 + delta).",
+  "targets": [
+    {
+      "name": "Research.Horner.forward_error",
+      "statement": "For every model : Research.FloatingPoint.Model, every coefficients : List(R), and every x in R, |Q(model,coefficients,x) - P(coefficients,x)| <= E(coefficients,x,model.u). A model consists of u in R, a proof of 0 <= u, and r : R -> R such that for every z in R there exists delta in R with |delta| <= u and r(z) = z(1 + delta); model.u = u and model.round = r. P, Q, and E are the exact recursions given below. This bounds the absolute difference between the constructed rounded computation Q and the exact polynomial evaluation P, with no further hypotheses."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.Horner.P",
+      "description": "P : List(R) x R -> R. For every x in R, P([],x) = 0. For every a in R and finite real list t, P(a::t,x) = a + x P(t,x). Thus for c = [a_0,...,a_(n-1)], where n is any nonnegative integer, P(c,x) = sum over integers i with 0 <= i < n of a_i x^i, with empty sum 0. The first coefficient is the constant coefficient. All operations are exact real operations."
+    },
+    {
+      "name": "Research.Horner.Q",
+      "description": "Q : Research.FloatingPoint.Model x List(R) x R -> R. For every model with rounding function r and every x in R, Q(model,[],x) = 0. For every a in R and finite real list t, Q(model,a::t,x) = r(a + r(x Q(model,t,x))). The tail is recursively computed with the same model and x, its product with x is rounded, a is added, and that sum is rounded. Every nonempty-list step has these two rounding applications, including the final coefficient step whose tail value is 0; the last coefficient is not simply returned. Neither x nor the coefficients are separately rounded. This is the actual computation compared with P by the theorem."
+    },
+    {
+      "name": "Research.Horner.E",
+      "description": "E : List(R) x R x R -> R is defined for all finite real lists and all real x and u. E([],x,u) = 0. For every a in R and finite real list t, let v = P(t,x) and e = E(t,x,u). Then E(a::t,x,u) = u |a + x v| + (1 + u)(u |x v| + (1 + u)|x| e). The local terms use the exact tail value P(t,x), not the computed Q. The definition allows arbitrary real u, including negative u; the target theorem uses it only at the nonnegative model parameter model.u, as an upper bound for |Q - P|."
+    }
+  ],
+  "assumptions": [
+    "A model provides a real parameter u >= 0 and a total function r : R -> R satisfying: for every real z there exists a real delta with |delta| <= u and r(z) = z(1 + delta). The existential delta may depend on z; no common delta for all inputs is required.",
+    "The same model and rounding function are used throughout the recursion Q. The supplied model assumes no particular floating-point format, discrete representable set, tie rule, or upper bound such as u < 1.",
+    "Coefficients range over all finite lists of real numbers, including the empty list; x ranges over all real numbers. There are no sign, magnitude, nonzero-leading-coefficient, degree, or length restrictions.",
+    "All arithmetic, order, and absolute values are over the real numbers. Only explicit applications of model.round in Q round values. P and the tail evaluations in E use exact real arithmetic."
+  ],
+  "missing_context": []
+}

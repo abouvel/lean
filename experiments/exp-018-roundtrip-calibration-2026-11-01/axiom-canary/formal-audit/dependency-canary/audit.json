@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "unapproved_axioms": [
+    "_private.Research.Submission.0.Research.impossible"
+  ],
+  "protected_source_failures": [],
+  "candidate_hash": "7a366601195db05549c4eeef232d34b807d2139bd78856ea25f9f0bd0085feff",
+  "passed": false
+}

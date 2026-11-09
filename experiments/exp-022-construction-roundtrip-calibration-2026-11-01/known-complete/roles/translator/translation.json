@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "candidate_hash": "ed6f80dcb2f753266f3e66b6b9b882d1f7d23b84f78619db800e7d7eab889538",
+  "status": "complete",
+  "statement": "The construction Research.answer is the real number 0. Research.answer.eq_1 states that this constructed real number equals 0. Research.answer_correct states that its product with itself equals 0. Both statements concern this fixed construction; neither has hypotheses, implicit parameters, quantified variables, or bounds.",
+  "targets": [
+    {
+      "name": "Research.answer.eq_1",
+      "statement": "For the fixed real number Research.answer defined to be 0, Research.answer = 0. There are no hypotheses, implicit parameters, quantified variables, or bounds."
+    },
+    {
+      "name": "Research.answer_correct",
+      "statement": "For the fixed real number Research.answer defined to be 0, Research.answer × Research.answer = 0, where multiplication and zero are those of the real numbers. Thus the statement specializes to 0 × 0 = 0. There are no hypotheses, implicit parameters, quantified variables, or bounds."
+    }
+  ],
+  "constructions": [
+    {
+      "name": "Research.answer",
+      "description": "A constant in ℝ, defined by Research.answer := 0. It takes no arguments and has no implicit parameters; it simply denotes real zero."
+    }
+  ],
+  "assumptions": [],
+  "missing_context": []
+}

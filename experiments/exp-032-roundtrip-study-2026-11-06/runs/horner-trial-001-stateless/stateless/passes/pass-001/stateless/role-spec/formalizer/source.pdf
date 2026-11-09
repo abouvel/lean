@@ -1,0 +1,55 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+5 0 obj
+<< /Length 1343 >>
+stream
+BT /F1 10 Tf 14 TL 46 748 Td
+(# Rounded Horner evaluation with a forward-error bound) Tj T*
+() Tj T*
+(Use the supplied abstract relative-error rounding model. Coefficients form) Tj T*
+(a finite list of real numbers in increasing degree order. For every such) Tj T*
+(list and every real x, construct exact and rounded Horner evaluation.) Tj T*
+() Tj T*
+(The exact evaluator P returns 0 on the empty list and satisfies) Tj T*
+(P\(a :: tail, x\) = a + x * P\(tail, x\).) Tj T*
+(The rounded evaluator Q returns 0 on the empty list and satisfies) Tj T*
+(Q\(a :: tail, x\) = round\(a + round\(x * Q\(tail, x\)\)\).) Tj T*
+(Use one rounded multiplication and one rounded addition per list step.) Tj T*
+() Tj T*
+(Construct an error envelope E using only the exact evaluator, x, the) Tj T*
+(coefficients, and the model parameter u. The empty-list envelope is 0.) Tj T*
+(At a cons step, put v = P\(tail, x\) and e = E\(tail, x, u\). The envelope is) Tj T*
+() Tj T*
+(u * |a + x*v| + \(1+u\) * \(u * |x*v| + \(1+u\) * |x| * e\).) Tj T*
+() Tj T*
+(Prove |Q\(coefficients, x\) - P\(coefficients, x\)| <= E\(coefficients, x, u\)) Tj T*
+(for every supplied model, coefficient list, and x. The model already gives) Tj T*
+(u >= 0 and the relative rounding law. The result needs no smallness,) Tj T*
+(sign, nonzero-input, or exact-arithmetic hypothesis.) Tj T*
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000309 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1704
+%%EOF

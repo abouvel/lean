@@ -1,0 +1,8 @@
+'TriangularSolve.solution_of_a_triangular_system' depends on axioms: [propext, Classical.choice, Quot.sound]
+TriangularSolve.solution_of_a_triangular_system (n : ℕ) (direction : TriangularSolve.Direction)
+  (ar : TriangularSolve.Arithmetic) (T : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ) (u : ℝ) (hu : 0 ≤ u)
+  (hnu : ↑n * u < 1) (hnonsingular : T.det ≠ 0) (htriangular : TriangularSolve.IsTriangular direction T)
+  (hround : (TriangularSolve.substitution direction ar T b).SatisfiesModel ar u) :
+  ∃ Δ,
+    (T + Δ).mulVec (TriangularSolve.substitution direction ar T b).value = b ∧
+      (∀ (i j : Fin n), |Δ i j| ≤ TriangularSolve.gamma n u * |T i j|) ∧ TriangularSolve.IsTriangular direction Δ
