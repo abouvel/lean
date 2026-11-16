@@ -6,6 +6,9 @@ The supplied manuscript and the ten individual task packets are saved in
 Each result was attempted independently in a fresh Lean workspace, once per
 memory condition, with the paper available as mathematical source material.
 
+[Cholesky solve walkthrough](../exp-035-block-jacobi-handoff-replay-2026-11-08/WALKTHROUGH.md)
+shows the original proof-agent handoffs and the later round-trip replay.
+
 | Outcome | Stateless | Retrieved |
 | --- | ---: | ---: |
 | Lean and both semantic reviewers passed | 3 | 2 |

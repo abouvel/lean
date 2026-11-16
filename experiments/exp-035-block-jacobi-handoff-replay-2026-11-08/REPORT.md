@@ -1,5 +1,8 @@
 # Block Jacobi semantic replay
 
+[Cholesky solve walkthrough](WALKTHROUGH.md) follows one request from its LaTeX
+source through artifact retrieval, proof generation, and both reviews.
+
 All twelve candidates blocked by the definition-only handoff in
 [the original batch](../exp-034-block-jacobi-roundtrip-2026-11-06/REPORT.md)
 were evaluated in a separate experiment. The pipeline now accepts inductive
